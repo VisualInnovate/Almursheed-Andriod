@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_auth"
+    tools:context=".auth.RegisterTypeFragment">
+
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarRegisterType"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt1"
+        style="@style/TextStyleRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:gravity="center"
+        android:text="@string/choose_register_type_and_register_in_mursheed"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintTop_toBottomOf="@id/appBarRegisterType" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgRegisterAsTourist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_5x"
+        android:layout_marginHorizontal="@dimen/space_4x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt1"
+        app:srcCompat="@drawable/img_register_as_tourist" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgRegisterAsGuide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_2x"
+        android:layout_marginHorizontal="@dimen/space_4x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgRegisterAsTourist"
+        app:srcCompat="@drawable/img_register_as_guide" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgRegisterAsDriver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_2x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgRegisterAsGuide"
+        app:srcCompat="@drawable/img_register_as_driver" />
+
+    <TextView
+        android:id="@+id/txtLogin"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/space_3x"
+        android:gravity="center"
+        android:padding="@dimen/space_4x"
+        android:text="@string/already_have_an_account_login"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_margin="@dimen/space_5x"-->
+    <!--            android:gravity="center"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/imgRegisterAsDriver">-->
+
+    <!--            <TextView-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:gravity="center"-->
+    <!--                android:text="@string/already_have_an_account_login"-->
+    <!--                android:textColor="@color/colorBlack"-->
+    <!--                android:textSize="16sp" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/txtSignUp"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:gravity="start"-->
+    <!--                android:padding="@dimen/space_2x"-->
+    <!--                android:text="@string/sign_up"-->
+    <!--                android:textColor="@color/colorPrimary"-->
+    <!--                android:textSize="16sp" />-->
+
+    <!--        </LinearLayout>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

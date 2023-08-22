@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_auth"
+    tools:context=".auth.guide.GuideRegisterSecondFragment">
+
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarTouristRegisterSecond"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvGuideRegisterSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_4x"
+        app:cardCornerRadius="@dimen/space_4x"
+        app:layout_constraintTop_toBottomOf="@id/appBarTouristRegisterSecond">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/space_4x">
+
+            <TextView
+                android:id="@+id/txtPhoneNumber"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtPhone"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/enter_your_name"
+                android:inputType="number"
+                android:padding="@dimen/space_4x"
+                android:textColorHint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/txtPhoneNumber" />
+
+            <TextView
+                android:id="@+id/txtGovernmentID"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/government_id"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/edtPhone" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtGovernmentID"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/enter_your_id"
+                android:inputType="number"
+                android:padding="@dimen/space_4x"
+                android:textColorHint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/txtGovernmentID" />
+
+            <TextView
+                android:id="@+id/txtLanguage"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/language"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/edtGovernmentID" />
+
+            <include
+                android:id="@+id/spinnerLanguage"
+                layout="@layout/layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
+            <TextView
+                android:id="@+id/txtBiography"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/biography"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/spinnerLanguage" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtBiography"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_35x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:gravity="top"
+                android:hint="@string/enter_your_biography"
+                android:inputType="text"
+                android:padding="@dimen/space_5x"
+                android:textColorHint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/txtBiography" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
+        style="@style/customButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_4x"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

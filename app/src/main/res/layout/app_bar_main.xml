@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/app_bar_background_v"
+        style="@style/AppBar"
+        android:background="@color/gradiant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--    <view-->
+    <!--        android:id="@+id/app_bar_shadow"-->
+    <!--        android:layout_height="2dp"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:elevation="2dp"-->
+    <!--        android:background="@drawable/rectangular_shadow"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/app_bar_background_v"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appBarBackButton"
+        style="@style/BackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/space_2x"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/appBarTitle"
+        style="@style/header_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_2x"
+        android:layout_marginEnd="@dimen/space_3x"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="start|bottom"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingTop="@dimen/space_1_5x"
+        android:paddingBottom="@dimen/space_2x"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnOneWithoutImage"
+        app:layout_constraintStart_toEndOf="@id/appBarBackButton"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Titles" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintBtnSort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_1x"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/app_bar_background_v"
+        app:layout_constraintEnd_toStartOf="@id/constraintBtnFilter"
+        app:layout_constraintTop_toTopOf="@id/app_bar_background_v">
+
+        <TextView
+            android:id="@+id/txtSort"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="@string/sort"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_2x"
+            android:src="@drawable/ic_sort"
+            app:layout_constraintStart_toEndOf="@id/txtSort"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintBtnFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_3x"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/app_bar_background_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/app_bar_background_v">
+
+        <TextView
+            android:id="@+id/txtFilter"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical"
+            android:text="@string/filter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_2x"
+            android:src="@drawable/ic_filter"
+            app:layout_constraintStart_toEndOf="@id/txtFilter"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/btnOneWithoutImage"
+        style="@style/AppBarSecondText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_3x"
+        android:padding="@dimen/space_2x"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/app_bar_background_v"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/app_bar_background_v"
+        tools:text="Login" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

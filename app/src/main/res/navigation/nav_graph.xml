@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.visualinnovate.almursheed.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splash_to_onBoarding"
+            app:destination="@id/onBoardingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.visualinnovate.almursheed.OnBoardingFragment"
+        android:label="On Boarding"
+        tools:layout="@layout/fragment_on_boarding" >
+        <action
+            android:id="@+id/action_onBoarding_to_registerType"
+            app:destination="@id/registerTypeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.visualinnovate.almursheed.auth.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_touristRegister"
+            app:destination="@id/touristRegisterFragment" />
+        <action
+            android:id="@+id/action_login_to_forgetPassword"
+            app:destination="@id/forgetPasswordFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/touristRegisterFragment"
+        android:name="com.visualinnovate.almursheed.auth.tourist.TouristRegisterFragment"
+        android:label="Tourist Register"
+        tools:layout="@layout/fragment_tourist_register" >
+        <action
+            android:id="@+id/action_touristRegister_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_touristRegister_to_verifyAccount"
+            app:destination="@id/verifyAccountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerTypeFragment"
+        android:name="com.visualinnovate.almursheed.auth.RegisterTypeFragment"
+        android:label="fragment_register_type"
+        tools:layout="@layout/fragment_register_type" >
+        <action
+            android:id="@+id/action_registerType_to_touristRegister"
+            app:destination="@id/touristRegisterFragment" />
+        <action
+            android:id="@+id/action_registerType_to_guideRegister"
+            app:destination="@id/guideRegisterFragment" />
+        <action
+            android:id="@+id/action_registerType_to_driverRegister"
+            app:destination="@id/driverRegisterFragment" />
+        <action
+            android:id="@+id/action_registerType_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/guideRegisterFragment"
+        android:name="com.visualinnovate.almursheed.auth.guide.GuideRegisterFragment"
+        android:label="Guide Register #1"
+        tools:layout="@layout/fragment_guide_register" >
+        <action
+            android:id="@+id/action_guideRegister_to_guideRegisterSecond"
+            app:destination="@id/guideRegisterSecondFragment" />
+        <action
+            android:id="@+id/action_guideRegister_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/guideRegisterSecondFragment"
+        android:name="com.visualinnovate.almursheed.auth.guide.GuideRegisterSecondFragment"
+        android:label="Guide Register #2"
+        tools:layout="@layout/fragment_guide_register_second" >
+        <action
+            android:id="@+id/action_guideRegisterSecond_to_verifyAccount"
+            app:destination="@id/verifyAccountFragment" />
+        <action
+            android:id="@+id/action_guideRegisterSecond_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/verifyAccountFragment"
+        android:name="com.visualinnovate.almursheed.auth.VerifyAccountFragment"
+        android:label="fragment_verify_account"
+        tools:layout="@layout/fragment_verify_account" />
+
+    <fragment
+        android:id="@+id/driverRegisterFragment"
+        android:name="com.visualinnovate.almursheed.auth.driver.DriverRegisterFragment"
+        android:label="Driver Register #1"
+        tools:layout="@layout/fragment_driver_register" >
+        <action
+            android:id="@+id/action_driverRegister_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_driverRegister_to_driverRegisterSecond"
+            app:destination="@id/driverRegisterSecondFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/driverRegisterSecondFragment"
+        android:name="com.visualinnovate.almursheed.auth.driver.DriverRegisterSecondFragment"
+        android:label="Driver Register #2"
+        tools:layout="@layout/fragment_driver_register_second" >
+        <action
+            android:id="@+id/action_driverRegisterSecond_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_driverRegisterSecond_to_verifyAccount"
+            app:destination="@id/verifyAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.visualinnovate.almursheed.auth.ForgetPasswordFragment"
+        android:label="fragment_forget_password"
+        tools:layout="@layout/fragment_forget_password" />
+
+</navigation>

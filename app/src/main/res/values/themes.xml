@@ -1,0 +1,93 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.AlmursheedApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorSecondaryVariant">@color/primary</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.AlmursheedApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.AlmursheedApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.AlmursheedApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- App bar -->
+    <style name="AppBar">
+        <item name="android:layout_height">?android:attr/actionBarSize</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!-- Back Button -->
+    <style name="BackButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:paddingStart">@dimen/space_3x</item>
+        <item name="android:paddingEnd">@dimen/space_3x</item>
+        <item name="android:paddingBottom">@dimen/space_0_5x</item>
+        <item name="android:paddingTop">@dimen/space_0_5x</item>
+        <item name="android:src">@drawable/ic_back</item>
+    </style>
+
+    <!-- header Title-->
+    <style name="header_title">
+         <item name="android:fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:textSize">@dimen/space_20x_sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!-- header Title-->
+    <style name="AppBarSecondText">
+         <item name="android:fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:textSize">@dimen/space_14x_sp</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
+    <style name="TextStyleLight">
+        <item name="android:fontFamily">@font/myriad_pro_light</item>
+    </style>
+
+    <style name="TextStyleRegular">
+         <item name="android:fontFamily">@font/myriad_pro_regular</item>
+    </style>
+
+    <style name="TextStyleBold">
+         <item name="android:fontFamily">@font/myriad_pro_bold</item>
+    </style>
+
+    <style name="EditTextStyleRegular">
+        <item name="android:fontFamily">@font/myriad_pro_regular</item>
+        <item name="android:textSize">@dimen/space_12x_sp</item>
+    </style>
+
+    <style name="EditTextStyleLight">
+        <item name="android:fontFamily">@font/myriad_pro_light</item>
+    </style>
+
+    <style name="customButtonStyle" parent=""> <!-- @android:style/Widget.Button -->
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">@dimen/space_3x</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:layout_marginHorizontal">@dimen/space_4x</item>
+        <item name="android:textSize">@dimen/space_20x_sp</item>
+        <item name="android:background">@drawable/btn_selector</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+</resources>
