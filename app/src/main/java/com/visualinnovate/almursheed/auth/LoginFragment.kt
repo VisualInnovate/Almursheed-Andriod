@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentLoginBinding
+import com.visualinnovate.almursheed.home.HomeActivity
 
 class LoginFragment : Fragment() {
 
@@ -119,7 +121,15 @@ class LoginFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             // navigate to home
+            startHomeActivity()
         }
+    }
+
+    private fun startHomeActivity() {
+        val intent = Intent(requireActivity(), HomeActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun openSpinner() {}

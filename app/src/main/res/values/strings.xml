@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Almursheed App</string>
+    <string name="app_name">Almursheed</string>
     <string name="action_settings">Settings</string>
 
     <string name="next">Next</string>
@@ -78,5 +78,18 @@
         <item>Guide</item>
         <item>Driver</item>
     </array>
+    <string name="title_activity_home">HomeActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="search_murcheed_app">Search Murcheed App</string>
+    <string name="best_drivers">Best Drivers</string>
+    <string name="see_all">See all</string>
+    <string name="book_now">Book Now</string>
+    <string name="best_guides">Best Guides</string>
+    <string name="offers">Offers</string>
+    <string name="popular_locations">Popular Locations</string>
 
 </resources>

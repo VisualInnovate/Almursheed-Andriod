@@ -54,7 +54,7 @@
         android:id="@+id/btnGetStarted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_5x"
+        android:layout_margin="@dimen/space_4x"
         android:background="@drawable/btn_on_boarding"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -76,14 +76,14 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icNextOnBoarding"
-            android:layout_width="@dimen/space_11x"
-            android:layout_height="@dimen/space_11x"
+            android:layout_width="@dimen/space_13x"
+            android:layout_height="@dimen/space_12x"
             android:layout_marginHorizontal="@dimen/space_2x"
-            android:layout_marginVertical="@dimen/space_2x"
+            android:layout_marginVertical="@dimen/space_1x"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_next_on_boarding" />
+            app:srcCompat="@drawable/ic_next_animation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

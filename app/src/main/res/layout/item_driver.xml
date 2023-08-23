@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/space_4x"
+    app:cardCornerRadius="@dimen/space_4x"
+    app:cardElevation="@dimen/space_1x">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/imgDriver"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/img_driver">
+
+        <TextView
+            android:id="@+id/rating"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginStart="@dimen/space_2x"
+            android:background="@drawable/ic_bg_rating"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/space_1_5x"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_2x"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="4.0" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginEnd="@dimen/space_2x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_unfavorite" />
+
+        <TextView
+            android:id="@+id/username"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_2x"
+            android:ellipsize="start"
+            android:background="@drawable/ic_bg_rating"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:maxLines="1"
+            android:maxLength="15"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_12x_sp"
+            app:layout_constraintEnd_toStartOf="@id/imgStatus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating"
+            tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_1x"
+            android:layout_marginTop="@dimen/space_1x"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/username"
+            app:layout_constraintTop_toBottomOf="@id/rating"
+            app:srcCompat="@drawable/ic_active_online" />
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/TextStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_2x"
+            android:background="@drawable/ic_bg_rating"
+            android:gravity="end|center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_12x_sp"
+            app:layout_constraintStart_toEndOf="@id/imgStatus"
+            app:layout_constraintBottom_toBottomOf="@id/btnBookNow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating"
+            tools:text="$150.00" />
+
+        <TextView
+            android:id="@+id/city"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_bg_rating"
+            android:gravity="start|center_vertical"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_11x_sp"
+            app:layout_constraintStart_toStartOf="@id/username"
+            app:layout_constraintEnd_toEndOf="@id/price"
+            app:layout_constraintTop_toBottomOf="@id/username"
+            tools:text="Cairo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBookNow"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_7x"
+            android:background="@drawable/ic_bg_book_now"
+            android:text="@string/book_now"
+            style="@style/TextStyleBold"
+            android:textSize="@dimen/space_12x_sp"
+            android:textColor="@color/accent"
+            app:layout_constraintTop_toBottomOf="@id/city"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

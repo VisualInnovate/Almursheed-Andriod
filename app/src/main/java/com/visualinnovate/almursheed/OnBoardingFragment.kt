@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.common.Utils
 import com.visualinnovate.almursheed.databinding.FragmentOnBoardingBinding
 
 class OnBoardingFragment : Fragment() {
@@ -24,6 +25,9 @@ class OnBoardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // load icon next of get started
+        Utils.loadGifImage(requireContext(), R.drawable.ic_next_animation, binding.icNextOnBoarding)
         setBtnListener()
     }
 

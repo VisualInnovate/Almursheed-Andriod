@@ -1,0 +1,11 @@
+package com.visualinnovate.almursheed.home.model
+
+data class GuideModel(
+    var guideId: Int = 0,
+    var guideImage: Int = 0,
+    var guideRating: Double = 0.0,
+    var guideName: String = "",
+    var guidePrice: Double = 0.0,
+    var guideCity: String = "",
+    var guideFavorite: Boolean = false
+)

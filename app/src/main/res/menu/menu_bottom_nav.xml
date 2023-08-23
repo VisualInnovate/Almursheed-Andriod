@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.visualinnovate.almursheed.MainActivity">
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_apple"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+         />
+
+    <item
+        android:id="@+id/action_hire"
+        android:icon="@drawable/ic_apple"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_accommodation"
+        android:icon="@drawable/ic_apple"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_flight"
+        android:icon="@drawable/ic_apple"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_apple"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>

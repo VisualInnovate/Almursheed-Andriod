@@ -12,6 +12,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:textColorHint">@color/grey</item>
+        <item name="android:textSize">@dimen/space_12x_sp</item>
+        <item name="popupMenuBackground">@color/white</item>
     </style>
 
     <style name="Theme.AlmursheedApp.NoActionBar">
@@ -44,28 +48,31 @@
 
     <!-- header Title-->
     <style name="header_title">
-         <item name="android:fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:fontFamily">@font/myriad_pro_bold</item>
         <item name="android:textSize">@dimen/space_20x_sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <!-- header Title-->
     <style name="AppBarSecondText">
-         <item name="android:fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:fontFamily">@font/myriad_pro_bold</item>
         <item name="android:textSize">@dimen/space_14x_sp</item>
         <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="TextStyleLight">
         <item name="android:fontFamily">@font/myriad_pro_light</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="TextStyleRegular">
-         <item name="android:fontFamily">@font/myriad_pro_regular</item>
+        <item name="android:fontFamily">@font/myriad_pro_regular</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="TextStyleBold">
-         <item name="android:fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="EditTextStyleRegular">
@@ -75,6 +82,11 @@
 
     <style name="EditTextStyleLight">
         <item name="android:fontFamily">@font/myriad_pro_light</item>
+    </style>
+
+    <style name="RoundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/space_3x</item>
     </style>
 
     <style name="customButtonStyle" parent=""> <!-- @android:style/Widget.Button -->
@@ -88,6 +100,14 @@
         <item name="android:background">@drawable/btn_selector</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="queryHint">@string/search_murcheed_app</item>
+        <item name="fontFamily">@font/myriad_pro_regular</item>
+        <item name="queryBackground">@null</item>
+        <item name="searchHintIcon">@drawable/ic_search</item>
     </style>
 
 </resources>

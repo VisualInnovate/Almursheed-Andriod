@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_edit_text"
+    tools:context=".home.view.HomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bgCurveHome"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bg_curve_home" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgHomeLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10x"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_home_logo" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/SearchViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_10x"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_4x"
+            android:background="@drawable/rounded_search_view"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toStartOf="@id/icNotification"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4x"
+            android:layout_marginEnd="@dimen/space_4x"
+            app:layout_constraintBottom_toBottomOf="@id/searchView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/searchView"
+            app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
+            app:srcCompat="@drawable/ic_notification" />
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/rvBanner"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/space_1x"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/searchView"-->
+        <!--            tools:itemCount="3"-->
+        <!--            tools:listitem="@layout/item_banner" />-->
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/rvBanner"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_marginTop="@dimen/space_6x"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dotsIndicatorBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            app:dotsColor="@color/bg_dots_indicator"
+            app:dotsCornerRadius="@dimen/space_2x"
+            app:dotsSize="@dimen/space_2x"
+            app:dotsSpacing="@dimen/space_1x"
+            app:dotsWidthFactor="2.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvBanner"
+            app:progressMode="false"
+            app:selectedDotColor="@color/primary" />
+
+        <TextView
+            android:id="@+id/txtBestDrivers"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/best_drivers"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dotsIndicatorBanner" />
+
+        <TextView
+            android:id="@+id/seeAllDivers"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_4x"
+            android:text="@string/see_all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dotsIndicatorBanner" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDriver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/txtBestDrivers"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_driver" />
+
+        <TextView
+            android:id="@+id/txtBestGuides"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/best_guides"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvDriver" />
+
+        <TextView
+            android:id="@+id/seeAllGuides"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:padding="@dimen/space_4x"
+            android:text="@string/see_all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvDriver" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvGuide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/txtBestGuides"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_driver" />
+
+        <TextView
+            android:id="@+id/txtOffers"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/offers"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvGuide" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/rvOffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_offer"
+            app:layout_constraintTop_toBottomOf="@id/txtOffers" />
+
+        <TextView
+            android:id="@+id/txtPopularLocations"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/popular_locations"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvOffer" />
+
+        <TextView
+            android:id="@+id/seeAllPopularLocations"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:padding="@dimen/space_4x"
+            android:text="@string/see_all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvOffer" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPopularLocations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginVertical="@dimen/space_5x"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPopularLocations"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_popular_location" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
