@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.databinding.FragmentRegisterTypeBinding
 
 class RegisterTypeFragment : Fragment() {
@@ -37,7 +38,8 @@ class RegisterTypeFragment : Fragment() {
 
     private fun setBtnListener() {
         binding.imgRegisterAsTourist.setOnClickListener {
-            findNavController().navigate(R.id.action_registerType_to_touristRegister)
+//            findNavController().navigate(R.id.action_registerType_to_touristRegister)
+            findNavController().customNavigate(R.id.touristRegisterFragment)
         }
         binding.imgRegisterAsGuide.setOnClickListener {
             findNavController().navigate(R.id.action_registerType_to_guideRegister)

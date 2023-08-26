@@ -27,8 +27,11 @@ class DriverAdapter(
         private val btnBookNow = itemView.btnBookNow
 
         init {
-            btnBookNow.setOnClickListener {
+            itemView.root.setOnClickListener {
                 btnDriverClickCallBack.invoke(newsList[adapterPosition])
+            }
+            btnBookNow.setOnClickListener {
+                // btnDriverClickCallBack.invoke(newsList[adapterPosition])
             }
         }
     }

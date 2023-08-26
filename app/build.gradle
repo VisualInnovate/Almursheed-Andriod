@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -8,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.visualinnovate.almursheed"
-        minSdk 20
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -46,7 +48,8 @@ dependencies {
     // Multidex
     implementation "androidx.multidex:multidex:2.0.1"
 
-    // Bubble Bottom Navigation Bar
+    // Chip Bottom Navigation Bar
+    implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
 
     // Dots indicator
     implementation "com.tbuonomo:dotsindicator:4.3"

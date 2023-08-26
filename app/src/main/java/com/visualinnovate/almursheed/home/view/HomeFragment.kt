@@ -1,63 +1,86 @@
 package com.visualinnovate.almursheed.home.view
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.Constant
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
+import com.visualinnovate.almursheed.home.HomeActivity
 import com.visualinnovate.almursheed.home.adapter.*
-import com.visualinnovate.almursheed.home.model.BannerModel
-import com.visualinnovate.almursheed.home.model.DriverModel
-import com.visualinnovate.almursheed.home.model.GuideModel
-import com.visualinnovate.almursheed.home.model.LocationModel
-import java.util.*
+import com.visualinnovate.almursheed.home.model.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
     private lateinit var driverAdapter: DriverAdapter
     private lateinit var guideAdapter: GuideAdapter
+    private lateinit var offerAdapter: OfferAdapter
     private lateinit var locationAdapter: LocationAdapter
 
     private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
         toast("Clicked Item banner $banner")
-        val bundle = Bundle()
+        // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
     private val btnDriverClickCallBack: (driver: DriverModel) -> Unit = { driver ->
         toast("Clicked Item driver $driver")
-        val bundle = Bundle()
-        // bundle.putString("memberName", chat.memberName)
-        // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
+        // val bundle = Bundle()
+        // bundle.putParcelable(Constant.DRIVER, driver)
+        // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
     private val btnGuideClickCallBack: (guide: GuideModel) -> Unit = { guide ->
         toast("Clicked Item guide $guide")
-        val bundle = Bundle()
+        // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
     private val btnLocationClickCallBack: (location: LocationModel) -> Unit = { location ->
         toast("Clicked Item banner $location")
-        val bundle = Bundle()
+        // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
+    }
+
+    private val btnBoobNowOfferCallBack: (offer: OfferModel) -> Unit = { offer ->
+        toast("Clicked Item BoobNowOffer $offer")
+        // val bundle = Bundle()
+        // bundle.putString("memberName", chat.memberName)
+        // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
+    }
+
+    private val btnDetailsOfferCallBack: (offer: OfferModel) -> Unit = { offer ->
+        showOfferDetailsBottomSheet(offer)
+    }
+
+    private fun showOfferDetailsBottomSheet(offer: OfferModel) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constant.OFFER_DETAILS, offer)
+
+        // Create an instance of the bottom sheet dialog fragment with the data
+        val offerDetailsSheetFragment = OfferDetailsFragment.newInstance(bundle)
+
+        // Show the bottom sheet dialog fragment
+        offerDetailsSheetFragment.show(
+            childFragmentManager,
+            "OfferDetailsFragment"
+        ) // offerDetailsSheetFragment.tag
     }
 
     override fun onCreateView(
@@ -71,17 +94,29 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initBannerRecycler()
-        initDriverRecycler()
-        initGuideRecycler()
-        initLocationRecycler()
+        (requireActivity() as HomeActivity).changeSelectedBottomNavListener(R.id.action_home)
+        initView()
         setBtnListener()
     }
 
+    private fun initView() {
+        initBannerRecycler()
+        initDriverRecycler()
+        initGuideRecycler()
+        initOfferRecycler()
+        initLocationRecycler()
+    }
+
     private fun setBtnListener() {
-        binding.seeAllDivers.setOnClickListener { }
-        binding.seeAllGuides.setOnClickListener { }
-        binding.seeAllPopularLocations.setOnClickListener { }
+        binding.seeAllDivers.setOnClickListener {
+            findNavController().customNavigate(R.id.allDriversFragment)
+        }
+        binding.seeAllGuides.setOnClickListener {
+            findNavController().customNavigate(R.id.allGuidesFragment)
+        }
+        binding.seeAllPopularLocations.setOnClickListener {
+            findNavController().customNavigate(R.id.allLocationFragment)
+        }
     }
 
     private fun initBannerRecycler() {
@@ -91,7 +126,6 @@ class HomeFragment : Fragment() {
         binding.rvBanner.adapter = bannerViewPagerAdapter
         binding.dotsIndicatorBanner.attachTo(binding.rvBanner)
 
-        // startAutoSlider(bannerViewPagerAdapter.count)
         startAutoSlider()
         /*binding.rvBanner.apply {
             bannerAdapter = BannerAdapter(btnBannerClickCallBack)
@@ -101,29 +135,16 @@ class HomeFragment : Fragment() {
     }
 
     private var currentPage = 0
-    private var timer: Timer? = null
 
     // Start the auto slider
     private fun startAutoSlider() {
-        val handler = Handler(Looper.getMainLooper())
-
-        // Create a new Timer
-        timer = Timer()
-
-        // Create a TimerTask to run the ViewPager
-        val timerTask: TimerTask = object : TimerTask() {
-            override fun run() {
-                handler.post {
-                    if (currentPage == getBannerList().size) {
-                        currentPage = 0
-                    }
-                    binding.rvBanner.setCurrentItem(currentPage++, true)
-                }
+        lifecycleScope.launch {
+            delay(2000)
+            if (currentPage == getBannerList().size) {
+                currentPage = 0
             }
+            binding.rvBanner.setCurrentItem(currentPage++, true)
         }
-
-        // Schedule the timer to run periodically
-        timer?.schedule(timerTask, 2000, 2000)
     }
 
     private fun initDriverRecycler() {
@@ -142,12 +163,35 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun initOfferRecycler() {
+        binding.rvOffer.apply {
+            offerAdapter = OfferAdapter(btnBoobNowOfferCallBack, btnDetailsOfferCallBack)
+            offerAdapter.submitData(getOfferList())
+            adapter = offerAdapter
+        }
+    }
+
     private fun initLocationRecycler() {
         binding.rvPopularLocations.apply {
             locationAdapter = LocationAdapter(btnLocationClickCallBack)
             locationAdapter.submitData(getLocationList())
             adapter = locationAdapter
+
+            // Use attachTo() instead of setViewPager2()
+            // binding.dotsIndicatorBanner.attachTo(this)
         }
+
+//        viewPagerAdapter = ViewPagerAdapter(getBanners())
+//        binding.viewPager.adapter = viewPagerAdapter
+//
+//        val snapHelper = StartSnapHelper()
+//        snapHelper.attachToRecyclerView(binding.viewPager)
+//
+//        binding.dotsIndicatorBanner.swipePrevious()
+//        binding.dotsIndicatorBanner.swipeNext()
+//
+//        // Use attachTo() instead of setViewPager2()
+//        binding.dotsIndicatorBanner.
     }
 
     private fun getBannerList(): ArrayList<BannerModel> {
@@ -279,6 +323,45 @@ class HomeFragment : Fragment() {
         return guideList
     }
 
+    private fun getOfferList(): ArrayList<OfferModel> {
+        val offerList = ArrayList<OfferModel>()
+
+        offerList.add(
+            OfferModel(
+                0,
+                R.drawable.img_test,
+                2.2,
+                "Ahmed Mohamed"
+            )
+        )
+        offerList.add(
+            OfferModel(
+                1,
+                R.drawable.img_driver,
+                1.1,
+                "Mohamed Mohamed"
+            )
+        )
+        offerList.add(
+            OfferModel(
+                2,
+                R.drawable.img_test,
+                4.5,
+                "Ahmed Ahmed"
+            )
+        )
+        offerList.add(
+            OfferModel(
+                3,
+                R.drawable.img_driver,
+                3.1,
+                "Ahmed Mohamed"
+            )
+        )
+
+        return offerList
+    }
+
     private fun getLocationList(): ArrayList<LocationModel> {
         val locationList = ArrayList<LocationModel>()
 
@@ -322,8 +405,8 @@ class HomeFragment : Fragment() {
         return locationList
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

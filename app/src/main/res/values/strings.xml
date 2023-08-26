@@ -56,6 +56,7 @@
     <string name="enter_your_id">Enter Your ID</string>
     <string name="government_id">Government ID <font fgcolor='#FF0000'> *</font></string>
     <string name="language">Language <font fgcolor='#FF0000'> *</font></string>
+    <string name="language_text">Language</string>
     <string name="biography">Biography <font fgcolor='#FF0000'> *</font></string>
     <string name="enter_your_biography">Enter Your Biography</string>
     <string name="choose_destination">Choose Destination <font fgcolor='#FF0000'> *</font></string>
@@ -89,7 +90,30 @@
     <string name="see_all">See all</string>
     <string name="book_now">Book Now</string>
     <string name="best_guides">Best Guides</string>
+    <string name="guides">Guides</string>
     <string name="offers">Offers</string>
     <string name="popular_locations">Popular Locations</string>
+    <string name="home">Home</string>
+    <string name="hire">Hire</string>
+    <string name="accommodation">Accommodation</string>
+    <string name="accommodation_details">Accommodation Details</string>
+    <string name="driver_details">Driver Details</string>
+    <string name="guide_details">Guide Details</string>
+    <string name="location_details">Location Details</string>
+    <string name="locations">Locations</string>
+    <string name="flight_reservation">Flight reservation</string>
+    <string name="flight">Flight</string>
+    <string name="more">More</string>
+    <string name="our_drivers">Our Drivers</string>
+    <string name="price">Price</string>
+    <string name="location_info">Location Info</string>
+    <string name="description">Description</string>
+    <string name="details">Details</string>
+    <string name="available">Available</string>
+    <string name="accommodation_info">Accommodation Info</string>
+    <string name="boat_tour">Boat tour</string>
+    <string name="price_offer">Price:</string>
+    <string name="_2000"><strike>2000 $</strike></string>
+    <string name="car_info">Car Info</string>
 
 </resources>

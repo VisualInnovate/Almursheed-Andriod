@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_auth"
     app:startDestination="@id/splashFragment">
 
     <fragment
@@ -22,7 +22,8 @@
         tools:layout="@layout/fragment_on_boarding" >
         <action
             android:id="@+id/action_onBoarding_to_registerType"
-            app:destination="@id/registerTypeFragment" />
+            app:destination="@id/registerTypeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment

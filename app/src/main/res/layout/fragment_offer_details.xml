@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_curve_offer_details"
+    tools:context=".home.view.OfferDetailsFragment">
+
+    <TextView
+        android:id="@+id/txtBoatTour"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_6x"
+        android:gravity="start"
+        android:lines="1"
+        android:text="@string/boat_tour"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/icClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/icClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_1x"
+        android:padding="@dimen/space_3x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtBoatTour"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        app:srcCompat="@drawable/ic_close" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgOffer"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_margin="@dimen/space_4x"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toBottomOf="@id/txtBoatTour"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        app:srcCompat="@drawable/img_test" />
+
+    <TextView
+        android:id="@+id/OfferDescription"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_5x"
+        android:gravity="start"
+        android:lineSpacingExtra="@dimen/space_2x"
+        android:lines="3"
+        android:text="Taking a boat tour through \nCanals Taking a boat tour \nthrough Canals"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_22x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/imgOffer"
+        app:layout_constraintStart_toStartOf="@id/imgOffer"
+        app:layout_constraintTop_toBottomOf="@id/imgOffer" />
+
+    <TextView
+        android:id="@+id/txtPrice"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:gravity="start"
+        android:paddingVertical="@dimen/space_3x"
+        android:text="@string/price_offer"
+        android:textColor="@color/dark_grey"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/price"
+        app:layout_constraintStart_toStartOf="@id/imgOffer"
+        app:layout_constraintTop_toBottomOf="@id/OfferDescription" />
+
+    <TextView
+        android:id="@+id/price"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/space_3x"
+        android:gravity="start|center_vertical"
+        android:letterSpacing="0.1"
+        android:text="1500 $"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/txtPrice"
+        app:layout_constraintStart_toEndOf="@id/txtPrice"
+        app:layout_constraintTop_toBottomOf="@id/OfferDescription"
+        app:layout_constraintTop_toTopOf="@id/txtPrice" />
+
+    <TextView
+        android:id="@+id/realPrice"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/space_3x"
+        android:gravity="start|center_vertical"
+        android:letterSpacing="0.1"
+        android:text="@string/_2000"
+        android:textColor="@color/dark_grey"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/price"
+        app:layout_constraintStart_toEndOf="@id/price"
+        app:layout_constraintTop_toBottomOf="@id/OfferDescription"
+        app:layout_constraintTop_toTopOf="@id/price" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnBookNow"
+        style="@style/customButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_4x"
+        android:text="@string/book_now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/price" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

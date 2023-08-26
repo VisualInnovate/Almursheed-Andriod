@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_edit_text"
+    tools:context=".home.view.driver.DriverDetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.visualinnovate.almursheed.common.AppBarView
+            android:id="@+id/appBarDriverDetails"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            app:cardCornerRadius="@dimen/space_3x"
+            app:cardElevation="@dimen/space_1x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarDriverDetails">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgDriver"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="@dimen/space_6x"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:srcCompat="@drawable/img_test" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgDriverStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_6x"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="@id/imgDriver"
+                    app:layout_constraintEnd_toEndOf="@id/imgDriver"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:srcCompat="@drawable/ic_active_online" />
+
+                <TextView
+                    android:id="@+id/driverReview"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/space_4x"
+                    android:drawableStart="@drawable/ic_stars"
+                    android:drawablePadding="@dimen/space_1_5x"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:text="(1200 review)"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/space_9x_sp"
+                    app:layout_constraintBottom_toBottomOf="@id/driverName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/driverName"
+                    app:layout_constraintTop_toTopOf="@id/driverName" />
+
+                <TextView
+                    android:id="@+id/driverName"
+                    style="@style/TextStyleBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintEnd_toStartOf="@id/driverReview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgDriver"
+                    tools:text="Ahmed khaled" />
+
+                <TextView
+                    android:id="@+id/txtPrice"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_1x"
+                    android:layout_marginEnd="@dimen/space_1x"
+                    android:gravity="end"
+                    android:text="@string/price"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/driverPrice"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/driverName" />
+
+                <TextView
+                    android:id="@+id/driverPrice"
+                    style="@style/TextStyleBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_2x"
+                    android:layout_marginTop="@dimen/space_1x"
+                    android:layout_marginEnd="@dimen/space_4x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/space_12x_sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/txtPrice"
+                    app:layout_constraintTop_toBottomOf="@id/driverName"
+                    tools:text="$150.00" />
+
+                <TextView
+                    android:id="@+id/txtLocationInfo"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/location_info"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/txtPrice" />
+
+                <TextView
+                    android:id="@+id/driverCountry"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2x"
+                    android:text="Egypt"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_country"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtLocationInfo" />
+
+                <TextView
+                    android:id="@+id/driverCity"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2x"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_location_primary"
+                    app:layout_constraintBottom_toBottomOf="@id/driverCountry"
+                    app:layout_constraintStart_toEndOf="@id/driverCountry"
+                    app:layout_constraintTop_toTopOf="@id/driverCountry"
+                    tools:text="Cairo" />
+
+                <TextView
+                    android:id="@+id/txtLanguage"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/language_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/driverCountry" />
+
+                <TextView
+                    android:id="@+id/languageEnglish"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:padding="@dimen/space_2x"
+                    android:text="English"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_country"
+                    app:layout_constraintEnd_toStartOf="@id/languageArabic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
+                <TextView
+                    android:id="@+id/languageArabic"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:padding="@dimen/space_2x"
+                    android:text="Arabic"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_country"
+                    app:layout_constraintStart_toEndOf="@id/languageEnglish"
+                    app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/languageEnglish" />
+
+                <TextView
+                    android:id="@+id/driverDescription"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lineSpacingExtra="8sp"
+                    android:lines="3"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our ="
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintTop_toBottomOf="@id/txtDescription" />
+
+                <TextView
+                    android:id="@+id/txtCarInfo"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/car_info"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/driverDescription" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvCarInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/space_3x"
+                    app:cardBackgroundColor="@color/bg_edit_text"
+                    app:cardCornerRadius="@dimen/space_3x"
+                    app:cardElevation="@dimen/space_1x"
+                    app:layout_constraintEnd_toEndOf="@id/txtCarInfo"
+                    app:layout_constraintStart_toStartOf="@id/txtCarInfo"
+                    app:layout_constraintTop_toBottomOf="@id/txtCarInfo">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imgCar"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/img_car" />
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/space_3x"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/imgCar">
+
+                            <TextView
+                                android:id="@+id/carName"
+                                style="@style/TextStyleRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="@dimen/space_1_5x"
+                                android:ellipsize="end"
+                                android:gravity="start|center_vertical"
+                                android:lines="1"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:text="Accent 2022"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/space_10x_sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/view"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/imgCar"
+                                app:drawableStartCompat="@drawable/ic_car_trunk" />
+
+                            <View
+                                android:id="@+id/view"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="@dimen/space_2x"
+                                android:background="@color/primary"
+                                app:layout_constraintBottom_toBottomOf="@id/carName"
+                                app:layout_constraintEnd_toStartOf="@id/carType"
+                                app:layout_constraintStart_toEndOf="@id/carName"
+                                app:layout_constraintTop_toTopOf="@id/carName" />
+
+                            <TextView
+                                android:id="@+id/carType"
+                                style="@style/TextStyleRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="@dimen/space_1_5x"
+                                android:ellipsize="end"
+                                android:gravity="start|center_vertical"
+                                android:lines="1"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:text="SUV"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/space_10x_sp"
+                                app:layout_constraintBottom_toBottomOf="@id/carName"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/view"
+                                app:layout_constraintTop_toTopOf="@id/carName"
+                                app:drawableStartCompat="@drawable/ic_car_trunk" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnHire"
+                    style="@style/customButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_6x"
+                    android:layout_marginBottom="@dimen/space_4x"
+                    android:text="@string/hire"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cvCarInfo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

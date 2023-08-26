@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/space_4x"
+    android:layout_marginVertical="@dimen/space_3x"
+    android:layout_marginStart="@dimen/space_4x"
+    android:layout_marginEnd="@dimen/space_1x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imgDriver"
-        android:layout_width="210dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/img_driver">
 
@@ -47,8 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_2x"
-            android:ellipsize="start"
-            android:background="@drawable/ic_bg_rating"
+            android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
             android:maxLines="1"
@@ -77,10 +78,9 @@
         <TextView
             android:id="@+id/price"
             style="@style/TextStyleBold"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_2x"
-            android:background="@drawable/ic_bg_rating"
             android:gravity="end|center_vertical"
             android:ellipsize="end"
             android:maxLines="1"
@@ -97,7 +97,6 @@
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_bg_rating"
             android:gravity="start|center_vertical"
             android:ellipsize="end"
             android:maxLines="1"

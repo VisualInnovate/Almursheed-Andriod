@@ -67,8 +67,8 @@
             android:id="@+id/rvBanner"
             android:layout_width="match_parent"
             android:layout_height="145dp"
-            android:layout_marginTop="@dimen/space_6x"
             android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_6x"
             app:layout_constraintTop_toBottomOf="@id/searchView" />
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
@@ -105,22 +105,22 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/space_4x"
+            android:paddingHorizontal="@dimen/space_4x"
+            android:paddingVertical="@dimen/space_3x"
             android:text="@string/see_all"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintBottom_toBottomOf="@id/txtBestDrivers"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dotsIndicatorBanner" />
+            app:layout_constraintTop_toTopOf="@id/txtBestDrivers" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvDriver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_5x"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/txtBestDrivers"
+            app:layout_constraintTop_toBottomOf="@id/seeAllDivers"
             tools:itemCount="3"
             tools:listitem="@layout/item_driver" />
 
@@ -130,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_2x"
             android:text="@string/best_guides"
             android:textColor="@color/black"
             android:textSize="@dimen/space_18x_sp"
@@ -142,23 +142,22 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_2x"
-            android:padding="@dimen/space_4x"
+            android:paddingHorizontal="@dimen/space_4x"
+            android:paddingVertical="@dimen/space_3x"
             android:text="@string/see_all"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintBottom_toBottomOf="@id/txtBestGuides"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvDriver" />
+            app:layout_constraintTop_toTopOf="@id/txtBestGuides" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGuide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_5x"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/txtBestGuides"
+            app:layout_constraintTop_toBottomOf="@id/seeAllGuides"
             tools:itemCount="3"
             tools:listitem="@layout/item_driver" />
 
@@ -168,22 +167,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_1x"
             android:text="@string/offers"
             android:textColor="@color/black"
             android:textSize="@dimen/space_18x_sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rvGuide" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOffer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_1x"
             android:scaleType="fitXY"
             android:src="@drawable/img_offer"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_offer"
+            tools:itemCount="5"
             app:layout_constraintTop_toBottomOf="@id/txtOffers" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dotsIndicatorOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_2x"
+            android:layout_marginStart="@dimen/space_4x"
+            app:dotsColor="@color/grey"
+            app:dotsCornerRadius="@dimen/space_2x"
+            app:dotsSize="@dimen/space_2x"
+            app:dotsSpacing="@dimen/space_1x"
+            android:visibility="invisible"
+            app:dotsWidthFactor="2.5"
+            app:layout_constraintStart_toStartOf="@id/rvOffer"
+            app:layout_constraintBottom_toBottomOf="@id/rvOffer"
+            app:progressMode="false"
+            app:selectedDotColor="@color/white" />
 
         <TextView
             android:id="@+id/txtPopularLocations"
@@ -191,7 +211,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_1x"
             android:text="@string/popular_locations"
             android:textColor="@color/black"
             android:textSize="@dimen/space_18x_sp"
@@ -203,12 +223,14 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_1x"
             android:padding="@dimen/space_4x"
             android:text="@string/see_all"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtPopularLocations"
+            app:layout_constraintBottom_toBottomOf="@+id/txtPopularLocations"
             app:layout_constraintTop_toBottomOf="@id/rvOffer" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -216,11 +238,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginVertical="@dimen/space_5x"
+            android:layout_marginBottom="@dimen/space_4x"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtPopularLocations"
+            app:layout_constraintTop_toBottomOf="@id/seeAllPopularLocations"
             tools:itemCount="3"
             tools:listitem="@layout/item_popular_location" />
 

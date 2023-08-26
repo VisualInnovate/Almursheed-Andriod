@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.databinding.FragmentSplashBinding
 
 class SplashFragment : Fragment() {
@@ -32,7 +33,7 @@ class SplashFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             // if need to call api check version to make update to version app
             // navigate() -> if need to check to user to auto login
-            findNavController().navigate(R.id.action_splash_to_onBoarding)
+            findNavController().customNavigate(R.id.onBoardingFragment)
         }, 2000)
     }
 }

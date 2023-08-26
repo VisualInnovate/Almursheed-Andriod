@@ -13,7 +13,7 @@ class ForgetPasswordFragment : Fragment() {
     private var _binding: FragmentForgetPasswordBinding? = null
 
     // This property is only valid between onCreateView and
-    // onDestroyView.
+    // onDestroy.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -42,8 +42,8 @@ class ForgetPasswordFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

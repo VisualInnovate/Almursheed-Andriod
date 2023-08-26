@@ -1,6 +1,5 @@
 package com.visualinnovate.almursheed.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,10 +9,11 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentLoginBinding
-import com.visualinnovate.almursheed.home.HomeActivity
 
 class LoginFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
     private val btnRegisterCallBackListener: () -> Unit = {
         Log.d("btnFilterCallBack", "btnFilterCallBack")
         // navigate to register
-        findNavController().navigate(R.id.action_login_to_touristRegister)
+        findNavController().customNavigate(R.id.registerTypeFragment)
     }
 
     override fun onCreateView(
@@ -116,20 +116,13 @@ class LoginFragment : Fragment() {
         }
 
         binding.txtForgetPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_login_to_forgetPassword)
+            findNavController().customNavigate(R.id.forgetPasswordFragment)
         }
 
         binding.btnLogin.setOnClickListener {
             // navigate to home
-            startHomeActivity()
+            requireActivity().startHomeActivity()
         }
-    }
-
-    private fun startHomeActivity() {
-        val intent = Intent(requireActivity(), HomeActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        requireActivity().finish()
     }
 
     private fun openSpinner() {}

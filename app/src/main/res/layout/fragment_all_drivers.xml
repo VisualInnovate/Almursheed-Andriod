@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".home.view.driver.AllDriversFragment">
+
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarSeeAllDrivers"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSeeAllDrivers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/space_3x"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarSeeAllDrivers"
+        app:spanCount="2"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_driver" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/nav_home"
     app:startDestination="@id/homeFragment">
 
     <fragment
@@ -10,5 +10,69 @@
         android:name="com.visualinnovate.almursheed.home.view.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/hireFragment"
+        android:name="com.visualinnovate.almursheed.home.view.HireFragment"
+        android:label="HireFragment"
+        tools:layout="@layout/fragment_hire" />
+
+    <fragment
+        android:id="@+id/flightReservationFragment"
+        android:name="com.visualinnovate.almursheed.home.view.flights.FlightReservationFragment"
+        android:label="Flight Reservation"
+        tools:layout="@layout/fragment_flight_reservation" />
+
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.visualinnovate.almursheed.home.view.MoreFragment"
+        android:label="More"
+        tools:layout="@layout/fragment_more" />
+
+    <fragment
+        android:id="@+id/allDriversFragment"
+        android:name="com.visualinnovate.almursheed.home.view.driver.AllDriversFragment"
+        android:label="All Drivers"
+        tools:layout="@layout/fragment_all_drivers" />
+
+    <fragment
+        android:id="@+id/allLocationFragment"
+        android:name="com.visualinnovate.almursheed.home.view.location.SeeAllLocationFragment"
+        android:label="All Location"
+        tools:layout="@layout/fragment_see_all_location" />
+    <fragment
+        android:id="@+id/allGuidesFragment"
+        android:name="com.visualinnovate.almursheed.home.view.guide.AllGuidesFragment"
+        android:label="All Guides"
+        tools:layout="@layout/fragment_all_guides" />
+    <fragment
+        android:id="@+id/guideDetailsFragment"
+        android:name="com.visualinnovate.almursheed.home.view.guide.GuideDetailsFragment"
+        android:label="Guide Details"
+        tools:layout="@layout/fragment_guide_details" />
+
+    <fragment
+        android:id="@+id/accommodationFragment"
+        android:name="com.visualinnovate.almursheed.home.view.accommodation.AccommodationFragment"
+        android:label="Accommodation"
+        tools:layout="@layout/fragment_accommodation" />
+
+    <fragment
+        android:id="@+id/accommodationDetailsFragment"
+        android:name="com.visualinnovate.almursheed.home.view.accommodation.AccommodationDetailsFragment"
+        android:label="Accommodation Details"
+        tools:layout="@layout/fragment_accommodation_details" />
+
+    <dialog
+        android:id="@+id/offerDetailsFragment"
+        android:name="com.visualinnovate.almursheed.home.view.OfferDetailsFragment"
+        android:label="Offer Details"
+        tools:layout="@layout/fragment_offer_details" />
+
+    <fragment
+        android:id="@+id/driverDetailsFragment"
+        android:name="com.visualinnovate.almursheed.home.view.driver.DriverDetailsFragment"
+        android:label="Driver Details"
+        tools:layout="@layout/fragment_driver_details" />
 
 </navigation>

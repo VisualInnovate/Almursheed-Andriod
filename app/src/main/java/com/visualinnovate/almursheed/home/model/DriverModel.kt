@@ -1,5 +1,9 @@
 package com.visualinnovate.almursheed.home.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class DriverModel(
     var driverId: Int = 0,
     var driverImage: Int = 0,
@@ -9,4 +13,4 @@ data class DriverModel(
     var driverPrice: Double = 0.0,
     var driverCity: String = "",
     var driverFavorite: Boolean = false // false -> unFavorite, true -> favorite
-)
+) : Parcelable
