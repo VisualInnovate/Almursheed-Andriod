@@ -5,17 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
-import com.visualinnovate.almursheed.home.HomeActivity
+import com.visualinnovate.almursheed.home.MainActivity
 
 class MoreFragment : Fragment() {
 
     private var _binding: FragmentMoreBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroy.
     private val binding get() = _binding!!
+
+    private val btnBackCallBackFunc: () -> Unit = {
+        findNavController().navigateUp()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +33,30 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as HomeActivity).changeSelectedBottomNavListener(R.id.action_more)
+        (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_more)
+        initView()
+        setBtnListener()
+    }
+
+    private fun initToolbar() {
+        binding.appBarMore.setTitleString(getString(R.string.more))
+        binding.appBarMore.setTitleCenter(true)
+        binding.appBarMore.useBackButton(
+            true,
+            btnBackCallBackFunc,
+            R.drawable.ic_back
+        )
+    }
+
+    private fun initView() {}
+
+    private fun setBtnListener() {
+        binding.editProfile.onDebouncedListener {
+            findNavController().customNavigate(R.id.editProfileFragment)
+        }
+        binding.logout.onDebouncedListener {
+            SharedPreference.saveUserToken(null)
+        }
     }
 
     override fun onDestroy() {

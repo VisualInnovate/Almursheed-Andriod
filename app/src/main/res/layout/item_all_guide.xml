@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/space_4x"
-    android:layout_marginStart="@dimen/space_4x"
-    android:layout_marginEnd="@dimen/space_1x"
+    android:layout_marginVertical="@dimen/space_2x"
+    android:layout_marginStart="@dimen/space_1_5x"
+    android:layout_marginEnd="@dimen/space_2x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imgLocation"
-        android:layout_width="155dp"
+        android:layout_width="170dp"
         android:layout_height="160dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -55,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="@id/imgGuide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="4.0" />
+            android:text="4.0" />
 
         <TextView
             android:id="@+id/guideName"
@@ -109,7 +109,7 @@
             app:layout_constraintTop_toBottomOf="@id/guideName"
             app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="$150.00" />
+            android:text="$150.00" />
 
         <TextView
             android:id="@+id/language"
@@ -127,7 +127,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="English, Arabic" />
+            android:text="English, Arabic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/flightReservationFragment"
-        android:name="com.visualinnovate.almursheed.home.view.flights.FlightReservationFragment"
+        android:name="com.visualinnovate.almursheed.home.view.FlightReservationFragment"
         android:label="Flight Reservation"
         tools:layout="@layout/fragment_flight_reservation" />
 
@@ -37,14 +37,16 @@
 
     <fragment
         android:id="@+id/allLocationFragment"
-        android:name="com.visualinnovate.almursheed.home.view.location.SeeAllLocationFragment"
+        android:name="com.visualinnovate.almursheed.home.view.location.AllLocationFragment"
         android:label="All Location"
-        tools:layout="@layout/fragment_see_all_location" />
+        tools:layout="@layout/fragment_all_location" />
+
     <fragment
         android:id="@+id/allGuidesFragment"
         android:name="com.visualinnovate.almursheed.home.view.guide.AllGuidesFragment"
         android:label="All Guides"
         tools:layout="@layout/fragment_all_guides" />
+
     <fragment
         android:id="@+id/guideDetailsFragment"
         android:name="com.visualinnovate.almursheed.home.view.guide.GuideDetailsFragment"
@@ -74,5 +76,21 @@
         android:name="com.visualinnovate.almursheed.home.view.driver.DriverDetailsFragment"
         android:label="Driver Details"
         tools:layout="@layout/fragment_driver_details" />
+
+    <fragment
+        android:id="@+id/locationDetailsFragment"
+        android:name="com.visualinnovate.almursheed.home.view.location.LocationDetailsFragment"
+        android:label="fragment_location_details"
+        tools:layout="@layout/fragment_location_details" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.visualinnovate.almursheed.home.view.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/completeEditProfileDriverFragment"
+        android:name="com.visualinnovate.almursheed.home.view.profile.CompleteEditProfileDriverFragment"
+        android:label="fragment_complete_edit_profile_driver"
+        tools:layout="@layout/fragment_complete_edit_profile_driver" />
 
 </navigation>

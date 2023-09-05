@@ -4,16 +4,17 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.visualinnovate.almursheed.common.Utils
+import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemOfferBinding
-import com.visualinnovate.almursheed.home.model.OfferModel
+import com.visualinnovate.almursheed.home.model.OfferItem
 
 class OfferAdapter(
-    private val btnBoobNowOfferCallBack: (offer: OfferModel) -> Unit,
-    private val btnDetailsOfferCallBack: (offer: OfferModel) -> Unit
+    private val btnBoobNowOfferCallBack: (offer: OfferItem) -> Unit,
+    private val btnDetailsOfferCallBack: (offer: OfferItem) -> Unit
 ) : RecyclerView.Adapter<OfferAdapter.OfferViewHolder>() {
 
-    private var offerList: List<OfferModel> = ArrayList()
+    private var offerList: List<OfferItem?>? = ArrayList()
 
     private lateinit var binding: ItemOfferBinding
 
@@ -27,10 +28,10 @@ class OfferAdapter(
 
         init {
             btnBookNow.setOnClickListener {
-                btnBoobNowOfferCallBack.invoke(offerList[adapterPosition])
+                btnBoobNowOfferCallBack.invoke(offerList!![adapterPosition]!!)
             }
             details.setOnClickListener {
-                btnDetailsOfferCallBack.invoke(offerList[adapterPosition])
+                btnDetailsOfferCallBack.invoke(offerList!![adapterPosition]!!)
             }
         }
     }
@@ -42,25 +43,26 @@ class OfferAdapter(
     }
 
     override fun onBindViewHolder(holder: OfferViewHolder, position: Int) {
-        val flight = offerList[position]
+        val flight = offerList!![position]!!
         // bind view
         bindData(holder, flight)
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindData(holder: OfferViewHolder, offer: OfferModel) {
+    private fun bindData(holder: OfferViewHolder, offer: OfferItem) {
         // set data
-        Utils.loadImage(holder.itemView.context, offer.offerImage, holder.imgOffer)
+        // Utils.loadImage(holder.itemView.context, offer.offerImage, holder.imgOffer)
+        Utils.loadImage(holder.itemView.context, R.drawable.img_test, holder.imgOffer)
         // holder.imgFlight.setImageResource(flight.flightImage)
-        holder.offerName.text = offer.offerName
-        holder.offerRating.text = offer.offerRating.toString()
+        holder.offerName.text = offer.title?.localized ?: ""
+        holder.offerRating.text = offer.number ?: ""
     }
 
     override fun getItemCount(): Int {
-        return offerList.size
+        return offerList?.size ?: 0
     }
 
-    fun submitData(data: List<OfferModel>) {
+    fun submitData(data: List<OfferItem?>?) {
         offerList = data
         notifyDataSetChanged()
     }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_auth"
-    tools:context=".auth.driver.DriverRegisterFragment">
+    tools:context=".auth.view.driver.DriverRegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

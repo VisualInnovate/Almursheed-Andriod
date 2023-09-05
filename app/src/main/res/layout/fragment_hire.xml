@@ -1,27 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    android:layout_height="wrap_content"
+    android:background="@color/bg_edit_text"
+    tools:context=".home.view.HireFragment">
 
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.visualinnovate.almursheed.common.AppBarView
+            android:id="@+id/appBarHire"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/app_bar_height"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/appBarHire"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgHireBanner"
+                android:layout_width="match_parent"
+                android:layout_height="115dp"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_banner_hire" />
+
+            <TextView
+                android:id="@+id/txtTripInfo"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_3x"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/trip_info"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/imgHireBanner" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtTripInfo"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="Enter trip info"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/txtTripInfo" />
+
+            <TextView
+                android:id="@+id/txtDate"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="Date"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/edtTripInfo" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtStartDate"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/start_date"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintEnd_toStartOf="@id/icSwitchDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtDate" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtEndDate"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/end_date"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icSwitchDate"
+                app:layout_constraintTop_toBottomOf="@id/txtDate" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icSwitchDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-18dp"
+                android:layout_marginEnd="-18dp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@id/edtEndDate"
+                app:layout_constraintEnd_toStartOf="@id/edtEndDate"
+                app:layout_constraintStart_toEndOf="@id/edtStartDate"
+                app:layout_constraintTop_toTopOf="@id/edtStartDate"
+                app:srcCompat="@drawable/ic_switch_arrow" />
+
+            <TextView
+                android:id="@+id/txtRouteInfo"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/route_info"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/edtStartDate" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icLocationRoute1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/edtWhereto"
+                app:layout_constraintStart_toStartOf="@+id/txtRouteInfo"
+                app:layout_constraintTop_toTopOf="@id/edtWhereto"
+                app:srcCompat="@drawable/ic_location_route" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtWhereto"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/where_to"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
+                app:layout_constraintTop_toBottomOf="@id/txtRouteInfo" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icLocationRoute2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/edtWhereFrom"
+                app:layout_constraintStart_toStartOf="@+id/txtRouteInfo"
+                app:layout_constraintTop_toTopOf="@id/edtWhereFrom"
+                app:srcCompat="@drawable/ic_location_route" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtWhereFrom"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/where_from"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icLocationRoute2"
+                app:layout_constraintTop_toBottomOf="@id/edtWhereto" />
+
+            <TextView
+                android:id="@+id/txtWhatDoYouWantHire"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/what_do_you_want_hire"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/edtWhereFrom" />
+
+            <TextView
+                android:id="@+id/driver"
+                style="@style/TextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_primary"
+                android:gravity="center"
+                android:padding="@dimen/space_3x"
+                android:text="@string/male"
+                android:textColor="@color/white"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintEnd_toStartOf="@id/guide"
+                app:layout_constraintStart_toStartOf="@id/txtWhatDoYouWantHire"
+                app:layout_constraintTop_toBottomOf="@id/txtWhatDoYouWantHire" />
+
+            <TextView
+                android:id="@+id/guide"
+                style="@style/TextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:gravity="center"
+                android:padding="@dimen/space_3x"
+                android:text="@string/female"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintEnd_toEndOf="@id/txtWhatDoYouWantHire"
+                app:layout_constraintStart_toEndOf="@id/driver"
+                app:layout_constraintTop_toBottomOf="@id/txtWhatDoYouWantHire" />
+
+            <TextView
+                android:id="@+id/txtDriver"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="driver"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/driver" />
+
+            <include
+                android:id="@+id/spinnerChooseDriver"
+                layout="@layout/layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_2x"
+                app:layout_constraintTop_toBottomOf="@id/txtDriver" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_5x"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:padding="@dimen/space_1x"
+                android:background="@drawable/bg_rectangle_corner_primary"
+                app:layout_constraintTop_toBottomOf="@id/spinnerChooseDriver">
+
+                <TextView
+                    android:id="@+id/priceOfDay"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="100 $ / DAY"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="@dimen/space_3x"
+                    android:layout_marginVertical="@dimen/space_1x"
+                    android:gravity="start|center_vertical"
+                    android:background="@drawable/bg_rectangle_corner_primary"
+                    android:textSize="@dimen/space_14x_sp"
+                    android:textStyle="bold"
+                    android:lines="2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/totalPrice"/>
+
+                <TextView
+                    android:id="@+id/totalPrice"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Total=700"
+                    android:layout_marginVertical="@dimen/space_1x"
+                    android:padding="@dimen/space_3x"
+                    android:lines="1"
+                    android:textColor="@color/black"
+                    android:gravity="end|center_vertical"
+                    android:layout_marginHorizontal="@dimen/space_3x"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/priceOfDay" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnHire"
+                style="@style/customButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_margin="@dimen/space_4x"
+                android:text="@string/hire"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintPrice" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -3,7 +3,7 @@ package com.visualinnovate.almursheed.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.visualinnovate.almursheed.common.Utils
+import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemBannerBinding
 import com.visualinnovate.almursheed.home.model.BannerModel
 

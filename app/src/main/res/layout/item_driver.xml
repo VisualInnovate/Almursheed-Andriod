@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="210dp"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/space_3x"
     android:layout_marginStart="@dimen/space_4x"
@@ -11,27 +11,34 @@
     app:cardElevation="@dimen/space_1x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/imgDriver"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/img_driver">
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgDriver"
+            android:layout_width="210dp"
+            android:layout_height="145dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_driver" />
 
         <TextView
             android:id="@+id/rating"
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
             android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_3x"
             android:background="@drawable/ic_bg_rating"
             android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/space_1_5x"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/space_2x"
+            android:text="4.0"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="4.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgFavorite"
@@ -52,13 +59,13 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
-            android:maxLines="1"
-            android:maxLength="15"
             android:marqueeRepeatLimit="marquee_forever"
+            android:maxLength="15"
+            android:maxLines="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintEnd_toStartOf="@id/imgStatus"
+            android:textSize="@dimen/space_13x_sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imgStatus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rating"
             tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
@@ -81,44 +88,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_2x"
-            android:gravity="end|center_vertical"
             android:ellipsize="end"
+            android:gravity="end|center_vertical"
             android:maxLines="1"
+            android:text="$150.00"
             android:textColor="@color/white"
             android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintStart_toEndOf="@id/imgStatus"
             app:layout_constraintBottom_toBottomOf="@id/btnBookNow"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rating"
-            tools:text="$150.00" />
+            app:layout_constraintStart_toEndOf="@id/imgStatus"
+            app:layout_constraintTop_toBottomOf="@id/rating" />
 
         <TextView
             android:id="@+id/city"
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
+            android:layout_marginBottom="@dimen/space_2x"
             android:ellipsize="end"
+            android:gravity="start|center_vertical"
             android:maxLines="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/space_11x_sp"
-            app:layout_constraintStart_toStartOf="@id/username"
+            android:textSize="@dimen/space_12x_sp"
             app:layout_constraintEnd_toEndOf="@id/price"
+            app:layout_constraintStart_toStartOf="@id/username"
             app:layout_constraintTop_toBottomOf="@id/username"
-            tools:text="Cairo" />
+            app:layout_constraintBottom_toTopOf="@id/btnBookNow"
+            android:text="Cairo" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnBookNow"
+            style="@style/TextStyleBold"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_7x"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_1x"
             android:background="@drawable/ic_bg_book_now"
             android:text="@string/book_now"
-            style="@style/TextStyleBold"
-            android:textSize="@dimen/space_12x_sp"
             android:textColor="@color/accent"
-            app:layout_constraintTop_toBottomOf="@id/city"
+            android:textSize="@dimen/space_12x_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/city" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

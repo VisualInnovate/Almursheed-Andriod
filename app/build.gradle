@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -22,6 +24,14 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASR_URL", "\"https://mursheed.visualinnovate.net/api/\"")
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"https://mursheed.visualinnovate.net/api/\"")
         }
     }
     compileOptions {
@@ -48,17 +58,45 @@ dependencies {
     // Multidex
     implementation "androidx.multidex:multidex:2.0.1"
 
+    // OTP verify
+    implementation 'com.github.KevinSchildhorn:OTPView:0.2.5'
+
     // Chip Bottom Navigation Bar
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
 
     // Dots indicator
     implementation "com.tbuonomo:dotsindicator:4.3"
 
+    // MVVM - Model-View-ViewModel design pattern
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+
+    // Retrofit Library
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
+    // ViewPager with Dots Indicator
+    implementation 'com.github.chahine:pageindicator:0.2.8'
+
+    // Hawk
+    implementation "com.orhanobut:hawk:2.0.1"
+
+    // custom navigation drawer or slider navigation drawer
+    implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
+    implementation 'com.google.android.gms:play-services-cast-framework:21.3.0'
+
     // Glide for image loading
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
+    // testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'

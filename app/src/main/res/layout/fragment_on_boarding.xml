@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/img_bg_on_boarding"
-    tools:context=".OnBoardingFragment">
+    tools:context=".auth.view.OnBoardingFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgLogo"

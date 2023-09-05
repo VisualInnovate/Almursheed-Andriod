@@ -1,14 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_edit_text"
     tools:context=".home.view.MoreFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarMore"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_4x"
+        android:padding="@dimen/space_3x"
+        android:background="@drawable/bg_rectangle_corner_white"
+        app:layout_constraintTop_toBottomOf="@id/appBarMore">
+
+        <TextView
+            android:id="@+id/liveChat"
+            style="@style/TextStyleBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/live_chat"
+            android:drawablePadding="@dimen/space_4x"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_live_chat" />
+
+        <TextView
+            android:id="@+id/aboutMursheed"
+            style="@style/TextStyleBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/about_murcheed"
+            android:drawablePadding="@dimen/space_4x"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/liveChat"
+            app:drawableStartCompat="@drawable/ic_info" />
+
+        <TextView
+            android:id="@+id/aboutUs"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/about_us"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/aboutMursheed"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/terms_and_conditions"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/terms_and_conditions"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/aboutUs"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/privacyPolicy"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/privacy_policy"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/terms_and_conditions"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/txtMyAccount"
+            style="@style/TextStyleBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4x"
+            android:text="@string/my_account"
+            android:drawablePadding="@dimen/space_4x"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/privacyPolicy"
+            app:drawableStartCompat="@drawable/ic_my_account" />
+
+        <TextView
+            android:id="@+id/editProfile"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/edit_profile"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/txtMyAccount"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/myOrders"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/my_orders"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/editProfile"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/editLocation"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/edit_location"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/myOrders"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/resetPassword"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/reset_password"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/editLocation"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/logout"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/logout"
+            android:textColor="@color/black"
+            android:gravity="start|center_vertical"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/resetPassword"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

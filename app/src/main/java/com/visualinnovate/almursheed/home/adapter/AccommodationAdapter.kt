@@ -3,15 +3,16 @@ package com.visualinnovate.almursheed.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemAccommodationBinding
-import com.visualinnovate.almursheed.home.model.AccommodationModel
+import com.visualinnovate.almursheed.home.model.AccommodationItem
 
 class AccommodationAdapter(
-    private val btnAccommodationClickCallBack: (accommodation: AccommodationModel) -> Unit
+    private val btnAccommodationClickCallBack: (accommodation: AccommodationItem) -> Unit
 ) : RecyclerView.Adapter<AccommodationAdapter.AccommodationViewHolder>() {
 
-    private var newsList: List<AccommodationModel> = ArrayList()
+    private var accommodationList: List<AccommodationItem?>? = ArrayList()
 
     private lateinit var binding: ItemAccommodationBinding
 
@@ -25,7 +26,7 @@ class AccommodationAdapter(
 
         init {
             itemView.root.setOnClickListener {
-                btnAccommodationClickCallBack.invoke(newsList[adapterPosition])
+                btnAccommodationClickCallBack.invoke(accommodationList!![adapterPosition]!!)
             }
             imgGoogleMap.setOnClickListener { }
         }
@@ -38,31 +39,37 @@ class AccommodationAdapter(
     }
 
     override fun onBindViewHolder(holder: AccommodationViewHolder, position: Int) {
-        val article = newsList[position]
+        val accommodation = accommodationList!![position]!!
         // bind view
-        bindData(holder, article)
+        bindData(holder, position, accommodation)
     }
 
-    private fun bindData(holder: AccommodationViewHolder, accommodation: AccommodationModel) {
+    private fun bindData(
+        holder: AccommodationViewHolder,
+        position: Int,
+        accommodation: AccommodationItem
+    ) {
         // set data
-        // Utils.loadImage(holder.itemView.context, accommodation.imageBanner, holder.imgBanner)
-        holder.imgAccommodation.setImageResource(accommodation.accommodationImage)
-        holder.accommodationName.text = accommodation.accommodationName
-        holder.countryAndCity.text = accommodation.accommodationLocation
-        // check favorite
-        if (!accommodation.accommodationFavorite) { // false -> un favorite
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        } else {
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }
+        Glide.with(holder.itemView.context)
+            // .load(accommodation.media?.forEach { it?.originalUrl })
+            .load(R.drawable.img_test)
+            .into(holder.imgAccommodation)
+        holder.accommodationName.text = accommodation.name?.localized ?: ""
+        holder.countryAndCity.text = accommodation.address?.localized ?: ""
+//        // check favorite
+//        if (!accommodation.isFavorite) { // false -> un favorite
+//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//        } else {
+//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//        }
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        return accommodationList?.size ?: 0
     }
 
-    fun submitData(data: List<AccommodationModel>) {
-        newsList = data
+    fun submitData(data: List<AccommodationItem?>?) {
+        accommodationList = data
         notifyDataSetChanged()
     }
 }

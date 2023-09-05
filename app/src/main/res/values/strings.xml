@@ -5,9 +5,15 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_home">HomeActivity</string>
+    <!-- Strings used for fragments for navigation -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome_to_mursheed">Welcome \nTo \nMursheed</string>
     <string name="get_the_best_deals_on_mursheed_app_we_are_excited_to_have_you_on_board_as_a_tourist_tour_guide_or_car_driver">Get the best deals on Mursheed App, \nWe are excited to have you on board as a \ntourist, tour guide, or car driver.</string>
     <string name="get_started">Get Started</string>
@@ -19,9 +25,15 @@
     <string name="email_address">Email Address <font fgcolor='#FF0000'> *</font></string>
     <string name="enter_your_email">Enter Your Email</string>
     <string name="enter_your_password">Enter Your Password</string>
+    <string name="enter_new_password">Enter New Password</string>
+    <string name="enter_confirm_password">Enter Confirm Password</string>
     <string name="password">Password <font fgcolor='#FF0000'> *</font></string>
+    <string name="new_password">New Password <font fgcolor='#FF0000'> *</font></string>
+    <string name="confirm_password">Confirm Password <font fgcolor='#FF0000'> *</font></string>
     <string name="remember_me">Remember Me</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="create_new_password">Create new password</string>
     <string name="or_login_with">OR Login With</string>
     <string name="option">Options</string>
     <string name="register">Register</string>
@@ -52,6 +64,7 @@
     <string name="choose_register_type_and_register_in_mursheed">Choose register type and register \nin Mursheed</string>
     <!--    <string name="author">author<i><font fgcolor='#FF0000'> *</font> </i></string>-->
     <string name="already_have_an_account_login">Already have an account? <b><font fgcolor='#088070'>Login</font> </b></string>
+    <string name="didn_t_get_the_code_resend_code">Didn’t get the code? <b><font fgcolor='#088070'>Resend Code</font> </b></string>
     <string name="phone_number">Phone Number <font fgcolor='#FF0000'> *</font></string>
     <string name="enter_your_id">Enter Your ID</string>
     <string name="government_id">Government ID <font fgcolor='#FF0000'> *</font></string>
@@ -75,16 +88,11 @@
     <string name="send">Send</string>
 
     <array name="options">
-        <item>Tourist</item>
-        <item>Guide</item>
         <item>Driver</item>
+        <item>Guide</item>
+        <item>Tourist</item>
     </array>
-    <string name="title_activity_home">HomeActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
     <string name="search_murcheed_app">Search Murcheed App</string>
     <string name="best_drivers">Best Drivers</string>
     <string name="see_all">See all</string>
@@ -115,5 +123,40 @@
     <string name="price_offer">Price:</string>
     <string name="_2000"><strike>2000 $</strike></string>
     <string name="car_info">Car Info</string>
+    <string name="register_as_a_tourist">Register as a Tourist</string>
+    <string name="register_as_a_guide">Register as a Guide</string>
+    <string name="register_as_a_driver">Register as a Driver</string>
+    <string name="owner_info">Owner info</string>
+    <string name="required">Field is required</string>
+    <string name="password_should_be_more_than_8_characters">Password should be more than 8 characters</string>
+    <string name="confirm_password_should_be_more_than_8_characters">Confirm password should be more than 8 characters</string>
+    <string name="a_verification_code_has_been_sent_to">A verification code has been sent to</string>
+    <string name="enter_the_code_below"><font color="%1$s">%2$s</font>, Enter the code below</string>
+    <string name="resend_code_in">Resend code in %s!</string>
+    <string name="verify">Verify</string>
+    <string name="please_enter_a_valid_email">Please enter a valid email</string>
+    <string name="your_new_password_must_be_different_nfrom_previous_used_passwords">Your new password must be different \nfrom previous used passwords</string>
+    <string name="create">Create</string>
+    <string name="live_chat">Live Chat</string>
+    <string name="about_murcheed">About Murcheed</string>
+    <string name="about_us">About Us</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="my_account">My Account</string>
+    <string name="my_orders">My Orders</string>
+    <string name="my_profile">My Profile</string>
+    <string name="logout">Logout</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="edit_location">Edit Location</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="update">Update</string>
+    <string name="trip_info">Trip info</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="route_info">Route info</string>
+    <string name="where_to">Where to?</string>
+    <string name="where_from">Where from?</string>
+    <string name="what_do_you_want_hire">What do you want hire?</string>
+
 
 </resources>

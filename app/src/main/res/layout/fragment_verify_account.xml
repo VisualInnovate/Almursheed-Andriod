@@ -1,14 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".auth.VerifyAccountFragment">
+    android:background="@color/bg_edit_text"
+    tools:context=".auth.view.VerifyAccountFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarVerifyCode"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/txt1"
+        style="@style/TextStyleRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_5x"
+        android:layout_marginTop="@dimen/space_6x"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintTop_toBottomOf="@id/appBarVerifyCode"
+        tools:text="A verification code has been sent to \n abc@gmail.com, Enter the code below" />
+
+    <com.kevinschildhorn.otpview.OTPView
+        android:id="@+id/otpView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/space_6x"
+        android:autofillHints=""
+        android:gravity="center"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt1"
+        app:otp_backgroundImage="@drawable/bg_verify_otp"
+        app:otp_cursorColor="@color/black"
+        app:otp_filledBackgroundImage="@drawable/bg_verify_otp"
+        app:otp_filledTextSize="@dimen/space_18x_sp"
+        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
+        app:otp_highlightedTextSize="@dimen/space_18x_sp"
+        app:otp_itemCount="6"
+        app:otp_itemHeight="@dimen/space_14x"
+        app:otp_itemWidth="@dimen/space_14x"
+        app:otp_showCursor="true"
+        app:otp_textColor="@color/primary"
+        app:otp_textSize="@dimen/space_18x_sp"
+        app:otp_underscoreCursor="false" />
+
+<!--    app:otp_marginBetween="@dimen/space_7x"-->
+<!--    android:layout_marginHorizontal="@dimen/space_6x"-->
+
+    <TextView
+        android:id="@+id/txtResendCode"
+        style="@style/TextStyleRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_6x"
+        android:layout_marginTop="@dimen/space_2x"
+        android:drawablePadding="@dimen/space_4x"
+        android:gravity="start"
+        android:padding="@dimen/space_4x"
+        android:text="@string/resend_code_in"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_16x_sp"
+        app:drawableStartCompat="@drawable/ic_resend_code"
+        app:layout_constraintTop_toBottomOf="@id/otpView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVerify"
+        style="@style/customButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space_2x"
+        android:text="@string/verify"
+        app:layout_constraintBottom_toTopOf="@id/resendCode" />
+
+    <TextView
+        android:id="@+id/resendCode"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/space_3x"
+        android:gravity="center"
+        android:padding="@dimen/space_4x"
+        android:text="@string/didn_t_get_the_code_resend_code"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

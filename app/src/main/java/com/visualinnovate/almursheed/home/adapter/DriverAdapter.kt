@@ -3,21 +3,22 @@ package com.visualinnovate.almursheed.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.DriverModel
+import com.visualinnovate.almursheed.home.model.DriversItem
 
 class DriverAdapter(
-    private val btnDriverClickCallBack: (driverModel: DriverModel) -> Unit
+    private val btnDriverClickCallBack: (driver: DriversItem) -> Unit
 ) : RecyclerView.Adapter<DriverAdapter.DriverViewHolder>() {
 
-    private var newsList: List<DriverModel> = ArrayList()
+    private var driversList: List<DriversItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverBinding
 
     inner class DriverViewHolder(itemView: ItemDriverBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        val imgBanner = itemView.imgDriver
+        val imgDriver = itemView.imgDriver
         val imgFavorite = itemView.imgFavorite
         val imgStatus = itemView.imgStatus
         val username = itemView.username
@@ -28,7 +29,7 @@ class DriverAdapter(
 
         init {
             itemView.root.setOnClickListener {
-                btnDriverClickCallBack.invoke(newsList[adapterPosition])
+                btnDriverClickCallBack.invoke(driversList!![adapterPosition]!!)
             }
             btnBookNow.setOnClickListener {
                 // btnDriverClickCallBack.invoke(newsList[adapterPosition])
@@ -42,37 +43,38 @@ class DriverAdapter(
     }
 
     override fun onBindViewHolder(holder: DriverViewHolder, position: Int) {
-        val article = newsList[position]
+        val driver = driversList!![position]
         // bind view
-        bindData(holder, position, article)
+        bindData(holder, position, driver!!)
     }
 
-    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriverModel) {
-        // Utils.loadImage(holder.itemView.context, driver.imageBanner, holder.imgBanner)
-        holder.rating.text = driver.driverRating.toString()
-        holder.username.text = driver.driverName
-        holder.price.text = driver.driverPrice.toString()
-        holder.city.text = driver.driverCity
-        // check favorite
-        if (!driver.driverFavorite) { // false -> un favorite
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        } else {
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }
+    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriversItem) {
+        Glide.with(holder.itemView.context)
+            // .load(driver.pictures?.personalPictures?.get(position)?.originalUrl)
+            .load(R.drawable.img_driver)
+            .into(holder.imgDriver)
+        holder.username.text = driver.name ?: ""
+        holder.city.text = driver.state?.state
         // check status
-        if (!driver.driverStatus) { // false -> offline
-            holder.imgStatus.setImageResource(R.drawable.ic_offline_active)
-        } else {
+        if (driver.status == 1) { // false -> offline
             holder.imgStatus.setImageResource(R.drawable.ic_active_online)
+        } else {
+            holder.imgStatus.setImageResource(R.drawable.ic_offline_active)
         }
+        // check favorite
+//        if (!driver.driverFavorite) { // false -> un favorite
+//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//        } else {
+//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//        }
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        return driversList?.size ?: 0
     }
 
-    fun submitData(data: List<DriverModel>) {
-        newsList = data
+    fun submitData(drivers: List<DriversItem?>?) {
+        driversList = drivers
         notifyDataSetChanged()
     }
 }

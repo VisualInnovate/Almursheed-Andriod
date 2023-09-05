@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_edit_text"
+    tools:context=".home.view.location.LocationDetailsFragment">
+
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarLocationDetails"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/detailsImage"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_margin="@dimen/space_3x"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toBottomOf="@id/appBarLocationDetails"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        app:srcCompat="@drawable/img_test" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_3x"
+        app:layout_constraintEnd_toEndOf="@id/detailsImage"
+        app:layout_constraintTop_toTopOf="@id/detailsImage"
+        app:srcCompat="@drawable/ic_un_favorite" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImageDetails"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/space_3x"
+        app:layout_constraintTop_toBottomOf="@id/detailsImage" />
+
+    <TextView
+        android:id="@+id/txtLocationInfo"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:gravity="start"
+        android:text="@string/location_info"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/detailsImage"
+        app:layout_constraintStart_toStartOf="@id/detailsImage"
+        app:layout_constraintTop_toBottomOf="@id/rvImageDetails" />
+
+    <TextView
+        android:id="@+id/pinDetails"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:background="@drawable/bg_details_text"
+        android:drawablePadding="@dimen/space_2x"
+        android:ellipsize="end"
+        android:gravity="start|center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="@dimen/space_2x"
+        android:text="Ramsis hilton"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_12x_sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_pin"
+        app:layout_constraintEnd_toStartOf="@id/detailsCountry"
+        app:layout_constraintStart_toStartOf="@id/detailsImage"
+        app:layout_constraintTop_toBottomOf="@id/txtLocationInfo" />
+
+    <TextView
+        android:id="@+id/detailsCountry"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/space_3x"
+        android:background="@drawable/bg_details_text"
+        android:drawablePadding="@dimen/space_2x"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="@dimen/space_2x"
+        android:text="Egypt"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_12x_sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_country"
+        app:layout_constraintBottom_toBottomOf="@id/pinDetails"
+        app:layout_constraintEnd_toStartOf="@id/detailsCity"
+        app:layout_constraintStart_toEndOf="@id/pinDetails"
+        app:layout_constraintTop_toTopOf="@id/pinDetails" />
+
+    <TextView
+        android:id="@+id/detailsCity"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/space_3x"
+        android:background="@drawable/bg_details_text"
+        android:drawablePadding="@dimen/space_2x"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="@dimen/space_2x"
+        android:text="Cairo"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_12x_sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_location_primary"
+        app:layout_constraintBottom_toBottomOf="@id/detailsCountry"
+        app:layout_constraintStart_toEndOf="@id/detailsCountry"
+        app:layout_constraintTop_toTopOf="@id/detailsCountry" />
+
+    <TextView
+        android:id="@+id/txtDetailsDescription"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:gravity="start"
+        android:text="@string/description"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/detailsImage"
+        app:layout_constraintStart_toStartOf="@id/detailsImage"
+        app:layout_constraintTop_toBottomOf="@id/pinDetails" />
+
+    <TextView
+        android:id="@+id/detailsDescription"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:gravity="start"
+        android:lineSpacingExtra="@dimen/space_2x"
+        android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our hotel provides ample space for both indoor and outdoor activities."
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintEnd_toEndOf="@id/detailsImage"
+        app:layout_constraintStart_toStartOf="@id/detailsImage"
+        app:layout_constraintTop_toBottomOf="@id/txtDetailsDescription" />
+
+    <TextView
+        android:id="@+id/txtLocationMapInfo"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:gravity="start"
+        android:text="@string/location_info"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/detailsDescription"
+        app:layout_constraintStart_toStartOf="@id/detailsDescription"
+        app:layout_constraintTop_toBottomOf="@id/detailsDescription" />
+
+    <TextView
+        android:id="@+id/locationLink"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:background="@drawable/bg_details_text"
+        android:drawablePadding="@dimen/space_2x"
+        android:ellipsize="end"
+        android:gravity="start|center"
+        android:lines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:padding="@dimen/space_2x"
+        android:text="https://goo.gl/maps/59Ze3kmbKxmErkRF6"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_12x_sp"
+        android:textStyle="bold"
+        app:drawableEndCompat="@drawable/ic_copy"
+        app:layout_constraintEnd_toStartOf="@id/imgLocationMaps"
+        app:layout_constraintStart_toStartOf="@id/txtLocationMapInfo"
+        app:layout_constraintTop_toBottomOf="@id/txtLocationMapInfo" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgLocationMaps"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/space_3x"
+        app:layout_constraintBottom_toBottomOf="@id/locationLink"
+        app:layout_constraintEnd_toEndOf="@id/txtLocationMapInfo"
+        app:layout_constraintStart_toEndOf="@id/locationLink"
+        app:layout_constraintTop_toTopOf="@id/locationLink"
+        app:srcCompat="@drawable/ic_bg_location_maps" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_auth"
-    tools:context=".auth.RegisterTypeFragment">
+    tools:context=".auth.view.RegisterTypeFragment">
 
     <com.visualinnovate.almursheed.common.AppBarView
         android:id="@+id/appBarRegisterType"
@@ -27,36 +27,81 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgRegisterAsTourist"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_5x"
         android:layout_marginHorizontal="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_5x"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt1"
         app:srcCompat="@drawable/img_register_as_tourist" />
 
+    <TextView
+        style="@style/TextStyleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_as_a_tourist"
+        android:textColor="@color/white"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgRegisterAsTourist"
+        app:layout_constraintEnd_toEndOf="@id/imgRegisterAsTourist"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="@id/imgRegisterAsTourist"
+        app:layout_constraintTop_toTopOf="@id/imgRegisterAsTourist"
+        app:layout_constraintVertical_bias="0.492" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgRegisterAsGuide"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_2x"
         android:layout_marginHorizontal="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_4x"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgRegisterAsTourist"
         app:srcCompat="@drawable/img_register_as_guide" />
+
+    <TextView
+        style="@style/TextStyleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_as_a_guide"
+        android:textColor="@color/white"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgRegisterAsGuide"
+        app:layout_constraintEnd_toEndOf="@id/imgRegisterAsGuide"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="@id/imgRegisterAsGuide"
+        app:layout_constraintTop_toTopOf="@id/imgRegisterAsGuide"
+        app:layout_constraintVertical_bias="0.492" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgRegisterAsDriver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_4x"
-        android:layout_marginTop="@dimen/space_2x"
+        android:layout_marginTop="@dimen/space_4x"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgRegisterAsGuide"
         app:srcCompat="@drawable/img_register_as_driver" />
+
+    <TextView
+        style="@style/TextStyleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_as_a_driver"
+        android:textColor="@color/white"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgRegisterAsDriver"
+        app:layout_constraintEnd_toEndOf="@id/imgRegisterAsDriver"
+        app:layout_constraintHorizontal_bias="0.66"
+        app:layout_constraintStart_toStartOf="@id/imgRegisterAsDriver"
+        app:layout_constraintTop_toTopOf="@id/imgRegisterAsDriver"
+        app:layout_constraintVertical_bias="0.492" />
 
     <TextView
         android:id="@+id/txtLogin"
@@ -71,7 +116,7 @@
         android:textSize="@dimen/space_14x_sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!--        <LinearLayout-->
     <!--            android:layout_width="match_parent"-->

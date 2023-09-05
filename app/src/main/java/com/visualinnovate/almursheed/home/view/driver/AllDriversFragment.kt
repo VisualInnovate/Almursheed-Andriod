@@ -1,30 +1,37 @@
 package com.visualinnovate.almursheed.home.view.driver
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.common.Constant
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllDriversBinding
-import com.visualinnovate.almursheed.home.adapter.DriverAdapter
-import com.visualinnovate.almursheed.home.model.DriverModel
+import com.visualinnovate.almursheed.home.adapter.AllDriverAdapter
+import com.visualinnovate.almursheed.home.model.DriversItem
+import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AllDriversFragment : Fragment() {
 
     private var _binding: FragmentAllDriversBinding? = null
-
     private val binding get() = _binding!!
 
-    private lateinit var driverAdapter: DriverAdapter
+    private val vm: HomeViewModel by viewModels()
 
-    private val btnDriverClickCallBack: (driver: DriverModel) -> Unit = { driver ->
+    private lateinit var allDriverAdapter: AllDriverAdapter
+
+    private val btnDriverClickCallBack: (driver: DriversItem) -> Unit = { driver ->
         val bundle = Bundle()
-        bundle.putParcelable(Constant.DRIVER, driver)
+        bundle.putInt(Constant.DRIVER_ID, driver.id!!)
         findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
@@ -33,11 +40,11 @@ class AllDriversFragment : Fragment() {
     }
 
     private val btnSortCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
+        // findNavController().navigateUp()
     }
 
     private val btnFilterCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
+        // findNavController().navigateUp()
     }
 
     override fun onCreateView(
@@ -54,6 +61,12 @@ class AllDriversFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
         initViews()
+        subscribeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        vm.fetchAllDrivers()
     }
 
     private fun initToolbar() {
@@ -80,13 +93,42 @@ class AllDriversFragment : Fragment() {
 
     private fun initSeeAllDriverRecycler() {
         binding.rvSeeAllDrivers.apply {
-            driverAdapter = DriverAdapter(btnDriverClickCallBack)
-            driverAdapter.submitData(getDriverList())
-            adapter = driverAdapter
+            allDriverAdapter = AllDriverAdapter(btnDriverClickCallBack)
+            adapter = allDriverAdapter
         }
     }
 
-    private fun getDriverList(): ArrayList<DriverModel> {
+    private fun subscribeData() {
+        // observe in drivers list
+        vm.driverLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    allDriverAdapter.submitData(it.data!!.drivers)
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                }
+                else -> {
+                    toast("Else")
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+}
+
+/*
+ private fun getDriverList(): ArrayList<DriverModel> {
         val driverList = ArrayList<DriverModel>()
 
         driverList.add(
@@ -152,9 +194,4 @@ class AllDriversFragment : Fragment() {
 
         return driverList
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-}
+ */

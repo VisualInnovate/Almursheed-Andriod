@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,188 +7,294 @@
     android:background="@color/bg_edit_text"
     tools:context=".home.view.accommodation.AccommodationDetailsFragment">
 
-    <com.visualinnovate.almursheed.common.AppBarView
-        android:id="@+id/appBarAccommodationDetails"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_4x"
-        app:cardCornerRadius="@dimen/space_3x"
-        app:cardElevation="@dimen/space_1x"
-        app:layout_constraintTop_toBottomOf="@id/appBarAccommodationDetails">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.visualinnovate.almursheed.common.AppBarView
+            android:id="@+id/appBarAccommodationDetails"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="@dimen/app_bar_height"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/detailsImage"
-                android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:layout_margin="@dimen/space_3x"
-                android:scaleType="centerCrop"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/RoundedImageView"
-                app:srcCompat="@drawable/img_test" />
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="@dimen/space_3x"
+            app:layout_constraintTop_toTopOf="@id/detailsImage"
+            app:layout_constraintBottom_toBottomOf="@id/detailsImage"/>
 
-            <TextView
-                android:id="@+id/btnAvailable"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_3x"
-                android:background="@drawable/bg_btn_available_text"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/space_5x"
-                android:paddingVertical="@dimen/space_2x"
-                android:text="@string/available"
-                android:textColor="@color/white"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintStart_toStartOf="@id/detailsImage"
-                app:layout_constraintTop_toTopOf="@id/detailsImage" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/detailsImage"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_margin="@dimen/space_3x"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toBottomOf="@id/appBarAccommodationDetails"
+            app:shapeAppearanceOverlay="@style/RoundedImageView"
+            app:srcCompat="@drawable/img_test" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_3x"
-                app:layout_constraintEnd_toEndOf="@id/detailsImage"
-                app:layout_constraintTop_toTopOf="@id/detailsImage"
-                app:srcCompat="@drawable/ic_un_favorite" />
+        <TextView
+            android:id="@+id/btnAvailable"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:background="@drawable/bg_btn_available_text"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/space_5x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/available"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintStart_toStartOf="@id/detailsImage"
+            app:layout_constraintTop_toTopOf="@id/detailsImage" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvImageDetails"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="@dimen/space_3x"
-                app:layout_constraintTop_toBottomOf="@id/detailsImage" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            app:layout_constraintEnd_toEndOf="@id/detailsImage"
+            app:layout_constraintTop_toTopOf="@id/detailsImage"
+            app:srcCompat="@drawable/ic_un_favorite" />
 
-            <TextView
-                android:id="@+id/txtDetailsInfo"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="start"
-                android:text="@string/accommodation_info"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_18x_sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/detailsImage"
-                app:layout_constraintStart_toStartOf="@id/detailsImage"
-                app:layout_constraintTop_toBottomOf="@id/rvImageDetails" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvImageDetails"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="@dimen/space_3x"
+            app:layout_constraintTop_toBottomOf="@id/detailsImage" />
 
-            <TextView
-                android:id="@+id/pinDetails"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_3x"
-                android:background="@drawable/bg_details_text"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="start|center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:padding="@dimen/space_2x"
-                android:text="Ramsis hilton"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/detailsCountry"
-                app:layout_constraintStart_toStartOf="@id/detailsImage"
-                app:layout_constraintTop_toBottomOf="@id/txtDetailsInfo"
-                app:drawableStartCompat="@drawable/ic_pin" />
+        <TextView
+            android:id="@+id/txtDetailsInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:gravity="start"
+            android:text="@string/accommodation_info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/detailsImage"
+            app:layout_constraintStart_toStartOf="@id/detailsImage"
+            app:layout_constraintTop_toBottomOf="@id/rvImageDetails" />
 
-            <TextView
-                android:id="@+id/detailsCountry"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:background="@drawable/bg_details_text"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:padding="@dimen/space_2x"
-                android:text="Egypt"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/pinDetails"
-                app:layout_constraintEnd_toStartOf="@id/detailsCity"
-                app:layout_constraintStart_toEndOf="@id/pinDetails"
-                app:layout_constraintTop_toTopOf="@id/pinDetails"
-                app:drawableStartCompat="@drawable/ic_country" />
+        <TextView
+            android:id="@+id/pinDetails"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="start|center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/space_2x"
+            android:text="Ramsis hilton"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_pin"
+            app:layout_constraintEnd_toStartOf="@id/detailsCountry"
+            app:layout_constraintStart_toStartOf="@id/detailsImage"
+            app:layout_constraintTop_toBottomOf="@id/txtDetailsInfo" />
 
-            <TextView
-                android:id="@+id/detailsCity"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:background="@drawable/bg_details_text"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:padding="@dimen/space_2x"
-                android:text="Cairo"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/detailsCountry"
-                app:layout_constraintStart_toEndOf="@id/detailsCountry"
-                app:layout_constraintTop_toTopOf="@id/detailsCountry"
-                app:drawableStartCompat="@drawable/ic_location_primary" />
+        <TextView
+            android:id="@+id/detailsCountry"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/space_2x"
+            android:text="Egypt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_country"
+            app:layout_constraintBottom_toBottomOf="@id/pinDetails"
+            app:layout_constraintEnd_toStartOf="@id/detailsCity"
+            app:layout_constraintStart_toEndOf="@id/pinDetails"
+            app:layout_constraintTop_toTopOf="@id/pinDetails" />
 
-            <TextView
-                android:id="@+id/txtDetailsDescription"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="start"
-                android:text="@string/description"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_18x_sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/detailsImage"
-                app:layout_constraintStart_toStartOf="@id/detailsImage"
-                app:layout_constraintTop_toBottomOf="@id/pinDetails" />
+        <TextView
+            android:id="@+id/detailsCity"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/space_2x"
+            android:text="Cairo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_location_primary"
+            app:layout_constraintBottom_toBottomOf="@id/detailsCountry"
+            app:layout_constraintStart_toEndOf="@id/detailsCountry"
+            app:layout_constraintTop_toTopOf="@id/detailsCountry" />
 
-            <TextView
-                android:id="@+id/detailsDescription"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="start"
-                android:lineSpacingExtra="@dimen/space_2x"
-                android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our hotel provides ample space for both indoor and outdoor activities."
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintEnd_toEndOf="@id/detailsImage"
-                app:layout_constraintStart_toStartOf="@id/detailsImage"
-                app:layout_constraintTop_toBottomOf="@id/txtDetailsDescription" />
+        <TextView
+            android:id="@+id/txtDetailsDescription"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:gravity="start"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/detailsImage"
+            app:layout_constraintStart_toStartOf="@id/detailsImage"
+            app:layout_constraintTop_toBottomOf="@id/pinDetails" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnBookNow"
-                style="@style/customButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_10x"
-                android:layout_marginBottom="@dimen/space_4x"
-                android:text="@string/book_now"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/detailsDescription" />
+        <TextView
+            android:id="@+id/detailsDescription"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:gravity="start"
+            android:lineSpacingExtra="@dimen/space_2x"
+            android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our hotel provides ample space for both indoor and outdoor activities."
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintEnd_toEndOf="@id/detailsImage"
+            app:layout_constraintStart_toStartOf="@id/detailsImage"
+            app:layout_constraintTop_toBottomOf="@id/txtDetailsDescription" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/txtOwnerInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4x"
+            android:gravity="start"
+            android:text="@string/owner_info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/detailsDescription"
+            app:layout_constraintStart_toStartOf="@id/detailsDescription"
+            app:layout_constraintTop_toBottomOf="@id/detailsDescription" />
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/ownerName"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="start|center"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/space_2x"
+            android:text="Hilton Company"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_user"
+            app:layout_constraintEnd_toStartOf="@id/ownerPhone"
+            app:layout_constraintStart_toStartOf="@id/txtOwnerInfo"
+            app:layout_constraintTop_toBottomOf="@id/txtOwnerInfo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/ownerPhone"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="start|center"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/space_2x"
+            android:text="+20xxxxxxxx"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ownerName"
+            app:layout_constraintTop_toBottomOf="@id/txtOwnerInfo" />
+
+        <TextView
+            android:id="@+id/txtLocationInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_4x"
+            android:gravity="start"
+            android:text="@string/location_info"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ownerName" />
+
+        <TextView
+            android:id="@+id/locationLink"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="start|center"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="@dimen/space_2x"
+            android:text="https://goo.gl/maps/59Ze3kmbKxmErkRF6"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableEndCompat="@drawable/ic_copy"
+            app:layout_constraintEnd_toStartOf="@id/imgLocationMaps"
+            app:layout_constraintStart_toStartOf="@id/txtLocationInfo"
+            app:layout_constraintTop_toBottomOf="@id/txtLocationInfo" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgLocationMaps"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/space_3x"
+            app:layout_constraintBottom_toBottomOf="@id/locationLink"
+            app:layout_constraintEnd_toEndOf="@id/txtLocationInfo"
+            app:layout_constraintStart_toEndOf="@id/locationLink"
+            app:layout_constraintTop_toTopOf="@id/locationLink"
+            app:srcCompat="@drawable/ic_bg_location_maps" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnBookNow"
+            style="@style/customButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10x"
+            android:layout_marginBottom="@dimen/space_4x"
+            android:text="@string/book_now"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/locationLink" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

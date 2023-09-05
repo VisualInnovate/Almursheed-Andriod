@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.visualinnovate.almursheed.common.Utils
+import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemBannerBinding
 import com.visualinnovate.almursheed.home.model.BannerModel
 

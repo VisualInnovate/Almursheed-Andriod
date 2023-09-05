@@ -1,0 +1,132 @@
+{
+  "states": [
+    {
+      "state": "Badakhshan",
+      "state_id": 42
+    },
+    {
+      "state": "Badgis",
+      "state_id": 43
+    },
+    {
+      "state": "Baglan",
+      "state_id": 44
+    },
+    {
+      "state": "Balkh",
+      "state_id": 45
+    },
+    {
+      "state": "Bamiyan",
+      "state_id": 46
+    },
+    {
+      "state": "Farah",
+      "state_id": 47
+    },
+    {
+      "state": "Faryab",
+      "state_id": 48
+    },
+    {
+      "state": "Gawr",
+      "state_id": 49
+    },
+    {
+      "state": "Gazni",
+      "state_id": 50
+    },
+    {
+      "state": "Herat",
+      "state_id": 51
+    },
+    {
+      "state": "Hilmand",
+      "state_id": 52
+    },
+    {
+      "state": "Jawzjan",
+      "state_id": 53
+    },
+    {
+      "state": "Kabul",
+      "state_id": 54
+    },
+    {
+      "state": "Kapisa",
+      "state_id": 55
+    },
+    {
+      "state": "Khawst",
+      "state_id": 56
+    },
+    {
+      "state": "Kunar",
+      "state_id": 57
+    },
+    {
+      "state": "Lagman",
+      "state_id": 58
+    },
+    {
+      "state": "Lawghar",
+      "state_id": 59
+    },
+    {
+      "state": "Nangarhar",
+      "state_id": 60
+    },
+    {
+      "state": "Nimruz",
+      "state_id": 61
+    },
+    {
+      "state": "Nuristan",
+      "state_id": 62
+    },
+    {
+      "state": "Paktika",
+      "state_id": 63
+    },
+    {
+      "state": "Paktiya",
+      "state_id": 64
+    },
+    {
+      "state": "Parwan",
+      "state_id": 65
+    },
+    {
+      "state": "Qandahar",
+      "state_id": 66
+    },
+    {
+      "state": "Qunduz",
+      "state_id": 67
+    },
+    {
+      "state": "Samangan",
+      "state_id": 68
+    },
+    {
+      "state": "Sar-e Pul",
+      "state_id": 69
+    },
+    {
+      "state": "Takhar",
+      "state_id": 70
+    },
+    {
+      "state": "Uruzgan",
+      "state_id": 71
+    },
+    {
+      "state": "Wardag",
+      "state_id": 72
+    },
+    {
+      "state": "Zabul",
+      "state_id": 73
+    }
+  ]
+}

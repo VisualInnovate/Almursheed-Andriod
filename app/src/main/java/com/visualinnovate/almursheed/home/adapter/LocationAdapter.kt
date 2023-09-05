@@ -3,15 +3,15 @@ package com.visualinnovate.almursheed.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.visualinnovate.almursheed.R
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.databinding.ItemPopularLocationBinding
-import com.visualinnovate.almursheed.home.model.LocationModel
+import com.visualinnovate.almursheed.home.model.AttractivesItem
 
 class LocationAdapter(
-    private val btnLocationClickCallBack: (locationModel: LocationModel) -> Unit
+    private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit
 ) : RecyclerView.Adapter<LocationAdapter.LocationViewHolder>() {
 
-    private var newsList: List<LocationModel> = ArrayList()
+    private var attractivesList: List<AttractivesItem?>? = ArrayList()
 
     private lateinit var binding: ItemPopularLocationBinding
 
@@ -24,7 +24,7 @@ class LocationAdapter(
 
         init {
             itemView.root.setOnClickListener {
-                btnLocationClickCallBack.invoke(newsList[adapterPosition])
+                btnLocationClickCallBack.invoke(attractivesList!![adapterPosition]!!)
             }
         }
     }
@@ -36,30 +36,31 @@ class LocationAdapter(
     }
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        val article = newsList[position]
+        val article = attractivesList!![position]!!
         // bind view
         bindData(holder, article)
     }
 
-    private fun bindData(holder: LocationViewHolder, location: LocationModel) {
-        // Utils.loadImage(holder.itemView.context, location.imageBanner, holder.imgBanner)
-        holder.imgPopularLocation.setImageResource(location.locationImage)
-        holder.popularLocationName.text = location.locationName
-        holder.cityLocationName.text = location.locationCity
+    private fun bindData(holder: LocationViewHolder, attractives: AttractivesItem) {
+        Glide.with(holder.itemView.context)
+            .load(attractives.media?.get(0)?.originalUrl)
+            .into(holder.imgPopularLocation)
+        holder.popularLocationName.text = attractives.name?.localized
+        holder.cityLocationName.text = attractives.country?.country
         // check favorite
-        if (!location.locationFavorite) { // false -> un favorite
+        /*if (!location.locationFavorite) { // false -> un favorite
             holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
         } else {
             holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }
+        }*/
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        return attractivesList?.size ?: 0
     }
 
-    fun submitData(data: List<LocationModel>) {
-        newsList = data
+    fun submitData(data: List<AttractivesItem?>?) {
+        attractivesList = data
         notifyDataSetChanged()
     }
 }

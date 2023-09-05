@@ -4,15 +4,33 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.google.android.material.snackbar.Snackbar
-import com.visualinnovate.almursheed.home.HomeActivity
+import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.home.view.LiveEvent
+
+inline fun View.onDebouncedListener(
+    delayInClick: Long = 500L,
+    crossinline listener: (View) -> Unit
+) {
+    val enableAgain = Runnable { isEnabled = true }
+    setOnClickListener {
+        if (isEnabled) {
+            isEnabled = false
+            postDelayed(enableAgain, delayInClick)
+            listener(it)
+        }
+    }
+}
 
 // fun NavController.navigate(
 //    @IdRes destinationId: Int,
@@ -82,8 +100,30 @@ fun Fragment.hideKeyboard() {
 }
 
 fun Activity.startHomeActivity() {
-    val intent = Intent(this, HomeActivity::class.java)
+    val intent = Intent(this, MainActivity::class.java)
     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(intent)
     this.finish()
+}
+
+val EditText.value
+    get() = text?.toString()?.trim() ?: ""
+// ex: val name = etName.value
+
+fun String.isEmptySting(): Boolean {
+    return (
+        TextUtils.isEmpty(this) ||
+            this.equals("", ignoreCase = true) ||
+            this.equals("{}", ignoreCase = true) ||
+            this.equals("null", ignoreCase = true) ||
+            this.equals("undefined", ignoreCase = true)
+        )
+}
+
+fun <T> LiveData<T>.toSingleEvent(): LiveData<T> {
+    val result = LiveEvent<T>()
+    result.addSource(this) {
+        result.value = it
+    }
+    return result
 }

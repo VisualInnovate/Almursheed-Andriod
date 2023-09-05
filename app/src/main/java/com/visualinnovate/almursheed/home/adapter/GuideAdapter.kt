@@ -3,22 +3,23 @@ package com.visualinnovate.almursheed.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.GuideModel
+import com.visualinnovate.almursheed.home.model.GuidesItem
 
 class GuideAdapter(
-    private val btnGuideClickCallBack: (guideModel: GuideModel) -> Unit
+    private val btnGuideClickCallBack: (guide: GuidesItem) -> Unit
 ) : RecyclerView.Adapter<GuideAdapter.GuideViewHolder>() {
 
-    private var newsList: List<GuideModel> = ArrayList()
+    private var guidesList: List<GuidesItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverBinding
 
     inner class GuideViewHolder(itemView: ItemDriverBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        val imgBanner = itemView.imgDriver
+        val imgDriver = itemView.imgDriver
         val imgFavorite = itemView.imgFavorite
         val imgStatus = itemView.imgStatus
         val username = itemView.username
@@ -29,7 +30,7 @@ class GuideAdapter(
 
         init {
             btnBookNow.setOnClickListener {
-                btnGuideClickCallBack.invoke(newsList[adapterPosition])
+                btnGuideClickCallBack.invoke(guidesList!![adapterPosition]!!)
             }
         }
     }
@@ -40,33 +41,33 @@ class GuideAdapter(
     }
 
     override fun onBindViewHolder(holder: GuideViewHolder, position: Int) {
-        val article = newsList[position]
+        val guide = guidesList!![position]
         // bind view
-        bindData(holder, article)
+        bindData(holder, guide!!)
     }
 
-    private fun bindData(holder: GuideViewHolder, guide: GuideModel) {
+    private fun bindData(holder: GuideViewHolder, guide: GuidesItem) {
         holder.imgStatus.invisible()
         // set data
-        // Utils.loadImage(holder.itemView.context, guide.imageBanner, holder.imgBanner)
-        holder.rating.text = guide.guideRating.toString()
-        holder.username.text = guide.guideName
-        holder.price.text = guide.guidePrice.toString()
-        holder.city.text = guide.guideCity
-        // check favorite
-        if (!guide.guideFavorite) { // false -> un favorite
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        } else {
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }
+        Glide.with(holder.itemView.context)
+            // .load(driver.pictures?.personalPictures?.get(position)?.originalUrl)
+            .load(R.drawable.img_test)
+            .into(holder.imgDriver)
+        holder.username.text = guide.name
+//        // check favorite
+//        if (!guide.guideFavorite) { // false -> un favorite
+//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//        } else {
+//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//        }
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        return guidesList?.size ?: 0
     }
 
-    fun submitData(data: List<GuideModel>) {
-        newsList = data
+    fun submitData(data: List<GuidesItem?>?) {
+        guidesList = data
         notifyDataSetChanged()
     }
 }

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="170dp"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/space_1x"
+    android:layout_marginHorizontal="@dimen/space_1x"
+    app:cardCornerRadius="@dimen/space_4x"
+    app:cardElevation="@dimen/space_1x">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="170dp"
+        android:layout_height="160dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgDriver"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="@dimen/space_3x"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            app:srcCompat="@drawable/img_driver" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imgFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_3x"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleImageView"
+            app:srcCompat="@drawable/ic_un_favorite" />
+
+        <TextView
+            android:id="@+id/driverRating"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-4dp"
+            android:background="@drawable/ic_bg_item_see_all_guide"
+            android:drawableStart="@drawable/ic_star"
+            android:drawablePadding="@dimen/space_1x"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/space_2x"
+            android:text="4.0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_9x_sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgDriver"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/driverName"
+            style="@style/TextStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/driverRating"
+            tools:text="Ahmed khaled " />
+
+        <TextView
+            android:id="@+id/city"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:layout_marginStart="@dimen/space_3x"
+            android:drawableStart="@drawable/ic_location_primary"
+            android:drawablePadding="@dimen/space_1x"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:maxLength="15"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_10x_sp"
+            app:layout_constraintEnd_toStartOf="@id/price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/driverName"
+            tools:text="Cairo" />
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_1_5x"
+            android:layout_marginEnd="@dimen/space_3x"
+            android:drawableStart="@drawable/ic_money_dollar_coin"
+            android:drawablePadding="@dimen/space_1x"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="$150.0"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_10x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/city"
+            app:layout_constraintTop_toBottomOf="@id/driverName" />
+
+        <TextView
+            android:id="@+id/language"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:drawableStart="@drawable/ic_country"
+            android:drawablePadding="@dimen/space_1x"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="English, Arabic"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_11x_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/city" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -41,7 +41,7 @@
         android:layout_height="210dp"
         android:layout_margin="@dimen/space_4x"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toBottomOf="@id/txtBoatTour"
+        app:layout_constraintTop_toBottomOf="@id/icClose"
         app:shapeAppearanceOverlay="@style/RoundedImageView"
         app:srcCompat="@drawable/img_test" />
 
@@ -121,5 +121,6 @@
         android:text="@string/book_now"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/price" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

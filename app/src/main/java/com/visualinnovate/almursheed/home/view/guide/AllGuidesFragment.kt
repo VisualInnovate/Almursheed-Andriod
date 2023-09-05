@@ -6,26 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.common.Constant
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
 import com.visualinnovate.almursheed.home.adapter.AllGuideAdapter
-import com.visualinnovate.almursheed.home.model.GuideModel
+import com.visualinnovate.almursheed.home.model.GuidesItem
+import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AllGuidesFragment : Fragment() {
 
     private var _binding: FragmentAllGuidesBinding? = null
     private val binding get() = _binding!!
 
+    private val vm: HomeViewModel by viewModels()
+
     private lateinit var allGuideAdapter: AllGuideAdapter
 
-    private val btnGuideClickCallBack: (guide: GuideModel) -> Unit =
+    private val btnGuideClickCallBack: (guide: GuidesItem) -> Unit =
         { guide ->
             val bundle = Bundle()
-            bundle.putParcelable(Constant.GUIDE, guide)
+            bundle.putInt(Constant.GUIDE_ID, guide.id!!)
             findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
         }
 
@@ -53,7 +60,13 @@ class AllGuidesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar()
-        initViews()
+        initSeeAllDriverRecycler()
+        subscribeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        vm.fetchAllGuides()
     }
 
     private fun initToolbar() {
@@ -74,70 +87,34 @@ class AllGuidesFragment : Fragment() {
         )
     }
 
-    private fun initViews() {
-        initSeeAllDriverRecycler()
-    }
-
     private fun initSeeAllDriverRecycler() {
         binding.rvSeeAllGuides.apply {
             allGuideAdapter = AllGuideAdapter(btnGuideClickCallBack)
-            allGuideAdapter.submitData(getAllGuideList())
             adapter = allGuideAdapter
         }
     }
 
-    private fun getAllGuideList(): ArrayList<GuideModel> {
-        val guideList = ArrayList<GuideModel>()
-
-        guideList.add(
-            GuideModel(
-                0,
-                R.drawable.img_driver,
-                2.2,
-                "Ahmed Mohamed",
-                120.0,
-                "October",
-                false,
-                "English, Arabic, French"
-            )
-        )
-        guideList.add(
-            GuideModel(
-                1,
-                R.drawable.img_driver,
-                1.1,
-                "Mohamed Mohamed",
-                120.0,
-                "Giza",
-                true,
-                "English"
-            )
-        )
-        guideList.add(
-            GuideModel(
-                2,
-                R.drawable.img_driver,
-                4.5,
-                "Ahmed Ahmed",
-                120.0,
-                "Cairo",
-                false,
-                "Arabic, French"
-            )
-        )
-        guideList.add(
-            GuideModel(
-                3,
-                R.drawable.img_driver,
-                3.1,
-                "Ahmed Mohamed",
-                120.0,
-                "Giza",
-                true,
-                "English, Arabic"
-            )
-        )
-        return guideList
+    private fun subscribeData() {
+        // observe in drivers list
+        vm.guideLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    allGuideAdapter.submitData(it.data!!.guides)
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                }
+                else -> {
+                    toast("Else")
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

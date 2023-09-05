@@ -5,18 +5,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.visualinnovate.almursheed.common.Constant
+import com.visualinnovate.almursheed.common.invisible
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentOfferDetailsBinding
-import com.visualinnovate.almursheed.home.model.OfferModel
+import com.visualinnovate.almursheed.home.model.Offer
+import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OfferDetailsFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentOfferDetailsBinding? = null
-
     private val binding get() = _binding!!
 
-    private var offerArgs: OfferModel? = null
+    private val vm: HomeViewModel by viewModels()
+
+    private var offerId: Int? = null
 
     companion object {
         fun newInstance(bundle: Bundle): OfferDetailsFragment {
@@ -37,14 +46,26 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        offerArgs = arguments?.getParcelable(Constant.OFFER_DETAILS)
-        Log.d("arguments?", "offerArgs $offerArgs")
-        initView()
+        // get argument
+        offerId = requireArguments().getInt(Constant.OFFER_ID)
+        Log.d("arguments?", "offerArgs $offerId")
+        // fun clicked
         setBtnListener()
+        subscribeData()
     }
 
-    private fun initView() {
-        binding.imgOffer.setImageResource(offerArgs?.offerImage!!)
+    override fun onStart() {
+        super.onStart()
+        vm.getOfferDetailsById(offerId ?: 0)
+    }
+
+    private fun initView(offer: Offer?) {
+        binding.txtBoatTour.text = offer?.title?.localized
+        binding.price.text = "${offer?.price?.toString()} $"
+        binding.realPrice.invisible()
+        Glide.with(requireContext())
+            .load(offer?.media?.get(0)?.originalUrl)
+            .into(binding.imgOffer)
     }
 
     private fun setBtnListener() {
@@ -52,6 +73,31 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.btnBookNow.setOnClickListener { }
+    }
+
+    private fun subscribeData() {
+        // observe in drivers list
+        vm.offerDetailsLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    Log.d("Success11", "${it.data!!.offer}")
+                    initView(it.data.offer)
+                    // driverAdapter.submitData(it.data.drivers)
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                }
+                else -> {
+                    toast("Else")
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

@@ -2,22 +2,31 @@ package com.visualinnovate.almursheed.home.view.guide
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.common.Constant
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentGuideDetailsBinding
-import com.visualinnovate.almursheed.home.model.GuideModel
+import com.visualinnovate.almursheed.home.model.Guide
+import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GuideDetailsFragment : Fragment() {
 
     private var _binding: FragmentGuideDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var guideArgument: GuideModel
+    private val vm: HomeViewModel by viewModels()
+
+    private var guideId: Int? = null
 
     private val btnBackCallBackFunc: () -> Unit = {
         findNavController().navigateUp()
@@ -34,9 +43,14 @@ class GuideDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        guideArgument = requireArguments().getParcelable(Constant.GUIDE)!!
+        guideId = requireArguments().getInt(Constant.GUIDE_ID)
         initToolbar()
-        initViews()
+        subscribeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        vm.getGuideDetailsById(guideId)
     }
 
     private fun initToolbar() {
@@ -49,11 +63,34 @@ class GuideDetailsFragment : Fragment() {
         )
     }
 
+    private fun subscribeData() {
+        // observe in drivers list
+        vm.guideDetailsLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    initViews(it.data!!.guide)
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                }
+                else -> {
+                    toast("Else")
+                }
+            }
+        }
+    }
+
     @SuppressLint("SetTextI18n")
-    private fun initViews() {
-        binding.guideName.text = guideArgument.guideName
-        binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
-        binding.guideCity.text = guideArgument.guideCity
+    private fun initViews(guide: Guide?) {
+        binding.guideName.text = guide?.name?.localized
+        // binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
+        // binding.guideCity.text = guideArgument.guideCity
     }
 
     override fun onDestroy() {

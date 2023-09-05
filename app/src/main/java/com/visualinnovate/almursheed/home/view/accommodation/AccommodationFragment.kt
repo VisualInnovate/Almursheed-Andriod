@@ -1,35 +1,44 @@
 package com.visualinnovate.almursheed.home.view.accommodation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.common.Constant
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationBinding
-import com.visualinnovate.almursheed.home.HomeActivity
+import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.AccommodationAdapter
-import com.visualinnovate.almursheed.home.model.AccommodationModel
+import com.visualinnovate.almursheed.home.model.AccommodationItem
+import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AccommodationFragment : Fragment() {
 
     private var _binding: FragmentAccommodationBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroy.
+    // This property is only valid between onCreateView and // onDestroy.
     private val binding get() = _binding!!
+
+    // initialize home view model to call api and make observe
+    private val vm: HomeViewModel by viewModels()
 
     private lateinit var accommodationAdapter: AccommodationAdapter
 
-    private val btnAccommodationClickCallBack: (accommodation: AccommodationModel) -> Unit =
+    private val btnAccommodationClickCallBack: (accommodation: AccommodationItem) -> Unit =
         { accommodation ->
-            toast("Clicked Item accommodation $accommodation")
+            Log.d("btnAccommodationClickCallBack", "Clicked Item accommodation $accommodation")
             val bundle = Bundle()
-            bundle.putParcelable(Constant.ACCOMMODATION, accommodation)
-            findNavController().navigate(R.id.accommodationDetailsFragment, bundle)
+            bundle.putInt(Constant.ACCOMMODATION_ID, accommodation.id!!)
+            findNavController().customNavigate(R.id.accommodationDetailsFragment, false, bundle)
         }
 
     private val btnBackCallBackFunc: () -> Unit = {
@@ -55,9 +64,15 @@ class AccommodationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as HomeActivity).changeSelectedBottomNavListener(R.id.action_accommodationFragment)
+        (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_accommodationFragment)
         initToolbar()
         initViews()
+        subscribeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        vm.fetchAccommodationsList()
     }
 
     private fun initToolbar() {
@@ -85,15 +100,43 @@ class AccommodationFragment : Fragment() {
     private fun initSeeAllDriverRecycler() {
         binding.rvAccommodation.apply {
             accommodationAdapter = AccommodationAdapter(btnAccommodationClickCallBack)
-            accommodationAdapter.submitData(getAccommodationList())
             adapter = accommodationAdapter
         }
     }
 
-    private fun getAccommodationList(): ArrayList<AccommodationModel> {
-        val driverList = ArrayList<AccommodationModel>()
+    private fun subscribeData() {
+        vm.accommodationLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    accommodationAdapter.submitData(it.data!!.accommodations)
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("ResponseHandler.Error", it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                }
+                else -> {
+                    toast("Else")
+                }
+            }
+        }
+    }
 
-        driverList.add(
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+}
+
+/*
+private fun getAccommodationList(): ArrayList<AccommodationModel> {
+        val accommodationList = ArrayList<AccommodationModel>()
+
+        accommodationList.add(
             AccommodationModel(
                 0,
                 R.drawable.img_test,
@@ -103,7 +146,7 @@ class AccommodationFragment : Fragment() {
                 "120.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 1,
                 R.drawable.img_driver,
@@ -113,7 +156,7 @@ class AccommodationFragment : Fragment() {
                 "333.2"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 2,
                 R.drawable.img_test,
@@ -123,7 +166,7 @@ class AccommodationFragment : Fragment() {
                 "123.22"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 3,
                 R.drawable.img_driver,
@@ -133,7 +176,7 @@ class AccommodationFragment : Fragment() {
                 "111.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -144,7 +187,7 @@ class AccommodationFragment : Fragment() {
             )
         )
 
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -154,7 +197,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -164,7 +207,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -174,7 +217,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -184,7 +227,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -194,7 +237,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -204,7 +247,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -214,68 +257,7 @@ class AccommodationFragment : Fragment() {
                 "5555.0"
             )
         )
-        driverList.add(
-            AccommodationModel(
-                4,
-                R.drawable.img_test,
-                "Ahmed Mohamed",
-                "Egypt, Giza",
-                true,
-                "5555.0"
-            )
-        )
-
-        driverList.add(
-            AccommodationModel(
-                4,
-                R.drawable.img_test,
-                "Ahmed Mohamed",
-                "Egypt, Giza",
-                true,
-                "5555.0"
-            )
-        )
-        driverList.add(
-            AccommodationModel(
-                4,
-                R.drawable.img_test,
-                "Ahmed Mohamed",
-                "Egypt, Giza",
-                true,
-                "5555.0"
-            )
-        )
-        driverList.add(
-            AccommodationModel(
-                4,
-                R.drawable.img_test,
-                "Ahmed Mohamed",
-                "Egypt, Giza",
-                true,
-                "5555.0"
-            )
-        )
-        driverList.add(
-            AccommodationModel(
-                4,
-                R.drawable.img_test,
-                "Ahmed Mohamed",
-                "Egypt, Giza",
-                true,
-                "5555.0"
-            )
-        )
-        driverList.add(
-            AccommodationModel(
-                4,
-                R.drawable.img_test,
-                "Ahmed Mohamed",
-                "Egypt, Giza",
-                true,
-                "5555.0"
-            )
-        )
-        driverList.add(
+        accommodationList.add(
             AccommodationModel(
                 4,
                 R.drawable.img_test,
@@ -286,11 +268,67 @@ class AccommodationFragment : Fragment() {
             )
         )
 
-        return driverList
+        accommodationList.add(
+            AccommodationModel(
+                4,
+                R.drawable.img_test,
+                "Ahmed Mohamed",
+                "Egypt, Giza",
+                true,
+                "5555.0"
+            )
+        )
+        accommodationList.add(
+            AccommodationModel(
+                4,
+                R.drawable.img_test,
+                "Ahmed Mohamed",
+                "Egypt, Giza",
+                true,
+                "5555.0"
+            )
+        )
+        accommodationList.add(
+            AccommodationModel(
+                4,
+                R.drawable.img_test,
+                "Ahmed Mohamed",
+                "Egypt, Giza",
+                true,
+                "5555.0"
+            )
+        )
+        accommodationList.add(
+            AccommodationModel(
+                4,
+                R.drawable.img_test,
+                "Ahmed Mohamed",
+                "Egypt, Giza",
+                true,
+                "5555.0"
+            )
+        )
+        accommodationList.add(
+            AccommodationModel(
+                4,
+                R.drawable.img_test,
+                "Ahmed Mohamed",
+                "Egypt, Giza",
+                true,
+                "5555.0"
+            )
+        )
+        accommodationList.add(
+            AccommodationModel(
+                4,
+                R.drawable.img_test,
+                "Ahmed Mohamed",
+                "Egypt, Giza",
+                true,
+                "5555.0"
+            )
+        )
+
+        return accommodationList
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-}
+ */
