@@ -74,6 +74,7 @@ class VerifyAccountFragment : BaseFragment() {
         binding.resendCode.onDebouncedListener {
             // counter
         }
+        //
         binding.btnVerify.onDebouncedListener {
             // call api
             if (validate()) {
