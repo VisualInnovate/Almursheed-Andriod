@@ -47,7 +47,7 @@ class DriverViewModel @Inject constructor(
         }
     }
 
-
+//
     private fun createBodyRequest(name: String, email: String, password: String , gender:String ,  nationality:String , countryId:Int , cityId:Int , type:String): RequestBody {
         val requestData = mapOf(
             "name" to name,
