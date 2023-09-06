@@ -157,6 +157,8 @@
     <string name="where_to">Where to?</string>
     <string name="where_from">Where from?</string>
     <string name="what_do_you_want_hire">What do you want hire?</string>
+    <string name="destination_country">Destination Country <font fgcolor='#FF0000'> *</font></string>
+    <string name="destination_city">Destination City <font fgcolor='#FF0000'> *</font></string>
 
 
 </resources>

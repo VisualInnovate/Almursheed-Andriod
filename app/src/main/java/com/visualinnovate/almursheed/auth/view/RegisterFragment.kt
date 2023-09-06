@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.auth.view.driver
+package com.visualinnovate.almursheed.auth.view
 
 import android.content.Intent
 import android.graphics.Color
@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,25 +17,28 @@ import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.DriverViewModel
 import com.visualinnovate.almursheed.common.*
+import com.visualinnovate.almursheed.utils.Constant.ROLE_TOURIST
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
-import com.visualinnovate.almursheed.databinding.FragmentDriverRegisterBinding
+import com.visualinnovate.almursheed.databinding.FragmentRegisterBinding
 import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.cities
 import com.visualinnovate.almursheed.utils.Utils.countries
 import com.visualinnovate.almursheed.utils.Utils.nationalities
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DriverRegisterFragment : BaseFragment() {
+class RegisterFragment : BaseFragment() {
 
-    private var _binding: FragmentDriverRegisterBinding? = null
+    private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
     private val vm: DriverViewModel by activityViewModels()
 
+    private lateinit var role: String
     private lateinit var username: String
     private lateinit var email: String
     private var nationalityName: String = ""
@@ -51,56 +53,87 @@ class DriverRegisterFragment : BaseFragment() {
     private val imageCompressor by lazy { ImageCompressorHelper.with(requireContext()) }
     private lateinit var permissionHelper: PermissionHelper
 
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
-
     private val btnLoginCallBackListener: () -> Unit = {
-        Log.d("btnLoginCallBackListener", "btnLoginCallBackListener")
         // navigate to login
-        findNavController().navigate(R.id.action_driverRegister_to_login)
+        findNavController().customNavigate(R.id.loginFragment)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentDriverRegisterBinding.inflate(inflater, container, false)
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        role = requireArguments().getString("role")!!
         permissionHelper = PermissionHelper.init(this)
-
         initView()
         initToolbar()
         subscribeActivityResult()
         setBtnListener()
+        subscribeData()
+    }
+
+    private fun subscribeData() {
+        vm.registerDriverLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    hideAuthLoading()
+                    toast(it.data!!.message!!)
+                    val bundle = Bundle()
+                    bundle.putString("email",email)
+                    findNavController().customNavigate(R.id.verifyAccountFragment, data = bundle)
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showAuthLoading()
+                }
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideAuthLoading()
+                }
+                else -> {
+                    toast("Else")
+                }
+            }
+        }
     }
 
     private fun initView() {
         // binding.spinnerNationality.spinnerText.text = getString(R.string.select_your_nationality)
         // binding.spinnerCountry.spinnerText.text = getString(R.string.select_your_country)
         // binding.spinnerCity.spinnerText.text = getString(R.string.select_your_city)
+        if (role == ROLE_TOURIST) {
+            binding.txtCountry.text = getString(R.string.destination_country)
+            binding.txtCity.text = getString(R.string.destination_city)
+        }
+        binding.btnUploadPicture.gone()
+        binding.txtPersonalPicture.gone()
         initCountrySpinner()
         initNationalitySpinner()
         initCitySpinner()
     }
 
     private fun initToolbar() {
-        binding.appBarDriverRegister.setTitleString(getString(R.string.driver_register))
-        binding.appBarDriverRegister.setTitleCenter(true)
-        binding.appBarDriverRegister.useBackButton(
+        binding.appBar.setTitleString(getString(R.string.driver_register))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
             true,
-            btnBackCallBackFunc,
-            R.drawable.ic_back
+            { findNavController().navigateUp() },
+            R.drawable.ic_back,
         )
-        binding.appBarDriverRegister.showButtonOneWithoutImage(
+        binding.appBar.showButtonOneWithoutImage(
             getString(R.string.login),
-            btnLoginCallBackListener
+            btnLoginCallBackListener,
         )
     }
 
@@ -111,7 +144,7 @@ class DriverRegisterFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                nationalityList
+                nationalityList,
             )
 
         binding.spinnerNationality.spinner.adapter = arrayAdapter
@@ -122,12 +155,11 @@ class DriverRegisterFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected country name
                     nationalityName = nationalityList[position]
                     // Retrieve the corresponding country ID from the map
-                    Log.d("MyDebugData", "nationalityName $nationalityName ")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -147,7 +179,7 @@ class DriverRegisterFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                countryList
+                countryList,
             )
 
         binding.spinnerCountry.spinner.adapter = arrayAdapter
@@ -158,16 +190,12 @@ class DriverRegisterFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected country name
                     val selectedCountryName = countryList[position]
                     // Retrieve the corresponding country ID from the map
                     countryId = countries[selectedCountryName]!!.toInt()
-                    Log.d(
-                        "MyDebugData",
-                        "selectedCountryName $selectedCountryName countryId $countryId"
-                    )
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -189,7 +217,7 @@ class DriverRegisterFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                cityList
+                cityList,
             )
 
         binding.spinnerCity.spinner.adapter = arrayAdapter
@@ -200,17 +228,11 @@ class DriverRegisterFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected country name
                     val selectedCityName = cityList[position]
-                    Log.d("readJsonFile", "selectedCityName $selectedCityName")
-
-                    // Retrieve the corresponding country ID from the map
                     cityId = cities[selectedCityName]!!
-                    val cityId22 = cities[selectedCityName]!!
-                    Log.d("readJsonFile", "cityId $cityId")
-                    Log.d("readJsonFile", "cityId22 $cityId22")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -251,7 +273,7 @@ class DriverRegisterFragment : BaseFragment() {
             handleProfilePictureChange()
         }
         binding.btnNext.setOnClickListener {
-            if (!validate()) {
+            if (validate()) {
                 // vm.registerDriverRequest.name = username
                 // vm.registerDriverRequest.email = email
                 // vm.registerDriverRequest.gender = gender.toInt()
@@ -259,7 +281,8 @@ class DriverRegisterFragment : BaseFragment() {
                 // vm.registerDriverRequest.country_id = countryId
                 // vm.registerDriverRequest.state_id = cityId
                 // vm.registerDriverRequest.personal_pictures = imagePath
-                findNavController().customNavigate(R.id.verifyAccountFragment)
+                vm.registerDriver(username,email,password,gender,nationalityName,countryId!!,cityId!!,role)
+               // findNavController().customNavigate(R.id.verifyAccountFragment)
             }
         }
     }
@@ -306,10 +329,10 @@ class DriverRegisterFragment : BaseFragment() {
             toast("Please choose city")
             isValid = false
         }
-        if (imagePath.isEmptySting()) {
-            toast("Please choose personal picture")
-            isValid = false
-        }
+//        if (imagePath.isEmptySting()) {
+//            toast("Please choose personal picture")
+//            isValid = false
+//        }
         return isValid
     }
 
@@ -328,13 +351,13 @@ class DriverRegisterFragment : BaseFragment() {
                                         Toast.makeText(
                                             requireContext(),
                                             error,
-                                            Toast.LENGTH_SHORT
+                                            Toast.LENGTH_SHORT,
                                         ).show()
                                     },
                                     { path ->
                                         imagePath = path
                                         showProfileImageBottomSheet()
-                                    }
+                                    },
                                 )
                         })
                     }
@@ -347,7 +370,7 @@ class DriverRegisterFragment : BaseFragment() {
                             { path ->
                                 imagePath = path
                                 showProfileImageBottomSheet()
-                            }
+                            },
                         )
                     }
                 }
@@ -365,7 +388,7 @@ class DriverRegisterFragment : BaseFragment() {
         // Show the bottom sheet dialog fragment
         uploadImageSheetFragment.show(
             childFragmentManager,
-            "UploadImageFragment"
+            "UploadImageFragment",
         ) // uploadImageSheetFragment.tag
     }
 

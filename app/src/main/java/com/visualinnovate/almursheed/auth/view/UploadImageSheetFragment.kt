@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.auth.view.driver
+package com.visualinnovate.almursheed.auth.view
 
 import android.graphics.BitmapFactory
 import android.os.Bundle

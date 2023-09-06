@@ -31,26 +31,13 @@
         android:name="com.visualinnovate.almursheed.auth.view.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_login_to_touristRegister"
-            app:destination="@id/touristRegisterFragment" />
+
         <action
             android:id="@+id/action_login_to_forgetPassword"
             app:destination="@id/forgetPasswordFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/touristRegisterFragment"
-        android:name="com.visualinnovate.almursheed.auth.view.TouristRegisterFragment"
-        android:label="Tourist Register"
-        tools:layout="@layout/fragment_tourist_register" >
-        <action
-            android:id="@+id/action_touristRegister_to_login"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_touristRegister_to_verifyAccount"
-            app:destination="@id/verifyAccountFragment" />
-    </fragment>
+
 
     <fragment
         android:id="@+id/registerTypeFragment"
@@ -58,44 +45,23 @@
         android:label="fragment_register_type"
         tools:layout="@layout/fragment_register_type" >
         <action
-            android:id="@+id/action_registerType_to_touristRegister"
-            app:destination="@id/touristRegisterFragment" />
-        <action
-            android:id="@+id/action_registerType_to_guideRegister"
-            app:destination="@id/guideRegisterFragment" />
-        <action
-            android:id="@+id/action_registerType_to_driverRegister"
-            app:destination="@id/driverRegisterFragment" />
-        <action
             android:id="@+id/action_registerType_to_login"
             app:destination="@id/loginFragment" />
     </fragment>
 
+
     <fragment
-        android:id="@+id/guideRegisterFragment"
-        android:name="com.visualinnovate.almursheed.auth.view.guide.GuideRegisterFragment"
-        android:label="Guide Register #1"
-        tools:layout="@layout/fragment_guide_register" >
-        <action
-            android:id="@+id/action_guideRegister_to_guideRegisterSecond"
-            app:destination="@id/guideRegisterSecondFragment" />
+        android:id="@+id/RegisterFragment"
+        android:name="com.visualinnovate.almursheed.auth.view.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register" >
+
         <action
             android:id="@+id/action_guideRegister_to_login"
             app:destination="@id/loginFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/guideRegisterSecondFragment"
-        android:name="com.visualinnovate.almursheed.auth.view.guide.GuideRegisterSecondFragment"
-        android:label="Guide Register #2"
-        tools:layout="@layout/fragment_guide_register_second" >
-        <action
-            android:id="@+id/action_guideRegisterSecond_to_verifyAccount"
-            app:destination="@id/verifyAccountFragment" />
-        <action
-            android:id="@+id/action_guideRegisterSecond_to_login"
-            app:destination="@id/loginFragment" />
-    </fragment>
+
 
     <fragment
         android:id="@+id/verifyAccountFragment"
@@ -107,30 +73,7 @@
             app:destination="@id/newPasswordFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/driverRegisterFragment"
-        android:name="com.visualinnovate.almursheed.auth.view.driver.DriverRegisterFragment"
-        android:label="Driver Register #1"
-        tools:layout="@layout/fragment_driver_register" >
-        <action
-            android:id="@+id/action_driverRegister_to_login"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_driverRegister_to_driverRegisterComplete"
-            app:destination="@id/driverRegisterCompleteFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/driverRegisterCompleteFragment"
-        android:name="com.visualinnovate.almursheed.auth.view.driver.CompleteDriverRegisterFragment"
-        android:label="Driver Register #2"
-        tools:layout="@layout/fragment_driver_register_complete" >
-        <action
-            android:id="@+id/action_driverRegisterComplete_to_verifyAccount"
-            app:destination="@id/verifyAccountFragment" />
-        <action
-            android:id="@+id/action_driverRegisterComplete_to_login"
-            app:destination="@id/loginFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/forgetPasswordFragment"
         android:name="com.visualinnovate.almursheed.auth.view.ForgetPasswordFragment"

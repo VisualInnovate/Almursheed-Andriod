@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.visualinnovate.almursheed.auth.model.DriverResponse
 import com.visualinnovate.almursheed.auth.model.RegisterDriverRequest
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
+import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DriverViewModel @Inject constructor(
     private val apiService: ApiService,
-    application: Application
+    application: Application,
 ) : BaseApiResponse(application) {
 
     var registerDriverRequest = RegisterDriverRequest()
@@ -33,94 +35,32 @@ class DriverViewModel @Inject constructor(
     val registerDriverLiveData: LiveData<ResponseHandler<DriverResponse?>> =
         _registerDriverMutableData
 
-    private fun createMultiPartToImage(image: String, name: String): MultipartBody.Part {
-        val file = File(image) //
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-        val body = MultipartBody.Part.createFormData(name, file.name, requestFile) // "image"
-        Log.d("createMultiPartToImage", "body $body")
-        return body
-    }
 
-    fun createDriverMultiPart() {
-        for (carImagePath in registerDriverRequest.carImagesList!!) {
-            val carImageFile = File(carImagePath)
-            val carImageRequestBody =
-                RequestBody.create("image/*".toMediaTypeOrNull(), carImageFile)
-            val carImagePart = MultipartBody.Part.createFormData(
-                "car_photos",
-                carImageFile.name,
-                carImageRequestBody
-            )
-            imagesList.add(carImagePart)
-        }
-
-        val profilePicFile = File(registerDriverRequest.personal_pictures!!)
-        val profilePicRequestBody =
-            RequestBody.create("image/*".toMediaTypeOrNull(), profilePicFile)
-
-        // yaaaaaaaaaaaaaaaaaaaaaad
-        val profilePicPart = MultipartBody.Part.createFormData(
-            "personal_pictures",
-            profilePicFile.name,
-            profilePicRequestBody
-        )
-        val name =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.name!!)
-        val country_id = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            registerDriverRequest.country_id!!.toString()
-        )
-        val state_id = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            registerDriverRequest.state_id!!.toString()
-        )
-        val gender = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            registerDriverRequest.gender!!.toString()
-        )
-        val password =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.password!!)
-        val email =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.email!!)
-        val phone =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.phone!!)
-        val bio = RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.bio!!)
-        val car_number =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.car_number!!)
-        val driver_licence_number = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            registerDriverRequest.driver_licence_number!!
-        )
-        val gov_id =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), registerDriverRequest.gov_id!!)
-        val languagesList = ArrayList<RequestBody>()
-        for (i in registerDriverRequest.languages!!) {
-            val lang = RequestBody.create("text/plain".toMediaTypeOrNull(), i.toString())
-            languagesList.add(lang)
-        }
-
+    fun registerDriver(name: String, email: String, password: String , gender:String ,  nationality:String , countryId:Int , cityId:Int , type:String) {
+       val requestBody =  createBodyRequest(name, email, password, gender,nationality, countryId, cityId, type)
         viewModelScope.launch {
             safeApiCall {
-                // Make your API call here using Retrofit service or similar
-                apiService.registerDriver(
-                    name,
-                    country_id,
-                    state_id,
-                    gender,
-                    password,
-                    email,
-                    phone,
-                    bio,
-                    car_number,
-                    driver_licence_number,
-                    gov_id,
-                    imagesList,
-                    profilePicPart,
-                    registerDriverRequest.languages!!
-                )
-            }.asLiveData().observeForever {
+                apiService.registerDriver(requestBody)
+            }.collect {
                 _registerDriverMutableData.value = it
             }
         }
+    }
+
+
+    private fun createBodyRequest(name: String, email: String, password: String , gender:String ,  nationality:String , countryId:Int , cityId:Int , type:String): RequestBody {
+        val requestData = mapOf(
+            "name" to name,
+            "email" to email,
+            "nationality" to nationality,
+            "country_id" to countryId,
+            "state_id" to cityId,
+            "gender" to gender,
+            "password" to password,
+            "type" to type,
+        )
+        val gson = Gson()
+        val jsonData = gson.toJson(requestData)
+        return RequestBody.create("application/json".toMediaTypeOrNull(), jsonData)
     }
 }

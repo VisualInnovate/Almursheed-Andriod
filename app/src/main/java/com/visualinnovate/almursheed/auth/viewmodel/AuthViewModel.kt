@@ -10,7 +10,6 @@ import com.visualinnovate.almursheed.auth.model.LoginResponse
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.TouristResponse
 import com.visualinnovate.almursheed.common.toSingleEvent
-import com.visualinnovate.almursheed.home.view.LiveEvent
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -25,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val apiService: ApiService,
-    application: Application
+    application: Application,
 ) : BaseApiResponse(application) {
 
     private val _loginMutableData: MutableLiveData<ResponseHandler<LoginResponse?>> =
@@ -70,7 +69,7 @@ class AuthViewModel @Inject constructor(
         email: String,
         nationalityName: String,
         password: String,
-        file: File
+        file: File,
     ) {
         val countryId = "50"
         val stateId = "5"
@@ -84,15 +83,15 @@ class AuthViewModel @Inject constructor(
             RequestBody.create("text/plain".toMediaTypeOrNull(), username)
         val country_id = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            countryId.toString()
+            countryId.toString(),
         )
         val state_id = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            stateId
+            stateId,
         )
         val gender = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            genderId
+            genderId,
         )
         val password =
             RequestBody.create("text/plain".toMediaTypeOrNull(), password)
@@ -109,7 +108,7 @@ class AuthViewModel @Inject constructor(
                     gender,
                     password,
                     email,
-                    profilePicPart
+                    profilePicPart,
                 )
             }.asLiveData().observeForever {
                 _registerTouristMutableData.value = it

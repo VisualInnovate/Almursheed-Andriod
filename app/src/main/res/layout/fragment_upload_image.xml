@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_curve_offer_details"
-    tools:context=".auth.view.driver.UploadImageSheetFragment">
+    tools:context=".auth.view.UploadImageSheetFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/icClose"

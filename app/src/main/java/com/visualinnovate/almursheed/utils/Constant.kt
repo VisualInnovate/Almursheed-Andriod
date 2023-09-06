@@ -22,4 +22,7 @@ object Constant {
     const val ATTRACTIVE_ID = "attractive_id"
     const val LOCATION_DETAILS = "location Details"
     const val ACCOMMODATION_ID = "AccommodationId"
+    const val ROLE_TOURIST = "Tourist"
+    const val ROLE_GUIDE = "Guide"
+    const val ROLE_DRIVER = "Driver"
 }

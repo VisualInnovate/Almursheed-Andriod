@@ -75,7 +75,6 @@ class VerifyAccountFragment : BaseFragment() {
             // counter
         }
         binding.btnVerify.onDebouncedListener {
-            Log.d("", "email $email otp $otpCode")
             // call api
             if (validate()) {
                 vm.validateOTP(email, otpCode!!)

@@ -45,7 +45,7 @@
         app:otp_filledTextSize="@dimen/space_18x_sp"
         app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
         app:otp_highlightedTextSize="@dimen/space_18x_sp"
-        app:otp_itemCount="6"
+        app:otp_itemCount="4"
         app:otp_itemHeight="@dimen/space_14x"
         app:otp_itemWidth="@dimen/space_14x"
         app:otp_showCursor="true"

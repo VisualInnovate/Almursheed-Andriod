@@ -12,23 +12,29 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @Multipart
+//    @Multipart
+//    @POST("drivers/create")
+//    suspend fun registerDriver(
+//        @Part("name") name: RequestBody,
+//        @Part("country_id") country_id: RequestBody,
+//        @Part("state_id") state_id: RequestBody,
+//        @Part("gender") gender: RequestBody,
+//        @Part("password") password: RequestBody,
+//        @Part("email") email: RequestBody,
+//        @Part("phone") phone: RequestBody,
+//        @Part("bio") bio: RequestBody,
+//        @Part("car_number") car_number: RequestBody,
+//        @Part("driver_licence_number") driver_licence_number: RequestBody,
+//        @Part("gov_id") gov_id: RequestBody,
+//        @Part car_photos: List<MultipartBody.Part>,
+//        @Part personal_pictures: MultipartBody.Part, // @Part image: MultipartBody.Part,
+//        @Part("languages[]") languages: List<Int>
+//    ): Response<DriverResponse>
+//
+
     @POST("drivers/create")
     suspend fun registerDriver(
-        @Part("name") name: RequestBody,
-        @Part("country_id") country_id: RequestBody,
-        @Part("state_id") state_id: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("password") password: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part("phone") phone: RequestBody,
-        @Part("bio") bio: RequestBody,
-        @Part("car_number") car_number: RequestBody,
-        @Part("driver_licence_number") driver_licence_number: RequestBody,
-        @Part("gov_id") gov_id: RequestBody,
-        @Part car_photos: List<MultipartBody.Part>,
-        @Part personal_pictures: MultipartBody.Part, // @Part image: MultipartBody.Part,
-        @Part("languages[]") languages: List<Int>
+        @Body requestBody: RequestBody,
     ): Response<DriverResponse>
 
     @Multipart
@@ -40,25 +46,25 @@ interface ApiService {
         @Part("gender") gender: RequestBody,
         @Part("password") password: RequestBody,
         @Part("email") email: RequestBody,
-        @Part personal_pictures: MultipartBody.Part // @Part image: MultipartBody.Part,
+        @Part personal_pictures: MultipartBody.Part, // @Part image: MultipartBody.Part,
     ): Response<TouristResponse>
 
     @POST("login-clients")
     suspend fun login(
         @Query("email") email: String?,
         @Query("password") password: String?,
-        @Query("type") type: Int?
+        @Query("type") type: Int?,
     ): Response<LoginResponse>
 
     @POST("password/send-otp")
     suspend fun forgetPassword(
-        @Query("email") email: String?
+        @Query("email") email: String?,
     ): Response<MessageResponse>
 
     @POST("password/validate-otp")
     suspend fun validateOTP(
         @Query("email") email: String?,
-        @Query("otp") otp: String?
+        @Query("otp") otp: String?,
     ): Response<MessageResponse>
 
     @POST("password/reset")
@@ -66,7 +72,7 @@ interface ApiService {
         @Query("otp") otp: String?,
         @Query("email") email: String?,
         @Query("password") newPassword: String?,
-        @Query("password_confirmation") password_confirmation: String?
+        @Query("password_confirmation") password_confirmation: String?,
     ): Response<MessageResponse>
 
     @GET("guides/latest/{id}")
@@ -89,12 +95,12 @@ interface ApiService {
 
     @GET("attracives/{id}") // https://mursheed.visualinnovate.net/api/attracives
     suspend fun getAttractiveDetailsById(
-        @Path("id") id: Int
+        @Path("id") id: Int,
     ): Response<AttraciveDetailsResponse>
 
     @GET("offers/{id}")
     suspend fun getOfferDetailsById(
-        @Path("id") offerId: Int
+        @Path("id") offerId: Int,
     ): Response<OfferDetailsResponse>
 
     @GET("accommodition")
@@ -102,17 +108,17 @@ interface ApiService {
 
     @GET("accommodition/{id}")
     suspend fun getAccommodationDetailsById(
-        @Path("id") id: Int
+        @Path("id") id: Int,
     ): Response<AccommodationDetailsResponse>
 
     @GET("drivers/{id}")
     suspend fun getDriverDetailsById(
-        @Path("id") id: Int
+        @Path("id") id: Int,
     ): Response<DriverDetailsResponse>
 
     @GET("guides/{id}")
     suspend fun getGuideDetailsById(
-        @Path("id") id: Int
+        @Path("id") id: Int,
     ): Response<GuideDetailsResponse>
 
     @GET("flights")
