@@ -37,6 +37,7 @@
         android:maxLines="1"
         android:textColor="@color/primary"
         android:textSize="@dimen/space_16x_sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/txt2"
         app:layout_constraintStart_toStartOf="@id/txt1"
         app:layout_constraintTop_toBottomOf="@id/txt1"
@@ -55,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="@id/txt1"
         app:layout_constraintStart_toEndOf="@id/email"
         app:layout_constraintTop_toBottomOf="@id/txt1"
-        tools:text="@string/enter_the_code_below" />
+        android:text="@string/enter_the_code_below" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearOtpView"

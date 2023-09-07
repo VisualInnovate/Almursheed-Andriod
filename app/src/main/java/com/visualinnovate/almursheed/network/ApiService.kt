@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.network
 
-import com.visualinnovate.almursheed.auth.model.DriverResponse
-import com.visualinnovate.almursheed.auth.model.LoginResponse
+import com.visualinnovate.almursheed.auth.model.UserResponse
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.TouristResponse
 import com.visualinnovate.almursheed.home.model.*
@@ -35,25 +34,25 @@ interface ApiService {
     @POST("drivers/create")
     suspend fun registerDriver(
         @Body requestBody: RequestBody,
-    ): Response<DriverResponse>
+    ): Response<UserResponse>
 
-    @Multipart
+    @POST("guides/create")
+    suspend fun registerGuide(
+        @Body requestBody: RequestBody,
+    ): Response<UserResponse>
+
+
     @POST("tourists/create")
     suspend fun registerTourist(
-        @Part("name") name: RequestBody,
-        @Part("country_id") country_id: RequestBody,
-        @Part("state_id") state_id: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("password") password: RequestBody,
-        @Part("email") email: RequestBody,
-        @Part personal_pictures: MultipartBody.Part, // @Part image: MultipartBody.Part,
-    ): Response<TouristResponse>
+        @Body requestBody: RequestBody,
+    ): Response<UserResponse>
+
 
     @POST("login-clients")
     suspend fun login(
         @Query("email") email: String?,
         @Query("password") password: String?
-    ): Response<LoginResponse>
+    ): Response<UserResponse>
 
     @POST("password/send-otp")
     suspend fun forgetPassword(
@@ -62,8 +61,7 @@ interface ApiService {
 
     @POST("password/validate-otp")
     suspend fun validateOTP(
-        @Query("email") email: String?,
-        @Query("otp") otp: String?,
+        @Body requestBody: RequestBody,
     ): Response<MessageResponse>
 
     @POST("password/reset")

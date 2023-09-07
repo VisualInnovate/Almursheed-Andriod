@@ -1,34 +1,26 @@
 package com.visualinnovate.almursheed.auth.view
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextUtils
-import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
+import com.visualinnovate.almursheed.auth.viewmodel.VerificationViewModel
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
-import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentVerifyAccountBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.StringBuilder
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -36,14 +28,14 @@ class VerifyAccountFragment : BaseFragment() {
 
     private var _binding: FragmentVerifyAccountBinding? = null
     private val binding get() = _binding!!
-    private val vm: AuthViewModel by viewModels()
+    private val vm: VerificationViewModel by viewModels()
 
     private lateinit var email: String
     private var otpCode: String? = null
     private var timeLeft: Long = 0
     private var countDownTimer: CountDownTimer? = null
     private var TIMER_COUNTDOWN_INITIAL: Long = 120000
-
+    private var enableResendCode = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,7 +82,7 @@ class VerifyAccountFragment : BaseFragment() {
             }
         }
         binding.resendCode.onDebouncedListener {
-            // counter
+            if (enableResendCode) {} // call api
         }
         //
         binding.btnVerify.onDebouncedListener {
@@ -102,12 +94,10 @@ class VerifyAccountFragment : BaseFragment() {
     }
 
     private fun subscribeData() {
-        vm.validateOtpLiveData.observe(viewLifecycleOwner) {
+        vm.validateOtpLive.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     hideAuthLoading()
-                    Log.d("Success", "${it.data!!.message}")
-                    toast(it.data.message.toString())
                     // navigate to verify and pass email
                     val bundle = Bundle()
                     bundle.putString(Constant.EMAIL, email)
@@ -141,9 +131,9 @@ class VerifyAccountFragment : BaseFragment() {
     private fun validate(): Boolean {
         var isValid = true
         otpCode = binding.edtOtpBox1.text?.trim().toString() +
-                binding.edtOtpBox2.text?.trim().toString() +
-                binding.edtOtpBox3.text?.trim().toString() +
-                binding.edtOtpBox4.text?.trim().toString()
+            binding.edtOtpBox2.text?.trim().toString() +
+            binding.edtOtpBox3.text?.trim().toString() +
+            binding.edtOtpBox4.text?.trim().toString()
 
         if (binding.edtOtpBox1.text?.trim()?.isEmpty() == true) {
             binding.edtOtpBox1.error = getString(R.string.required)
@@ -168,6 +158,7 @@ class VerifyAccountFragment : BaseFragment() {
         countDownTimer?.cancel()
         countDownTimer = object : CountDownTimer(startTime, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                enableResendCode = false
                 timeLeft = millisUntilFinished
                 val minutes = (millisUntilFinished / 1000).toInt() / 60
                 val seconds = (millisUntilFinished / 1000).toInt() % 60
@@ -184,6 +175,7 @@ class VerifyAccountFragment : BaseFragment() {
 
             override fun onFinish() {
                 if (_binding != null) {
+                    enableResendCode = true
                     binding.txtResendCode.text = getString(R.string.resend_code_in, "00:00")
                 }
             }

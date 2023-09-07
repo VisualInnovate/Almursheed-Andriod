@@ -137,84 +137,6 @@
                     app:layout_constraintTop_toBottomOf="@id/txtCity" />
 
 
-                <TextView
-                    android:id="@+id/txtGender"
-                    style="@style/TextStyleBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4x"
-                    android:text="@string/gender"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCity" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintGender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_3x"
-                    android:padding="@dimen/space_1_5x"
-                    android:background="@drawable/bg_rectangle_corner_blue"
-                    app:layout_constraintTop_toBottomOf="@id/txtGender">
-
-                    <TextView
-                        android:id="@+id/txtMale"
-                        style="@style/TextStyleRegular"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:padding="@dimen/space_3x"
-                        android:text="@string/male"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:background="@drawable/bg_rectangle_corner_primary"
-                        android:textSize="@dimen/space_14x_sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/txtFemale"/>
-
-                    <TextView
-                        android:id="@+id/txtFemale"
-                        style="@style/TextStyleRegular"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:text="@string/female"
-                        android:padding="@dimen/space_3x"
-                        android:textColor="@color/grey"
-                        android:gravity="center"
-                        android:layout_marginHorizontal="@dimen/space_3x"
-                        android:textSize="@dimen/space_14x_sp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/txtMale" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <TextView
-                    android:id="@+id/txtPersonalPicture"
-                    style="@style/TextStyleBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4x"
-                    android:text="@string/personal_picture"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/constraintGender" />
-
-                <TextView
-                    android:id="@+id/btnUploadPicture"
-                    style="@style/TextStyleRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_3x"
-                    android:padding="@dimen/space_4x"
-                    android:background="@drawable/bg_rectangle_corner_blue"
-                    android:text="@string/upload_your_picture"
-                    android:textColor="@color/grey"
-                    android:drawableEnd="@drawable/ic_upload_picture"
-                    android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/txtPersonalPicture" />
 
                 <TextView
                     android:id="@+id/txtPassword"
@@ -225,7 +147,7 @@
                     android:text="@string/password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/btnUploadPicture" />
+                    app:layout_constraintTop_toBottomOf="@id/spinnerCity" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtInputPassword"
