@@ -1,23 +1,24 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.profile
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.common.SharedPreference
-import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.onDebouncedListener
-import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
+import com.visualinnovate.almursheed.common.value
+import com.visualinnovate.almursheed.databinding.FragmentEditProfileGuideBinding
+import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
 
-class MoreFragment : Fragment() {
+class EditProfileGuideFragment : Fragment() {
 
-    private var _binding: FragmentMoreBinding? = null
+    private var _binding: FragmentEditProfileGuideBinding? = null
     private val binding get() = _binding!!
+
 
     private val btnBackCallBackFunc: () -> Unit = {
         findNavController().navigateUp()
@@ -28,41 +29,35 @@ class MoreFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoreBinding.inflate(inflater, container, false)
+        _binding = FragmentEditProfileGuideBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_more)
         initToolbar()
-        initView()
         setBtnListener()
     }
 
+    private fun setBtnListener() {
+        binding.btnSubmit.onDebouncedListener {
+
+        }
+    }
+
     private fun initToolbar() {
-        binding.appBarMore.setTitleString(getString(R.string.more))
-        binding.appBarMore.setTitleCenter(true)
-        binding.appBarMore.useBackButton(
+        binding.appBarEditProfileGudie.setTitleString(getString(R.string.edit_profile))
+        binding.appBarEditProfileGudie.setTitleCenter(true)
+        binding.appBarEditProfileGudie.useBackButton(
             true,
             btnBackCallBackFunc,
             R.drawable.ic_back
         )
     }
 
-    private fun initView() {}
-
-    private fun setBtnListener() {
-        binding.editProfile.onDebouncedListener {
-            findNavController().customNavigate(R.id.editProfileFragment)
-        }
-        binding.logout.onDebouncedListener {
-            SharedPreference.saveUserToken(null)
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
 }

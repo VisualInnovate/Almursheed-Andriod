@@ -213,29 +213,28 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/txtPersonalPicture"
+                    android:id="@+id/txtPhoneNumber"
                     style="@style/TextStyleBold"
                     android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/space_3x"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4x"
-                    android:text="@string/personal_picture"
+                    android:text="@string/phone_number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/constraintGender" />
+                    app:layout_constraintTop_toBottomOf="@+id/constraintGender" />
 
-                <TextView
-                    android:id="@+id/btnUploadPicture"
-                    style="@style/TextStyleRegular"
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtPhone"
+                    style="@style/EditTextStyleRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
-                    android:padding="@dimen/space_4x"
                     android:background="@drawable/bg_rectangle_corner_blue"
-                    android:text="@string/upload_your_picture"
-                    android:textColor="@color/grey"
-                    android:drawableEnd="@drawable/ic_upload_picture"
-                    android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/txtPersonalPicture" />
+                    android:hint="@string/enter_your_name"
+                    android:inputType="number"
+                    android:padding="@dimen/space_4x"
+                    android:textColorHint="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@id/txtPhoneNumber" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -87,10 +87,11 @@
         android:name="com.visualinnovate.almursheed.home.view.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
+
     <fragment
-        android:id="@+id/completeEditProfileDriverFragment"
-        android:name="com.visualinnovate.almursheed.home.view.profile.CompleteEditProfileDriverFragment"
+        android:id="@+id/editProfileDriverFragment"
+        android:name="com.visualinnovate.almursheed.home.view.profile.EditProfileDriverFragment"
         android:label="fragment_complete_edit_profile_driver"
-        tools:layout="@layout/fragment_complete_edit_profile_driver" />
+        tools:layout="@layout/fragment_edit_profile_driver" />
 
 </navigation>

@@ -30,13 +30,13 @@ object SharedPreference {
         return Hawk.get(Constant.KEY_LANGUAGE) ?: "en"
     }
 
-    fun saveCityIfTourist(city: Int?) {
-        Hawk.put(Constant.KEY_CITY_TOURIST_CHOOSSED, city)
-    }
-
-    fun getCityIfTourist(): Int {
-        return Hawk.get(Constant.KEY_CITY_TOURIST_CHOOSSED) ?: 999999
-    }
+//    fun saveCityId(city: Int?) {
+//        Hawk.put(Constant.KEY_CITY_TOURIST_CHOOSSED, city)
+//    }
+//
+//    fun getCityId(): Int {
+//        return Hawk.get(Constant.KEY_CITY_TOURIST_CHOOSSED) ?: 999999
+//    }
 
 //    fun saveCurrentUser(currentUser: UserModel) {
 //        userModel = currentUser

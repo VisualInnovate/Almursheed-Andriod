@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
+import com.visualinnovate.almursheed.auth.model.DriverResponse
 import com.visualinnovate.almursheed.auth.model.LoginResponse
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.TouristResponse
@@ -52,12 +54,45 @@ class AuthViewModel @Inject constructor(
     val resetPasswordLiveData: LiveData<ResponseHandler<MessageResponse?>> =
         _resetPasswordMutableData.toSingleEvent()
 
-    fun login(email: String, password: String, type: Int) {
-        Log.d("login", "type $type email $email password $password")
+    private val _registerDriverMutableData: MutableLiveData<ResponseHandler<DriverResponse?>> =
+        MutableLiveData()
+    val registerDriverLiveData: LiveData<ResponseHandler<DriverResponse?>> =
+        _registerDriverMutableData.toSingleEvent()
+
+    fun registerDriver(name: String, email: String, password: String, gender: String, nationality: String, countryId: Int, cityId: Int, type: String) {
+        val requestBody = createBodyRequest(name, email, password, gender, nationality, countryId, cityId, type)
+        viewModelScope.launch {
+            safeApiCall {
+                apiService.registerDriver(requestBody)
+            }.collect {
+                _registerDriverMutableData.value = it
+            }
+        }
+    }
+
+    //
+    private fun createBodyRequest(name: String, email: String, password: String, gender: String, nationality: String, countryId: Int, cityId: Int, type: String): RequestBody {
+        val requestData = mapOf(
+            "name" to name,
+            "email" to email,
+            "nationality" to nationality,
+            "country_id" to countryId,
+            "state_id" to cityId,
+            "gender" to gender,
+            "password" to password,
+            "type" to type,
+        )
+        val gson = Gson()
+        val jsonData = gson.toJson(requestData)
+        return RequestBody.create("application/json".toMediaTypeOrNull(), jsonData)
+    }
+
+    fun login(email: String, password: String) {
+        Log.d("login", "email $email password $password")
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.login(email, password, type)
+                apiService.login(email, password)
             }.asLiveData().observeForever {
                 _loginMutableData.value = it
             }

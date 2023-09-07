@@ -106,9 +106,11 @@ class LoginFragment : BaseFragment() {
                         "Driver" -> {
                             "1"
                         }
+
                         "Guide" -> {
                             "2"
                         }
+
                         else -> {
                             showExtraViewToTourist()
                             "3"
@@ -246,8 +248,7 @@ class LoginFragment : BaseFragment() {
         binding.btnLogin.setOnClickListener {
             if (validate()) {
                 // call api login
-                SharedPreference.saveCityIfTourist(cityId)
-                vm.login(email, password, loginAs.toInt())
+                vm.login(email, password)
             }
         }
     }
@@ -256,26 +257,28 @@ class LoginFragment : BaseFragment() {
         vm.loginLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    // navigate to home
-                    if (SharedPreference.getCityIfTourist() == null) {
-                        SharedPreference.saveCityIfTourist(it.data?.user!!.stateId)
-                    }
-
-                    SharedPreference.saveUserToken(it.data!!.token!!)
-                    Log.d("Success", "${SharedPreference.getCityIfTourist()}")
-                    requireActivity().startHomeActivity()
                     // save user
+                    hideAuthLoading()
+                    SharedPreference.saveUser(it.data?.user)
+                    SharedPreference.saveUserToken(it.data?.token)
+                    Log.d("Success", "${SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId}")
+                    requireActivity().startHomeActivity()
                 }
+
                 is ResponseHandler.Error -> {
+                    hideAuthLoading()
                     // show error message
                     toast(it.message)
                     Log.d("ResponseHandler.Error", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showAuthLoading()
                 }
                 else -> {
                     toast("Else")
+                    hideAuthLoading()
                 }
             }
         }
@@ -285,6 +288,8 @@ class LoginFragment : BaseFragment() {
         var isValid = true
         email = binding.edtEmailAddress.value
         password = binding.edtPassword.value
+        email = "mohamed.nasar8710@gmail.com"
+        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

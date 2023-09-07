@@ -75,22 +75,22 @@ class HomeViewModel @Inject constructor(
     val guideDetailsLiveData: LiveData<ResponseHandler<GuideDetailsResponse?>> =
         _guideDetailsMutable
 
-    fun getLatestDriver(cityId: Int) {
+    fun getLatestDriver(cityId: Int?) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestDriver(cityId)
+                apiService.getLatestDriver(cityId!!)
             }.collect {
                 _driverLatestMutableData.value = it
             }
         }
     }
 
-    fun getLatestGuides(cityId: Int) {
+    fun getLatestGuides(cityId: Int?) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestGuide(cityId)
+                apiService.getLatestGuide(cityId!!)
             }.asLiveData().observeForever {
                 _guideLatestMutableData.value = it
             }

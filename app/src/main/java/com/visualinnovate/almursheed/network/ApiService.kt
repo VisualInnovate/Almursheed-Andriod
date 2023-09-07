@@ -52,8 +52,7 @@ interface ApiService {
     @POST("login-clients")
     suspend fun login(
         @Query("email") email: String?,
-        @Query("password") password: String?,
-        @Query("type") type: Int?,
+        @Query("password") password: String?
     ): Response<LoginResponse>
 
     @POST("password/send-otp")

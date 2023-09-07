@@ -12,10 +12,10 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.auth.viewmodel.DriverViewModel
+import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.common.*
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.permission.FileUtils
@@ -36,7 +36,7 @@ class RegisterFragment : BaseFragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: DriverViewModel by activityViewModels()
+    private val vm: AuthViewModel by viewModels()
 
     private lateinit var role: String
     private lateinit var username: String

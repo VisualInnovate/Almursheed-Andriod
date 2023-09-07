@@ -112,9 +112,9 @@ class HomeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("onStart()", "${SharedPreference.getCityIfTourist()}")
-        vm.getLatestDriver(SharedPreference.getCityIfTourist())
-        vm.getLatestGuides(SharedPreference.getCityIfTourist())
+        Log.d("onStart()", "${SharedPreference.getUser()}")
+        vm.getLatestDriver(SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId)
+        vm.getLatestGuides(SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId)
         // vm.fetchAllDrivers()
         // vm.fetchAllGuides()
         vm.fetchOfferResponse()
