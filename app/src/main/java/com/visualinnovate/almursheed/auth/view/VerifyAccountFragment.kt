@@ -12,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
@@ -21,6 +23,7 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentVerifyAccountBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -35,8 +38,8 @@ class VerifyAccountFragment : BaseFragment() {
     private val binding get() = _binding!!
     private val vm: AuthViewModel by viewModels()
 
-    private var otpCode: String? = null
     private lateinit var email: String
+    private var otpCode: String? = null
     private var timeLeft: Long = 0
     private var countDownTimer: CountDownTimer? = null
     private var TIMER_COUNTDOWN_INITIAL: Long = 120000
@@ -61,11 +64,7 @@ class VerifyAccountFragment : BaseFragment() {
     }
 
     private fun initView() {
-        binding.txt1.text =
-            "${
-                getString(R.string.a_verification_code_has_been_sent_to)
-            } ${getString(R.string.enter_the_code_below)}"
-
+        binding.email.text = email
         setTimer(TIMER_COUNTDOWN_INITIAL)
     }
 
@@ -75,6 +74,21 @@ class VerifyAccountFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
+        binding.edtOtpBox1.doAfterTextChanged {
+            if (it != null && !it.toString().isEmptySting()) {
+                binding.edtOtpBox2.requestFocus()
+            }
+        }
+        binding.edtOtpBox2.doAfterTextChanged {
+            if (it != null && !it.toString().isEmptySting()) {
+                binding.edtOtpBox3.requestFocus()
+            }
+        }
+        binding.edtOtpBox3.doAfterTextChanged {
+            if (it != null && !it.toString().isEmptySting()) {
+                binding.edtOtpBox4.requestFocus()
+            }
+        }
         binding.resendCode.onDebouncedListener {
             // counter
         }
@@ -100,19 +114,23 @@ class VerifyAccountFragment : BaseFragment() {
                     bundle.putString(Constant.OTP, otpCode)
                     findNavController().customNavigate(R.id.newPasswordFragment, false, bundle)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("ResponseHandler.Error ", "forgetPassword ${it.message}")
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                     showAuthLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
                     hideAuthLoading()
                 }
+
                 else -> {
                     toast("Else")
                 }
@@ -122,13 +140,27 @@ class VerifyAccountFragment : BaseFragment() {
 
     private fun validate(): Boolean {
         var isValid = true
-        otpCode = binding.otpView.getStringFromFields()
+        otpCode = binding.edtOtpBox1.text?.trim().toString() +
+                binding.edtOtpBox2.text?.trim().toString() +
+                binding.edtOtpBox3.text?.trim().toString() +
+                binding.edtOtpBox4.text?.trim().toString()
 
-        if (otpCode!!.isEmptySting()) {
-            toast("Please enter code to verification")
+        if (binding.edtOtpBox1.text?.trim()?.isEmpty() == true) {
+            binding.edtOtpBox1.error = getString(R.string.required)
             isValid = false
         }
-
+        if (binding.edtOtpBox2.text?.trim()?.isEmpty() == true) {
+            binding.edtOtpBox2.error = getString(R.string.required)
+            isValid = false
+        }
+        if (binding.edtOtpBox3.text?.trim()?.isEmpty() == true) {
+            binding.edtOtpBox3.error = getString(R.string.required)
+            isValid = false
+        }
+        if (binding.edtOtpBox4.text?.trim()?.isEmpty() == true) {
+            binding.edtOtpBox4.error = getString(R.string.required)
+            isValid = false
+        }
         return isValid
     }
 

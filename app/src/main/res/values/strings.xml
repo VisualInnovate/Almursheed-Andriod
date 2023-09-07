@@ -130,8 +130,8 @@
     <string name="required">Field is required</string>
     <string name="password_should_be_more_than_8_characters">Password should be more than 8 characters</string>
     <string name="confirm_password_should_be_more_than_8_characters">Confirm password should be more than 8 characters</string>
-    <string name="a_verification_code_has_been_sent_to">A verification code has been sent to <font color="%1$s">%2$s</font></string>
-    <string name="enter_the_code_below"> Enter the code below</string>
+    <string name="a_verification_code_has_been_sent_to">A verification code has been sent to</string>
+    <string name="enter_the_code_below">, enter the code below</string>
     <string name="resend_code_in">Resend code in %s</string>
     <string name="verify">Verify</string>
     <string name="please_enter_a_valid_email">Please enter a valid email</string>

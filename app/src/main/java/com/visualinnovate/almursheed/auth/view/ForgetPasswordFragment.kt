@@ -68,7 +68,7 @@ class ForgetPasswordFragment : BaseFragment() {
                     // navigate to verify and pass email
                     val bundle = Bundle()
                     bundle.putString(Constant.EMAIL, email)
-                    findNavController().customNavigate(R.id.verifyAccountFragment, false, bundle)
+                    findNavController().customNavigate(R.id.verifyAccountFragment, data = bundle)
                 }
                 is ResponseHandler.Error -> {
                     // show error message
@@ -93,6 +93,7 @@ class ForgetPasswordFragment : BaseFragment() {
     private fun validate(): Boolean {
         var isValid = true
         email = binding.edtEmailAddress.value
+        email = "mohamed.nasar8710@gmail.com"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

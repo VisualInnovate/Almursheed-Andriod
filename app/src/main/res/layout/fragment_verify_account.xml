@@ -21,40 +21,105 @@
         android:layout_marginHorizontal="@dimen/space_5x"
         android:layout_marginTop="@dimen/space_6x"
         android:gravity="center"
-        android:textColor="@color/grey"
         android:lineSpacingExtra="@dimen/space_1x"
+        android:text="@string/a_verification_code_has_been_sent_to"
+        android:textColor="@color/grey"
         android:textSize="@dimen/space_16x_sp"
-        app:layout_constraintTop_toBottomOf="@id/appBarVerifyCode"
-        tools:text="A verification code has been sent to \n abc@gmail.com, Enter the code below" />
+        app:layout_constraintTop_toBottomOf="@id/appBarVerifyCode" />
 
-    <com.kevinschildhorn.otpview.OTPView
-        android:id="@+id/otpView"
+    <TextView
+        android:id="@+id/email"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:lineSpacingExtra="@dimen/space_1x"
+        android:maxLines="1"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintEnd_toStartOf="@id/txt2"
+        app:layout_constraintStart_toStartOf="@id/txt1"
+        app:layout_constraintTop_toBottomOf="@id/txt1"
+        tools:text="mohamed.nasar8710@gmail.com" />
+
+    <TextView
+        android:id="@+id/txt2"
+        style="@style/TextStyleRegular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_6x"
-        android:autofillHints=""
-        android:gravity="center"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt1"
-        app:otp_backgroundImage="@drawable/bg_verify_otp"
-        app:otp_cursorColor="@color/black"
-        app:otp_filledBackgroundImage="@drawable/bg_verify_otp"
-        app:otp_filledTextSize="@dimen/space_18x_sp"
-        app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
-        app:otp_highlightedTextSize="@dimen/space_18x_sp"
-        app:otp_itemCount="4"
-        app:otp_itemHeight="@dimen/space_16x"
-        app:otp_itemWidth="@dimen/space_16x"
-        app:otp_showCursor="true"
-        app:otp_textColor="@color/primary"
-        app:otp_textSize="@dimen/space_18x_sp"
-        app:otp_underscoreCursor="true" />
+        android:layout_marginEnd="@dimen/space_2x"
+        android:gravity="start"
+        android:lineSpacingExtra="@dimen/space_1x"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/space_16x_sp"
+        app:layout_constraintEnd_toEndOf="@id/txt1"
+        app:layout_constraintStart_toEndOf="@id/email"
+        app:layout_constraintTop_toBottomOf="@id/txt1"
+        tools:text="@string/enter_the_code_below" />
 
-<!--    app:otp_marginBetween="@dimen/space_7x"-->
-<!--    android:layout_marginHorizontal="@dimen/space_6x"-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearOtpView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/space_12x"
+        android:layout_marginTop="@dimen/space_10x"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        app:layout_constraintTop_toBottomOf="@id/txt2">
+
+        <EditText
+            android:id="@+id/edtOtpBox1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="@dimen/space_5x"
+            android:layout_weight="1"
+            android:nextFocusDown="@id/edtOtpBox2"
+            android:background="@drawable/background_highlighted"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="@dimen/space_18x_sp" />
+
+        <EditText
+            android:id="@+id/edtOtpBox2"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:nextFocusDown="@id/edtOtpBox3"
+            android:background="@drawable/background_highlighted"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="@dimen/space_18x_sp" />
+
+        <EditText
+            android:id="@+id/edtOtpBox3"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="@dimen/space_5x"
+            android:layout_weight="1"
+            android:nextFocusDown="@id/edtOtpBox4"
+            android:background="@drawable/background_highlighted"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="@dimen/space_18x_sp"
+            tools:text="1" />
+
+        <EditText
+            android:id="@+id/edtOtpBox4"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/background_highlighted"
+            android:gravity="center"
+            android:inputType="number"
+            android:maxLength="1"
+            android:textSize="@dimen/space_18x_sp" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:id="@+id/txtResendCode"
@@ -70,7 +135,8 @@
         android:textColor="@color/black"
         android:textSize="@dimen/space_16x_sp"
         app:drawableStartCompat="@drawable/ic_resend_code"
-        app:layout_constraintTop_toBottomOf="@id/otpView" />
+        app:layout_constraintTop_toBottomOf="@id/linearOtpView" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnVerify"
