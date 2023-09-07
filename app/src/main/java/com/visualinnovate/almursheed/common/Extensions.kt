@@ -116,6 +116,7 @@ fun String.isEmptySting(): Boolean {
             this.equals("", ignoreCase = true) ||
             this.equals("{}", ignoreCase = true) ||
             this.equals("null", ignoreCase = true) ||
+            this.equals("nullnullnullnull", ignoreCase = true) ||
             this.equals("undefined", ignoreCase = true)
         )
 }

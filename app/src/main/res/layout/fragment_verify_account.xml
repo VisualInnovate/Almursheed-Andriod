@@ -21,16 +21,16 @@
         android:layout_marginHorizontal="@dimen/space_5x"
         android:layout_marginTop="@dimen/space_6x"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/grey"
+        android:lineSpacingExtra="@dimen/space_1x"
         android:textSize="@dimen/space_16x_sp"
         app:layout_constraintTop_toBottomOf="@id/appBarVerifyCode"
         tools:text="A verification code has been sent to \n abc@gmail.com, Enter the code below" />
 
     <com.kevinschildhorn.otpview.OTPView
         android:id="@+id/otpView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="@dimen/space_6x"
         android:autofillHints=""
         android:gravity="center"
@@ -46,12 +46,12 @@
         app:otp_highlightedBackgroundImage="@drawable/background_highlighted"
         app:otp_highlightedTextSize="@dimen/space_18x_sp"
         app:otp_itemCount="4"
-        app:otp_itemHeight="@dimen/space_14x"
-        app:otp_itemWidth="@dimen/space_14x"
+        app:otp_itemHeight="@dimen/space_16x"
+        app:otp_itemWidth="@dimen/space_16x"
         app:otp_showCursor="true"
         app:otp_textColor="@color/primary"
         app:otp_textSize="@dimen/space_18x_sp"
-        app:otp_underscoreCursor="false" />
+        app:otp_underscoreCursor="true" />
 
 <!--    app:otp_marginBetween="@dimen/space_7x"-->
 <!--    android:layout_marginHorizontal="@dimen/space_6x"-->

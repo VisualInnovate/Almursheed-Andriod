@@ -17,13 +17,13 @@ import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.DriverViewModel
 import com.visualinnovate.almursheed.common.*
-import com.visualinnovate.almursheed.utils.Constant.ROLE_TOURIST
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.databinding.FragmentRegisterBinding
 import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.Constant.ROLE_TOURIST
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.cities
 import com.visualinnovate.almursheed.utils.Utils.countries
@@ -86,7 +86,7 @@ class RegisterFragment : BaseFragment() {
                     hideAuthLoading()
                     toast(it.data!!.message!!)
                     val bundle = Bundle()
-                    bundle.putString("email",email)
+                    bundle.putString("email", email)
                     findNavController().customNavigate(R.id.verifyAccountFragment, data = bundle)
                 }
                 is ResponseHandler.Error -> {
@@ -116,8 +116,8 @@ class RegisterFragment : BaseFragment() {
             binding.txtCountry.text = getString(R.string.destination_country)
             binding.txtCity.text = getString(R.string.destination_city)
         }
-        binding.btnUploadPicture.gone()
-        binding.txtPersonalPicture.gone()
+        //    binding.btnUploadPicture.gone()
+        //   binding.txtPersonalPicture.gone()
         initCountrySpinner()
         initNationalitySpinner()
         initCitySpinner()
@@ -281,8 +281,8 @@ class RegisterFragment : BaseFragment() {
                 // vm.registerDriverRequest.country_id = countryId
                 // vm.registerDriverRequest.state_id = cityId
                 // vm.registerDriverRequest.personal_pictures = imagePath
-                vm.registerDriver(username,email,password,gender,nationalityName,countryId!!,cityId!!,role)
-               // findNavController().customNavigate(R.id.verifyAccountFragment)
+                vm.registerDriver(username, email, password, gender, nationalityName, countryId!!, cityId!!, role)
+                // findNavController().customNavigate(R.id.verifyAccountFragment)
             }
         }
     }
@@ -339,7 +339,9 @@ class RegisterFragment : BaseFragment() {
     private fun subscribeActivityResult() {
         activityResultsCallBack.observe(viewLifecycleOwner) {
             if (it != null) { // from gallery
+                Log.d("MyDebugData","RegisterFragment : it != null :  " + it.clipData);
                 if (it.data != null) {
+                    Log.d("MyDebugData","RegisterFragment : it.data !=null:  " + it.clipData);
                     it.data?.let { uri ->
                         fileUtils.getFilePath(uri, { error ->
                             Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
@@ -428,6 +430,9 @@ class RegisterFragment : BaseFragment() {
 
     private fun performCameraAndGalleyAction() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryIntent.type = "image/*"
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        galleryIntent.action = Intent.ACTION_GET_CONTENT
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val uri = fileUtils.createTmpFileUri()
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
