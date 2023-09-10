@@ -31,75 +31,14 @@
                 android:layout_margin="@dimen/space_4x">
 
                 <TextView
-                    android:id="@+id/txtLoginAs"
-                    style="@style/TextStyleBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/login_as"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <include
-                    android:id="@+id/spinnerLoginAs"
-                    layout="@layout/layout_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_3x"
-                    app:layout_constraintTop_toBottomOf="@id/txtLoginAs" />
-
-                <TextView
-                    android:id="@+id/txtChooseDestination"
-                    style="@style/TextStyleBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4x"
-                    android:text="@string/choose_destination"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/space_14x_sp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerLoginAs" />
-
-                <include
-                    android:id="@+id/spinnerChooseDestination"
-                    layout="@layout/layout_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_3x"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/txtChooseDestination" />
-
-                <TextView
-                    android:id="@+id/txtChooseCity"
-                    style="@style/TextStyleBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4x"
-                    android:text="@string/choose_city"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/space_14x_sp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerChooseDestination" />
-
-                <include
-                    android:id="@+id/spinnerChooseCity"
-                    layout="@layout/layout_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_3x"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/txtChooseCity" />
-
-                <TextView
                     android:id="@+id/txtEmailAddress"
                     style="@style/TextStyleBold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_4x"
                     android:text="@string/email_address"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerChooseCity" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtEmailAddress"

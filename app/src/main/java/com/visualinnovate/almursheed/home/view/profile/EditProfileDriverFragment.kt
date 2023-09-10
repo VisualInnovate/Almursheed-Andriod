@@ -11,26 +11,28 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.view.UploadImageSheetFragment
 import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.base.BaseFragment
-import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileDriverBinding
+import com.visualinnovate.almursheed.home.view.ProfileData
 import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.carBrand
 import com.visualinnovate.almursheed.utils.Utils.carType
 import com.visualinnovate.almursheed.utils.Utils.carYears
 import com.visualinnovate.almursheed.utils.Utils.languages
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditProfileDriverFragment : BaseFragment() {
 
     private var _binding: FragmentEditProfileDriverBinding? = null
@@ -38,7 +40,8 @@ class EditProfileDriverFragment : BaseFragment() {
 
     private val vm: ProfileViewModel by activityViewModels()
 
-    private lateinit var phoneNumber: String
+    private var profileData: ProfileData? = null
+
     private lateinit var governmentID: String
     private lateinit var licenseNumber: String
     private var carNumber: String? = ""
@@ -46,18 +49,14 @@ class EditProfileDriverFragment : BaseFragment() {
     private var year: String? = ""
     private var brandId: String? = ""
     private var languagesIdsList: ArrayList<Int> = ArrayList()
-
-    //
     private var carImagePath: String = ""
     private var carImagesList: ArrayList<String> = ArrayList()
     private var documentImagePath: String = ""
+
+    //
     private val fileUtils by lazy { FileUtils(requireContext()) }
     private val imageCompressor by lazy { ImageCompressorHelper.with(requireContext()) }
     private lateinit var permissionHelper: PermissionHelper
-
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +69,8 @@ class EditProfileDriverFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        profileData = requireArguments().getParcelable("ProfileData")
+        Log.d("profileData", "profileData in update drive $profileData")
         permissionHelper = PermissionHelper.init(this)
         //
         initViews()
@@ -95,7 +96,7 @@ class EditProfileDriverFragment : BaseFragment() {
         binding.appBarDriverRegisterSecond.setTitleCenter(true)
         binding.appBarDriverRegisterSecond.useBackButton(
             true,
-            btnBackCallBackFunc,
+            { findNavController().navigateUp() },
             R.drawable.ic_back
         )
     }
@@ -109,7 +110,9 @@ class EditProfileDriverFragment : BaseFragment() {
         }
 
         binding.btnRegister.setOnClickListener {
-            if (validate()) {
+            governmentID = binding.edtGovernmentID.value
+            licenseNumber = binding.edtLicenseNumber.value
+            carNumber = binding.edtCarNumber.value
 //                vm.registerDriverRequest.gov_id = governmentID
 //                vm.registerDriverRequest.phone = phoneNumber
 //                vm.registerDriverRequest.driver_licence_number = licenseNumber
@@ -118,33 +121,45 @@ class EditProfileDriverFragment : BaseFragment() {
 //                vm.registerDriverRequest.car_photos = carImagePath
 //                vm.registerDriverRequest.carImagesList = carImagesList
 //                vm.registerDriverRequest.languages = languagesIdsList
-                // call api driver create
-                // vm.createDriverMultiPart()
-            }
+            // call api driver create
+            vm.updateDriverMultiPart(
+                profileData, governmentID, licenseNumber,
+                carNumber!!, "bio bio bio", carImagesList, languagesIdsList
+            )
         }
     }
 
     private fun subscribeData() {
-//        vm.registerDriverLiveData.observe(viewLifecycleOwner) {
-//            when (it) {
-//                is ResponseHandler.Success -> {
-//                    // bind data to the view
-//                    Log.d("registerDriverLiveData", "it.data ${it.data}")
-//                    findNavController().customNavigate(R.id.loginFragment)
-//                }
-//                is ResponseHandler.Error -> {
-//                    // show error message
-//                    toast(it.message)
-//                    Log.d("ResponseHandler.Error -> Register Driver", it.message)
-//                }
-//                is ResponseHandler.Loading -> {
-//                    // show a progress bar
-//                }
-//                else -> {
-//                    toast("Else")
-//                }
-//            }
-//        }
+        vm.updateDriverLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    hideMainLoading()
+                    // bind data to the view
+                    Log.d("registerDriverLiveData", "it.data ${it.data}")
+                    toast(it.data?.message ?: "")
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("ResponseHandler.Error -> Register Driver", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {
+                    // toast("Else")
+                }
+            }
+        }
     }
 
     private fun initYearSpinner() {
@@ -313,52 +328,6 @@ class EditProfileDriverFragment : BaseFragment() {
 //            Log.d("readJsonFile", "languageId $languageId")
 //            Log.d("readJsonFile", "languagesIdsList $languagesIdsList")
 //        }
-    }
-
-    private fun validate(): Boolean {
-        var isValid = true
-        phoneNumber = binding.edtPhone.value
-        governmentID = binding.edtGovernmentID.value
-        licenseNumber = binding.edtLicenseNumber.value
-        carNumber = binding.edtCarNumber.value
-
-        if (phoneNumber.isEmptySting()) {
-            binding.edtPhone.error = getString(R.string.required)
-            isValid = false
-        } else {
-            binding.edtPhone.error = null
-        }
-        if (governmentID.isEmptySting()) {
-            binding.edtGovernmentID.error = getString(R.string.required)
-            isValid = false
-        } else {
-            binding.edtGovernmentID.error = null
-        }
-        if (licenseNumber.isEmptySting()) {
-            binding.edtLicenseNumber.error = getString(R.string.required)
-            isValid = false
-        } else {
-            binding.edtLicenseNumber.error = null
-        }
-        if (carNumber?.isEmptySting() == true) {
-            binding.edtCarNumber.error = getString(R.string.required)
-            isValid = false
-        } else {
-            binding.edtCarNumber.error = null
-        }
-        if (year?.isEmptySting() == true) {
-            toast("Please choose car manufacturing date")
-            isValid = false
-        }
-        if (brandId?.isEmptySting() == true) {
-            toast("Please choose car brand name")
-            isValid = false
-        }
-        if (carImagePath.isEmptySting()) {
-            toast("Please choose car photo")
-            isValid = false
-        }
-        return isValid
     }
 
     private fun subscribeActivityResult() {

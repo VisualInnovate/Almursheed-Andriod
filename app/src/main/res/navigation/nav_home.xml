@@ -93,5 +93,10 @@
         android:name="com.visualinnovate.almursheed.home.view.profile.EditProfileDriverFragment"
         android:label="fragment_complete_edit_profile_driver"
         tools:layout="@layout/fragment_edit_profile_driver" />
+    <fragment
+        android:id="@+id/editProfileGuideFragment"
+        android:name="com.visualinnovate.almursheed.home.view.profile.EditProfileGuideFragment"
+        android:label="fragment_edit_profile_guide"
+        tools:layout="@layout/fragment_edit_profile_guide" />
 
 </navigation>

@@ -1,10 +1,8 @@
 package com.visualinnovate.almursheed.network
 
-import com.visualinnovate.almursheed.auth.model.UserResponse
 import com.visualinnovate.almursheed.auth.model.MessageResponse
-import com.visualinnovate.almursheed.auth.model.TouristResponse
+import com.visualinnovate.almursheed.auth.model.UserResponse
 import com.visualinnovate.almursheed.home.model.*
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -120,4 +118,24 @@ interface ApiService {
 
     @GET("flights")
     suspend fun getAllFlights(): Response<FlightResponse>
+
+    @Multipart
+    @POST("drivers/update")
+    suspend fun updateDriver(
+        @Part("name") name: RequestBody,
+        @Part("country_id") country_id: RequestBody,
+        @Part("state_id") state_id: RequestBody,
+        // @Part("gender") gender: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("bio") bio: RequestBody,
+        @Part("gov_id") gov_id: RequestBody,
+        // @Part("languages[]") languages: List<Int>
+        // @Part personal_pictures: MultipartBody.Part,
+        @Part("driver_licence_number") driver_licence_number: RequestBody,
+        // @Part car_photos: List<MultipartBody.Part>,
+        @Part("car_number") car_number: RequestBody,
+        @Part("car_type") car_type: RequestBody,
+        @Part("car_brand_name") car_brand_name: RequestBody,
+        @Part("car_manufacturing_date") car_manufacturing_date: RequestBody,
+    ): Response<UpdateDriverResponse>
 }
