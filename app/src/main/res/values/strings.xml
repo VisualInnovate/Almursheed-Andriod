@@ -160,6 +160,12 @@
     <string name="destination_country">Destination Country <font fgcolor='#FF0000'> *</font></string>
     <string name="destination_city">Destination City <font fgcolor='#FF0000'> *</font></string>
     <string name="submit">Submit</string>
+    <string name="destination">Destination</string>
+    <string name="in_city">In City</string>
+    <string name="between_cities">Between Cities</string>
+    <string name="driver">Driver</string>
+    <string name="guide">Guide\n</string>
+    <string name="drivers">Drivers</string>
 
 
 </resources>

@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileGuideBinding
-import com.visualinnovate.almursheed.home.view.ProfileData
 
 class EditProfileGuideFragment : Fragment() {
 
@@ -21,8 +21,7 @@ class EditProfileGuideFragment : Fragment() {
 
     private val vm: ProfileViewModel by viewModels()
 
-    private var profileData: ProfileData = ProfileData()
-
+    private lateinit var currentUser : User
     private var govId: Int? = null
     private var languagesList: List<Int>? = null
     private var bio: String? = null
@@ -38,8 +37,7 @@ class EditProfileGuideFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileData = requireArguments().getParcelable("ProfileData")!!
-        Log.d("ProfileData", "ProfileData $profileData")
+        currentUser = requireArguments().getParcelable("userData")!!
         initToolbar()
         setBtnListener()
     }

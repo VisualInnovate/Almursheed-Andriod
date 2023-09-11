@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -38,17 +39,12 @@ class EditProfileFragment : BaseFragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val user = SharedPreference.getUser()
-
-    private var userName: String? = null
-    private var email: String? = null
+    private val currentUser: User = SharedPreference.getUser()!!
     private var nationalityName: String? = null
     private var countryId: Int? = null
     private var cityId: Int? = null
     private var gender: Int? = null
-    private var phoneNumber: String? = null
-
-    //
+    // for image
     private var imagePath: String = ""
     private val fileUtils by lazy { FileUtils(requireContext()) }
     private val imageCompressor by lazy { ImageCompressorHelper.with(requireContext()) }
@@ -57,7 +53,7 @@ class EditProfileFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -66,7 +62,6 @@ class EditProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         permissionHelper = PermissionHelper.init(this)
-        Log.d("getUser", "$user")
         initToolbar()
         initView()
         setBtnListener()
@@ -79,7 +74,7 @@ class EditProfileFragment : BaseFragment() {
         binding.appBarEditProfile1.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
     }
 
@@ -90,19 +85,22 @@ class EditProfileFragment : BaseFragment() {
         initCountrySpinner()
         initNationalitySpinner()
         initCitySpinner()
-        if (user?.type == "Driver" || user?.type == "Guide") {
+        imagePath = currentUser?.personalPhoto ?: ""
+        if (currentUser?.type == "Driver" || currentUser?.type == "Guide") {
             binding.btnNext.text = getString(R.string.next)
         } else {
             binding.btnNext.text = getString(R.string.submit)
         }
         Glide.with(requireContext())
-            .load(user?.personalPhoto)
+            .load(currentUser?.personalPhoto)
             .error(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .circleCrop()
             .into(binding.imgUser)
-        binding.edtUserName.setText(user?.name)
-        binding.edtEmailAddress.setText(user?.email)
+        binding.edtUserName.setText(currentUser?.name)
+        binding.edtEmailAddress.setText(currentUser?.email)
+        binding.edtEmailAddress.isEnabled = false
+
         // binding.spinnerNationality.spinner.selectedView
     }
 
@@ -113,7 +111,7 @@ class EditProfileFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                nationalityList
+                nationalityList,
             )
 
         binding.spinnerNationality.spinner.adapter = arrayAdapter
@@ -124,7 +122,7 @@ class EditProfileFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected country name
                     nationalityName = nationalityList[position]
@@ -149,7 +147,7 @@ class EditProfileFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                countryList
+                countryList,
             )
 
         binding.spinnerCountry.spinner.adapter = arrayAdapter
@@ -160,16 +158,12 @@ class EditProfileFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected country name
                     val selectedCountryName = countryList[position]
                     // Retrieve the corresponding country ID from the map
                     countryId = countries[selectedCountryName]!!.toInt()
-                    Log.d(
-                        "MyDebugData",
-                        "selectedCountryName $selectedCountryName countryId $countryId"
-                    )
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -191,7 +185,7 @@ class EditProfileFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                cityList
+                cityList,
             )
 
         binding.spinnerCity.spinner.adapter = arrayAdapter
@@ -202,17 +196,14 @@ class EditProfileFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected country name
                     val selectedCityName = cityList[position]
-                    Log.d("readJsonFile", "selectedCityName $selectedCityName")
 
                     // Retrieve the corresponding country ID from the map
                     cityId = cities[selectedCityName]!!.toInt()
                     val cityId22 = cities[selectedCityName]!!
-                    Log.d("readJsonFile", "cityId $cityId")
-                    Log.d("readJsonFile", "cityId22 $cityId22")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -254,27 +245,22 @@ class EditProfileFragment : BaseFragment() {
         }
 
         binding.btnNext.onDebouncedListener {
-            userName = binding.edtUserName.value
-            email = binding.edtEmailAddress.value
-            phoneNumber = binding.edtPhone.value
+            if (binding.edtUserName.value.isNotEmpty()) {
+                currentUser.name = binding.edtUserName.value
+            }
+            currentUser.phone = binding.edtPhone.value
+            currentUser.personalPhoto = imagePath
+            currentUser.gender = gender
+            currentUser.countryId = countryId
+            currentUser.stateId = cityId
 
-            val profileData = ProfileData(
-                imagePath,
-                userName,
-                email,
-                nationalityName,
-                countryId,
-                cityId,
-                gender,
-                phoneNumber
-            )
             val bundle = Bundle()
-            bundle.putParcelable("ProfileData", profileData)
-            when (user?.type) {
+            bundle.putParcelable("userData", currentUser)
+            when (currentUser.type) {
                 "Driver" -> {
                     findNavController().customNavigate(
                         R.id.editProfileDriverFragment,
-                        data = bundle
+                        data = bundle,
                     )
                 }
 
@@ -304,15 +290,16 @@ class EditProfileFragment : BaseFragment() {
                                         Toast.makeText(
                                             requireContext(),
                                             error,
-                                            Toast.LENGTH_SHORT
+                                            Toast.LENGTH_SHORT,
                                         ).show()
                                     },
                                     { path ->
                                         imagePath = path
                                         Glide.with(requireContext())
-                                            .load(imagePath ?: user?.personalPhoto)
+                                            .load(imagePath ?: currentUser?.personalPhoto)
+                                            .circleCrop()
                                             .into(binding.imgUser)
-                                    }
+                                    },
                                 )
                         })
                     }
@@ -325,9 +312,9 @@ class EditProfileFragment : BaseFragment() {
                             { path ->
                                 imagePath = path
                                 Glide.with(requireContext())
-                                    .load(imagePath ?: user?.personalPhoto)
+                                    .load(imagePath ?: currentUser?.personalPhoto)
                                     .into(binding.imgUser)
-                            }
+                            },
                         )
                     }
                 }
@@ -390,15 +377,20 @@ class EditProfileFragment : BaseFragment() {
     }
 }
 
-@Parcelize
-data class ProfileData(
-    var personal_pictures: String? = null,
-    var userName: String? = null,
-    var email: String? = null,
-    var nationality: String? = null,
-    var countryId: Int? = null,
-    var cityId: Int? = null,
-    var gender: Int? = null,
-    var phoneNumber: String? = null,
 
-    ) : Parcelable
+
+
+
+
+/*
+ private fun performGalleyMultipleSelection() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        galleryIntent.type = "image/*"
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        galleryIntent.action = Intent.ACTION_GET_CONTENT
+        val chooserIntent = Intent(Intent.ACTION_CHOOSER)
+        chooserIntent.putExtra(Intent.EXTRA_INTENT, galleryIntent)
+        chooserIntent.putExtra(Intent.EXTRA_TITLE, "Select from:")
+        launchActivityForResult(chooserIntent)
+    }
+ */

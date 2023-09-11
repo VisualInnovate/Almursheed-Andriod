@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/space_1x"
+    android:layout_marginStart="@dimen/space_3x"
+    android:layout_marginEnd="@dimen/space_3x"
+    android:layout_marginTop="@dimen/space_1x"
+    android:layout_marginBottom="@dimen/space_1x"
+    app:cardElevation="1dp"
+   >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_2x"
+        android:paddingBottom="@dimen/space_3x">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="@dimen/space_1x"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/day_number"
+        android:layout_marginStart="@dimen/space_1x"
+        android:background="@color/primary"/>
+
+        <TextView
+            style="@style/TextStyleRegular"
+            android:id="@+id/day_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/view"
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="@dimen/space_1x"
+            app:layout_constraintBottom_toBottomOf="@id/btn_collapse"
+            android:text="Day One"
+            android:textColor="@color/black"
+            android:layout_marginStart="@dimen/space_2x"
+            android:textSize="14sp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_collapse"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/bg_plus_curved_green"
+         />
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/routeView"
+            app:layout_constraintTop_toBottomOf="@id/btn_collapse"
+            app:layout_constraintStart_toStartOf="@id/day_number"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icLocationRoute1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/edtWhereto"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edtWhereto"
+                app:srcCompat="@drawable/ic_location_route" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtWhereto"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_grey_border"
+                android:hint="@string/where_to"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icLocationRoute2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/space_2x"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/edtWhereFrom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edtWhereFrom"
+                app:srcCompat="@drawable/ic_location_route" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtWhereFrom"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_grey_border"
+                android:hint="@string/where_from"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icLocationRoute2"
+                app:layout_constraintTop_toBottomOf="@id/edtWhereto" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

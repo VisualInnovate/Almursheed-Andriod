@@ -1,57 +1,60 @@
 package com.visualinnovate.almursheed.auth.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class UserResponse(
 
     @field:SerializedName("message")
-    val message: String? = null,
+    var message: String? = null,
 
     @field:SerializedName("user")
-    val user: User? = null,
+    var user: User? = null,
 
     @field:SerializedName("status")
-    val status: Boolean? = null,
+    var status: Boolean? = null,
 
     @field:SerializedName("token")
-    val token: String? = null,
+    var token: String? = null,
 )
 
+@Parcelize
 data class User(
 
     @field:SerializedName("nationality")
-    val nationality: String? = null,
+    var nationality: String? = null,
 
     @field:SerializedName("gender")
-    val gender: String? = null,
+    var gender: Int? = null,
 
     @field:SerializedName("phone")
-    val phone: String? = null,
+    var phone: String? = null,
 
     @field:SerializedName("name")
-    val name: String? = null,
+    var name: String? = null,
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    var id: Int? = null,
 
     @field:SerializedName("state_id")
-    val stateId: Int? = null,
+    var stateId: Int? = null,
 
     @field:SerializedName("type")
-    val type: String? = null,
+    var type: String? = null,
 
     @field:SerializedName("is_verified")
-    val isVerified: Boolean? = null,
+    var isVerified: Boolean? = null,
 
     @field:SerializedName("email")
-    val email: String? = null,
+    var email: String? = null,
 
     @field:SerializedName("country_id")
-    val countryId: Int? = null,
+    var countryId: Int? = null,
 
     @field:SerializedName("des_city_id")
-    val desCityId: Int? = null,
+    var desCityId: Int? = null,
 
     @field:SerializedName("personal_photo")
-    val personalPhoto: String? = null,
-)
+    var personalPhoto: String? = null,
+):Parcelable

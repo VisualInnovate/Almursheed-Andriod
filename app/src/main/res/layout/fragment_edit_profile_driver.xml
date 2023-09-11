@@ -114,7 +114,7 @@
 
                 <include
                     android:id="@+id/spinnerCarType"
-                    layout="@layout/layout_spinner"
+                    layout="@layout/layout_spinner_bg_green"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
@@ -133,7 +133,7 @@
 
                 <include
                     android:id="@+id/spinnerCarBrandName"
-                    layout="@layout/layout_spinner"
+                    layout="@layout/layout_spinner_bg_green"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
@@ -176,7 +176,7 @@
 
                 <include
                     android:id="@+id/spinnerCarManufacturingDate"
-                    layout="@layout/layout_spinner"
+                    layout="@layout/layout_spinner_bg_green"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
@@ -245,7 +245,7 @@
 
                 <include
                     android:id="@+id/spinnerLanguage"
-                    layout="@layout/layout_spinner"
+                    layout="@layout/layout_spinner_bg_green"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"

@@ -45,92 +45,44 @@
                 android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="1"
-                android:text="@string/trip_info"
+                android:text="@string/destination"
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/imgHireBanner" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtTripInfo"
-                style="@style/EditTextStyleRegular"
+
+            <LinearLayout
+                android:id="@+id/destination_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:background="@drawable/bg_rectangle_corner_blue"
-                android:hint="Enter trip info"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="@dimen/space_3x"
-                android:shadowColor="@color/dark_grey"
-                android:textColorHint="@color/grey"
-                app:layout_constraintTop_toBottomOf="@id/txtTripInfo" />
+                app:layout_constraintTop_toBottomOf="@id/txtTripInfo"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/space_3x"
+                android:paddingEnd="@dimen/space_3x"
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/txtDate"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginTop="@dimen/space_4x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:maxLines="1"
-                android:text="Date"
-                android:textColor="@color/dark_grey"
-                android:textSize="@dimen/space_14x_sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/edtTripInfo" />
+                <CheckBox
+                    android:theme="@style/MyCheckboxStyle"
+                    android:id="@+id/inCityCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/in_city"
+                    android:layout_weight="1"
+                   />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtStartDate"
-                style="@style/EditTextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:background="@drawable/bg_rectangle_corner_blue"
-                android:hint="@string/start_date"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="@dimen/space_3x"
-                android:shadowColor="@color/dark_grey"
-                android:textColorHint="@color/grey"
-                app:layout_constraintEnd_toStartOf="@id/icSwitchDate"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtDate" />
+                <CheckBox
+                    android:theme="@style/MyCheckboxStyle"
+                    android:id="@+id/betweenCityCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/between_cities"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtEndDate"
-                style="@style/EditTextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:background="@drawable/bg_rectangle_corner_blue"
-                android:hint="@string/end_date"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="@dimen/space_3x"
-                android:shadowColor="@color/dark_grey"
-                android:textColorHint="@color/grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icSwitchDate"
-                app:layout_constraintTop_toBottomOf="@id/txtDate" />
+            </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/icSwitchDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="-18dp"
-                android:layout_marginEnd="-18dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@id/edtEndDate"
-                app:layout_constraintEnd_toStartOf="@id/edtEndDate"
-                app:layout_constraintStart_toEndOf="@id/edtStartDate"
-                app:layout_constraintTop_toTopOf="@id/edtStartDate"
-                app:srcCompat="@drawable/ic_switch_arrow" />
+
+
 
             <TextView
                 android:id="@+id/txtRouteInfo"
@@ -146,65 +98,20 @@
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/edtStartDate" />
+                app:layout_constraintTop_toBottomOf="@id/destination_view" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/icLocationRoute1"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/days_recycler_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@+id/edtWhereto"
-                app:layout_constraintStart_toStartOf="@+id/txtRouteInfo"
-                app:layout_constraintTop_toTopOf="@id/edtWhereto"
-                app:srcCompat="@drawable/ic_location_route" />
+                android:layout_marginTop="@dimen/space_2x"
+                app:layout_constraintTop_toBottomOf="@id/txtRouteInfo"
+                tools:listitem="@layout/item_days"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:itemCount="3"
+                />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtWhereto"
-                style="@style/EditTextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_3x"
-                android:background="@drawable/bg_rectangle_corner_blue"
-                android:hint="@string/where_to"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="@dimen/space_3x"
-                android:shadowColor="@color/dark_grey"
-                android:textColorHint="@color/grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
-                app:layout_constraintTop_toBottomOf="@id/txtRouteInfo" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/icLocationRoute2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@+id/edtWhereFrom"
-                app:layout_constraintStart_toStartOf="@+id/txtRouteInfo"
-                app:layout_constraintTop_toTopOf="@id/edtWhereFrom"
-                app:srcCompat="@drawable/ic_location_route" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtWhereFrom"
-                style="@style/EditTextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_3x"
-                android:background="@drawable/bg_rectangle_corner_blue"
-                android:hint="@string/where_from"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="@dimen/space_3x"
-                android:shadowColor="@color/dark_grey"
-                android:textColorHint="@color/grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icLocationRoute2"
-                app:layout_constraintTop_toBottomOf="@id/edtWhereto" />
 
             <TextView
                 android:id="@+id/txtWhatDoYouWantHire"
@@ -220,7 +127,7 @@
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/edtWhereFrom" />
+                app:layout_constraintTop_toBottomOf="@id/days_recycler_view" />
 
             <TextView
                 android:id="@+id/driver"
@@ -228,11 +135,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_3x"
-                android:background="@drawable/bg_rectangle_corner_primary"
+                android:background="@drawable/bg_rectangle_corner_green_border"
                 android:gravity="center"
                 android:padding="@dimen/space_3x"
-                android:text="@string/male"
-                android:textColor="@color/white"
+                android:text="@string/driver"
+                android:textColor="@color/black"
                 android:textSize="@dimen/space_14x_sp"
                 app:layout_constraintEnd_toStartOf="@id/guide"
                 app:layout_constraintStart_toStartOf="@id/txtWhatDoYouWantHire"
@@ -242,17 +149,19 @@
                 android:id="@+id/guide"
                 style="@style/TextStyleRegular"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="center"
-                android:padding="@dimen/space_3x"
-                android:text="@string/female"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/guide"
                 android:textColor="@color/grey"
+                android:background="@drawable/bg_rectangle_corner_grey_border"
                 android:textSize="@dimen/space_14x_sp"
+                android:paddingTop="@dimen/space_3x"
                 app:layout_constraintEnd_toEndOf="@id/txtWhatDoYouWantHire"
                 app:layout_constraintStart_toEndOf="@id/driver"
-                app:layout_constraintTop_toBottomOf="@id/txtWhatDoYouWantHire" />
+                app:layout_constraintBottom_toBottomOf="@id/driver"
+                app:layout_constraintTop_toTopOf="@id/driver"
+                />
 
             <TextView
                 android:id="@+id/txtDriver"
@@ -264,7 +173,7 @@
                 android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="1"
-                android:text="driver"
+                android:text="@string/drivers"
                 android:textColor="@color/dark_grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
@@ -272,7 +181,7 @@
 
             <include
                 android:id="@+id/spinnerChooseDriver"
-                layout="@layout/layout_spinner"
+                layout="@layout/layout_spinner_bg_grey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_3x"

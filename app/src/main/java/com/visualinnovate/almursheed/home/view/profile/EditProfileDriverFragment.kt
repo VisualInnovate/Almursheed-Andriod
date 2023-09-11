@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.auth.view.UploadImageSheetFragment
 import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -23,7 +24,6 @@ import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileDriverBinding
-import com.visualinnovate.almursheed.home.view.ProfileData
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.carBrand
@@ -40,8 +40,6 @@ class EditProfileDriverFragment : BaseFragment() {
 
     private val vm: ProfileViewModel by activityViewModels()
 
-    private var profileData: ProfileData? = null
-
     private lateinit var governmentID: String
     private lateinit var licenseNumber: String
     private var carNumber: String? = ""
@@ -57,11 +55,12 @@ class EditProfileDriverFragment : BaseFragment() {
     private val fileUtils by lazy { FileUtils(requireContext()) }
     private val imageCompressor by lazy { ImageCompressorHelper.with(requireContext()) }
     private lateinit var permissionHelper: PermissionHelper
+    private lateinit var currentUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentEditProfileDriverBinding.inflate(inflater, container, false)
         return binding.root
@@ -69,9 +68,9 @@ class EditProfileDriverFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        profileData = requireArguments().getParcelable("ProfileData")
-        Log.d("profileData", "profileData in update drive $profileData")
         permissionHelper = PermissionHelper.init(this)
+        currentUser = requireArguments().getParcelable("userData")!!
+
         //
         initViews()
         initToolbar()
@@ -97,7 +96,7 @@ class EditProfileDriverFragment : BaseFragment() {
         binding.appBarDriverRegisterSecond.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
     }
 
@@ -113,19 +112,16 @@ class EditProfileDriverFragment : BaseFragment() {
             governmentID = binding.edtGovernmentID.value
             licenseNumber = binding.edtLicenseNumber.value
             carNumber = binding.edtCarNumber.value
-//                vm.registerDriverRequest.gov_id = governmentID
-//                vm.registerDriverRequest.phone = phoneNumber
-//                vm.registerDriverRequest.driver_licence_number = licenseNumber
-//                vm.registerDriverRequest.car_number = carNumber
-//                vm.registerDriverRequest.bio = "bio bio bio bio"
-//                vm.registerDriverRequest.car_photos = carImagePath
-//                vm.registerDriverRequest.carImagesList = carImagesList
-//                vm.registerDriverRequest.languages = languagesIdsList
+
             // call api driver create
-            vm.updateDriverMultiPart(
-                profileData, governmentID, licenseNumber,
-                carNumber!!, "bio bio bio", carImagesList, languagesIdsList
-            )
+//            vm.updateDriverMultiPart(
+//                governmentID,
+//                licenseNumber,
+//                carNumber!!,
+//                "bio bio bio",
+//                carImagesList,
+//                languagesIdsList,
+//            )
         }
     }
 
@@ -169,7 +165,7 @@ class EditProfileDriverFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                yearsList
+                yearsList,
             )
 
         binding.spinnerCarManufacturingDate.spinner.adapter = arrayAdapter
@@ -180,7 +176,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected Car Manufacturing Date
                     val selectedYear = yearsList[position]
@@ -214,7 +210,7 @@ class EditProfileDriverFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                carTypeList
+                carTypeList,
             )
 
         binding.spinnerCarType.spinner.adapter = arrayAdapter
@@ -225,7 +221,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected Car type name
                     val selectedCarType = carTypeList[position]
@@ -249,7 +245,7 @@ class EditProfileDriverFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                brandNameList
+                brandNameList,
             )
 
         binding.spinnerCarBrandName.spinner.adapter = arrayAdapter
@@ -260,7 +256,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected Car brand name
                     val selectedBrandName = brandNameList[position]
@@ -293,7 +289,7 @@ class EditProfileDriverFragment : BaseFragment() {
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                languagesList
+                languagesList,
             )
 
         binding.spinnerLanguage.spinner.adapter = arrayAdapter
@@ -304,7 +300,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
-                    id: Long
+                    id: Long,
                 ) {
                     // Retrieve the selected language name
                     val selectedLanguage = languagesList[position]
@@ -344,14 +340,14 @@ class EditProfileDriverFragment : BaseFragment() {
                                         Toast.makeText(
                                             requireContext(),
                                             error,
-                                            Toast.LENGTH_SHORT
+                                            Toast.LENGTH_SHORT,
                                         ).show()
                                     },
                                     { path ->
                                         carImagePath = path
                                         carImagesList.add(carImagePath)
                                         showProfileImageBottomSheet()
-                                    }
+                                    },
                                 )
                         })
                     }
@@ -365,7 +361,7 @@ class EditProfileDriverFragment : BaseFragment() {
                                 carImagePath = path
                                 carImagesList.add(carImagePath)
                                 showProfileImageBottomSheet()
-                            }
+                            },
                         )
                     }
                 }
@@ -383,7 +379,7 @@ class EditProfileDriverFragment : BaseFragment() {
         // Show the bottom sheet dialog fragment
         uploadImageSheetFragment.show(
             childFragmentManager,
-            "UploadImageFragment"
+            "UploadImageFragment",
         ) // uploadImageSheetFragment.tag
     }
 
