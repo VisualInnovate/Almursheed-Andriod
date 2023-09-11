@@ -47,14 +47,14 @@ class HomeFragment : Fragment() {
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
-    private val btnDriverClickCallBack: (driver: DriversItem) -> Unit = { driver ->
+    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit = { driver ->
         toast("Clicked Item driver $driver")
         // val bundle = Bundle()
         // bundle.putParcelable(Constant.DRIVER, driver)
         // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
-    private val btnGuideClickCallBack: (guide: GuidesItem) -> Unit = { guide ->
+    private val btnGuideClickCallBack: (guide: GuideItem) -> Unit = { guide ->
         toast("Clicked Item guide $guide")
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)

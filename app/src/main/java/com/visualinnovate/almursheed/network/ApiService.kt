@@ -39,12 +39,10 @@ interface ApiService {
         @Body requestBody: RequestBody,
     ): Response<UserResponse>
 
-
     @POST("tourists/create")
     suspend fun registerTourist(
         @Body requestBody: RequestBody,
     ): Response<UserResponse>
-
 
     @POST("login-clients")
     suspend fun login(
@@ -71,16 +69,16 @@ interface ApiService {
     ): Response<MessageResponse>
 
     @GET("guides/latest/{id}")
-    suspend fun getLatestGuide(@Path("id") cityId: Int): Response<GuideResponse>
+    suspend fun getLatestGuide(@Path("id") cityId: Int): Response<GuideListResponse>
 
     @GET("drivers/latest/{id}") // https://mursheed.visualinnovate.net/api/drivers/latest/42
-    suspend fun getLatestDriver(@Path("id") cityId: Int): Response<DriverLatestResponse>
+    suspend fun getLatestDriver(@Path("id") cityId: Int): Response<DriverListResponse>
 
-    @GET("drivers")
+    @GET("drivers/all")
     suspend fun getAllDrivers(): Response<DriverListResponse>
 
-    @GET("guides")
-    suspend fun getAllGuides(): Response<GuideResponse>
+    @GET("guides/all")
+    suspend fun getAllGuides(): Response<GuideListResponse>
 
     @GET("offers")
     suspend fun getAllOffers(): Response<OfferResponse>

@@ -13,7 +13,7 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
 import com.visualinnovate.almursheed.home.adapter.AllGuideAdapter
-import com.visualinnovate.almursheed.home.model.GuidesItem
+import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -29,7 +29,7 @@ class AllGuidesFragment : Fragment() {
 
     private lateinit var allGuideAdapter: AllGuideAdapter
 
-    private val btnGuideClickCallBack: (guide: GuidesItem) -> Unit =
+    private val btnGuideClickCallBack: (guide: GuideItem) -> Unit =
         { guide ->
             val bundle = Bundle()
             bundle.putInt(Constant.GUIDE_ID, guide.id!!)

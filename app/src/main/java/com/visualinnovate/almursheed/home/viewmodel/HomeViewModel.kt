@@ -19,22 +19,22 @@ class HomeViewModel @Inject constructor(
     application: Application
 ) : BaseApiResponse(application) {
 
-    private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriverLatestResponse?>> =
+    private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
         MutableLiveData()
-    val driverLatestLiveData: LiveData<ResponseHandler<DriverLatestResponse?>> =
+    val driverLatestLiveData: LiveData<ResponseHandler<DriverListResponse?>> =
         _driverLatestMutableData
 
-    private val _guideLatestMutableData: MutableLiveData<ResponseHandler<GuideResponse?>> =
+    private val _guideLatestMutableData: MutableLiveData<ResponseHandler<GuideListResponse?>> =
         MutableLiveData()
-    val guideLatestLiveData: LiveData<ResponseHandler<GuideResponse?>> = _guideLatestMutableData
+    val guideLatestLiveData: LiveData<ResponseHandler<GuideListResponse?>> = _guideLatestMutableData
 
     private val _driverMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
         MutableLiveData()
     val driverLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _driverMutableData
 
-    private val _guideMutableData: MutableLiveData<ResponseHandler<GuideResponse?>> =
+    private val _guideMutableData: MutableLiveData<ResponseHandler<GuideListResponse?>> =
         MutableLiveData()
-    val guideLiveData: LiveData<ResponseHandler<GuideResponse?>> = _guideMutableData
+    val guideLiveData: LiveData<ResponseHandler<GuideListResponse?>> = _guideMutableData
 
     private val _offerMutableData: MutableLiveData<ResponseHandler<OfferResponse?>> =
         MutableLiveData()

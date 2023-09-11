@@ -5,15 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemAllGuideBinding
-import com.visualinnovate.almursheed.home.model.GuidesItem
+import com.visualinnovate.almursheed.home.model.GuideItem
 
 class AllGuideAdapter(
-    private val btnAccommodationClickCallBack: (guide: GuidesItem) -> Unit
+    private val btnAccommodationClickCallBack: (guide: GuideItem) -> Unit
 ) : RecyclerView.Adapter<AllGuideAdapter.AllGuideViewHolder>() {
 
-    private var allGuideList: List<GuidesItem?>? = ArrayList()
+    private var allGuideList: List<GuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemAllGuideBinding
 
@@ -47,17 +46,16 @@ class AllGuideAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindData(holder: AllGuideViewHolder, guide: GuidesItem) {
+    private fun bindData(holder: AllGuideViewHolder, guide: GuideItem) {
         // set data
-        // Utils.loadImage(holder.itemView.context, accommodation.imageBanner, holder.imgBanner)
         Glide.with(holder.itemView.context)
-            // .load(driver.pictures?.personalPictures?.get(position)?.originalUrl)
-            .load(R.drawable.img_driver)
+            .load(guide.imageBackground)
             .into(holder.imgGuide)
         holder.guideName.text = guide.name
         // holder.price.text = "$ ${guide.guidePrice}"
-        // holder.city.text = guide.guideCity
+        holder.city.text = guide.stateName
         // holder.language.text = guide.language
+
         // check favorite
         /*if (!guide.guideFavorite) { // false -> un favorite
             holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
@@ -70,7 +68,7 @@ class AllGuideAdapter(
         return allGuideList?.size ?: 0
     }
 
-    fun submitData(data: List<GuidesItem?>?) {
+    fun submitData(data: List<GuideItem?>?) {
         allGuideList = data
         notifyDataSetChanged()
     }

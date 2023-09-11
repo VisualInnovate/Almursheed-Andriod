@@ -7,13 +7,13 @@ import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.GuidesItem
+import com.visualinnovate.almursheed.home.model.GuideItem
 
 class GuideAdapter(
-    private val btnGuideClickCallBack: (guide: GuidesItem) -> Unit
+    private val btnGuideClickCallBack: (guide: GuideItem) -> Unit
 ) : RecyclerView.Adapter<GuideAdapter.GuideViewHolder>() {
 
-    private var guidesList: List<GuidesItem?>? = ArrayList()
+    private var guidesList: List<GuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverBinding
 
@@ -46,27 +46,28 @@ class GuideAdapter(
         bindData(holder, guide!!)
     }
 
-    private fun bindData(holder: GuideViewHolder, guide: GuidesItem) {
+    private fun bindData(holder: GuideViewHolder, guide: GuideItem) {
         holder.imgStatus.invisible()
         // set data
         Glide.with(holder.itemView.context)
-            // .load(driver.pictures?.personalPictures?.get(position)?.originalUrl)
-            .load(R.drawable.img_test)
+             .load(guide.imageBackground)
             .into(holder.imgDriver)
         holder.username.text = guide.name
-//        // check favorite
-//        if (!guide.guideFavorite) { // false -> un favorite
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-//        } else {
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-//        }
+        holder.city.text = guide.stateName
+
+        // check favorite
+        /*if (!guide.guideFavorite) { // false -> un favorite
+            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        } else {
+            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        }*/
     }
 
     override fun getItemCount(): Int {
         return guidesList?.size ?: 0
     }
 
-    fun submitData(data: List<GuidesItem?>?) {
+    fun submitData(data: List<GuideItem?>?) {
         guidesList = data
         notifyDataSetChanged()
     }

@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentDriverDetailsBinding
-import com.visualinnovate.almursheed.home.model.Driver
+import com.visualinnovate.almursheed.home.model.DriverItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -70,14 +71,17 @@ class DriverDetailsFragment : Fragment() {
                     // bind data to the view
                     initViews(it.data!!.driver)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("Error->DriverList", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
+
                 else -> {
                     toast("Else")
                 }
@@ -85,12 +89,20 @@ class DriverDetailsFragment : Fragment() {
         }
     }
 
-    private fun initViews(driver: Driver?) {
-//        Glide.with(requireContext())
-//            .load(driver.media.get(0)personalPictures?.get(position)?.originalUrl)
-//            .into(binding.imgDriver)
-        binding.imgDriver.setImageResource(R.drawable.img_driver)
+    private fun initViews(driver: DriverItem?) {
+        Glide.with(requireContext())
+            .load(driver?.personalPhoto)
+            .into(binding.imgDriver)
+
+        Glide.with(requireContext())
+            .load(driver?.carPhoto!![0])
+            .into(binding.imgCar)
         binding.driverName.text = driver?.name ?: ""
+        binding.driverCountry.text = driver?.country ?: ""
+        binding.driverCity.text = driver?.state ?: ""
+        binding.driverDescription.text = driver?.bio ?: ""
+        binding.carName.text = driver?.carModel ?: ""
+        binding.carType.text = driver?.carType ?: ""
         // binding.driverPrice.text = "$ ${d?.driverPrice}"
         // binding.driverCity.text = driverArgs?.driverCity ?: ""
     }

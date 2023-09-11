@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.DriversItem
+import com.visualinnovate.almursheed.home.model.DriverItem
 
 class DriverAdapter(
-    private val btnDriverClickCallBack: (driver: DriversItem) -> Unit
+    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit
 ) : RecyclerView.Adapter<DriverAdapter.DriverViewHolder>() {
 
-    private var driversList: List<DriversItem?>? = ArrayList()
+    private var driversList: List<DriverItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverBinding
 
@@ -48,19 +47,18 @@ class DriverAdapter(
         bindData(holder, position, driver!!)
     }
 
-    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriversItem) {
+    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriverItem) {
         Glide.with(holder.itemView.context)
-            // .load(driver.pictures?.personalPictures?.get(position)?.originalUrl)
-            .load(R.drawable.img_driver)
+            .load(driver.imageBackground)
             .into(holder.imgDriver)
         holder.username.text = driver.name ?: ""
-        holder.city.text = driver.state?.state
+        holder.city.text = driver.stateName
         // check status
-        if (driver.status == 1) { // false -> offline
+        /*if (driver.status == 1) { // false -> offline
             holder.imgStatus.setImageResource(R.drawable.ic_active_online)
         } else {
             holder.imgStatus.setImageResource(R.drawable.ic_offline_active)
-        }
+        }*/
         // check favorite
 //        if (!driver.driverFavorite) { // false -> un favorite
 //            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
@@ -73,7 +71,7 @@ class DriverAdapter(
         return driversList?.size ?: 0
     }
 
-    fun submitData(drivers: List<DriversItem?>?) {
+    fun submitData(drivers: List<DriverItem?>?) {
         driversList = drivers
         notifyDataSetChanged()
     }

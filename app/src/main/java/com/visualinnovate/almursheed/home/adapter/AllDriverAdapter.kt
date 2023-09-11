@@ -4,16 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemAllDriverBinding
-import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.DriversItem
+import com.visualinnovate.almursheed.home.model.DriverItem
 
 class AllDriverAdapter(
-    private val btnDriverClickCallBack: (driver: DriversItem) -> Unit
+    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit
 ) : RecyclerView.Adapter<AllDriverAdapter.AllDriverViewHolder>() {
 
-    private var allDriversList: List<DriversItem?>? = ArrayList()
+    private var allDriversList: List<DriverItem?>? = ArrayList()
 
     private lateinit var binding: ItemAllDriverBinding
 
@@ -44,26 +42,26 @@ class AllDriverAdapter(
         bindData(holder, position, driver!!)
     }
 
-    private fun bindData(holder: AllDriverViewHolder, position: Int, driver: DriversItem) {
+    private fun bindData(holder: AllDriverViewHolder, position: Int, driver: DriverItem) {
         Glide.with(holder.itemView.context)
-            // .load(driver.pictures?.personalPictures?.get(position)?.originalUrl)
-            .load(R.drawable.img_driver)
+            .load(driver.imageBackground)
             .into(holder.imgDriver)
         holder.driverName.text = driver.name ?: ""
-        holder.city.text = driver.state?.state
+        holder.city.text = driver.stateName
+
         // check favorite
-//        if (!driver.driverFavorite) { // false -> un favorite
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-//        } else {
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-//        }
+        /*if (!driver.driverFavorite) { // false -> un favorite
+            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        } else {
+            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        }*/
     }
 
     override fun getItemCount(): Int {
         return allDriversList?.size ?: 0
     }
 
-    fun submitData(data: List<DriversItem?>?) {
+    fun submitData(data: List<DriverItem?>?) {
         allDriversList = data
         notifyDataSetChanged()
     }

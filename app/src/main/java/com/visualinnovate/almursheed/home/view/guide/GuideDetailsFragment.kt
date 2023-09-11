@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentGuideDetailsBinding
-import com.visualinnovate.almursheed.home.model.Guide
+import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -71,14 +72,17 @@ class GuideDetailsFragment : Fragment() {
                     // bind data to the view
                     initViews(it.data!!.guide)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("Error->DriverList", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
+
                 else -> {
                     toast("Else")
                 }
@@ -87,10 +91,16 @@ class GuideDetailsFragment : Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initViews(guide: Guide?) {
-        binding.guideName.text = guide?.name?.localized
+    private fun initViews(guide: GuideItem?) {
+        Glide.with(requireContext())
+            .load(guide?.personalPhoto)
+            .into(binding.imgGuide)
+
+        binding.guideName.text = guide?.name ?: ""
+        binding.guideCity.text = guide?.country ?: ""
+        binding.guideCountry.text = guide?.state ?: ""
+        binding.guideDescription.text = guide?.bio ?: ""
         // binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
-        // binding.guideCity.text = guideArgument.guideCity
     }
 
     override fun onDestroy() {
