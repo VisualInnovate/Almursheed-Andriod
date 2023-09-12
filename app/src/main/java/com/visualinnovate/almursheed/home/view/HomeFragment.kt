@@ -104,7 +104,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_home)
+        (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_home_tourist)
         initView()
         setBtnListener()
         subscribeData()

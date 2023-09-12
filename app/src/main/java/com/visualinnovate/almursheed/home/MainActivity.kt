@@ -16,6 +16,8 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ActivityMainBinding
+import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
+import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
@@ -26,27 +28,33 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
-
+    private lateinit var userRole: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        userRole = SharedPreference.getUserRole()!!
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         navController = findNavController(R.id.nav_host_fragment_content_home)
-        binding.bottomNavBar.setItemSelected(R.id.action_home)
+
+        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
+            setupDriverOrGuideViews()
+        } else {
+            setupTouristViews()
+        }
         binding.bottomNavBar.setOnItemSelectedListener(object :
-                ChipNavigationBar.OnItemSelectedListener {
-                override fun onItemSelected(id: Int) {
-                    when (id) {
-                        R.id.action_home -> navController.navigate(R.id.homeFragment)
-                        R.id.action_hireFragment -> navController.navigate(R.id.hireFragment)
-                        R.id.action_accommodationFragment -> navController.navigate(R.id.accommodationFragment)
-                        R.id.action_flightReservation -> navController.navigate(R.id.flightReservationFragment)
-                        R.id.action_more -> navController.navigate(R.id.moreFragment)
-                    }
+            ChipNavigationBar.OnItemSelectedListener {
+            override fun onItemSelected(id: Int) {
+                when (id) {
+                    R.id.action_home_tourist -> navController.navigate(R.id.homeFragment)
+                    R.id.action_home_driver_guide -> navController.navigate(R.id.editProfileFragment)
+                    R.id.action_hireFragment -> navController.navigate(R.id.hireFragment)
+                    R.id.action_accommodationFragment -> navController.navigate(R.id.accommodationFragment)
+                    R.id.action_flightReservation -> navController.navigate(R.id.flightReservationFragment)
+                    R.id.action_more -> navController.navigate(R.id.moreFragment)
                 }
-            })
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -65,6 +73,16 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         if (this::binding.isInitialized) {
             binding.bottomNavBar.setItemSelected(id)
         }
+    }
+
+    private fun setupDriverOrGuideViews() {
+        binding.bottomNavBar.setMenuResource(R.menu.driver_guide_menu_bottom_nav)
+        binding.bottomNavBar.setItemSelected(R.id.action_home_driver_guide)
+        navController.graph.setStartDestination(R.id.editProfileFragment)
+    }
+    private fun setupTouristViews() {
+        binding.bottomNavBar.setMenuResource(R.menu.tourist_menu_bottom_nav)
+        binding.bottomNavBar.setItemSelected(R.id.action_home_tourist)
     }
 
     // init (readJsonFile)

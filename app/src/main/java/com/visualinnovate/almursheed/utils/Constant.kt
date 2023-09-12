@@ -5,6 +5,7 @@ object Constant {
     const val KEY_LANGUAGE = "language"
     const val USER = "user"
     const val USER_TOKEN = "user_token"
+    const val USER_Role = "user_role"
 
     const val KEY_CITY_TOURIST_CHOOSSED = "City tourist choossed"
 

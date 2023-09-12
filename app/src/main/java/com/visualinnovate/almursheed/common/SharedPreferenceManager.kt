@@ -7,6 +7,7 @@ import com.visualinnovate.almursheed.utils.Constant
 object SharedPreference {
 
     fun saveUser(user: User?) {
+        setUserRole(user?.type)
         Hawk.put(Constant.USER, user)
     }
 
@@ -14,6 +15,13 @@ object SharedPreference {
         return Hawk.get(Constant.USER)
     }
 
+    private fun setUserRole(role: String?) {
+        Hawk.put(Constant.USER_Role, role)
+    }
+
+    fun getUserRole(): String? {
+        return Hawk.get(Constant.USER_Role)
+    }
     fun saveUserToken(token: String?) {
         Hawk.put(Constant.USER_TOKEN, token)
     }

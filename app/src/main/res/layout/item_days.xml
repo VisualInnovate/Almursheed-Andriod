@@ -68,13 +68,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_2x"
                 android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@+id/edtWhereto"
+                app:layout_constraintBottom_toBottomOf="@+id/destination"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/edtWhereto"
+                app:layout_constraintTop_toTopOf="@id/destination"
                 app:srcCompat="@drawable/ic_location_route" />
 
             <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtWhereto"
+                android:id="@+id/destination"
                 style="@style/EditTextStyleRegular"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -90,35 +90,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/icLocationRoute2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/space_2x"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@+id/edtWhereFrom"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/edtWhereFrom"
-                app:srcCompat="@drawable/ic_location_route" />
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/edtWhereFrom"
-                style="@style/EditTextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_3x"
-                android:background="@drawable/bg_rectangle_corner_grey_border"
-                android:hint="@string/where_from"
-                android:inputType="text"
-                android:maxLines="1"
-                android:padding="@dimen/space_3x"
-                android:shadowColor="@color/dark_grey"
-                android:textColorHint="@color/grey"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icLocationRoute2"
-                app:layout_constraintTop_toBottomOf="@id/edtWhereto" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

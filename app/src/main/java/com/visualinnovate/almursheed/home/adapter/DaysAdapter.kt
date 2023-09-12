@@ -21,8 +21,7 @@ class DaysAdapter() : RecyclerView.Adapter<DaysAdapter.DaysViewHolder>() {
         val dayNumber = itemView.dayNumber
         val btnCollapse = itemView.btnCollapse
         val routeView = itemView.routeView
-        val whereTo = itemView.edtWhereFrom
-        val whereFrom = itemView.edtWhereFrom
+        val destination = itemView.destination
 
         init {
             btnCollapse.onDebouncedListener {

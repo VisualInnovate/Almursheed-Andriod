@@ -29,7 +29,6 @@
         app:cnb_addTopInset="false"
         app:cnb_animationDuration="175"
         app:cnb_badgeColor="@color/white"
-        app:cnb_menuResource="@menu/menu_bottom_nav"
         app:cnb_orientationMode="horizontal"
         app:cnb_radius="@dimen/space_10x"
         app:layout_constraintBottom_toBottomOf="parent"
