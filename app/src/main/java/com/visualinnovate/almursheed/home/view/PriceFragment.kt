@@ -27,6 +27,7 @@ class PriceFragment : Fragment() {
     private lateinit var myOrdersAdapter: MyOrdersDriveAdapter
 
     // m.nassar@visualinnovate.com
+    //
     private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
         toast("Clicked Item banner $banner")
     }
