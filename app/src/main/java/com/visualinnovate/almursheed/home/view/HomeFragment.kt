@@ -41,7 +41,6 @@ class HomeFragment : BaseFragment() {
 
     private val vm: HomeViewModel by viewModels()
 
-    private lateinit var bannerAdapter: BannerAdapter
     private lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
     private lateinit var driverAdapter: DriverAdapter
     private lateinit var guideAdapter: GuideAdapter

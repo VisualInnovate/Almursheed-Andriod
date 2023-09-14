@@ -1,14 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".home.view.HomeDriverAndGuideFragment">
+    android:background="@color/bg_edit_text"
+    tools:context=".home.view.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bgCurveHome"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bg_curve_home" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgHomeLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_10x"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_home_logo" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/SearchViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_10x"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_4x"
+            android:background="@drawable/rounded_search_view"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toStartOf="@id/icNotification"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4x"
+            android:layout_marginEnd="@dimen/space_4x"
+            app:layout_constraintBottom_toBottomOf="@id/searchView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/searchView"
+            app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
+            app:srcCompat="@drawable/ic_notification" />
+
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/rvBanner"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="@dimen/space_1x"-->
+        <!--            android:orientation="horizontal"-->
+        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+        <!--            app:layout_constraintTop_toBottomOf="@id/searchView"-->
+        <!--            tools:itemCount="3"-->
+        <!--            tools:listitem="@layout/item_banner" />-->
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/rvBanner"
+            android:layout_width="match_parent"
+            android:layout_height="145dp"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_6x"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/dotsIndicatorBanner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            app:dotsColor="@color/bg_dots_indicator"
+            app:dotsCornerRadius="@dimen/space_2x"
+            app:dotsSize="@dimen/space_2x"
+            app:dotsSpacing="@dimen/space_1x"
+            app:dotsWidthFactor="2.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rvBanner"
+            app:progressMode="false"
+            app:selectedDotColor="@color/primary" />
+
+        <TextView
+            android:id="@+id/txtEarnings"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/earnings"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dotsIndicatorBanner" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/earningCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_4x"
+            android:layout_marginEnd="@dimen/space_4x"
+            android:layout_marginBottom="@dimen/space_2x"
+            app:cardCornerRadius="@dimen/space_3x"
+            app:cardElevation="@dimen/space_1x"
+            app:layout_constraintTop_toBottomOf="@id/txtEarnings">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/totalEarning"
+                    style="@style/TextStyleBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:layout_marginBottom="@dimen/space_3x"
+                    android:gravity="center_horizontal"
+                    android:text="12,491.21 $"
+                    android:textColor="@color/accent"
+                    android:textSize="@dimen/space_24x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/space_2x"
+                    android:background="#DAD9D9"
+                    app:layout_constraintTop_toBottomOf="@id/totalEarning" />
+
+                <TextView
+                    android:id="@+id/clientNumber"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_3x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:layout_marginBottom="@dimen/space_4x"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:gravity="center_horizontal"
+                    android:text="@string/number_clients"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:drawableStartCompat="@drawable/ic_repeat"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view" />
+
+                <TextView
+                    android:id="@+id/earningTime"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:layout_marginEnd="@dimen/space_3x"
+                    android:layout_marginBottom="@dimen/space_4x"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:gravity="center_horizontal"
+                    android:text="@string/number_hours"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:drawableStartCompat="@drawable/ic_resend_code"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/txtMyOrders"
+            style="@style/TextStyleBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_4x"
+            android:text="@string/my_orders"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/earningCard" />
+
+        <TextView
+            android:id="@+id/seeAllOrders"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_4x"
+            android:padding="@dimen/space_2x"
+            android:text="@string/see_all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintBottom_toBottomOf="@id/txtMyOrders"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/txtMyOrders" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myOrdersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txtMyOrders"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/space_3x"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_my_order_d_g_home"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

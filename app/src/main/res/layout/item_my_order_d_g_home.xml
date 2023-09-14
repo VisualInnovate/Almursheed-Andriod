@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/space_4x"
+    android:layout_marginTop="@dimen/space_2x"
+    android:layout_marginEnd="@dimen/space_4x"
+    android:layout_marginBottom="@dimen/space_3x"
+    app:cardCornerRadius="@dimen/space_2x"
+    app:cardElevation="@dimen/space_1x">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/status"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:background="@color/light_green"
+            android:paddingStart="@dimen/space_5x"
+            android:paddingTop="@dimen/space_2x"
+            android:paddingEnd="@dimen/space_5x"
+            android:paddingBottom="@dimen/space_2x"
+            android:text="@string/on"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtTripInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/trip_info"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/status" />
+
+
+        <TextView
+            android:id="@+id/txtCountry"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/countryy"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTripInfo" />
+
+        <TextView
+            android:id="@+id/country"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Egypt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtCountry"
+            app:layout_constraintTop_toTopOf="@id/txtCountry" />
+
+        <TextView
+            android:id="@+id/txtDateOfEntry"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/date_of_entry"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtCountry" />
+
+        <TextView
+            android:id="@+id/entryDate"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10-09-2022"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtDateOfEntry"
+            app:layout_constraintTop_toTopOf="@id/txtDateOfEntry" />
+
+        <TextView
+            android:id="@+id/txtDateOfExit"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/date_of_exit"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDateOfEntry" />
+
+        <TextView
+            android:id="@+id/exitDate"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11-09-2022"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtDateOfExit"
+            app:layout_constraintTop_toTopOf="@id/txtDateOfExit" />
+
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_4x"
+            android:layout_marginEnd="@dimen/space_3x"
+            android:background="#DAD9D9"
+            app:layout_constraintTop_toBottomOf="@id/txtDateOfExit" />
+
+
+        <TextView
+            android:id="@+id/txtRouteInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/route_info"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/days_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginBottom="@dimen/space_3x"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtRouteInfo"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_days" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

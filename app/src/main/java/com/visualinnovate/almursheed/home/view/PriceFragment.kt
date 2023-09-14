@@ -19,7 +19,7 @@ import com.visualinnovate.almursheed.home.model.BannerModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class HomeDriverAndGuideFragment : Fragment() {
+class PriceFragment : Fragment() {
     private var _binding: FragmentHomeDriverAndGuideBinding? = null
     private val binding get() = _binding!!
 

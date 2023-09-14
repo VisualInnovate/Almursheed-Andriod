@@ -99,4 +99,11 @@
         android:label="fragment_edit_profile_guide"
         tools:layout="@layout/fragment_edit_profile_guide" />
 
+
+    <fragment
+        android:id="@+id/homeDriveAndGuideFragment"
+        android:name="com.visualinnovate.almursheed.home.view.HomeDriverAndGuideFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_driver_and_guide" />
+
 </navigation>

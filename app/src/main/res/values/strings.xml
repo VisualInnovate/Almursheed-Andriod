@@ -167,6 +167,18 @@
     <string name="guide">Guide\n</string>
     <string name="drivers">Drivers</string>
     <string name="earrings">Earrings</string>
+    <string name="earnings">Earnings</string>
+    <string name="number_clients">%s Clients</string>
+    <string name="number_hours">%s hours</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="countryy">Country</string>
+    <string name="date_of_entry">Date of entry</string>
+    <string name="date_of_exit">Date of exit</string>
+    <string name="earring">Earning</string>
+    <string name="profile">Profile</string>
+    <string name="select_your_prices">Select your prices</string>
+    <string name="enter_price">Enter Price</string>
 
 
 </resources>

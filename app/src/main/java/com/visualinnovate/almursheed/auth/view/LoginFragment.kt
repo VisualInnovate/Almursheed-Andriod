@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
@@ -15,7 +13,6 @@ import com.visualinnovate.almursheed.common.*
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.databinding.FragmentLoginBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +30,7 @@ class LoginFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -53,10 +50,10 @@ class LoginFragment : BaseFragment() {
         binding.appBarLogin.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
         binding.appBarLogin.showButtonOneWithoutImage(
-            getString(R.string.register)
+            getString(R.string.register),
         ) { findNavController().customNavigate(R.id.registerTypeFragment) }
     }
 
@@ -114,10 +111,10 @@ class LoginFragment : BaseFragment() {
 
     private fun validate(): Boolean {
         var isValid = true
-        email = binding.edtEmailAddress.value
-        password = binding.edtPassword.value
-        // email = "mohamed.nasar8710@gmail.com"
-        // password = "123456789"
+        // email = binding.edtEmailAddress.value
+        // password = binding.edtPassword.value
+        email = "mohamed.driver@gmail.com"
+        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

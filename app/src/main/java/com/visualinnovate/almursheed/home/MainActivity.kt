@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import com.google.gson.Gson
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -13,6 +14,7 @@ import com.visualinnovate.almursheed.auth.model.City
 import com.visualinnovate.almursheed.auth.model.Country
 import com.visualinnovate.almursheed.auth.model.Language
 import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ActivityMainBinding
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private lateinit var userRole: String
+    private lateinit var navGraph : NavGraph
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userRole = SharedPreference.getUserRole()!!
@@ -36,7 +40,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         setContentView(binding.root)
 
         navController = findNavController(R.id.nav_host_fragment_content_home)
-
+         navGraph =  navController.navInflater.inflate(R.navigation.nav_home)
         if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
         } else {
@@ -46,12 +50,17 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
             ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(id: Int) {
                 when (id) {
-                    R.id.action_home_tourist -> navController.navigate(R.id.homeFragment)
-                    R.id.action_home_driver_guide -> navController.navigate(R.id.editProfileFragment)
-                    R.id.action_hireFragment -> navController.navigate(R.id.hireFragment)
-                    R.id.action_accommodationFragment -> navController.navigate(R.id.accommodationFragment)
-                    R.id.action_flightReservation -> navController.navigate(R.id.flightReservationFragment)
-                    R.id.action_more -> navController.navigate(R.id.moreFragment)
+                    // tourist
+                    R.id.action_home_tourist -> navController.customNavigate(R.id.homeFragment)
+                    R.id.action_hireFragment -> navController.customNavigate(R.id.hireFragment)
+                    R.id.action_accommodationFragment -> navController.customNavigate(R.id.accommodationFragment)
+                    R.id.action_flightReservation -> navController.customNavigate(R.id.flightReservationFragment)
+                    // Guide and Driver
+                    R.id.action_home_driver_guide -> navController.customNavigate(R.id.homeDriveAndGuideFragment)
+                    R.id.action_priceFragment -> navController.customNavigate(R.id.editProfileFragment)
+                    R.id.action_earningFragment -> navController.customNavigate(R.id.editProfileFragment)
+
+                    R.id.action_more -> navController.customNavigate(R.id.moreFragment)
                 }
             }
         })
@@ -76,13 +85,16 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
     }
 
     private fun setupDriverOrGuideViews() {
+        navGraph.setStartDestination(R.id.homeDriveAndGuideFragment)
         binding.bottomNavBar.setMenuResource(R.menu.driver_guide_menu_bottom_nav)
         binding.bottomNavBar.setItemSelected(R.id.action_home_driver_guide)
-        navController.graph.setStartDestination(R.id.editProfileFragment)
+        navController.graph = navGraph
     }
     private fun setupTouristViews() {
+        navGraph.setStartDestination(R.id.homeFragment) // replace to homeTouristFragment
         binding.bottomNavBar.setMenuResource(R.menu.tourist_menu_bottom_nav)
         binding.bottomNavBar.setItemSelected(R.id.action_home_tourist)
+        navController.graph = navGraph
     }
 
     // init (readJsonFile)
