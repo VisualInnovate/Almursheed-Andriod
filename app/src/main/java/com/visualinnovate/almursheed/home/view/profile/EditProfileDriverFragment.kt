@@ -17,7 +17,9 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.auth.view.UploadImageSheetFragment
 import com.visualinnovate.almursheed.common.ImageCompressorHelper
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
@@ -109,19 +111,15 @@ class EditProfileDriverFragment : BaseFragment() {
         }
 
         binding.btnRegister.setOnClickListener {
-            governmentID = binding.edtGovernmentID.value
-            licenseNumber = binding.edtLicenseNumber.value
-            carNumber = binding.edtCarNumber.value
+            currentUser.govId = binding.edtGovernmentID.value
+            currentUser.driverLicenceNumber = binding.edtLicenseNumber.value
+            currentUser.carNumber = binding.edtCarNumber.value
+            currentUser.carBrandName = brandId
+            currentUser.carType = carTypeName
+            currentUser.carManufacturingDate = year
 
             // call api driver create
-//            vm.updateDriverMultiPart(
-//                governmentID,
-//                licenseNumber,
-//                carNumber!!,
-//                "bio bio bio",
-//                carImagesList,
-//                languagesIdsList,
-//            )
+            vm.updateDriver(currentUser)
         }
     }
 
@@ -129,10 +127,10 @@ class EditProfileDriverFragment : BaseFragment() {
         vm.updateDriverLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    hideMainLoading()
                     // bind data to the view
-                    Log.d("registerDriverLiveData", "it.data ${it.data}")
-                    toast(it.data?.message ?: "")
+                    SharedPreference.saveUser(it.data?.user!![0])
+                    toast(it.data.message ?: "")
+                    findNavController().navigateUp()
                 }
 
                 is ResponseHandler.Error -> {
@@ -151,9 +149,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     hideMainLoading()
                 }
 
-                else -> {
-                    // toast("Else")
-                }
+                else -> {}
             }
         }
     }

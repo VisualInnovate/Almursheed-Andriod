@@ -58,6 +58,7 @@ class MoreFragment : Fragment() {
         }
         binding.logout.onDebouncedListener {
             SharedPreference.saveUserToken(null)
+            findNavController().customNavigate(R.id.loginFragment)
         }
     }
 

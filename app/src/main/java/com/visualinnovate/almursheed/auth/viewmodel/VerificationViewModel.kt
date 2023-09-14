@@ -28,10 +28,10 @@ class VerificationViewModel @Inject constructor(
     val validateOtpLive: LiveData<ResponseHandler<MessageResponse?>> =
         _validateOtpMutable.toSingleEvent()
 
-    fun validateOTP(email: String, code: String) {
+    fun validateOTP(email: String, code: String, type: String) {
         viewModelScope.launch {
             safeApiCall {
-                val requestBody = createBodyRequest(email, code)
+                val requestBody = createBodyRequest(email, code, type)
                 // Make your API call here using Retrofit service or similar
                 apiService.validateOTP(requestBody)
             }.collect {
@@ -40,10 +40,11 @@ class VerificationViewModel @Inject constructor(
         }
     }
 
-    private fun createBodyRequest(email: String, code: String): RequestBody {
+    private fun createBodyRequest(email: String, code: String, type: String): RequestBody {
         val requestData = mapOf(
-            "email" to email,
+            "identifier" to email, // Enter your mail
             "otp" to code,
+            "type" to type //  //0 for email , 2 for rese
         )
         val gson = Gson()
         val jsonData = gson.toJson(requestData)

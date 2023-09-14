@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.network
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +41,8 @@ abstract class BaseApiResponse(application: Application) : AndroidViewModel(appl
             } catch (e: Exception) {
                 emit(ResponseHandler.StopLoading)
                 emit(ResponseHandler.Error("something went wrong"))
+                Log.d("Exception", "${e.message}")
+                Log.d("Exception", "${e.localizedMessage}")
             }
         }.flowOn(Dispatchers.IO)
 

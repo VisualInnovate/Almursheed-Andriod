@@ -26,7 +26,13 @@ data class User(
     var nationality: String? = null,
 
     @field:SerializedName("gender")
-    var gender: Int? = null,
+    var gender: String? = null,
+
+    @field:SerializedName("dest_city_id")
+    val destCityId: Int? = null,
+
+    @field:SerializedName("email")
+    val email: String? = null,
 
     @field:SerializedName("phone")
     var phone: String? = null,
@@ -46,8 +52,8 @@ data class User(
     @field:SerializedName("is_verified")
     var isVerified: Boolean? = null,
 
-    @field:SerializedName("email")
-    var email: String? = null,
+    @field:SerializedName("bio")
+    var bio: String? = null,
 
     @field:SerializedName("country_id")
     var countryId: Int? = null,
@@ -57,4 +63,24 @@ data class User(
 
     @field:SerializedName("personal_photo")
     var personalPhoto: String? = null,
-):Parcelable
+
+    @field:SerializedName("car_brand_name")
+    var carBrandName: String? = null,
+
+    @field:SerializedName("car_manufacturing_date")
+    var carManufacturingDate: String? = null,
+
+    @field:SerializedName("car_type")
+    var carType: String? = null,
+
+    @field:SerializedName("driver_licence_number")
+    var driverLicenceNumber: String? = null,
+
+    @field:SerializedName("car_number")
+    var carNumber: String? = null,
+
+    @field:SerializedName("gov_id")
+    var govId: String? = null,
+
+
+    ) : Parcelable

@@ -10,7 +10,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.auth.viewmodel.VerificationViewModel
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
@@ -31,6 +30,7 @@ class VerifyAccountFragment : BaseFragment() {
     private val vm: VerificationViewModel by viewModels()
 
     private lateinit var email: String
+    private lateinit var type: String
     private var otpCode: String? = null
     private var timeLeft: Long = 0
     private var countDownTimer: CountDownTimer? = null
@@ -49,6 +49,7 @@ class VerifyAccountFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         email = requireArguments().getString(Constant.EMAIL)!!
+        type = requireArguments().getString(Constant.TYPE_OTP)!!
         initToolbar()
         initView()
         setBtnListener()
@@ -82,13 +83,14 @@ class VerifyAccountFragment : BaseFragment() {
             }
         }
         binding.resendCode.onDebouncedListener {
-            if (enableResendCode) {} // call api
+            if (enableResendCode) {
+            } // call api
         }
         //
         binding.btnVerify.onDebouncedListener {
             // call api
             if (validate()) {
-                vm.validateOTP(email, otpCode!!)
+                vm.validateOTP(email, otpCode!!, type)
             }
         }
     }
@@ -97,12 +99,16 @@ class VerifyAccountFragment : BaseFragment() {
         vm.validateOtpLive.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    hideAuthLoading()
+                    toast(it.data?.message ?: "")
                     // navigate to verify and pass email
                     val bundle = Bundle()
                     bundle.putString(Constant.EMAIL, email)
                     bundle.putString(Constant.OTP, otpCode)
-                    findNavController().customNavigate(R.id.newPasswordFragment, false, bundle)
+                    if (type == "0") {
+                        findNavController().customNavigate(R.id.loginFragment)
+                    } else {
+                        findNavController().customNavigate(R.id.newPasswordFragment, false, bundle)
+                    }
                 }
 
                 is ResponseHandler.Error -> {
@@ -121,9 +127,7 @@ class VerifyAccountFragment : BaseFragment() {
                     hideAuthLoading()
                 }
 
-                else -> {
-                    toast("Else")
-                }
+                else -> {}
             }
         }
     }
@@ -131,9 +135,9 @@ class VerifyAccountFragment : BaseFragment() {
     private fun validate(): Boolean {
         var isValid = true
         otpCode = binding.edtOtpBox1.text?.trim().toString() +
-            binding.edtOtpBox2.text?.trim().toString() +
-            binding.edtOtpBox3.text?.trim().toString() +
-            binding.edtOtpBox4.text?.trim().toString()
+                binding.edtOtpBox2.text?.trim().toString() +
+                binding.edtOtpBox3.text?.trim().toString() +
+                binding.edtOtpBox4.text?.trim().toString()
 
         if (binding.edtOtpBox1.text?.trim()?.isEmpty() == true) {
             binding.edtOtpBox1.error = getString(R.string.required)

@@ -13,6 +13,7 @@ object Constant {
 
     // pass email from forget to verify
     const val EMAIL = "email"
+    const val TYPE_OTP = "type_otp" // if from forget or register
 
     // pass email from verify to newPassword
     const val OTP = "otp"

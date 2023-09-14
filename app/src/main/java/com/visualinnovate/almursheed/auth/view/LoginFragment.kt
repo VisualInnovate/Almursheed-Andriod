@@ -87,7 +87,6 @@ class LoginFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    hideAuthLoading()
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.saveUserToken(it.data?.token)
                     Log.d("Success", "${SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId}")
@@ -95,7 +94,6 @@ class LoginFragment : BaseFragment() {
                 }
 
                 is ResponseHandler.Error -> {
-                    hideAuthLoading()
                     // show error message
                     toast(it.message)
                     Log.d("ResponseHandler.Error", it.message)
@@ -105,10 +103,11 @@ class LoginFragment : BaseFragment() {
                     // show a progress bar
                     showAuthLoading()
                 }
-                else -> {
-                    // toast("Else")
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
                     hideAuthLoading()
                 }
+                else -> {}
             }
         }
     }
@@ -117,8 +116,8 @@ class LoginFragment : BaseFragment() {
         var isValid = true
         email = binding.edtEmailAddress.value
         password = binding.edtPassword.value
-        email = "mohamed.nasar8710@gmail.com"
-        password = "123456789"
+        // email = "mohamed.nasar8710@gmail.com"
+        // password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

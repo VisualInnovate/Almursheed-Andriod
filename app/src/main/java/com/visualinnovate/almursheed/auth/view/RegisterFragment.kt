@@ -13,6 +13,7 @@ import com.visualinnovate.almursheed.auth.viewmodel.RegisterViewModel
 import com.visualinnovate.almursheed.common.*
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.databinding.FragmentRegisterBinding
+import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Constant.ROLE_TOURIST
@@ -66,7 +67,8 @@ class RegisterFragment : BaseFragment() {
                     hideAuthLoading()
 
                     val bundle = Bundle()
-                    bundle.putString("email", email)
+                    bundle.putString(Constant.EMAIL, email)
+                    bundle.putString(Constant.TYPE_OTP, "0")
                     findNavController().customNavigate(R.id.verifyAccountFragment, data = bundle)
                 }
                 is ResponseHandler.Error -> {

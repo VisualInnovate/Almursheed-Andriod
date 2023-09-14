@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
@@ -25,13 +25,15 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
+import com.visualinnovate.almursheed.home.view.profile.ProfileViewModel
+import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.cities
 import com.visualinnovate.almursheed.utils.Utils.countries
 import com.visualinnovate.almursheed.utils.Utils.nationalities
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.parcelize.Parcelize
 
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment() {
@@ -39,11 +41,14 @@ class EditProfileFragment : BaseFragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
 
+    private val vm: ProfileViewModel by viewModels()
+
     private val currentUser: User = SharedPreference.getUser()!!
     private var nationalityName: String? = null
     private var countryId: Int? = null
     private var cityId: Int? = null
-    private var gender: Int? = null
+    private var gender: String? = "1"
+
     // for image
     private var imagePath: String = ""
     private val fileUtils by lazy { FileUtils(requireContext()) }
@@ -66,6 +71,37 @@ class EditProfileFragment : BaseFragment() {
         initView()
         setBtnListener()
         subscribeActivityResult()
+        subscribeData()
+    }
+
+    private fun subscribeData() {
+        vm.updateTouristLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // save user
+                    SharedPreference.saveUser(it.data?.user!![0])
+                    toast(it.data.message.toString())
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("ResponseHandler.Error", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun initToolbar() {
@@ -85,20 +121,20 @@ class EditProfileFragment : BaseFragment() {
         initCountrySpinner()
         initNationalitySpinner()
         initCitySpinner()
-        imagePath = currentUser?.personalPhoto ?: ""
-        if (currentUser?.type == "Driver" || currentUser?.type == "Guide") {
+        imagePath = currentUser.personalPhoto ?: ""
+        if (currentUser.type == "Driver" || currentUser.type == "Guides") {
             binding.btnNext.text = getString(R.string.next)
         } else {
             binding.btnNext.text = getString(R.string.submit)
         }
         Glide.with(requireContext())
-            .load(currentUser?.personalPhoto)
+            .load(currentUser.personalPhoto ?: imagePath)
             .error(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .circleCrop()
             .into(binding.imgUser)
-        binding.edtUserName.setText(currentUser?.name)
-        binding.edtEmailAddress.setText(currentUser?.email)
+        binding.edtUserName.setText(currentUser.name)
+        binding.edtEmailAddress.setText(currentUser.email)
         binding.edtEmailAddress.isEnabled = false
 
         // binding.spinnerNationality.spinner.selectedView
@@ -230,14 +266,14 @@ class EditProfileFragment : BaseFragment() {
             binding.txtMale.setTextColor(resources.getColor(R.color.white, resources.newTheme()))
             binding.txtFemale.setBackgroundColor(Color.TRANSPARENT)
             binding.txtFemale.setTextColor(resources.getColor(R.color.grey, resources.newTheme()))
-            gender = 1 // -> Constant
+            gender = "1" // -> Constant
         }
         binding.txtFemale.setOnClickListener {
             binding.txtFemale.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
             binding.txtFemale.setTextColor(resources.getColor(R.color.white, resources.newTheme()))
             binding.txtMale.setBackgroundColor(Color.TRANSPARENT)
             binding.txtMale.setTextColor(resources.getColor(R.color.grey, resources.newTheme()))
-            gender = 2 // -> Constant
+            gender = "2" // -> Constant
         }
 
         binding.icEditUserImage.setOnClickListener {
@@ -250,9 +286,10 @@ class EditProfileFragment : BaseFragment() {
             }
             currentUser.phone = binding.edtPhone.value
             currentUser.personalPhoto = imagePath
-            currentUser.gender = gender
+            currentUser.gender = gender.toString()
             currentUser.countryId = countryId
             currentUser.stateId = cityId
+            currentUser.desCityId = cityId
 
             val bundle = Bundle()
             bundle.putParcelable("userData", currentUser)
@@ -264,12 +301,13 @@ class EditProfileFragment : BaseFragment() {
                     )
                 }
 
-                "Guide" -> {
+                "Guides" -> {
                     findNavController().customNavigate(R.id.editProfileGuideFragment, data = bundle)
                 }
 
                 else -> {
                     // call api update tourist
+                    vm.updateTourist(currentUser)
                 }
             }
         }
@@ -296,7 +334,8 @@ class EditProfileFragment : BaseFragment() {
                                     { path ->
                                         imagePath = path
                                         Glide.with(requireContext())
-                                            .load(imagePath ?: currentUser?.personalPhoto)
+                                            .load(imagePath)
+                                            .centerCrop()
                                             .circleCrop()
                                             .into(binding.imgUser)
                                     },
@@ -312,7 +351,9 @@ class EditProfileFragment : BaseFragment() {
                             { path ->
                                 imagePath = path
                                 Glide.with(requireContext())
-                                    .load(imagePath ?: currentUser?.personalPhoto)
+                                    .load(imagePath)
+                                    .centerCrop()
+                                    .circleCrop()
                                     .into(binding.imgUser)
                             },
                         )
@@ -376,10 +417,6 @@ class EditProfileFragment : BaseFragment() {
         fileUtils.clearTempFile()
     }
 }
-
-
-
-
 
 
 /*

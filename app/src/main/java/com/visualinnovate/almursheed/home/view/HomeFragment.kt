@@ -5,18 +5,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
 import com.visualinnovate.almursheed.home.MainActivity
-import com.visualinnovate.almursheed.home.adapter.*
-import com.visualinnovate.almursheed.home.model.*
+import com.visualinnovate.almursheed.home.adapter.BannerAdapter
+import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
+import com.visualinnovate.almursheed.home.adapter.DriverAdapter
+import com.visualinnovate.almursheed.home.adapter.GuideAdapter
+import com.visualinnovate.almursheed.home.adapter.LocationAdapter
+import com.visualinnovate.almursheed.home.adapter.OfferAdapter
+import com.visualinnovate.almursheed.home.model.AttractivesItem
+import com.visualinnovate.almursheed.home.model.BannerModel
+import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.GuideItem
+import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -25,7 +34,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -113,8 +122,12 @@ class HomeFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         Log.d("onStart()", "${SharedPreference.getUser()}")
-        vm.getLatestDriver(SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId)
-        vm.getLatestGuides(SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId)
+        vm.getLatestDriver(
+            SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId
+        )
+        vm.getLatestGuides(
+            SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId
+        )
         // vm.fetchAllDrivers()
         // vm.fetchAllGuides()
         vm.fetchOfferResponse()
@@ -138,16 +151,25 @@ class HomeFragment : Fragment() {
                     Log.d("Success11", "${it.data!!.drivers}")
                     driverAdapter.submitData(it.data!!.drivers)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("Error->DriverList", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
                 else -> {
-                    toast("Else")
+                    toast("Driver Else")
                 }
             }
         }
@@ -159,14 +181,22 @@ class HomeFragment : Fragment() {
                     Log.d("Success22", "${it.data!!.guides}")
                     guideAdapter.submitData(it.data.guides)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("Error->Guides", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
                 else -> {
                     toast("Else")
                 }
@@ -179,16 +209,22 @@ class HomeFragment : Fragment() {
                     // bind data to the view
                     offerAdapter.submitData(it.data!!.offers)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
-                else -> {
-                    toast("Else")
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
 
@@ -198,16 +234,22 @@ class HomeFragment : Fragment() {
                     // bind data to the view
                     locationAdapter.submitData(it.data!!.attractives)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
-                else -> {
-                    toast("Else")
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }

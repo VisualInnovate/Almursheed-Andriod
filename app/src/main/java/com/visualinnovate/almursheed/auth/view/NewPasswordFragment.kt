@@ -9,8 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
-import com.visualinnovate.almursheed.common.*
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.isEmptySting
+import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentNewPasswordBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -66,28 +70,28 @@ class NewPasswordFragment : BaseFragment() {
         vm.resetPasswordLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    hideAuthLoading()
-                    Log.d("Success", "${it.data!!.message}")
-                    toast(it.data.message.toString())
+                    toast(it.data?.message.toString())
                     // navigate to login to enter new password
                     findNavController().customNavigate(R.id.loginFragment)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("ResponseHandler.Error ", "forgetPassword ${it.message}")
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                     showAuthLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
                     hideAuthLoading()
                 }
-                else -> {
-                    toast("Else")
-                }
+
+                else -> {}
             }
         }
     }

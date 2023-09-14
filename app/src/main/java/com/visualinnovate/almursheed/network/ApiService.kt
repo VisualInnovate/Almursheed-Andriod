@@ -50,20 +50,21 @@ interface ApiService {
         @Query("password") password: String?
     ): Response<UserResponse>
 
-    @POST("password/send-otp")
+    @POST("generate-otp")
     suspend fun forgetPassword(
-        @Query("email") email: String?,
+        @Query("identifier") email: String?,
+        @Query("type") type: String?,
     ): Response<MessageResponse>
 
-    @POST("password/validate-otp")
+    @POST("validate-otp")
     suspend fun validateOTP(
         @Body requestBody: RequestBody,
     ): Response<MessageResponse>
 
-    @POST("password/reset")
+    @POST("resset-password")
     suspend fun resetPassword(
+        @Query("identifier") email: String?,
         @Query("otp") otp: String?,
-        @Query("email") email: String?,
         @Query("password") newPassword: String?,
         @Query("password_confirmation") password_confirmation: String?,
     ): Response<MessageResponse>
@@ -72,7 +73,9 @@ interface ApiService {
     suspend fun getLatestGuide(@Path("id") cityId: Int): Response<GuideListResponse>
 
     @GET("drivers/latest/{id}") // https://mursheed.visualinnovate.net/api/drivers/latest/42
-    suspend fun getLatestDriver(@Path("id") cityId: Int): Response<DriverListResponse>
+    suspend fun getLatestDriver(
+        @Path("id") cityId: Int
+    ): Response<DriverListResponse>
 
     @GET("drivers/all")
     suspend fun getAllDrivers(): Response<DriverListResponse>
@@ -123,9 +126,9 @@ interface ApiService {
         @Part("name") name: RequestBody,
         @Part("country_id") country_id: RequestBody,
         @Part("state_id") state_id: RequestBody,
-        // @Part("gender") gender: RequestBody,
+        @Part("gender") gender: RequestBody,
         @Part("phone") phone: RequestBody,
-        @Part("bio") bio: RequestBody,
+        // @Part("bio") bio: RequestBody,
         @Part("gov_id") gov_id: RequestBody,
         // @Part("languages[]") languages: List<Int>
         // @Part personal_pictures: MultipartBody.Part,
@@ -135,5 +138,31 @@ interface ApiService {
         @Part("car_type") car_type: RequestBody,
         @Part("car_brand_name") car_brand_name: RequestBody,
         @Part("car_manufacturing_date") car_manufacturing_date: RequestBody,
-    ): Response<UpdateDriverResponse>
+    ): Response<UpdateResponse>
+
+    @Multipart
+    @POST("tourists/update")
+    suspend fun updateTourist(
+        @Part("name") name: RequestBody,
+        @Part("dest_city_id") dest_city_id: Int,
+        @Part("gender") gender: RequestBody,
+        @Part("nationality") nationality: RequestBody,
+        // @Part personal_pictures: MultipartBody.Part,
+//        @Body requestBody: RequestBody,
+    ): Response<UpdateResponse>
+
+    @Multipart
+    @POST("guides/update")
+    suspend fun updateGuide(
+        @Part("name") name: RequestBody,
+        @Part("country_id") country_id: Int?,
+        @Part("state_id") dest_city_id: Int?,
+        @Part("gender") gender: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("bio") bio: RequestBody,
+        // @Part personal_pictures: MultipartBody.Part,
+        @Part("nationality") nationality: RequestBody,
+        // @Body requestBody: RequestBody,
+    ): Response<UpdateResponse>
+
 }

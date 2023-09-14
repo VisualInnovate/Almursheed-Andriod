@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.*
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
@@ -80,7 +81,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestDriver(cityId!!)
-            }.collect {
+            }.asLiveData().observeForever {
                 _driverLatestMutableData.value = it
             }
         }

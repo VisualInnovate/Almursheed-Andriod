@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.auth.model.MessageResponse
-import com.visualinnovate.almursheed.auth.model.TouristResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.network.ApiService
@@ -51,12 +50,12 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun forgetPassword(email: String) {
+    fun forgetPassword(email: String, type: String) {
         Log.d("forgetPassword", "email $email")
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.forgetPassword(email)
+                apiService.forgetPassword(email, type)
             }.collect {
                 _forgetPasswordMutableData.value = it
             }
@@ -69,7 +68,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.resetPassword(otp, email, newPassword, confirmPassword)
+                apiService.resetPassword(email, otp, newPassword, confirmPassword)
             }.collect {
                 _resetPasswordMutableData.value = it
             }

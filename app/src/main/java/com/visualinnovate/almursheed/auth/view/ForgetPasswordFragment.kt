@@ -53,7 +53,7 @@ class ForgetPasswordFragment : BaseFragment() {
     private fun setBtnListener() {
         binding.btnSend.setOnClickListener {
             if (validate()) {
-                vm.forgetPassword(email)
+                vm.forgetPassword(email, "2")
             }
         }
     }
@@ -68,6 +68,7 @@ class ForgetPasswordFragment : BaseFragment() {
                     // navigate to verify and pass email
                     val bundle = Bundle()
                     bundle.putString(Constant.EMAIL, email)
+                    bundle.putString(Constant.TYPE_OTP, "2")
                     findNavController().customNavigate(R.id.verifyAccountFragment, data = bundle)
                 }
                 is ResponseHandler.Error -> {
