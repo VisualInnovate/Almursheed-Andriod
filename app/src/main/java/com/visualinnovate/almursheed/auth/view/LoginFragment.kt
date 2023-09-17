@@ -113,7 +113,7 @@ class LoginFragment : BaseFragment() {
         var isValid = true
         // email = binding.edtEmailAddress.value
         // password = binding.edtPassword.value
-        email = "mohamed.driver@gmail.com"
+        email = "mohamed.nasar8710@gmail.com"
         password = "123456789"
 
         if (email.isEmptySting()) {

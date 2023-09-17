@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.home.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,6 @@ class MoreFragment : Fragment() {
 
     private var _binding: FragmentMoreBinding? = null
     private val binding get() = _binding!!
-
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +40,7 @@ class MoreFragment : Fragment() {
         binding.appBarMore.setTitleCenter(true)
         binding.appBarMore.useBackButton(
             true,
-            btnBackCallBackFunc,
+            { findNavController().navigateUp() },
             R.drawable.ic_back
         )
     }

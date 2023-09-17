@@ -165,4 +165,9 @@ interface ApiService {
         // @Body requestBody: RequestBody,
     ): Response<UpdateResponse>
 
+    @POST("orders/create")
+    suspend fun createOrder( // hire screen
+        @Body requestCreateOrder: RequestCreateOrder,
+    ): Response<MessageResponse>
+
 }
