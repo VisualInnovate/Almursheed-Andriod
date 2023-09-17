@@ -9,15 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.formatDate
+import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
 import com.visualinnovate.almursheed.common.onDebouncedListener
-import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 class HireFragment : Fragment() {
 
@@ -28,7 +27,7 @@ class HireFragment : Fragment() {
     private var selectedDays = ArrayList<String>()
     private var isForStartDate: Boolean = true
     private lateinit var daysAdapter: DaysAdapter
-
+    private var datePickerDialog: DatePickerDialog? = null
     private val btnBackCallBackFunc: () -> Unit = {
         findNavController().navigateUp()
     }
@@ -76,10 +75,12 @@ class HireFragment : Fragment() {
         binding.driver.onDebouncedListener {
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
+            binding.txtDriver.text = getString(R.string.drivers)
         }
         binding.guide.onDebouncedListener {
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
+            binding.txtDriver.text = getString(R.string.guides)
         }
 
         binding.btnHire.onDebouncedListener {
@@ -95,7 +96,7 @@ class HireFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView() {
+    private fun initSelectedDaysRecyclerView() {
         daysAdapter = DaysAdapter()
         binding.daysRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
@@ -105,62 +106,53 @@ class HireFragment : Fragment() {
         daysAdapter.submitData(selectedDays)
     }
 
+    private fun initDriversOrGuidesRecyclerView() {
+//        daysAdapter = DaysAdapter()
+//        binding.daysRecyclerView.apply {
+//            itemAnimator = DefaultItemAnimator()
+//            daysAdapter.setHasStableIds(true)
+//            adapter = daysAdapter
+//        }
+//        daysAdapter.submitData(selectedDays)
+    }
+
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
-        DatePickerDialog(
-            requireContext(),
-            { _, year, month, dayOfMonth ->
-                calendar.set(year, month, dayOfMonth)
-                val selectedDate = calendar.time
+        datePickerDialog.let {
+            if (it?.isShowing == false) {
+                datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    { _, year, month, dayOfMonth ->
+                        calendar.set(year, month, dayOfMonth)
+                        val selectedDate = calendar.time
 
-                if (isForStartDate) {
-                    startDate = selectedDate
-                } else {
-                    endDate = selectedDate
-                }
+                        if (isForStartDate) {
+                            startDate = selectedDate
+                        } else {
+                            endDate = selectedDate
+                        }
 
-                updateSelectedDatesTextView()
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH),
-        ).show()
+                        updateSelectedDatesTextView()
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH),
+                )
+                datePickerDialog?.show()
+            }
+        }
     }
 
     private fun updateSelectedDatesTextView() {
         if (isForStartDate) {
-            binding.startDate.text = formatDate(startDate)
+            binding.startDate.text = startDate.formatDate()
         } else {
-            binding.endDate.text = formatDate(endDate)
+            binding.endDate.text = endDate.formatDate()
         }
-        getDatesBetween(startDate, endDate)
+        selectedDays = startDate.getDatesBetweenTwoDates(endDate)
 
-        if (selectedDays.isNotEmpty()){
-            initRecyclerView()
-        }
-    }
-
-    private fun formatDate(date: Date): String {
-        return try {
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-            sdf.format(date)
-        } catch (e: Exception) {
-            ""
-        }
-    }
-
-    private fun getDatesBetween(startDate: Date, endDate: Date) {
-        selectedDays.clear()
-        val dates = mutableListOf<Date>()
-        val calendar = Calendar.getInstance()
-        calendar.time = startDate
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
-        while (!calendar.time.after(endDate)) {
-            dates.add(calendar.time)
-            calendar.add(Calendar.DATE, 1)
-        }
-        dates.forEach {
-            selectedDays.add(formatDate(it))
+        if (selectedDays.isNotEmpty()) {
+            initSelectedDaysRecyclerView()
         }
     }
 

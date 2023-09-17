@@ -17,10 +17,14 @@ import androidx.navigation.NavOptions
 import com.google.android.material.snackbar.Snackbar
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.view.LiveEvent
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 inline fun View.onDebouncedListener(
     delayInClick: Long = 500L,
-    crossinline listener: (View) -> Unit
+    crossinline listener: (View) -> Unit,
 ) {
     val enableAgain = Runnable { isEnabled = true }
     setOnClickListener {
@@ -51,7 +55,7 @@ inline fun View.onDebouncedListener(
 fun NavController.customNavigate(
     @IdRes destinationId: Int,
     inclusive: Boolean = false,
-    data: Bundle? = null
+    data: Bundle? = null,
 ) {
     val navOption =
         NavOptions.Builder().apply {
@@ -127,4 +131,29 @@ fun <T> LiveData<T>.toSingleEvent(): LiveData<T> {
         result.value = it
     }
     return result
+}
+
+fun Date.formatDate(): String {
+    return try {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        sdf.format(this)
+    } catch (e: Exception) {
+        ""
+    }
+}
+
+fun Date.getDatesBetweenTwoDates(endDate: Date): ArrayList<String> {
+    val datesString = ArrayList<String>()
+    val dates = mutableListOf<Date>()
+    val calendar = Calendar.getInstance()
+    calendar.time = this // startDate
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale("en"))
+    while (!calendar.time.after(endDate)) {
+        dates.add(calendar.time)
+        calendar.add(Calendar.DATE, 1)
+    }
+    dates.forEach {
+        datesString.add(it.formatDate())
+    }
+    return datesString
 }
