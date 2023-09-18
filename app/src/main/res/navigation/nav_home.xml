@@ -105,5 +105,10 @@
         android:name="com.visualinnovate.almursheed.home.view.HomeDriverAndGuideFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_driver_and_guide" />
+    <fragment
+        android:id="@+id/receiptFragment"
+        android:name="com.visualinnovate.almursheed.home.view.hire.ReceiptFragment"
+        android:label="fragment_receipt"
+        tools:layout="@layout/fragment_receipt" />
 
 </navigation>

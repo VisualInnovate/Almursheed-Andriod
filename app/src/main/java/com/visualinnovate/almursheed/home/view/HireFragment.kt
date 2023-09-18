@@ -10,16 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.formatDate
 import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
-import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
 import com.visualinnovate.almursheed.home.model.Order
+import com.visualinnovate.almursheed.home.model.OrderDetail
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -36,13 +37,30 @@ class HireFragment : BaseFragment() {
     private val vm: HireViewModel by viewModels()
 
     private var tripType: Int? = null
-    private var userChoosedType: Int? = null
+    private var userChoosedType: Int = 1
     private var startDate: Date = Date()
     private var endDate: Date = Date()
     private var selectedDays = ArrayList<String>()
+    private var orderDetailsList = ArrayList<OrderDetail>()
     private var isForStartDate: Boolean = true
     private lateinit var daysAdapter: DaysAdapter
     private var datePickerDialog: DatePickerDialog? = null
+
+    private val dataCallBack: (day: String, cityId: Int) -> Unit = { day, cityId ->
+        // Check if the date already exists in orderDetailsList
+        val existingOrderDetail = orderDetailsList.find { it.date == day }
+
+        if (existingOrderDetail != null) {
+            // If the date already exists, update the city_id
+            existingOrderDetail.city_id += cityId
+        } else {
+            // If the date doesn't exist, add it to the list
+            orderDetailsList.add(OrderDetail(date = day, cityId))
+        }
+
+        // Log the updated list
+        Log.d("dataCallBack", "orderDetailsList $orderDetailsList")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +78,11 @@ class HireFragment : BaseFragment() {
         setBtnListener()
         initView()
         subscribeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        vm.getAllDrivers()
     }
 
     private fun initToolbar() {
@@ -86,12 +109,14 @@ class HireFragment : BaseFragment() {
         binding.icSwitchDate.onDebouncedListener {
         }
         binding.driver.onDebouncedListener {
+            vm.getAllDrivers()
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.drivers)
             userChoosedType = 1
         }
         binding.guide.onDebouncedListener {
+            vm.getAllGuides()
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.guides)
@@ -104,19 +129,19 @@ class HireFragment : BaseFragment() {
                 trip_type = tripType ?: 0,
                 start_date = startDate.formatDate(),
                 end_date = endDate.formatDate(),
-                country_id = 1,
+                country_id = SharedPreference.getUser()?.desCityId ?: 0,
                 lat = "30.3030",
                 longitude = "30.3030",
             )
 
             val requestCreateOrder = RequestCreateOrder(
                 user_id = 1,
-                user_type = 1, // 1 driver, 2 guide
+                user_type = userChoosedType, // 1 driver, 2 guide
                 order = order,
-                order_details = ArrayList(),
+                order_details = orderDetailsList,
             )
 
-            if (validate()){
+            if (validate()) {
                 // call create order api
                 vm.createOrder(requestCreateOrder)
             }
@@ -134,6 +159,38 @@ class HireFragment : BaseFragment() {
     }
 
     private fun subscribeData() {
+        /*vm.allDriverLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    hideMainLoading()
+                    // allDriverAdapter.submitData(it.data!!.drivers)
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    hideMainLoading()
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {
+                    hideMainLoading()
+                    toast("Else")
+                }
+            }
+        }*/
+
         vm.createOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
@@ -164,7 +221,7 @@ class HireFragment : BaseFragment() {
     }
 
     private fun initSelectedDaysRecyclerView() {
-        daysAdapter = DaysAdapter()
+        daysAdapter = DaysAdapter(dataCallBack)
         binding.daysRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             daysAdapter.setHasStableIds(true)
@@ -185,29 +242,29 @@ class HireFragment : BaseFragment() {
 
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
-        datePickerDialog.let {
-            if (it?.isShowing == false) {
-                datePickerDialog = DatePickerDialog(
-                    requireContext(),
-                    { _, year, month, dayOfMonth ->
-                        calendar.set(year, month, dayOfMonth)
-                        val selectedDate = calendar.time
+        // datePickerDialog.let {
+        // if (datePickerDialog?.isShowing == false) {
+        datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                calendar.set(year, month, dayOfMonth)
+                val selectedDate = calendar.time
 
-                        if (isForStartDate) {
-                            startDate = selectedDate
-                        } else {
-                            endDate = selectedDate
-                        }
+                if (isForStartDate) {
+                    startDate = selectedDate
+                } else {
+                    endDate = selectedDate
+                }
 
-                        updateSelectedDatesTextView()
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH),
-                )
-                datePickerDialog?.show()
-            }
-        }
+                updateSelectedDatesTextView()
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH),
+        )
+        datePickerDialog?.show()
+        // }
+        // }
     }
 
     private fun updateSelectedDatesTextView() {
@@ -227,10 +284,6 @@ class HireFragment : BaseFragment() {
         var isValid = true
 
         if (tripType == null) {
-            toast("Choose Destination")
-            isValid = false
-        }
-        if (userChoosedType == null) {
             toast("Choose Destination")
             isValid = false
         }

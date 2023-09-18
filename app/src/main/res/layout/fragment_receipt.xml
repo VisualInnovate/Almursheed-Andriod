@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_edit_text"
+    tools:context=".home.view.hire.ReceiptFragment">
+
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBarReceipt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_3x"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/appBarReceipt"
+        tools:layout_editor_absoluteX="30dp">
+
+        <TextView
+            android:id="@+id/txtPriceInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_6x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@string/price_info"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtPricePerDay"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@string/price_per_day"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtPriceInfo" />
+
+        <TextView
+            android:id="@+id/txtDiscount"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@string/discount"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtPricePerDay" />
+
+        <TextView
+            android:id="@+id/txtFees"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@string/fees"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtDiscount" />
+
+        <TextView
+            android:id="@+id/txtTaxes"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@string/taxes"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtFees" />
+
+        <TextView
+            android:id="@+id/txtSubTotal"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_3x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="1"
+            android:text="@string/sub_total"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtTaxes" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:background="@drawable/bg_rectangle_corner_primary"
+            android:padding="@dimen/space_1x"
+            app:layout_constraintTop_toBottomOf="@id/txtSubTotal">
+
+            <TextView
+                android:id="@+id/priceOfDay"
+                style="@style/TextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="@dimen/space_1x"
+                android:layout_marginStart="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_primary"
+                android:gravity="start|center_vertical"
+                android:lines="2"
+                android:text="100 $ / DAY"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/totalPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/totalPrice"
+                style="@style/TextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_1x"
+                android:gravity="end|center_vertical"
+                android:lines="1"
+                android:padding="@dimen/space_3x"
+                android:text="Total=700"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/priceOfDay"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHire"
+            style="@style/customButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginVertical="@dimen/space_6x"
+            android:text="@string/hire"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintPrice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

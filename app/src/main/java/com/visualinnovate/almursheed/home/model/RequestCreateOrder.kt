@@ -18,6 +18,6 @@ data class Order(
 
 data class OrderDetail(
     val date: String,
-    val city_id: Int
+    var city_id: Int
 )
 
