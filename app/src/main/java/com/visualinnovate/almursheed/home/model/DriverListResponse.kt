@@ -10,7 +10,7 @@ data class DriverListResponse(
     @field:SerializedName("message")
     val message: String? = null,
 
-    @SerializedName(value = "drivers", alternate = ["guides"])
+    @SerializedName(value = "drivers", alternate = ["guides", "driver", "guide"])
     val drivers: List<DriverItem?>? = null,
 )
 

@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.hire
+package com.visualinnovate.almursheed.home.view.tourist.hire
 
 import android.app.Dialog
 import android.content.res.Resources
@@ -21,13 +21,14 @@ import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ReceiptDialog(
-) : DialogFragment() {
+class ReceiptDialog : DialogFragment() {
 
     private var _binding: LayoutReceiptBinding? = null
     private val binding get() = _binding!!
 
     private val vm: HireViewModel by viewModels()
+
+    private var cost: Int = -1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         if (dialog != null && dialog!!.window != null) {
@@ -55,7 +56,12 @@ class ReceiptDialog(
         subscribeData()
     }
 
-    private fun initView() {}
+    private fun initView() {
+        // Access data from the received Bundle (if needed)
+        val bundle = arguments
+        cost = bundle!!.getInt("COST")
+        binding.totalPrice.text = "Total=$cost"
+    }
 
     private fun setBtnListener() {
         binding.btnHire.onDebouncedListener {

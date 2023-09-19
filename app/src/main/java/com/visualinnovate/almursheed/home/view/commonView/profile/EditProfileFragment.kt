@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.commonView.profile
 
 import android.content.Intent
 import android.graphics.Color
@@ -28,7 +28,6 @@ import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
-import com.visualinnovate.almursheed.home.view.profile.ProfileViewModel
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.cities
 import com.visualinnovate.almursheed.utils.Utils.countries

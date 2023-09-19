@@ -168,6 +168,6 @@ interface ApiService {
     @POST("orders/create")
     suspend fun createOrder( // hire screen
         @Body requestCreateOrder: RequestCreateOrder,
-    ): Response<MessageResponse>
+    ): Response<CreateOrderResponse>
 
 }

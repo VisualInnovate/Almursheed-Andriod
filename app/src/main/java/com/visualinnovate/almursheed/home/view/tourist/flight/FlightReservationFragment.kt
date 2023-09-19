@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.tourist.flight
 
 import android.content.Intent
 import android.net.Uri

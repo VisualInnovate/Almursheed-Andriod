@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.profile
+package com.visualinnovate.almursheed.home.view.driver.profile
 
 import android.content.Intent
 import android.os.Build
@@ -19,13 +19,13 @@ import com.visualinnovate.almursheed.auth.view.UploadImageSheetFragment
 import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
-import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileDriverBinding
+import com.visualinnovate.almursheed.home.view.commonView.profile.ProfileViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.carBrand

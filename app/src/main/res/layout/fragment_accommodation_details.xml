@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_edit_text"
-    tools:context=".home.view.accommodation.AccommodationDetailsFragment">
+    tools:context=".home.view.tourist.accommodation.AccommodationDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

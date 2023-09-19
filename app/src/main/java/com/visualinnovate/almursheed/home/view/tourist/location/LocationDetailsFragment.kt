@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.location
+package com.visualinnovate.almursheed.home.view.tourist.location
 
 import android.os.Bundle
 import android.view.LayoutInflater

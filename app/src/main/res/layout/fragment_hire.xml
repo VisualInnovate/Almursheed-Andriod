@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bg_edit_text"
-    tools:context=".home.view.HireFragment">
+    tools:context=".home.view.tourist.hire.HireFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_edit_text"
-        >
+        android:background="@color/bg_edit_text">
 
         <com.visualinnovate.almursheed.common.AppBarView
             android:id="@+id/appBarHire"
@@ -247,17 +246,16 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/driver" />
 
-
             <include
-                layout="@layout/item_driver_guide"
                 android:id="@+id/chooseDriver"
+                layout="@layout/item_driver_guide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_3x"
                 android:layout_marginStart="@dimen/space_4x"
-                app:layout_constraintStart_toStartOf="parent"
-                android:padding="@dimen/space_2x"
                 android:layout_marginTop="@dimen/space_2x"
+                android:padding="@dimen/space_2x"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtDriver" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -317,7 +315,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_4x"
                 android:layout_marginTop="100dp"
-                android:text="@string/hire"
+                android:text="@string/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/constraintPrice" />
 

@@ -36,10 +36,6 @@ class AllGuidesFragment : Fragment() {
             findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
         }
 
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
-
     private val btnSortCallBackFunc: () -> Unit = {
         toast("Clicked btnSortCallBackFunc")
     }
@@ -74,7 +70,7 @@ class AllGuidesFragment : Fragment() {
         binding.appBarSeeAllGuides.setTitleCenter(true)
         binding.appBarSeeAllGuides.useBackButton(
             true,
-            btnBackCallBackFunc,
+            { findNavController().navigateUp() },
             R.drawable.ic_back
         )
         binding.appBarSeeAllGuides.showButtonSortAndFilter(
@@ -102,14 +98,17 @@ class AllGuidesFragment : Fragment() {
                     // bind data to the view
                     allGuideAdapter.submitData(it.data!!.guides)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("Error->DriverList", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
+
                 else -> {
                     toast("Else")
                 }

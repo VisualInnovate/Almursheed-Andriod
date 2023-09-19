@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.profile
+package com.visualinnovate.almursheed.home.view.commonView.profile
 
 import android.app.Application
 import android.util.Log

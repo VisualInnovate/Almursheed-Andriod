@@ -15,7 +15,7 @@
 
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:textSize">@dimen/space_12x_sp</item>
-        <item name="popupMenuBackground">@color/white</item>
+        <item name="popupMenuBackground">@color/bg_edit_text</item>
     </style>
 
     <style name="Theme.AlmursheedApp.NoActionBar">

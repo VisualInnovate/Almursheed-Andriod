@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.hire
+package com.visualinnovate.almursheed.home.view.tourist.hire
 
 import android.os.Bundle
 import android.view.LayoutInflater

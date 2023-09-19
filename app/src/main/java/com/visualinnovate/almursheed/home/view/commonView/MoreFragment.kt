@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.commonView
 
 import android.os.Bundle
 import android.view.LayoutInflater

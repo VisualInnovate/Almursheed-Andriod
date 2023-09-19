@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.tourist
 
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +15,6 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
 import com.visualinnovate.almursheed.home.MainActivity
-import com.visualinnovate.almursheed.home.adapter.BannerAdapter
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.home.adapter.DriverAdapter
 import com.visualinnovate.almursheed.home.adapter.GuideAdapter
@@ -26,6 +25,7 @@ import com.visualinnovate.almursheed.home.model.BannerModel
 import com.visualinnovate.almursheed.home.model.DriverItem
 import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
+import com.visualinnovate.almursheed.home.view.OfferDetailsFragment
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler

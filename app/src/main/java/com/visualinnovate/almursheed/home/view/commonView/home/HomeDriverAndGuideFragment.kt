@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.commonView.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,6 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHomeDriverAndGuideBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
-import com.visualinnovate.almursheed.home.adapter.DaysAdapter
 import com.visualinnovate.almursheed.home.adapter.MyOrdersDriveAdapter
 import com.visualinnovate.almursheed.home.model.BannerModel
 import kotlinx.coroutines.delay

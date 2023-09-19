@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.accommodation
+package com.visualinnovate.almursheed.home.view.tourist.accommodation
 
 import android.os.Bundle
 import android.util.Log

@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view.profile
+package com.visualinnovate.almursheed.home.view.guide.profile
 
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +17,7 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileGuideBinding
+import com.visualinnovate.almursheed.home.view.commonView.profile.ProfileViewModel
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint

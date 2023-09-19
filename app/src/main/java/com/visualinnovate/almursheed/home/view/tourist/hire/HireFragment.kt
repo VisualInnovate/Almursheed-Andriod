@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home.view
+package com.visualinnovate.almursheed.home.view.tourist.hire
 
 import android.app.DatePickerDialog
 import android.location.Location
@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.formatDate
 import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
@@ -29,8 +28,6 @@ import com.visualinnovate.almursheed.home.model.DriverItem
 import com.visualinnovate.almursheed.home.model.Order
 import com.visualinnovate.almursheed.home.model.OrderDetail
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
-import com.visualinnovate.almursheed.home.view.hire.ChooseDriverOrGuideBottomSheet
-import com.visualinnovate.almursheed.home.view.hire.ReceiptDialog
 import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
 import com.visualinnovate.almursheed.utils.LocationHelper
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -70,7 +67,6 @@ class HireFragment : BaseFragment() {
             // If the date doesn't exist, add it to the list
             orderDetailsList.add(OrderDetail(date = day, cityId))
         }
-        // Log the updated list
     }
 
     private val selectDriverGuideClickCalBack: (user: DriverItem) -> Unit = {
@@ -167,13 +163,13 @@ class HireFragment : BaseFragment() {
                 trip_type = tripType,
                 start_date = startDate.formatDate(),
                 end_date = endDate.formatDate(),
-                country_id = SharedPreference.getUser()?.desCityId ?: 1,
+                country_id = 1,
                 lat = currentLocation?.latitude.toString(),
                 longitude = currentLocation?.longitude.toString(),
             )
 
             val requestCreateOrder = RequestCreateOrder(
-                user_id = 1,
+                user_id = selectedDriverGuideId,
                 user_type = userChoosedType, // 1 driver, 2 guide
                 order = order,
                 order_details = orderDetailsList,
@@ -197,10 +193,10 @@ class HireFragment : BaseFragment() {
 
         binding.chooseDriver.root.onDebouncedListener {
             if (userChoosedType == 1) {
-                userChoosedType =1
+                userChoosedType = 1
                 showDriversGuidesBottomSheet("Driver", vm.allDrivers)
             } else {
-                userChoosedType =1
+                userChoosedType = 1
                 showDriversGuidesBottomSheet("Guide", vm.allGuides)
             }
         }
@@ -210,12 +206,14 @@ class HireFragment : BaseFragment() {
         vm.createOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    showReceiptDialog()
+                    Log.d("ResponseHandler.Error", it.data.toString())
+                    showReceiptDialog(it.data!!.order!!.cost!!)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    showReceiptDialog()
+                    // showReceiptDialog()
                     Log.d("ResponseHandler.Error", it.message)
                 }
 
@@ -234,8 +232,13 @@ class HireFragment : BaseFragment() {
         }
     }
 
-    private fun showReceiptDialog() {
+    private fun showReceiptDialog(cost: Int) {
         val dialog = ReceiptDialog()
+        val bundle = Bundle()
+        bundle.putInt("COST", cost)
+
+        // Set the Bundle as arguments for the DialogFragment
+        dialog.arguments = bundle
         this.showDialog(dialog, "ReceiptDialog")
     }
 
@@ -325,7 +328,7 @@ class HireFragment : BaseFragment() {
             isValid = false
         }
 
-        if (selectedDriverGuideId==-1) {
+        if (selectedDriverGuideId == -1) {
             toast("Please choose Driver or Guide")
             isValid = false
         }

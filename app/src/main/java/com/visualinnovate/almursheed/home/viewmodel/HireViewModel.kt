@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.common.toSingleEvent
+import com.visualinnovate.almursheed.home.model.CreateOrderResponse
 import com.visualinnovate.almursheed.home.model.DriverItem
 import com.visualinnovate.almursheed.home.model.DriverListResponse
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
@@ -35,9 +36,9 @@ class HireViewModel @Inject constructor(
         MutableLiveData()
     val allDriversAndGuidesLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _allDriversAndGuidesMutableData
 
-    private val _createOrderMutableData: MutableLiveData<ResponseHandler<MessageResponse?>> =
+    private val _createOrderMutableData: MutableLiveData<ResponseHandler<CreateOrderResponse?>> =
         MutableLiveData()
-    val createOrderLiveData: LiveData<ResponseHandler<MessageResponse?>> =
+    val createOrderLiveData: LiveData<ResponseHandler<CreateOrderResponse?>> =
         _createOrderMutableData.toSingleEvent()
 
     fun getAllDrivers() {
