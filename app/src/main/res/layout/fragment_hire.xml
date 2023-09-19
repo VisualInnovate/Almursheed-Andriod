@@ -9,7 +9,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/bg_edit_text"
+        >
 
         <com.visualinnovate.almursheed.common.AppBarView
             android:id="@+id/appBarHire"
@@ -245,12 +247,16 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@id/driver" />
 
+
             <include
-                android:id="@+id/spinnerChooseDriver"
-                layout="@layout/layout_spinner_bg_grey"
-                android:layout_width="match_parent"
+                layout="@layout/item_driver_guide"
+                android:id="@+id/chooseDriver"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginStart="@dimen/space_4x"
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="@dimen/space_2x"
                 android:layout_marginTop="@dimen/space_2x"
                 app:layout_constraintTop_toBottomOf="@id/txtDriver" />
 
@@ -263,7 +269,7 @@
                 android:background="@drawable/bg_rectangle_corner_primary"
                 android:padding="@dimen/space_1x"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/spinnerChooseDriver">
+                app:layout_constraintTop_toBottomOf="@id/chooseDriver">
 
                 <TextView
                     android:id="@+id/priceOfDay"

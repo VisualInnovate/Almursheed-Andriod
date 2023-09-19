@@ -4,12 +4,11 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.common.toSingleEvent
+import com.visualinnovate.almursheed.home.model.DriverItem
 import com.visualinnovate.almursheed.home.model.DriverListResponse
-import com.visualinnovate.almursheed.home.model.GuideListResponse
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
@@ -24,13 +23,17 @@ class HireViewModel @Inject constructor(
     application: Application,
 ) : BaseApiResponse(application) {
 
-    private val _allDriverMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
-        MutableLiveData()
-    val allDriverLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _allDriverMutableData
+    init {
+        getAllDrivers()
+        getAllGuides()
+    }
 
-    private val _allGuideMutableData: MutableLiveData<ResponseHandler<GuideListResponse?>> =
+    var allDrivers = ArrayList<DriverItem>()
+    var allGuides = ArrayList<DriverItem>()
+
+    private val _allDriversAndGuidesMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
         MutableLiveData()
-    val allGuideLiveData: LiveData<ResponseHandler<GuideListResponse?>> = _allGuideMutableData
+    val allDriversAndGuidesLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _allDriversAndGuidesMutableData
 
     private val _createOrderMutableData: MutableLiveData<ResponseHandler<MessageResponse?>> =
         MutableLiveData()
@@ -42,8 +45,13 @@ class HireViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllDrivers()
-            }.asLiveData().observeForever {
-                _allDriverMutableData.value = it
+            }.collect {
+                when (it) {
+                    is ResponseHandler.Success -> {
+                        allDrivers = (it.data?.drivers as ArrayList<DriverItem>?)!!
+                    }
+                    else -> {}
+                }
             }
         }
     }
@@ -53,8 +61,14 @@ class HireViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllGuides()
-            }.asLiveData().observeForever {
-                _allGuideMutableData.value = it
+            }.collect {
+                // _allGuideMutableData.value = it
+                when (it) {
+                    is ResponseHandler.Success -> {
+                        allGuides = (it.data?.drivers as ArrayList<DriverItem>?)!!
+                    }
+                    else -> {}
+                }
             }
         }
     }

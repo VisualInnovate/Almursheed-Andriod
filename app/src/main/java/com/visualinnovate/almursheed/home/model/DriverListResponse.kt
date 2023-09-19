@@ -10,8 +10,8 @@ data class DriverListResponse(
     @field:SerializedName("message")
     val message: String? = null,
 
-    @field:SerializedName("drivers")
-    val drivers: List<DriverItem?>? = null
+    @SerializedName(value = "drivers", alternate = ["guides"])
+    val drivers: List<DriverItem?>? = null,
 )
 
 data class DriverItem(
@@ -59,6 +59,6 @@ data class DriverItem(
     val carType: String? = null,
 
     @field:SerializedName("personal_photo")
-    val personalPhoto: String? = null
+    val personalPhoto: String? = null,
 
 )

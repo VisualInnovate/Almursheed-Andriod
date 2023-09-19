@@ -81,7 +81,7 @@ interface ApiService {
     suspend fun getAllDrivers(): Response<DriverListResponse>
 
     @GET("guides/all")
-    suspend fun getAllGuides(): Response<GuideListResponse>
+    suspend fun getAllGuides(): Response<DriverListResponse>
 
     @GET("offers")
     suspend fun getAllOffers(): Response<OfferResponse>

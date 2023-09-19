@@ -16,7 +16,8 @@ import com.visualinnovate.almursheed.databinding.ItemDaysBinding
 import com.visualinnovate.almursheed.utils.Utils
 
 class DaysAdapter(
-    private val dataCallBack: (day: String, cityId: Int) -> Unit
+    private val selectDaysCallback: ((day: String, cityId: Int) -> Unit)? = null,
+    private val enableEdit: Boolean = false
 ) : RecyclerView.Adapter<DaysAdapter.DaysViewHolder>() {
 
     private var days: List<String> = ArrayList()
@@ -60,7 +61,13 @@ class DaysAdapter(
     private fun bindData(holder: DaysViewHolder, day: String) {
         holder.dayNumber.text = day
 
-        initCitySpinner(holder.itemView.context, holder, day)
+        if (enableEdit){
+            initCitySpinner(holder.itemView.context, holder, day)
+            // hide textview
+        } else {
+           // hide spinner
+          //  set text
+        }
     }
 
     override fun getItemCount(): Int {
@@ -100,7 +107,7 @@ class DaysAdapter(
                     // Retrieve the selected country name
                     val selectedCityName = cityList[position]
                     cityId = Utils.cities[selectedCityName]!!
-                    dataCallBack(day, cityId!!)
+                    selectDaysCallback?.invoke(day, cityId!!)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

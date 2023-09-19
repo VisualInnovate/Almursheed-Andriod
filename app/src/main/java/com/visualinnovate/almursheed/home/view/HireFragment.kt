@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.home.view
 
 import android.app.DatePickerDialog
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,20 +10,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.formatDate
 import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.permission.Permission
+import com.visualinnovate.almursheed.common.permission.PermissionHelper
+import com.visualinnovate.almursheed.common.showBottomSheet
+import com.visualinnovate.almursheed.common.showDialog
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
+import com.visualinnovate.almursheed.home.model.DriverItem
 import com.visualinnovate.almursheed.home.model.Order
 import com.visualinnovate.almursheed.home.model.OrderDetail
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
+import com.visualinnovate.almursheed.home.view.hire.ChooseDriverOrGuideBottomSheet
+import com.visualinnovate.almursheed.home.view.hire.ReceiptDialog
 import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
+import com.visualinnovate.almursheed.utils.LocationHelper
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -36,17 +46,20 @@ class HireFragment : BaseFragment() {
 
     private val vm: HireViewModel by viewModels()
 
-    private var tripType: Int? = null
+    private var tripType: Int = 1
     private var userChoosedType: Int = 1
+    private var selectedDriverGuideId: Int = -1
     private var startDate: Date = Date()
     private var endDate: Date = Date()
+    private var currentLocation: Location? = null
     private var selectedDays = ArrayList<String>()
     private var orderDetailsList = ArrayList<OrderDetail>()
     private var isForStartDate: Boolean = true
     private lateinit var daysAdapter: DaysAdapter
     private var datePickerDialog: DatePickerDialog? = null
+    private lateinit var permissionHelper: PermissionHelper
 
-    private val dataCallBack: (day: String, cityId: Int) -> Unit = { day, cityId ->
+    private val selectDaysAndCityCallback: (day: String, cityId: Int) -> Unit = { day, cityId ->
         // Check if the date already exists in orderDetailsList
         val existingOrderDetail = orderDetailsList.find { it.date == day }
 
@@ -57,9 +70,15 @@ class HireFragment : BaseFragment() {
             // If the date doesn't exist, add it to the list
             orderDetailsList.add(OrderDetail(date = day, cityId))
         }
-
         // Log the updated list
-        Log.d("dataCallBack", "orderDetailsList $orderDetailsList")
+    }
+
+    private val selectDriverGuideClickCalBack: (user: DriverItem) -> Unit = {
+        selectedDriverGuideId = it.id!!
+        Glide.with(requireContext())
+            .load(it.imageBackground)
+            .into(binding.chooseDriver.imgDriver)
+        binding.chooseDriver.username.text = it.name
     }
 
     override fun onCreateView(
@@ -74,15 +93,34 @@ class HireFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_hireFragment)
+        permissionHelper = PermissionHelper.init(this)
+        askForLocationPermission()
         initToolbar()
         setBtnListener()
         initView()
         subscribeData()
     }
 
+    private fun askForLocationPermission() {
+        permissionHelper
+            .addPermissionsToAsk(Permission.Location)
+            .isRequired(true)
+            .requestPermissions { grantedList ->
+                for (permission in grantedList) {
+                    when (permission) {
+                        Permission.Location -> {
+                            getCurrentLocation()
+                            break
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+    }
+
     override fun onStart() {
         super.onStart()
-        vm.getAllDrivers()
     }
 
     private fun initToolbar() {
@@ -95,7 +133,9 @@ class HireFragment : BaseFragment() {
         )
     }
 
-    private fun initView() {}
+    private fun initView() {
+        binding.inCityCheckBox.isChecked = true
+    }
 
     private fun setBtnListener() {
         binding.startDate.onDebouncedListener {
@@ -109,14 +149,12 @@ class HireFragment : BaseFragment() {
         binding.icSwitchDate.onDebouncedListener {
         }
         binding.driver.onDebouncedListener {
-            vm.getAllDrivers()
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.drivers)
             userChoosedType = 1
         }
         binding.guide.onDebouncedListener {
-            vm.getAllGuides()
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.guides)
@@ -126,12 +164,12 @@ class HireFragment : BaseFragment() {
         binding.btnHire.onDebouncedListener {
             // navigate to payment screen
             val order = Order(
-                trip_type = tripType ?: 0,
+                trip_type = tripType,
                 start_date = startDate.formatDate(),
                 end_date = endDate.formatDate(),
-                country_id = SharedPreference.getUser()?.desCityId ?: 0,
-                lat = "30.3030",
-                longitude = "30.3030",
+                country_id = SharedPreference.getUser()?.desCityId ?: 1,
+                lat = currentLocation?.latitude.toString(),
+                longitude = currentLocation?.longitude.toString(),
             )
 
             val requestCreateOrder = RequestCreateOrder(
@@ -156,52 +194,28 @@ class HireFragment : BaseFragment() {
             binding.inCityCheckBox.isChecked = !isChecked
             tripType = 2
         }
+
+        binding.chooseDriver.root.onDebouncedListener {
+            if (userChoosedType == 1) {
+                userChoosedType =1
+                showDriversGuidesBottomSheet("Driver", vm.allDrivers)
+            } else {
+                userChoosedType =1
+                showDriversGuidesBottomSheet("Guide", vm.allGuides)
+            }
+        }
     }
 
     private fun subscribeData() {
-        /*vm.allDriverLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResponseHandler.Success -> {
-                    // bind data to the view
-                    hideMainLoading()
-                    // allDriverAdapter.submitData(it.data!!.drivers)
-                }
-
-                is ResponseHandler.Error -> {
-                    // show error message
-                    hideMainLoading()
-                    toast(it.message)
-                    Log.d("Error->DriverList", it.message)
-                }
-
-                is ResponseHandler.Loading -> {
-                    // show a progress bar
-                    showMainLoading()
-                }
-
-                is ResponseHandler.StopLoading -> {
-                    // show a progress bar
-                    hideMainLoading()
-                }
-
-                else -> {
-                    hideMainLoading()
-                    toast("Else")
-                }
-            }
-        }*/
-
         vm.createOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    // save user
-                    toast(it.data?.message.toString())
-                    // findNavController().navigateUp()
+                    showReceiptDialog()
                 }
-
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
+                    showReceiptDialog()
                     Log.d("ResponseHandler.Error", it.message)
                 }
 
@@ -220,8 +234,18 @@ class HireFragment : BaseFragment() {
         }
     }
 
+    private fun showReceiptDialog() {
+        val dialog = ReceiptDialog()
+        this.showDialog(dialog, "ReceiptDialog")
+    }
+
+    private fun showDriversGuidesBottomSheet(type: String, data: ArrayList<DriverItem>) {
+        val bottomSheet = ChooseDriverOrGuideBottomSheet(type, data, selectDriverGuideClickCalBack)
+        this.showBottomSheet(bottomSheet, "ChooseDriversGuidesBottomSheet")
+    }
+
     private fun initSelectedDaysRecyclerView() {
-        daysAdapter = DaysAdapter(dataCallBack)
+        daysAdapter = DaysAdapter(selectDaysAndCityCallback, true)
         binding.daysRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             daysAdapter.setHasStableIds(true)
@@ -283,10 +307,6 @@ class HireFragment : BaseFragment() {
     private fun validate(): Boolean {
         var isValid = true
 
-        if (tripType == null) {
-            toast("Choose Destination")
-            isValid = false
-        }
         if (binding.startDate.text.isEmpty()) {
             binding.startDate.error = getString(R.string.required)
             isValid = false
@@ -299,11 +319,30 @@ class HireFragment : BaseFragment() {
         } else {
             binding.endDate.error = null
         }
+
+        if (orderDetailsList.isEmpty()) {
+            toast("Please choose city")
+            isValid = false
+        }
+
+        if (selectedDriverGuideId==-1) {
+            toast("Please choose Driver or Guide")
+            isValid = false
+        }
         return isValid
+    }
+
+    private fun getCurrentLocation() {
+        LocationHelper.getInstance(requireContext()).singleListenLocationUpdate { location ->
+            location?.let {
+                currentLocation = it
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
 }

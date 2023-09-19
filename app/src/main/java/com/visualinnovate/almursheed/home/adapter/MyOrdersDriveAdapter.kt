@@ -63,12 +63,12 @@ class MyOrdersDriveAdapter() : RecyclerView.Adapter<MyOrdersDriveAdapter.MyOrder
     }
 
     private fun initRecyclerView(selectedDays: ArrayList<String>) {
-        /*daysAdapter = DaysAdapter()
+        daysAdapter = DaysAdapter(null)
         binding.daysRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             daysAdapter.setHasStableIds(true)
             adapter = daysAdapter
         }
-        daysAdapter.submitData(selectedDays)*/
+        daysAdapter.submitData(selectedDays)
     }
 }

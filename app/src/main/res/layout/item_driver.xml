@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="210dp"
+    android:id="@+id/root"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/space_3x"
     android:layout_marginStart="@dimen/space_4x"
-    android:layout_marginEnd="@dimen/space_1x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
@@ -31,14 +31,15 @@
             android:layout_marginStart="@dimen/space_2x"
             android:layout_marginTop="@dimen/space_3x"
             android:background="@drawable/ic_bg_rating"
-            android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/space_1_5x"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/space_2x"
+            android:paddingEnd="@dimen/space_2x"
             android:text="4.0"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_star" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgFavorite"

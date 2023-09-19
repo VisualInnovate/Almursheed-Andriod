@@ -186,6 +186,10 @@
     <string name="discount">Discount</string>
     <string name="fees">Fees</string>
     <string name="taxes">Taxes</string>
+    <string name="dollar">%s $</string>
+    <string name="discountt">%s %</string>
+    <string name="done">Done</string>
+    <string name="choose_a">Choose a %s</string>
 
 
 </resources>

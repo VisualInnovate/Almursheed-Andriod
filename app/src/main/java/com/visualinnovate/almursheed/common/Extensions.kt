@@ -10,10 +10,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.view.LiveEvent
@@ -156,4 +158,21 @@ fun Date.getDatesBetweenTwoDates(endDate: Date): ArrayList<String> {
         datesString.add(it.formatDate())
     }
     return datesString
+}
+
+fun Fragment.showDialog(dialog: DialogFragment, tag:String) {
+    try {
+        if (!dialog.isVisible){
+            dialog.show(this.childFragmentManager, tag)
+        }
+    } catch (e: Exception) {
+    }
+}
+fun Fragment.showBottomSheet(dialog: BottomSheetDialogFragment , tag:String) {
+    try {
+        if (!dialog.isVisible){
+            dialog.show(this.childFragmentManager, dialog.tag)
+        }
+    } catch (e: Exception) {
+    }
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="160dp"
+    android:id="@+id/root"
+    android:layout_height="150dp"
+    android:layout_marginStart="@dimen/space_1x"
+    android:layout_marginEnd="@dimen/space_1x"
+    android:layout_marginTop="@dimen/space_2x"
+    android:layout_marginBottom="@dimen/space_1x"
+    app:cardCornerRadius="@dimen/space_4x"
+    app:cardElevation="@dimen/space_1x">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgDriver"
+            android:layout_width="160dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_driver" />
+
+        <TextView
+            android:id="@+id/rating"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/ic_bg_rating"
+            android:drawablePadding="@dimen/space_1_5x"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_2x"
+            android:paddingEnd="@dimen/space_2x"
+            android:text="0.0"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_star" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginEnd="@dimen/space_2x"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_unfavorite" />
+
+        <TextView
+            android:id="@+id/username"
+            style="@style/TextStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginBottom="@dimen/space_3x"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/space_13x_sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Choose Driver or Guide" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

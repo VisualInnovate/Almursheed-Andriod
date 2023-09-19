@@ -107,8 +107,8 @@
         tools:layout="@layout/fragment_home_driver_and_guide" />
     <fragment
         android:id="@+id/receiptFragment"
-        android:name="com.visualinnovate.almursheed.home.view.hire.ReceiptFragment"
+        android:name="com.visualinnovate.almursheed.home.view.hire.ReceiptDialog"
         android:label="fragment_receipt"
-        tools:layout="@layout/fragment_receipt" />
+        tools:layout="@layout/layout_receipt" />
 
 </navigation>

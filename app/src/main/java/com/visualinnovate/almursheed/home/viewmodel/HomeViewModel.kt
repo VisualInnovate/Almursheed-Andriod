@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestDriver(cityId!!)
-            }.asLiveData().observeForever {
+            }.collect{
                 _driverLatestMutableData.value = it
             }
         }
@@ -92,7 +92,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestGuide(cityId!!)
-            }.asLiveData().observeForever {
+            }.collect{
                 _guideLatestMutableData.value = it
             }
         }
@@ -103,7 +103,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllDrivers()
-            }.asLiveData().observeForever {
+            }.collect{
                 _driverMutableData.value = it
             }
         }
@@ -114,8 +114,8 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllGuides()
-            }.asLiveData().observeForever {
-                _guideMutableData.value = it
+            }.collect{
+              //  _guideMutableData.value = it ///////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
     }
@@ -125,7 +125,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllOffers()
-            }.asLiveData().observeForever {
+            }.collect{
                 _offerMutableData.value = it
             }
         }
@@ -136,7 +136,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getOfferDetailsById(offerId)
-            }.asLiveData().observeForever {
+            }.collect{
                 _offerDetailsMutableData.value = it
             }
         }
@@ -147,7 +147,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllAccommodation()
-            }.asLiveData().observeForever {
+            }.collect{
                 _accommodationMutableData.value = it
             }
         }
@@ -158,7 +158,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAccommodationDetailsById(id)
-            }.asLiveData().observeForever {
+            }.collect{
                 _accommodationDetailsMutable.value = it
             }
         }
@@ -169,7 +169,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractives()
-            }.asLiveData().observeForever {
+            }.collect{
                 _attractivesMutableData.value = it
             }
         }
@@ -180,7 +180,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractiveDetailsById(locationId!!)
-            }.asLiveData().observeForever {
+            }.collect{
                 _attractivesDetailsMutableData.value = it
             }
         }
@@ -191,7 +191,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getDriverDetailsById(driverId!!)
-            }.asLiveData().observeForever {
+            }.collect{
                 _driverDetailsMutable.value = it
             }
         }
@@ -202,7 +202,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getGuideDetailsById(driverId!!)
-            }.asLiveData().observeForever {
+            }.collect{
                 _guideDetailsMutable.value = it
             }
         }
