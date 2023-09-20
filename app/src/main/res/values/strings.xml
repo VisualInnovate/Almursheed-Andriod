@@ -190,6 +190,12 @@
     <string name="discountt">%s %</string>
     <string name="done">Done</string>
     <string name="choose_a">Choose a %s</string>
+    <string name="from">From</string>
+    <string name="total_">Total /</string>
+    <string name="total">Total</string>
+    <string name="days">Days</string>
+    <string name="total_equal">Total=</string>
+    <string name="receipt_info">Receipt info</string>
 
 
 </resources>

@@ -96,7 +96,7 @@ class AllGuidesFragment : Fragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    allGuideAdapter.submitData(it.data!!.guides)
+                    // allGuideAdapter.submitData(it.data!!.drivers)
                 }
 
                 is ResponseHandler.Error -> {

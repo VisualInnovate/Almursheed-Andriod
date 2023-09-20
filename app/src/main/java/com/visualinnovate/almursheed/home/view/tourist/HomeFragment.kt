@@ -189,6 +189,7 @@ class HomeFragment : BaseFragment() {
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
 
                 is ResponseHandler.StopLoading -> {
@@ -216,6 +217,7 @@ class HomeFragment : BaseFragment() {
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
 
                 is ResponseHandler.StopLoading -> {
@@ -241,6 +243,7 @@ class HomeFragment : BaseFragment() {
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
 
                 is ResponseHandler.StopLoading -> {
@@ -351,205 +354,3 @@ class HomeFragment : BaseFragment() {
         _binding = null
     }
 }
-
-/*
-    private fun getLocationList(): ArrayList<LocationModel> {
-        val locationList = ArrayList<LocationModel>()
-
-        locationList.add(
-            LocationModel(
-                0,
-                R.drawable.img_test,
-                "Explore Paris",
-                "Paris",
-                false
-            )
-        )
-        locationList.add(
-            LocationModel(
-                1,
-                R.drawable.img_driver,
-                "Istanbul Tour",
-                "Turkey",
-                true
-            )
-        )
-        locationList.add(
-            LocationModel(
-                2,
-                R.drawable.img_driver,
-                "Explore Paris",
-                "Paris",
-                false
-            )
-        )
-        locationList.add(
-            LocationModel(
-                3,
-                R.drawable.img_driver,
-                "Istanbul Tour",
-                "Turkey",
-                true
-            )
-        )
-
-        return locationList
-    }
-
-private fun getGuideList(): ArrayList<GuideModel> {
-        val guideList = ArrayList<GuideModel>()
-
-        guideList.add(
-            GuideModel(
-                0,
-                R.drawable.img_driver,
-                2.2,
-                "Ahmed Mohamed",
-                120.0,
-                "October",
-                false
-            )
-        )
-        guideList.add(
-            GuideModel(
-                1,
-                R.drawable.img_driver,
-                1.1,
-                "Mohamed Mohamed",
-                120.0,
-                "Giza",
-                true
-            )
-        )
-        guideList.add(
-            GuideModel(
-                2,
-                R.drawable.img_driver,
-                4.5,
-                "Ahmed Ahmed",
-                120.0,
-                "Cairo",
-                false
-            )
-        )
-        guideList.add(
-            GuideModel(
-                3,
-                R.drawable.img_driver,
-                3.1,
-                "Ahmed Mohamed",
-                120.0,
-                "Giza",
-                true
-            )
-        )
-
-        return guideList
-    }
-
-private fun getDriverList(): ArrayList<DriverModel> {
-        val driverList = ArrayList<DriverModel>()
-
-        driverList.add(
-            DriverModel(
-                0,
-                R.drawable.img_driver,
-                4.5,
-                "Mohamed Mohamed",
-                true,
-                120.0,
-                "Giza",
-                false
-            )
-        )
-        driverList.add(
-            DriverModel(
-                1,
-                R.drawable.img_driver,
-                2.0,
-                "Mohamed Ahmed",
-                false,
-                333.2,
-                "Cairo",
-                false
-            )
-        )
-        driverList.add(
-            DriverModel(
-                2,
-                R.drawable.img_driver,
-                1.1,
-                "Ahmed Mohamed",
-                true,
-                123.22,
-                "New Cairo",
-                true
-            )
-        )
-        driverList.add(
-            DriverModel(
-                3,
-                R.drawable.img_driver,
-                5.1,
-                "Mohamed Ahmed",
-                false,
-                111.0,
-                "October",
-                true
-            )
-        )
-        driverList.add(
-            DriverModel(
-                4,
-                R.drawable.img_driver,
-                3.3,
-                "Ahmed Mohamed",
-                true,
-                5555.0,
-                "Giza",
-                false
-            )
-        )
-
-        return driverList
-    }
-
-private fun getOfferList(): ArrayList<OfferModel> {
-        val offerList = ArrayList<OfferModel>()
-
-        offerList.add(
-            OfferModel(
-                0,
-                R.drawable.img_test,
-                2.2,
-                "Ahmed Mohamed"
-            )
-        )
-        offerList.add(
-            OfferModel(
-                1,
-                R.drawable.img_driver,
-                1.1,
-                "Mohamed Mohamed"
-            )
-        )
-        offerList.add(
-            OfferModel(
-                2,
-                R.drawable.img_test,
-                4.5,
-                "Ahmed Ahmed"
-            )
-        )
-        offerList.add(
-            OfferModel(
-                3,
-                R.drawable.img_driver,
-                3.1,
-                "Ahmed Mohamed"
-            )
-        )
-
-        return offerList
-    }
- */

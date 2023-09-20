@@ -33,9 +33,9 @@ class HomeViewModel @Inject constructor(
         MutableLiveData()
     val driverLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _driverMutableData
 
-    private val _guideMutableData: MutableLiveData<ResponseHandler<GuideListResponse?>> =
+    private val _guideMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
         MutableLiveData()
-    val guideLiveData: LiveData<ResponseHandler<GuideListResponse?>> = _guideMutableData
+    val guideLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _guideMutableData
 
     private val _offerMutableData: MutableLiveData<ResponseHandler<OfferResponse?>> =
         MutableLiveData()
@@ -115,7 +115,7 @@ class HomeViewModel @Inject constructor(
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllGuides()
             }.collect{
-              //  _guideMutableData.value = it ///////////////////////////////////////////////////////////////////////////////////////////////////
+                _guideMutableData.value = it ///////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
     }

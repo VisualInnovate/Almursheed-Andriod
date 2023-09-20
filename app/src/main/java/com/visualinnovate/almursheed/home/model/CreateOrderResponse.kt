@@ -4,56 +4,47 @@ import com.google.gson.annotations.SerializedName
 
 data class CreateOrderResponse(
 
+    @field:SerializedName("cost")
+    val cost: Int? = null,
+
+    @field:SerializedName("sub_total")
+    val subTotal: Double? = null,
+
     @field:SerializedName("message")
     val message: String? = null,
+
+    @field:SerializedName("country_price")
+    val countryPrice: CountryPrice? = null,
 
     @field:SerializedName("status")
     val status: Int? = null,
 
-    @field:SerializedName("order")
-    val order: OrderItem? = null
+    @field:SerializedName("order_id")
+    val order_id: Int? = null
 )
 
-data class OrderItem(
+data class CountryPrice(
 
-    @field:SerializedName("end_date")
-    val endDate: String? = null,
-
-    @field:SerializedName("cost")
-    val cost: Int? = null,
-
-    @field:SerializedName("created_at")
-    val createdAt: String? = null,
-
-    @field:SerializedName("trip_type")
-    val tripType: Int? = null,
-
-    @field:SerializedName("tourist_id")
-    val touristId: Int? = null,
-
-    @field:SerializedName("user_type")
-    val userType: String? = null,
+    @field:SerializedName("fees")
+    val fees: String? = null,
 
     @field:SerializedName("updated_at")
-    val updatedAt: String? = null,
+    val updatedAt: Any? = null,
 
-    @field:SerializedName("user_id")
-    val userId: Int? = null,
+    @field:SerializedName("price")
+    val price: String? = null,
+
+    @field:SerializedName("created_at")
+    val createdAt: Any? = null,
+
+    @field:SerializedName("tax")
+    val tax: String? = null,
 
     @field:SerializedName("id")
     val id: Int? = null,
 
     @field:SerializedName("country_id")
     val countryId: Int? = null,
-
-    @field:SerializedName("lat")
-    val lat: String? = null,
-
-    @field:SerializedName("start_date")
-    val startDate: String? = null,
-
-    @field:SerializedName("longitude")
-    val longitude: String? = null,
 
     @field:SerializedName("status")
     val status: Int? = null

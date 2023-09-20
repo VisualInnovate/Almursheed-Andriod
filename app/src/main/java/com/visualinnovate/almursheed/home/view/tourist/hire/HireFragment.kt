@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -41,7 +42,7 @@ class HireFragment : BaseFragment() {
     private var _binding: FragmentHireBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: HireViewModel by viewModels()
+    private val vm: HireViewModel by activityViewModels()
 
     private var tripType: Int = 1
     private var userChoosedType: Int = 1
@@ -207,7 +208,8 @@ class HireFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     Log.d("ResponseHandler.Error", it.data.toString())
-                    showReceiptDialog(it.data!!.order!!.cost!!)
+                    vm.order = it.data
+                    showReceiptDialog()
                 }
 
                 is ResponseHandler.Error -> {
@@ -232,10 +234,12 @@ class HireFragment : BaseFragment() {
         }
     }
 
-    private fun showReceiptDialog(cost: Int) {
+    private fun showReceiptDialog() {
         val dialog = ReceiptDialog()
         val bundle = Bundle()
-        bundle.putInt("COST", cost)
+        bundle.putString("START_DATE", startDate.formatDate())
+        bundle.putString("END_DATE", endDate.formatDate())
+        bundle.putInt("NUMBER_OF_DATE", orderDetailsList.size)
 
         // Set the Bundle as arguments for the DialogFragment
         dialog.arguments = bundle

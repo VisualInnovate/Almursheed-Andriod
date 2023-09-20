@@ -13,11 +13,13 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.LayoutReceiptBinding
 import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
+import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,9 +28,11 @@ class ReceiptDialog : DialogFragment() {
     private var _binding: LayoutReceiptBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: HireViewModel by viewModels()
+    private val vm: HireViewModel by activityViewModels()
 
-    private var cost: Int = -1
+    private var startDate: String = ""
+    private var endDate: String = ""
+    private var numOfDays: Int = -1
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         if (dialog != null && dialog!!.window != null) {
@@ -59,13 +63,24 @@ class ReceiptDialog : DialogFragment() {
     private fun initView() {
         // Access data from the received Bundle (if needed)
         val bundle = arguments
-        cost = bundle!!.getInt("COST")
-        binding.totalPrice.text = "Total=$cost"
+        startDate = bundle!!.getString("START_DATE")!!
+        endDate = bundle.getString("END_DATE")!!
+        numOfDays = bundle.getInt("NUMBER_OF_DATE")
+
+        // set data
+        binding.from.text = startDate
+        binding.to.text = endDate
+        binding.fees.text = vm.order?.countryPrice?.fees
+        binding.taxes.text = vm.order?.countryPrice?.tax
+        binding.subTotal.text = vm.order?.subTotal.toString()
+        binding.numOfDay.text =
+            "${getString(R.string.total_)} $numOfDays ${getString(R.string.days)}"
+        binding.totalPrice.text = "${getString(R.string.total_equal)} ${vm.order?.cost}"
     }
 
     private fun setBtnListener() {
         binding.btnHire.onDebouncedListener {
-            dialog?.dismiss()
+            vm.submitOrder(vm.order?.order_id!!)
         }
         binding.btnClose.onDebouncedListener {
             dialog?.dismiss()
@@ -73,33 +88,32 @@ class ReceiptDialog : DialogFragment() {
     }
 
     private fun subscribeData() {
-        /*vm.createOrderLiveData.observe(viewLifecycleOwner) {
+        vm.submitOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
                     toast(it.data?.message.toString())
-                    // findNavController().navigateUp()
+                    dialog?.dismiss()
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
-                    showMainLoading()
+                    // showMainLoading()
                 }
 
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
-                    hideMainLoading()
+                    // hideMainLoading()
                 }
 
                 else -> {}
             }
-        }*/
+        }
     }
 
     override fun onStart() {

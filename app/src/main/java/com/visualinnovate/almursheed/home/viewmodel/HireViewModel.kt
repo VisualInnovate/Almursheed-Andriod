@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.auth.model.MessageResponse
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.CreateOrderResponse
 import com.visualinnovate.almursheed.home.model.DriverItem
@@ -24,9 +25,11 @@ class HireViewModel @Inject constructor(
     application: Application,
 ) : BaseApiResponse(application) {
 
+    var order: CreateOrderResponse? = null
+
     init {
-        getAllDrivers()
-        getAllGuides()
+        getAllDriversByDistCityId()
+        getAllGuidesByDistCityId()
     }
 
     var allDrivers = ArrayList<DriverItem>()
@@ -34,45 +37,54 @@ class HireViewModel @Inject constructor(
 
     private val _allDriversAndGuidesMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
         MutableLiveData()
-    val allDriversAndGuidesLiveData: LiveData<ResponseHandler<DriverListResponse?>> = _allDriversAndGuidesMutableData
+    val allDriversAndGuidesLiveData: LiveData<ResponseHandler<DriverListResponse?>> =
+        _allDriversAndGuidesMutableData
 
     private val _createOrderMutableData: MutableLiveData<ResponseHandler<CreateOrderResponse?>> =
         MutableLiveData()
     val createOrderLiveData: LiveData<ResponseHandler<CreateOrderResponse?>> =
         _createOrderMutableData.toSingleEvent()
 
-    fun getAllDrivers() {
+    private val _submitOrderMutableData: MutableLiveData<ResponseHandler<MessageResponse?>> =
+        MutableLiveData()
+    val submitOrderLiveData: LiveData<ResponseHandler<MessageResponse?>> =
+        _submitOrderMutableData.toSingleEvent()
+
+    private fun getAllDriversByDistCityId() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDrivers()
+                apiService.getAllDriversByDistCityId(SharedPreference.getUser()?.desCityId!!)
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
                         allDrivers = (it.data?.drivers as ArrayList<DriverItem>?)!!
                     }
+
                     else -> {}
                 }
             }
         }
     }
 
-    fun getAllGuides() {
+    private fun getAllGuidesByDistCityId() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllGuides()
+                apiService.getAllGuidesByDistCityId(SharedPreference.getUser()?.desCityId!!)
             }.collect {
                 // _allGuideMutableData.value = it
                 when (it) {
                     is ResponseHandler.Success -> {
                         allGuides = (it.data?.drivers as ArrayList<DriverItem>?)!!
                     }
+
                     else -> {}
                 }
             }
         }
     }
+
     fun createOrder(requestCreateOrder: RequestCreateOrder) {
         Log.d("createOrder", "requestCreateOrder $requestCreateOrder")
         viewModelScope.launch {
@@ -81,6 +93,18 @@ class HireViewModel @Inject constructor(
                 apiService.createOrder(requestCreateOrder)
             }.collect {
                 _createOrderMutableData.value = it
+            }
+        }
+    }
+
+    fun submitOrder(orderId: Int) {
+        Log.d("submitOrder", "orderId $orderId")
+        viewModelScope.launch {
+            safeApiCall {
+                // Make your API call here using Retrofit service or similar
+                apiService.submitOrder(orderId)
+            }.collect {
+                _submitOrderMutableData.value = it
             }
         }
     }

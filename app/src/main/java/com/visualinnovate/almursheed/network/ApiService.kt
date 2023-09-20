@@ -80,8 +80,18 @@ interface ApiService {
     @GET("drivers/all")
     suspend fun getAllDrivers(): Response<DriverListResponse>
 
+    @GET("drivers/get-driver-by-city")
+    suspend fun getAllDriversByDistCityId(
+        @Query("city_id") cityId: Int
+    ): Response<DriverListResponse>
+
     @GET("guides/all")
     suspend fun getAllGuides(): Response<DriverListResponse>
+
+    @GET("guides/get-guide-by-city")
+    suspend fun getAllGuidesByDistCityId(
+        @Query("city_id") cityId: Int
+    ): Response<DriverListResponse>
 
     @GET("offers")
     suspend fun getAllOffers(): Response<OfferResponse>
@@ -166,8 +176,15 @@ interface ApiService {
     ): Response<UpdateResponse>
 
     @POST("orders/create")
-    suspend fun createOrder( // hire screen
+    suspend fun createOrder(
+        // hire screen
         @Body requestCreateOrder: RequestCreateOrder,
     ): Response<CreateOrderResponse>
+
+    @POST("orders/submit/{id}")
+    suspend fun submitOrder(
+        // hire screen
+        @Path("id") id: Int,
+    ): Response<MessageResponse>
 
 }
