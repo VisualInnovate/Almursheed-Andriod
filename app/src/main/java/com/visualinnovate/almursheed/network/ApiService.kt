@@ -80,7 +80,7 @@ interface ApiService {
     @GET("drivers/all")
     suspend fun getAllDrivers(): Response<DriverListResponse>
 
-    @GET("drivers/get-driver-by-city")
+    @POST("drivers/get-driver-by-city")
     suspend fun getAllDriversByDistCityId(
         @Query("city_id") cityId: Int
     ): Response<DriverListResponse>
@@ -88,7 +88,7 @@ interface ApiService {
     @GET("guides/all")
     suspend fun getAllGuides(): Response<DriverListResponse>
 
-    @GET("guides/get-guide-by-city")
+    @POST("guides/get-guide-by-city")
     suspend fun getAllGuidesByDistCityId(
         @Query("city_id") cityId: Int
     ): Response<DriverListResponse>
