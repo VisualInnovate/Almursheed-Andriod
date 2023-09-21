@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -19,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.view.LiveEvent
+import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -160,19 +162,38 @@ fun Date.getDatesBetweenTwoDates(endDate: Date): ArrayList<String> {
     return datesString
 }
 
-fun Fragment.showDialog(dialog: DialogFragment, tag:String) {
+fun Fragment.showDialog(dialog: DialogFragment, tag: String) {
     try {
-        if (!dialog.isVisible){
+        if (!dialog.isVisible) {
             dialog.show(this.childFragmentManager, tag)
         }
     } catch (e: Exception) {
     }
 }
-fun Fragment.showBottomSheet(dialog: BottomSheetDialogFragment , tag:String) {
+fun Fragment.showBottomSheet(dialog: BottomSheetDialogFragment, tag: String) {
     try {
-        if (!dialog.isVisible){
+        if (!dialog.isVisible) {
             dialog.show(this.childFragmentManager, dialog.tag)
         }
     } catch (e: Exception) {
+    }
+}
+
+fun Fragment.showAlertDialog(title: String, message: String, cancelable:Boolean = false,onPositiveCallback: () -> Unit = {}) {
+    try {
+        val builder = AlertDialog.Builder(
+            this.requireContext(),
+        )
+        builder.setTitle(title)
+            .setMessage(message)
+            .setCancelable(cancelable)
+            .setPositiveButton(android.R.string.ok) { dialog, id ->
+                dialog.dismiss()
+                onPositiveCallback()
+            }
+        builder.create().show()
+    } catch (ex: IllegalStateException) {
+        //
+    } catch (ex: Exception) {
     }
 }

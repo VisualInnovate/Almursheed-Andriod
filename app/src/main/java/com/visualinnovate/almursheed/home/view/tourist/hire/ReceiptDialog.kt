@@ -2,9 +2,7 @@ package com.visualinnovate.almursheed.home.view.tourist.hire
 
 import android.app.Dialog
 import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.Point
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -15,8 +13,10 @@ import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.LayoutReceiptBinding
 import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -36,7 +36,6 @@ class ReceiptDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         if (dialog != null && dialog!!.window != null) {
-            dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
         }
         return super.onCreateDialog(savedInstanceState)
@@ -70,9 +69,9 @@ class ReceiptDialog : DialogFragment() {
         // set data
         binding.from.text = startDate
         binding.to.text = endDate
-        binding.fees.text = vm.order?.countryPrice?.fees
-        binding.taxes.text = vm.order?.countryPrice?.tax
-        binding.subTotal.text = vm.order?.subTotal.toString()
+        binding.fees.text = getString(R.string.dollar, vm.order?.countryPrice?.fees)
+        binding.taxes.text = getString(R.string.dollar, vm.order?.countryPrice?.tax)
+        binding.subTotal.text = getString(R.string.dollar, vm.order?.subTotal.toString())
         binding.numOfDay.text =
             "${getString(R.string.total_)} $numOfDays ${getString(R.string.days)}"
         binding.totalPrice.text = "${getString(R.string.total_equal)} ${vm.order?.cost}"
@@ -102,11 +101,13 @@ class ReceiptDialog : DialogFragment() {
                 }
 
                 is ResponseHandler.Loading -> {
+                    binding.loading.visible()
                     // show a progress bar
                     // showMainLoading()
                 }
 
                 is ResponseHandler.StopLoading -> {
+                    binding.loading.gone()
                     // show a progress bar
                     // hideMainLoading()
                 }

@@ -1,8 +1,12 @@
 package com.visualinnovate.almursheed.home.view.tourist.hire
 
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +22,7 @@ import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
+import com.visualinnovate.almursheed.common.showAlertDialog
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.showDialog
 import com.visualinnovate.almursheed.common.toast
@@ -71,10 +76,7 @@ class HireFragment : BaseFragment() {
 
     private val selectDriverGuideClickCalBack: (user: DriverItem) -> Unit = {
         selectedDriverGuideId = it.id!!
-        Glide.with(requireContext())
-            .load(it.imageBackground)
-            .into(binding.chooseDriver.imgDriver)
-        binding.chooseDriver.username.text = it.name
+        binding.chooseDriver.text = it.name
     }
 
     override fun onCreateView(
@@ -105,7 +107,7 @@ class HireFragment : BaseFragment() {
                 for (permission in grantedList) {
                     when (permission) {
                         Permission.Location -> {
-                            getCurrentLocation()
+                            checkGpsIsEnabled()
                             break
                         }
 
@@ -115,9 +117,7 @@ class HireFragment : BaseFragment() {
             }
     }
 
-    override fun onStart() {
-        super.onStart()
-    }
+
 
     private fun initToolbar() {
         binding.appBarHire.setTitleString(getString(R.string.hire))
@@ -145,15 +145,19 @@ class HireFragment : BaseFragment() {
         binding.icSwitchDate.onDebouncedListener {
         }
         binding.driver.onDebouncedListener {
+            selectedDriverGuideId = -1
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.drivers)
+            binding.chooseDriver.hint = getString(R.string.choose_a,getString(R.string.driver))
             userChoosedType = 1
         }
         binding.guide.onDebouncedListener {
+            selectedDriverGuideId = -1
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.guides)
+            binding.chooseDriver.hint = getString(R.string.choose_a,getString(R.string.guide))
             userChoosedType = 2
         }
 
@@ -191,7 +195,7 @@ class HireFragment : BaseFragment() {
             tripType = 2
         }
 
-        binding.chooseDriver.root.onDebouncedListener {
+        binding.chooseDriver.onDebouncedListener {
             if (userChoosedType == 1) {
                 userChoosedType = 1
                 showDriversGuidesBottomSheet("Driver", vm.allDrivers)
@@ -346,9 +350,22 @@ class HireFragment : BaseFragment() {
         }
     }
 
+    private fun checkGpsIsEnabled() {
+        val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        // Checking GPS is enabled
+        val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if (isGpsEnabled) {
+            getCurrentLocation()
+        } else {
+            showAlertDialog("GPS is not enabled", "Please enable GPS to take action") {
+                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                startActivity(intent)
+            }
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
 }

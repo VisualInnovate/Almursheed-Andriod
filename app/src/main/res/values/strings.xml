@@ -196,6 +196,7 @@
     <string name="days">Days</string>
     <string name="total_equal">Total=</string>
     <string name="receipt_info">Receipt info</string>
+    <string name="to">To</string>
 
 
 </resources>

@@ -148,7 +148,7 @@
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="1"
-        android:text="@string/from"
+        android:text="@string/to"
         android:textColor="@color/dark_grey"
         android:textSize="@dimen/space_14x_sp"
         android:textStyle="bold"
@@ -342,5 +342,21 @@
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constraintPrice" />
+
+
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#9FFFFFFF"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
