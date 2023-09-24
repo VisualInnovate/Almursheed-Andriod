@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_edit_text"
-    tools:context=".home.view.commonView.MoreFragment">
+    tools:context=".commonView.MoreFragment">
 
     <com.visualinnovate.almursheed.common.AppBarView
         android:id="@+id/appBarMore"

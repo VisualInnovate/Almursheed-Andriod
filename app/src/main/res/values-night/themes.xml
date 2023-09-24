@@ -89,6 +89,20 @@
         <item name="android:clickable">true</item>
     </style>
 
+
+    <style name="customButtonStyleRoundedBorder" parent=""> <!-- @android:style/Widget.Button -->
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">@dimen/space_3x</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:layout_marginHorizontal">@dimen/space_3x</item>
+        <item name="android:textSize">@dimen/space_20x_sp</item>
+        <item name="android:background">@drawable/bg_rectangle_white_border_red</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
     <style name="BottomSheetDialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/bottomSheetBackground</item>
     </style>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_edit_text"
-    tools:context=".home.view.driver.DriverDetailsFragment">
+    tools:context=".driver.DriverDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

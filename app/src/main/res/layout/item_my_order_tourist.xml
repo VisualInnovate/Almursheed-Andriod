@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/space_4x"
+    android:layout_marginTop="@dimen/space_2x"
+    android:layout_marginEnd="@dimen/space_4x"
+    android:layout_marginBottom="@dimen/space_3x"
+    app:cardCornerRadius="@dimen/space_2x"
+    app:cardElevation="@dimen/space_1x">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtTripInfo"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/trip_info"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/txtCountry"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/countryy"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtTripInfo" />
+
+        <TextView
+            android:id="@+id/country"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Egypt"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtCountry"
+            app:layout_constraintTop_toTopOf="@id/txtCountry" />
+
+        <TextView
+            android:id="@+id/txtDateOfEntry"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/date_of_entry"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtCountry" />
+
+        <TextView
+            android:id="@+id/entryDate"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10-09-2022"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtDateOfEntry"
+            app:layout_constraintTop_toTopOf="@id/txtDateOfEntry" />
+
+        <TextView
+            android:id="@+id/txtDateOfExit"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/date_of_exit"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDateOfEntry" />
+
+        <TextView
+            android:id="@+id/exitDate"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="11-09-2022"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtDateOfExit"
+            app:layout_constraintTop_toTopOf="@id/txtDateOfExit" />
+
+        <TextView
+            android:id="@+id/txtAllDetails"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/all_details"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDateOfExit" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnApprove"
+            style="@style/customButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            android:text="@string/approve"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnReject"
+            app:layout_constraintTop_toBottomOf="@id/txtAllDetails" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnReject"
+            style="@style/customButtonStyleRoundedBorder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            android:text="@string/reject"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnApprove"
+            app:layout_constraintTop_toBottomOf="@id/txtAllDetails"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

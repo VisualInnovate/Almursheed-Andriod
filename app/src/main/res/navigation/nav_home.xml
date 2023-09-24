@@ -7,61 +7,61 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.HomeFragment"
+        android:name="com.visualinnovate.almursheed.tourist.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/hireFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.hire.HireFragment"
+        android:name="com.visualinnovate.almursheed.tourist.hire.HireFragment"
         android:label="HireFragment"
         tools:layout="@layout/fragment_hire" />
 
     <fragment
         android:id="@+id/flightReservationFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.flight.FlightReservationFragment"
+        android:name="com.visualinnovate.almursheed.tourist.flight.FlightReservationFragment"
         android:label="Flight Reservation"
         tools:layout="@layout/fragment_flight_reservation" />
 
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.visualinnovate.almursheed.home.view.commonView.MoreFragment"
+        android:name="com.visualinnovate.almursheed.commonView.MoreFragment"
         android:label="More"
         tools:layout="@layout/fragment_more" />
 
     <fragment
         android:id="@+id/allDriversFragment"
-        android:name="com.visualinnovate.almursheed.home.view.driver.AllDriversFragment"
+        android:name="com.visualinnovate.almursheed.driver.AllDriversFragment"
         android:label="All Drivers"
         tools:layout="@layout/fragment_all_drivers" />
 
     <fragment
         android:id="@+id/allLocationFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.location.AllLocationFragment"
+        android:name="com.visualinnovate.almursheed.tourist.location.AllLocationFragment"
         android:label="All Location"
         tools:layout="@layout/fragment_all_location" />
 
     <fragment
         android:id="@+id/allGuidesFragment"
-        android:name="com.visualinnovate.almursheed.home.view.guide.AllGuidesFragment"
+        android:name="com.visualinnovate.almursheed.guide.AllGuidesFragment"
         android:label="All Guides"
         tools:layout="@layout/fragment_all_guides" />
 
     <fragment
         android:id="@+id/guideDetailsFragment"
-        android:name="com.visualinnovate.almursheed.home.view.guide.GuideDetailsFragment"
+        android:name="com.visualinnovate.almursheed.guide.GuideDetailsFragment"
         android:label="Guide Details"
         tools:layout="@layout/fragment_guide_details" />
 
     <fragment
         android:id="@+id/accommodationFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.accommodation.AccommodationFragment"
+        android:name="com.visualinnovate.almursheed.tourist.accommodation.AccommodationFragment"
         android:label="Accommodation"
         tools:layout="@layout/fragment_accommodation" />
 
     <fragment
         android:id="@+id/accommodationDetailsFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.accommodation.AccommodationDetailsFragment"
+        android:name="com.visualinnovate.almursheed.tourist.accommodation.AccommodationDetailsFragment"
         android:label="Accommodation Details"
         tools:layout="@layout/fragment_accommodation_details" />
 
@@ -73,42 +73,55 @@
 
     <fragment
         android:id="@+id/driverDetailsFragment"
-        android:name="com.visualinnovate.almursheed.home.view.driver.DriverDetailsFragment"
+        android:name="com.visualinnovate.almursheed.driver.DriverDetailsFragment"
         android:label="Driver Details"
         tools:layout="@layout/fragment_driver_details" />
 
     <fragment
         android:id="@+id/locationDetailsFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.location.LocationDetailsFragment"
+        android:name="com.visualinnovate.almursheed.tourist.location.LocationDetailsFragment"
         android:label="fragment_location_details"
         tools:layout="@layout/fragment_location_details" />
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.visualinnovate.almursheed.home.view.commonView.profile.EditProfileFragment"
+        android:name="com.visualinnovate.almursheed.commonView.profile.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/editProfileDriverFragment"
-        android:name="com.visualinnovate.almursheed.home.view.driver.profile.EditProfileDriverFragment"
+        android:name="com.visualinnovate.almursheed.driver.profile.EditProfileDriverFragment"
         android:label="fragment_complete_edit_profile_driver"
         tools:layout="@layout/fragment_edit_profile_driver" />
     <fragment
         android:id="@+id/editProfileGuideFragment"
-        android:name="com.visualinnovate.almursheed.home.view.guide.profile.EditProfileGuideFragment"
+        android:name="com.visualinnovate.almursheed.guide.profile.EditProfileGuideFragment"
         android:label="fragment_edit_profile_guide"
         tools:layout="@layout/fragment_edit_profile_guide" />
 
 
     <fragment
         android:id="@+id/homeDriveAndGuideFragment"
-        android:name="com.visualinnovate.almursheed.home.view.commonView.home.HomeDriverAndGuideFragment"
+        android:name="com.visualinnovate.almursheed.commonView.home.HomeDriverAndGuideFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_driver_and_guide" />
     <fragment
         android:id="@+id/receiptFragment"
-        android:name="com.visualinnovate.almursheed.home.view.tourist.hire.ReceiptDialog"
+        android:name="com.visualinnovate.almursheed.tourist.hire.ReceiptDialog"
         android:label="fragment_receipt"
         tools:layout="@layout/layout_receipt" />
+
+
+    <fragment
+        android:id="@+id/priceFragment"
+        android:name="com.visualinnovate.almursheed.tourist.hire.ReceiptDialog"
+        android:label="fragment_receipt"
+        tools:layout="@layout/layout_receipt" />
+
+    <fragment
+        android:id="@+id/myOrdersFragment"
+        android:name="com.visualinnovate.almursheed.home.view.PriceFragment"
+        android:label="fragment_price"
+        tools:layout="@layout/fragment_price" />
 
 </navigation>

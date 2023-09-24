@@ -197,6 +197,12 @@
     <string name="total_equal">Total=</string>
     <string name="receipt_info">Receipt info</string>
     <string name="to">To</string>
+    <string name="all_details">All Details</string>
+    <string name="approve">Approve</string>
+    <string name="reject">Reject</string>
+    <string name="all">All</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 
 </resources>

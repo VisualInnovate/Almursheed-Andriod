@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
                     R.id.action_flightReservation -> navController.customNavigate(R.id.flightReservationFragment)
                     // Guide and Driver
                     R.id.action_home_driver_guide -> navController.customNavigate(R.id.homeDriveAndGuideFragment)
-                    R.id.action_priceFragment -> navController.customNavigate(R.id.editProfileFragment)
+                    R.id.action_priceFragment -> navController.customNavigate(R.id.priceFragment)
                     R.id.action_earningFragment -> navController.customNavigate(R.id.editProfileFragment)
 
                     R.id.action_more -> navController.customNavigate(R.id.moreFragment)

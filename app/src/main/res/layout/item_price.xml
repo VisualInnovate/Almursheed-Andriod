@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <TextView
+        android:id="@+id/cityName"
+        style="@style/TextStyleRegular"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_2x"
+        android:layout_marginTop="@dimen/space_2x"
+        android:text="Cairo"
+        android:textColor="@color/black"
+        android:gravity="start|center_vertical"
+        android:textSize="@dimen/space_18x_sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+         />
+
+    <TextView
+        android:id="@+id/cityPrice"
+        style="@style/TextStyleBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_2x"
+        android:layout_marginTop="@dimen/space_2x"
+        android:text="150 $"
+        android:textColor="@color/primary"
+        android:gravity="start|center_vertical"
+        android:textSize="@dimen/space_18x_sp"
+        android:paddingStart="@dimen/space_4x"
+        android:paddingEnd="@dimen/space_4x"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cityName"
+         />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
