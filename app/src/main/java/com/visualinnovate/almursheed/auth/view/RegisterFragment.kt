@@ -190,7 +190,7 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun initCitySpinner() {
-        val cityList = cities.keys.toList().sorted()
+        val cityList = cities.keys.toList()
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(

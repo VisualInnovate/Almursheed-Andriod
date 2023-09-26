@@ -26,7 +26,7 @@
             android:paddingTop="@dimen/space_2x"
             android:paddingEnd="@dimen/space_5x"
             android:paddingBottom="@dimen/space_2x"
-            android:text="@string/on"
+            android:text="Active"
             android:textColor="@color/white"
             android:textSize="@dimen/space_16x_sp"
             app:layout_constraintEnd_toEndOf="parent"

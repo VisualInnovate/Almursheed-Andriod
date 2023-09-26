@@ -9,13 +9,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.json.JSONObject
+import retrofit2.Response
 
 abstract class BaseApiResponse(application: Application) : AndroidViewModel(application) {
 
     private var errorMessage = ""
 
     // safe Api Call function
-    suspend fun <T> safeApiCall(apiCall: suspend () -> Unit): Flow<ResponseHandler<T?>> =
+    suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Flow<ResponseHandler<T?>> =
         flow {
             emit(ResponseHandler.Loading)
             try {

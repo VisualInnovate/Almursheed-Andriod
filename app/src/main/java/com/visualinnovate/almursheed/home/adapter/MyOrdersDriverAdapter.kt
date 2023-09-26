@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
+import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.databinding.ItemMyOrderDGHomeBinding
 
-class MyOrdersDriveAdapter() : RecyclerView.Adapter<MyOrdersDriveAdapter.MyOrdersViewHolder>() {
+class MyOrdersDriverAdapter() : RecyclerView.Adapter<MyOrdersDriverAdapter.MyOrdersViewHolder>() {
 
-    private var order: List<String> = ArrayList()
+    private var orders: List<MyOrdersItem?>? = ArrayList()
 
     private lateinit var binding: ItemMyOrderDGHomeBinding
     private lateinit var daysAdapter: DaysAdapter
@@ -39,22 +40,22 @@ class MyOrdersDriveAdapter() : RecyclerView.Adapter<MyOrdersDriveAdapter.MyOrder
     }
 
     override fun onBindViewHolder(holder: MyOrdersViewHolder, position: Int) {
-        val order = order[position]
+        val order = orders?.get(position)
         // bind view
         bindData(holder, order)
     }
 
-    private fun bindData(holder: MyOrdersViewHolder, order: String) {
-        initRecyclerView(arrayListOf("Day One" , "Day Two" , "Day Three"))
+    private fun bindData(holder: MyOrdersViewHolder, order: MyOrdersItem?) {
+        initRecyclerView(arrayListOf("Day One", "Day Two", "Day Three"))
         // holder.dayNumber.text = day
     }
 
     override fun getItemCount(): Int {
-        return order.size
+        return orders?.size ?: 0
     }
 
-    fun submitData(data: List<String>) {
-        order = data
+    fun submitData(data: ArrayList<MyOrdersItem?>?) {
+        orders = data
         notifyDataSetChanged()
     }
 
@@ -69,6 +70,6 @@ class MyOrdersDriveAdapter() : RecyclerView.Adapter<MyOrdersDriveAdapter.MyOrder
             daysAdapter.setHasStableIds(true)
             adapter = daysAdapter
         }
-        daysAdapter.submitData(selectedDays)
+       // daysAdapter.submitData(selectedDays)
     }
 }

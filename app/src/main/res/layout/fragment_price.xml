@@ -42,7 +42,7 @@
 
 
             <include
-                android:id="@+id/spinnerDriversAndGuides"
+                android:id="@+id/spinner_cities"
                 layout="@layout/layout_spinner_bg_grey"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -61,20 +61,22 @@
                 android:hint="@string/enter_price"
                 android:textColorHint="@color/light_grey"
                 android:textSize="@dimen/space_16x_sp"
-                app:layout_constraintBottom_toBottomOf="@id/spinnerDriversAndGuides"
+                android:inputType="number"
+                android:maxEms="4"
+                app:layout_constraintBottom_toBottomOf="@id/spinner_cities"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/spinnerDriversAndGuides"
-                app:layout_constraintTop_toTopOf="@id/spinnerDriversAndGuides" />
+                app:layout_constraintStart_toEndOf="@id/spinner_cities"
+                app:layout_constraintTop_toTopOf="@id/spinner_cities" />
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/citiesRV"
+                android:id="@+id/pricesRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_3x"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/spinnerDriversAndGuides"
+                app:layout_constraintTop_toBottomOf="@id/spinner_cities"
                 tools:itemCount="4"
                 tools:listitem="@layout/item_price" />
 
@@ -86,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_4x"
                 android:text="@string/update"
-                app:layout_constraintTop_toBottomOf="@id/citiesRV" />
+                app:layout_constraintTop_toBottomOf="@id/pricesRV" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

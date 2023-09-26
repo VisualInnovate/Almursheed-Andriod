@@ -29,13 +29,14 @@
         <TextView
             android:id="@+id/day_number"
             style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_2x"
             android:paddingBottom="@dimen/space_1x"
             android:text="Day One"
             android:textColor="@color/black"
             android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@id/btn_collapse"
             app:layout_constraintBottom_toBottomOf="@id/btn_collapse"
             app:layout_constraintStart_toEndOf="@id/view"
             app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +66,7 @@
             android:id="@+id/routeView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/day_number"
@@ -94,11 +95,31 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="@dimen/space_3x"
+
                 android:shadowColor="@color/dark_grey"
                 android:textColorHint="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
                 app:layout_constraintTop_toTopOf="parent" />
+
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/txtDestination"-->
+<!--                style="@style/EditTextStyleRegular"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/space_3x"-->
+<!--                android:layout_marginVertical="@dimen/space_3x"-->
+<!--                android:background="@drawable/bg_rectangle_corner_grey_border"-->
+<!--                android:hint="@string/where_to"-->
+<!--                android:inputType="text"-->
+<!--                android:maxLines="1"-->
+<!--                android:visibility="gone"-->
+<!--                android:padding="@dimen/space_3x"-->
+<!--                android:shadowColor="@color/dark_grey"-->
+<!--                android:textColorHint="@color/grey"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@id/icLocationRoute1"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

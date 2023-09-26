@@ -105,23 +105,18 @@
         android:name="com.visualinnovate.almursheed.commonView.home.HomeDriverAndGuideFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home_driver_and_guide" />
-    <fragment
-        android:id="@+id/receiptFragment"
-        android:name="com.visualinnovate.almursheed.tourist.hire.ReceiptDialog"
-        android:label="fragment_receipt"
-        tools:layout="@layout/layout_receipt" />
 
 
     <fragment
         android:id="@+id/priceFragment"
-        android:name="com.visualinnovate.almursheed.tourist.hire.ReceiptDialog"
-        android:label="fragment_receipt"
-        tools:layout="@layout/layout_receipt" />
+        android:name="com.visualinnovate.almursheed.commonView.price.views.PriceFragment"
+        android:label="fragment_price"
+        tools:layout="@layout/fragment_price" />
 
     <fragment
         android:id="@+id/myOrdersFragment"
-        android:name="com.visualinnovate.almursheed.home.view.PriceFragment"
-        android:label="fragment_price"
-        tools:layout="@layout/fragment_price" />
+        android:name="com.visualinnovate.almursheed.commonView.myOrders.view.MyOrdersFragment"
+        android:label="fragment_my_orders"
+        tools:layout="@layout/fragment_my_orders" />
 
 </navigation>

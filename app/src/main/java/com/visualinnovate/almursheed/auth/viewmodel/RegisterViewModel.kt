@@ -69,7 +69,7 @@ class RegisterViewModel @Inject constructor(
         when (response) {
             is ResponseHandler.Success -> {
                 SharedPreference.saveUser(response.data?.user)
-                SharedPreference.saveUserToken(response.data?.token)
+                SharedPreference.setUserToken(response.data?.token)
             }
 
             else -> {}

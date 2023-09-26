@@ -12,15 +12,16 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
+import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.databinding.ItemDaysBinding
 import com.visualinnovate.almursheed.utils.Utils
 
 class DaysAdapter(
     private val selectDaysCallback: ((day: String, cityId: Int) -> Unit)? = null,
-    private val enableEdit: Boolean = false
+    private val enableEdit: Boolean = true,
 ) : RecyclerView.Adapter<DaysAdapter.DaysViewHolder>() {
 
-    private var days: List<String> = ArrayList()
+    private var days: List<DayModel> = ArrayList()
 
     private lateinit var binding: ItemDaysBinding
 
@@ -30,17 +31,18 @@ class DaysAdapter(
         val btnCollapse = itemView.btnCollapse
         val routeView = itemView.routeView
         val destination = itemView.destination
+      //  val txtDestination = itemView.txtDestination
         val spinnerCity = itemView.spinnerCity
 
         init {
             btnCollapse.onDebouncedListener {
                 if (routeView.isVisible) {
                     btnCollapse.setBackgroundResource(R.drawable.bg_plus_curved_green)
-                    // routeView.gone()
+                    routeView.gone()
                     spinnerCity.getRoot().gone()
                 } else {
                     btnCollapse.setBackgroundResource(R.drawable.bg_minus_curved_green)
-                    // routeView.visible()
+                     routeView.visible()
                     spinnerCity.getRoot().visible()
                 }
             }
@@ -58,15 +60,16 @@ class DaysAdapter(
         bindData(holder, day)
     }
 
-    private fun bindData(holder: DaysViewHolder, day: String) {
-        holder.dayNumber.text = day
+    private fun bindData(holder: DaysViewHolder, day: DayModel) {
+        holder.dayNumber.text = day.date
 
-        if (enableEdit){
+        if (enableEdit) {
             initCitySpinner(holder.itemView.context, holder, day)
-            // hide textview
+          //  holder.txtDestination.gone()
         } else {
-           // hide spinner
-          //  set text
+            holder.destination.gone()
+          //  holder.txtDestination.visible()
+        //    holder.txtDestination.text = day.date
         }
     }
 
@@ -74,7 +77,7 @@ class DaysAdapter(
         return days.size
     }
 
-    fun submitData(data: List<String>) {
+    fun submitData(data: ArrayList<DayModel>) {
         days = data
         notifyDataSetChanged()
     }
@@ -84,7 +87,7 @@ class DaysAdapter(
     }
 
     private var cityId: Int? = null
-    private fun initCitySpinner(context: Context, holder: DaysViewHolder, day: String) {
+    private fun initCitySpinner(context: Context, holder: DaysViewHolder, day: DayModel) {
         val cityList = Utils.cities.keys.toList().sorted()
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
@@ -107,7 +110,7 @@ class DaysAdapter(
                     // Retrieve the selected country name
                     val selectedCityName = cityList[position]
                     cityId = Utils.cities[selectedCityName]!!
-                    selectDaysCallback?.invoke(day, cityId!!)
+                    selectDaysCallback?.invoke(day.date.toString(), cityId!!)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

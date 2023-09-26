@@ -2,6 +2,8 @@
 <resources>
     <color name="primary">#088070</color> <!-- #098071 #D6EAE7 -->
     <color name="accent">#DE4915</color>
+    <color name="orange">#DE7315</color>
+    <color name="red">#DE2C15</color>
     <color name="gradiant">#0880704D</color>
     <color name="bg_edit_text">#D6EAE7</color>
     <color name="bg_dots_indicator">#ADD5D0</color>

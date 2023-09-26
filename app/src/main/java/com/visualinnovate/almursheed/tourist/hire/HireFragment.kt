@@ -26,6 +26,7 @@ import com.visualinnovate.almursheed.common.showAlertDialog
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.showDialog
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
@@ -54,7 +55,7 @@ class HireFragment : BaseFragment() {
     private var startDate: Date = Date()
     private var endDate: Date = Date()
     private var currentLocation: Location? = null
-    private var selectedDays = ArrayList<String>()
+    private var selectedDays = ArrayList<DayModel>()
     private var orderDetailsList = ArrayList<OrderDetail>()
     private var isForStartDate: Boolean = true
     private lateinit var daysAdapter: DaysAdapter
@@ -307,7 +308,12 @@ class HireFragment : BaseFragment() {
         } else {
             binding.endDate.text = endDate.formatDate()
         }
-        selectedDays = startDate.getDatesBetweenTwoDates(endDate)
+
+        val days = startDate.getDatesBetweenTwoDates(endDate)
+        days.forEach {
+            var day = DayModel("",it)
+            selectedDays.add(day)
+        }
 
         if (selectedDays.isNotEmpty()) {
             initSelectedDaysRecyclerView()

@@ -76,7 +76,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orders_tourist_rv"
+        android:id="@+id/orders_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

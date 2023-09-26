@@ -13,7 +13,7 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentHomeDriverAndGuideBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
-import com.visualinnovate.almursheed.home.adapter.MyOrdersDriveAdapter
+import com.visualinnovate.almursheed.home.adapter.MyOrdersDriverAdapter
 import com.visualinnovate.almursheed.home.model.BannerModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class HomeDriverAndGuideFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
-    private lateinit var myOrdersAdapter: MyOrdersDriveAdapter
+    private lateinit var myOrdersAdapter: MyOrdersDriverAdapter
 
     // m.nassar@visualinnovate.com
     private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
@@ -105,13 +105,13 @@ class HomeDriverAndGuideFragment : Fragment() {
     }
 
     private fun initOrdersRecyclerView() {
-        myOrdersAdapter = MyOrdersDriveAdapter()
+        myOrdersAdapter = MyOrdersDriverAdapter()
         binding.myOrdersRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             myOrdersAdapter.setHasStableIds(true)
             adapter = myOrdersAdapter
         }
-        myOrdersAdapter.submitData(arrayListOf("c", "d", "e", "f", "g", "h"))
+     //   myOrdersAdapter.submitData(arrayListOf("c", "d", "e", "f", "g", "h"))
     }
 
     override fun onDestroy() {

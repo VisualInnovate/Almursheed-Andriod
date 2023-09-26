@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.databinding.FragmentSplashBinding
@@ -33,10 +34,11 @@ class SplashFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+
         Handler(Looper.getMainLooper()).postDelayed({
             // if need to call api check version to make update to version app
             // navigate() -> if need to check to user to auto login
             findNavController().customNavigate(R.id.onBoardingFragment)
-        }, 6000)
+        }, 3000)
     }
 }

@@ -85,7 +85,7 @@ class LoginFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
-                    SharedPreference.saveUserToken(it.data?.token)
+                    SharedPreference.setUserToken(it.data?.token)
                     Log.d("Success", "${SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId}")
                     requireActivity().startHomeActivity()
                 }
@@ -115,6 +115,9 @@ class LoginFragment : BaseFragment() {
         // password = binding.edtPassword.value
         email = "mohamed.nasar8710@gmail.com"
         password = "123456789"
+
+//        email = "mohamed.driver77@gmail.com"
+//        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

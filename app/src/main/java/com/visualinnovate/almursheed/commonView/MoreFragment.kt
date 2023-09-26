@@ -12,7 +12,9 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
 import com.visualinnovate.almursheed.home.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MoreFragment : Fragment() {
 
     private var _binding: FragmentMoreBinding? = null
@@ -52,7 +54,7 @@ class MoreFragment : Fragment() {
             findNavController().customNavigate(R.id.editProfileFragment)
         }
         binding.logout.onDebouncedListener {
-            SharedPreference.saveUserToken(null)
+            SharedPreference.setUserToken(null)
             findNavController().customNavigate(R.id.loginFragment)
         }
 

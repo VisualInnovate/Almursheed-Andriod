@@ -22,7 +22,7 @@ object SharedPreference {
     fun getUserRole(): String? {
         return Hawk.get(Constant.USER_Role)
     }
-    fun saveUserToken(token: String?) {
+    fun setUserToken(token: String?) {
         Hawk.put(Constant.USER_TOKEN, token)
     }
 

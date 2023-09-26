@@ -2,6 +2,8 @@ package com.visualinnovate.almursheed.network
 
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
+import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
+import com.visualinnovate.almursheed.commonView.price.models.PricesResponse
 import com.visualinnovate.almursheed.home.model.*
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -47,7 +49,7 @@ interface ApiService {
     @POST("login-clients")
     suspend fun login(
         @Query("email") email: String?,
-        @Query("password") password: String?
+        @Query("password") password: String?,
     ): Response<UserResponse>
 
     @POST("generate-otp")
@@ -74,7 +76,7 @@ interface ApiService {
 
     @GET("drivers/latest/{id}") // https://mursheed.visualinnovate.net/api/drivers/latest/42
     suspend fun getLatestDriver(
-        @Path("id") cityId: Int
+        @Path("id") cityId: Int,
     ): Response<DriverListResponse>
 
     @GET("drivers/all")
@@ -82,7 +84,7 @@ interface ApiService {
 
     @POST("drivers/get-driver-by-city")
     suspend fun getAllDriversByDistCityId(
-        @Query("city_id") cityId: Int
+        @Query("city_id") cityId: Int,
     ): Response<DriverListResponse>
 
     @GET("guides/all")
@@ -90,7 +92,7 @@ interface ApiService {
 
     @POST("guides/get-guide-by-city")
     suspend fun getAllGuidesByDistCityId(
-        @Query("city_id") cityId: Int
+        @Query("city_id") cityId: Int,
     ): Response<DriverListResponse>
 
     @GET("offers")
@@ -187,4 +189,16 @@ interface ApiService {
         @Path("id") id: Int,
     ): Response<MessageResponse>
 
+    @POST("price-services")
+    suspend fun addNewPrice(
+        @Body requestBody: RequestBody,
+    ): Response<Void>
+
+    @GET("price-services")
+    suspend fun getUserPrices(): Response<PricesResponse>
+
+    @POST("orders/myOrders")
+    suspend fun getMyOrders(
+        @Query("status") status: String,
+    ): Response<MyOrdersModel>
 }
