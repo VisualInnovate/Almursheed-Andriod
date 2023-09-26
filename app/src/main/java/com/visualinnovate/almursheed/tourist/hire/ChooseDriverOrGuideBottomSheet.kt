@@ -9,23 +9,22 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.BottomSheetSelectDriverGuideBinding
 import com.visualinnovate.almursheed.home.adapter.SelectDriverOrGuideAdapter
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 
 class ChooseDriverOrGuideBottomSheet(
     private val type: String,
-    private val users: ArrayList<DriverItem>,
-    private val selectedUserCallback: (user: DriverItem) -> Unit,
+    private val users: ArrayList<DriverAndGuideItem>,
+    private val selectedUserCallback: (user: DriverAndGuideItem) -> Unit,
 ) : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetSelectDriverGuideBinding? = null
     private val binding get() = _binding!!
     private lateinit var selectUserAdapter: SelectDriverOrGuideAdapter
 
-    private val selectUserClickCalBack: (user: DriverItem) -> Unit = {
+    private val selectUserClickCalBack: (user: DriverAndGuideItem) -> Unit = {
         selectedUserCallback.invoke(it)
         dialog?.dismiss()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

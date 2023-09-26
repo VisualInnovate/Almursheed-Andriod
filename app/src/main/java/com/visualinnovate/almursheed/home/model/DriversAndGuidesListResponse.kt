@@ -2,7 +2,7 @@ package com.visualinnovate.almursheed.home.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DriverListResponse(
+data class DriversAndGuidesListResponse(
 
     @field:SerializedName("success")
     val success: Boolean? = null,
@@ -11,10 +11,10 @@ data class DriverListResponse(
     val message: String? = null,
 
     @SerializedName(value = "drivers", alternate = ["guides", "driver", "guide"])
-    val drivers: List<DriverItem?>? = null,
+    val drivers: List<DriverAndGuideItem?>? = null,
 )
 
-data class DriverItem(
+data class DriverAndGuideItem(
 
     @field:SerializedName("state_name")
     val stateName: String? = null,

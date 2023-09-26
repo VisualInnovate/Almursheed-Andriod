@@ -15,7 +15,7 @@ abstract class BaseApiResponse(application: Application) : AndroidViewModel(appl
 
     private var errorMessage = ""
 
-    // safe Api Call function
+    // safe Api Call function (Unit)
     suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): Flow<ResponseHandler<T?>> =
         flow {
             emit(ResponseHandler.Loading)

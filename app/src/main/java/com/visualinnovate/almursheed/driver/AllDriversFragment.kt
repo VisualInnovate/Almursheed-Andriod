@@ -13,7 +13,7 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllDriversBinding
 import com.visualinnovate.almursheed.home.adapter.AllDriverAdapter
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -29,7 +29,7 @@ class AllDriversFragment : BaseFragment() {
 
     private lateinit var allDriverAdapter: AllDriverAdapter
 
-    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit = { driver ->
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
         val bundle = Bundle()
         bundle.putInt(Constant.DRIVER_ID, driver.id!!)
         findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)

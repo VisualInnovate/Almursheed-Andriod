@@ -22,7 +22,7 @@ import com.visualinnovate.almursheed.home.adapter.LocationAdapter
 import com.visualinnovate.almursheed.home.adapter.OfferAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.model.BannerModel
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.view.OfferDetailsFragment
@@ -49,35 +49,30 @@ class HomeFragment : BaseFragment() {
 
     // m.nassar@visualinnovate.com
     private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
-        toast("Clicked Item banner $banner")
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
-    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit = { driver ->
-        toast("Clicked Item driver $driver")
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
         // val bundle = Bundle()
         // bundle.putParcelable(Constant.DRIVER, driver)
         // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
     private val btnGuideClickCallBack: (guide: GuideItem) -> Unit = { guide ->
-        toast("Clicked Item guide $guide")
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
     private val btnLocationClickCallBack: (attractives: AttractivesItem) -> Unit = { attractives ->
-        toast("Clicked Item banner $attractives")
         // val bundle = Bundle()
         // bundle.putInt(Constant.ATTRACTIVE_ID, attractives.id!!)
         // findNavController().customNavigate(R.id.locationDetailsFragment, false, bundle)
     }
 
     private val btnBoobNowOfferCallBack: (offer: OfferItem) -> Unit = { offer ->
-        toast("Clicked Item BoobNowOffer $offer")
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)

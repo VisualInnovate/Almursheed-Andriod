@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
     private lateinit var userRole: String
-    private lateinit var navGraph : NavGraph
+    private lateinit var navGraph: NavGraph
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,21 +40,32 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         setContentView(binding.root)
 
         navController = findNavController(R.id.nav_host_fragment_content_home)
-         navGraph =  navController.navInflater.inflate(R.navigation.nav_home)
-        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
+        navGraph = navController.navInflater.inflate(R.navigation.nav_home)
+
+        /*if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
         } else {
             setupTouristViews()
-        }
+        }*/
+        setupTouristViews()
+
         binding.bottomNavBar.setOnItemSelectedListener(object :
             ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(id: Int) {
                 when (id) {
-                    // tourist
+                    // Tourist
                     R.id.action_home_tourist -> navController.customNavigate(R.id.homeFragment)
-                    R.id.action_hireFragment -> navController.customNavigate(R.id.hireFragment)
+                    R.id.action_hireFragment -> {
+                        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
+
+                        } else {
+                            navController.customNavigate(R.id.hireFragment)
+                        }
+                    }
+
                     R.id.action_accommodationFragment -> navController.customNavigate(R.id.accommodationFragment)
                     R.id.action_flightReservation -> navController.customNavigate(R.id.flightReservationFragment)
+
                     // Guide and Driver
                     R.id.action_home_driver_guide -> navController.customNavigate(R.id.homeDriveAndGuideFragment)
                     R.id.action_priceFragment -> navController.customNavigate(R.id.priceFragment)
@@ -90,6 +101,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         binding.bottomNavBar.setItemSelected(R.id.action_home_driver_guide)
         navController.graph = navGraph
     }
+
     private fun setupTouristViews() {
         navGraph.setStartDestination(R.id.homeFragment) // replace to homeTouristFragment
         binding.bottomNavBar.setMenuResource(R.menu.tourist_menu_bottom_nav)

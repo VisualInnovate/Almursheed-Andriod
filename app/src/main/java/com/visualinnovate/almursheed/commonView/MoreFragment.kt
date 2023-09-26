@@ -9,9 +9,12 @@ import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
 import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,7 +50,13 @@ class MoreFragment : Fragment() {
         )
     }
 
-    private fun initView() {}
+    private fun initView() {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+            binding.myPrices.visible()
+        } else {
+            binding.myPrices.gone()
+        }
+    }
 
     private fun setBtnListener() {
         binding.editProfile.onDebouncedListener {
@@ -60,6 +69,10 @@ class MoreFragment : Fragment() {
 
         binding.myOrders.onDebouncedListener {
             findNavController().customNavigate(R.id.myOrdersFragment)
+        }
+
+        binding.myPrices.onDebouncedListener {
+            findNavController().customNavigate(R.id.priceFragment)
         }
     }
 

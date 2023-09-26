@@ -11,6 +11,6 @@ data class DriverDetailsResponse(
 	val message: String? = null,
 
 	@field:SerializedName("user")
-	val driver: DriverItem? = null
+	val driver: DriverAndGuideItem? = null
 )
 

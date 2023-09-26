@@ -5,22 +5,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
 import com.visualinnovate.almursheed.home.adapter.AllGuideAdapter
-import com.visualinnovate.almursheed.home.model.GuideItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AllGuidesFragment : Fragment() {
+class AllGuidesFragment : BaseFragment() {
 
     private var _binding: FragmentAllGuidesBinding? = null
     private val binding get() = _binding!!
@@ -29,7 +29,7 @@ class AllGuidesFragment : Fragment() {
 
     private lateinit var allGuideAdapter: AllGuideAdapter
 
-    private val btnGuideClickCallBack: (guide: GuideItem) -> Unit =
+    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit =
         { guide ->
             val bundle = Bundle()
             bundle.putInt(Constant.GUIDE_ID, guide.id!!)
@@ -96,7 +96,7 @@ class AllGuidesFragment : Fragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    // allGuideAdapter.submitData(it.data!!.drivers)
+                    allGuideAdapter.submitData(it.data!!.drivers)
                 }
 
                 is ResponseHandler.Error -> {
@@ -107,11 +107,15 @@ class AllGuidesFragment : Fragment() {
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
 
-                else -> {
-                    toast("Else")
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }

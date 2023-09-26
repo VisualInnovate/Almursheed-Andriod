@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentLocationDetailsBinding
 import com.visualinnovate.almursheed.home.model.Attracive
@@ -18,7 +19,7 @@ import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LocationDetailsFragment : Fragment() {
+class LocationDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentLocationDetailsBinding? = null
 
@@ -68,10 +69,15 @@ class LocationDetailsFragment : Fragment() {
                 }
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
-                else -> {
-                    toast("Else")
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }

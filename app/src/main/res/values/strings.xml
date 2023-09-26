@@ -203,6 +203,7 @@
     <string name="all">All</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="my_prices">My Prices</string>
 
 
 </resources>

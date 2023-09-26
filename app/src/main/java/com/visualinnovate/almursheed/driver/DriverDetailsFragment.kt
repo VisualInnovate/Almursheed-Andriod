@@ -5,21 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentDriverDetailsBinding
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DriverDetailsFragment : Fragment() {
+class DriverDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentDriverDetailsBinding? = null
     private val binding get() = _binding!!
@@ -80,16 +80,20 @@ class DriverDetailsFragment : Fragment() {
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
 
-                else -> {
-                    toast("Else")
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }
 
-    private fun initViews(driver: DriverItem?) {
+    private fun initViews(driver: DriverAndGuideItem?) {
         Glide.with(requireContext())
             .load(driver?.personalPhoto)
             .into(binding.imgDriver)

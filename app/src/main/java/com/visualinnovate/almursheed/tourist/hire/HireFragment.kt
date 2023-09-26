@@ -14,8 +14,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.formatDate
 import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
@@ -30,7 +30,7 @@ import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.Order
 import com.visualinnovate.almursheed.home.model.OrderDetail
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
@@ -75,7 +75,7 @@ class HireFragment : BaseFragment() {
         }
     }
 
-    private val selectDriverGuideClickCalBack: (user: DriverItem) -> Unit = {
+    private val selectDriverGuideClickCalBack: (user: DriverAndGuideItem) -> Unit = {
         selectedDriverGuideId = it.id!!
         binding.chooseDriver.text = it.name
     }
@@ -118,8 +118,6 @@ class HireFragment : BaseFragment() {
             }
     }
 
-
-
     private fun initToolbar() {
         binding.appBarHire.setTitleString(getString(R.string.hire))
         binding.appBarHire.setTitleCenter(true)
@@ -150,7 +148,7 @@ class HireFragment : BaseFragment() {
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.drivers)
-            binding.chooseDriver.hint = getString(R.string.choose_a,getString(R.string.driver))
+            binding.chooseDriver.hint = getString(R.string.choose_a, getString(R.string.driver))
             userChoosedType = 1
         }
         binding.guide.onDebouncedListener {
@@ -158,7 +156,7 @@ class HireFragment : BaseFragment() {
             binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
             binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
             binding.txtDriver.text = getString(R.string.guides)
-            binding.chooseDriver.hint = getString(R.string.choose_a,getString(R.string.guide))
+            binding.chooseDriver.hint = getString(R.string.choose_a, getString(R.string.guide))
             userChoosedType = 2
         }
 
@@ -250,7 +248,7 @@ class HireFragment : BaseFragment() {
         this.showDialog(dialog, "ReceiptDialog")
     }
 
-    private fun showDriversGuidesBottomSheet(type: String, data: ArrayList<DriverItem>) {
+    private fun showDriversGuidesBottomSheet(type: String, data: ArrayList<DriverAndGuideItem>) {
         val bottomSheet = ChooseDriverOrGuideBottomSheet(type, data, selectDriverGuideClickCalBack)
         this.showBottomSheet(bottomSheet, "ChooseDriversGuidesBottomSheet")
     }
@@ -311,7 +309,7 @@ class HireFragment : BaseFragment() {
 
         val days = startDate.getDatesBetweenTwoDates(endDate)
         days.forEach {
-            var day = DayModel("",it)
+            var day = DayModel("", it)
             selectedDays.add(day)
         }
 
@@ -345,6 +343,12 @@ class HireFragment : BaseFragment() {
             toast("Please choose Driver or Guide")
             isValid = false
         }
+
+        if (SharedPreference.getUser()?.desCityId == null || SharedPreference.getUser()?.destCityId == null) {
+            toast("Please set destinarion city from update profile")
+            isValid = false
+        }
+
         return isValid
     }
 
@@ -357,7 +361,8 @@ class HireFragment : BaseFragment() {
     }
 
     private fun checkGpsIsEnabled() {
-        val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         // Checking GPS is enabled
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
         if (isGpsEnabled) {

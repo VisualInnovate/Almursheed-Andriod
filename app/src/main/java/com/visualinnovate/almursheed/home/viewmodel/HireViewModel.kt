@@ -9,8 +9,8 @@ import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.CreateOrderResponse
-import com.visualinnovate.almursheed.home.model.DriverItem
-import com.visualinnovate.almursheed.home.model.DriverListResponse
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
@@ -32,12 +32,12 @@ class HireViewModel @Inject constructor(
         getAllGuidesByDistCityId()
     }
 
-    var allDrivers = ArrayList<DriverItem>()
-    var allGuides = ArrayList<DriverItem>()
+    var allDrivers = ArrayList<DriverAndGuideItem>()
+    var allGuides = ArrayList<DriverAndGuideItem>()
 
-    private val _allDriversAndGuidesMutableData: MutableLiveData<ResponseHandler<DriverListResponse?>> =
+    private val _allDriversAndGuidesMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val allDriversAndGuidesLiveData: LiveData<ResponseHandler<DriverListResponse?>> =
+    val allDriversAndGuidesLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         _allDriversAndGuidesMutableData
 
     private val _createOrderMutableData: MutableLiveData<ResponseHandler<CreateOrderResponse?>> =
@@ -58,7 +58,7 @@ class HireViewModel @Inject constructor(
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
-                        allDrivers = (it.data?.drivers as ArrayList<DriverItem>?)!!
+                        allDrivers = (it.data?.drivers as ArrayList<DriverAndGuideItem>?)!!
                     }
 
                     else -> {}
@@ -76,7 +76,7 @@ class HireViewModel @Inject constructor(
                 // _allGuideMutableData.value = it
                 when (it) {
                     is ResponseHandler.Success -> {
-                        allGuides = (it.data?.drivers as ArrayList<DriverItem>?)!!
+                        allGuides = (it.data?.drivers as ArrayList<DriverAndGuideItem>?)!!
                     }
 
                     else -> {}

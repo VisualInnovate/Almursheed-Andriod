@@ -5,15 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.common.gone
-import com.visualinnovate.almursheed.databinding.ItemDriverBinding
 import com.visualinnovate.almursheed.databinding.ItemDriverGuideBinding
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 
 class SelectDriverOrGuideAdapter(
-    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit,
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit,
 ) : RecyclerView.Adapter<SelectDriverOrGuideAdapter.SelectDriverOrGuideViewHolder>() {
 
-    private var driversList: List<DriverItem?>? = ArrayList()
+    private var driversList: List<DriverAndGuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverGuideBinding
 
@@ -29,7 +28,6 @@ class SelectDriverOrGuideAdapter(
             itemView.root.setOnClickListener {
                 btnDriverClickCallBack.invoke(driversList!![adapterPosition]!!)
             }
-
         }
     }
 
@@ -44,7 +42,7 @@ class SelectDriverOrGuideAdapter(
         bindData(holder, position, driver!!)
     }
 
-    private fun bindData(holder: SelectDriverOrGuideViewHolder, position: Int, driver: DriverItem) {
+    private fun bindData(holder: SelectDriverOrGuideViewHolder, position: Int, driver: DriverAndGuideItem) {
         holder.imgFavorite.gone()
 
       //  holder.rating.text =
@@ -70,7 +68,7 @@ class SelectDriverOrGuideAdapter(
         return driversList?.size ?: 0
     }
 
-    fun submitData(drivers: List<DriverItem?>?) {
+    fun submitData(drivers: List<DriverAndGuideItem?>?) {
         driversList = drivers
         notifyDataSetChanged()
     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -42,9 +43,20 @@ class PriceFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_priceFragment)
+        initToolbar()
         initViews()
         setBtnListener()
         subscribeData()
+    }
+
+    private fun initToolbar() {
+        binding.appBar.setTitleString(getString(R.string.my_prices))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
+            true,
+            { findNavController().navigateUp() },
+            R.drawable.ic_back
+        )
     }
 
     private fun initViews() {
@@ -63,14 +75,13 @@ class PriceFragment : BaseFragment() {
 
     private fun setBtnListener() {
         binding.btnUpdate.onDebouncedListener {
-           if (validate()){
-               vm.addNewPrice(cityId, price)
-           }
-
+            if (validate()) {
+                vm.addNewPrice(cityId, price)
+            }
         }
     }
 
-    private fun validate() : Boolean {
+    private fun validate(): Boolean {
         var isValid = true
         price = binding.price.text.toString().trim()
         if (price.isNotEmpty()) {
@@ -80,13 +91,13 @@ class PriceFragment : BaseFragment() {
             isValid = false
         }
 
-        for((index, value) in myPricesAdapter.getPricesList().withIndex()){
-            if (value?.cityId.toString() == cityId){
+        /*for ((index, value) in myPricesAdapter.getPricesList().withIndex()) {
+            if (value?.cityId.toString() == cityId) {
                 toast("you are already selected this city")
                 isValid = false
                 break
             }
-        }
+        }*/
         return isValid
     }
 
@@ -96,15 +107,19 @@ class PriceFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     vm.getAllPrices()
                 }
+
                 is ResponseHandler.Error -> {
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     showMainLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     hideMainLoading()
                 }
+
                 else -> {
                     toast("Something went wrong")
                 }
@@ -117,15 +132,19 @@ class PriceFragment : BaseFragment() {
                     val data = it.data?.priceServices
                     myPricesAdapter.submitData(data)
                 }
+
                 is ResponseHandler.Error -> {
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     showMainLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     hideMainLoading()
                 }
+
                 else -> {
                     toast("Something went wrong")
                 }
@@ -166,6 +185,7 @@ class PriceFragment : BaseFragment() {
         super.onStart()
         vm.getAllPrices()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

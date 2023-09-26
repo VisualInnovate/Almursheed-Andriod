@@ -4,14 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.utils.Constant
 
 class DriverAdapter(
-    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit
 ) : RecyclerView.Adapter<DriverAdapter.DriverViewHolder>() {
 
-    private var driversList: List<DriverItem?>? = ArrayList()
+    private var driversList: List<DriverAndGuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverBinding
 
@@ -47,7 +51,13 @@ class DriverAdapter(
         bindData(holder, position, driver!!)
     }
 
-    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriverItem) {
+    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriverAndGuideItem) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+            binding.btnBookNow.gone()
+        } else {
+            binding.btnBookNow.visible()
+        }
+
         Glide.with(holder.itemView.context)
             .load(driver.imageBackground)
             .into(holder.imgDriver)
@@ -71,7 +81,7 @@ class DriverAdapter(
         return driversList?.size ?: 0
     }
 
-    fun submitData(drivers: List<DriverItem?>?) {
+    fun submitData(drivers: List<DriverAndGuideItem?>?) {
         driversList = drivers
         notifyDataSetChanged()
     }

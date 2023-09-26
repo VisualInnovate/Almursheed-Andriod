@@ -118,17 +118,24 @@ class AccommodationDetailsFragment : BaseFragment() {
                     Log.d("ResponseHandler.Success", it.data!!.accommodation!!.toString())
                     initViews(it.data!!.accommodation!!)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("ResponseHandler.Error", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
-                else -> {
-                    toast("Else")
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }

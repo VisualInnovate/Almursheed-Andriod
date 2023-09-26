@@ -77,23 +77,23 @@ interface ApiService {
     @GET("drivers/latest/{id}") // https://mursheed.visualinnovate.net/api/drivers/latest/42
     suspend fun getLatestDriver(
         @Path("id") cityId: Int,
-    ): Response<DriverListResponse>
+    ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/all")
-    suspend fun getAllDrivers(): Response<DriverListResponse>
+    suspend fun getAllDrivers(): Response<DriversAndGuidesListResponse>
 
     @POST("drivers/get-driver-by-city")
     suspend fun getAllDriversByDistCityId(
         @Query("city_id") cityId: Int,
-    ): Response<DriverListResponse>
+    ): Response<DriversAndGuidesListResponse>
 
     @GET("guides/all")
-    suspend fun getAllGuides(): Response<DriverListResponse>
+    suspend fun getAllGuides(): Response<DriversAndGuidesListResponse>
 
     @POST("guides/get-guide-by-city")
     suspend fun getAllGuidesByDistCityId(
         @Query("city_id") cityId: Int,
-    ): Response<DriverListResponse>
+    ): Response<DriversAndGuidesListResponse>
 
     @GET("offers")
     suspend fun getAllOffers(): Response<OfferResponse>

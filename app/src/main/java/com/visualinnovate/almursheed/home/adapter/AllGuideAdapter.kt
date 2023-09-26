@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.databinding.ItemAllGuideBinding
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.GuideItem
 
 class AllGuideAdapter(
-    private val btnAccommodationClickCallBack: (guide: GuideItem) -> Unit
+    private val btnAccommodationClickCallBack: (guide: DriverAndGuideItem) -> Unit
 ) : RecyclerView.Adapter<AllGuideAdapter.AllGuideViewHolder>() {
 
-    private var allGuideList: List<GuideItem?>? = ArrayList()
+    private var allGuideList: List<DriverAndGuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemAllGuideBinding
 
@@ -46,7 +47,7 @@ class AllGuideAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindData(holder: AllGuideViewHolder, guide: GuideItem) {
+    private fun bindData(holder: AllGuideViewHolder, guide: DriverAndGuideItem) {
         // set data
         Glide.with(holder.itemView.context)
             .load(guide.imageBackground)
@@ -68,7 +69,7 @@ class AllGuideAdapter(
         return allGuideList?.size ?: 0
     }
 
-    fun submitData(data: List<GuideItem?>?) {
+    fun submitData(data: List<DriverAndGuideItem?>?) {
         allGuideList = data
         notifyDataSetChanged()
     }

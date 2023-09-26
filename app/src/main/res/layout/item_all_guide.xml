@@ -31,6 +31,7 @@
             android:id="@+id/imgFavorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_2x"
             android:padding="@dimen/space_3x"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="-4dp"
             android:background="@drawable/ic_bg_item_see_all_guide"
-            android:drawableStart="@drawable/ic_star"
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -55,7 +55,8 @@
             app:layout_constraintBottom_toBottomOf="@id/imgGuide"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="4.0" />
+            android:text="4.0"
+            app:drawableStartCompat="@drawable/ic_star" />
 
         <TextView
             android:id="@+id/guideName"
@@ -82,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_2x"
-            android:drawableStart="@drawable/ic_location_primary"
+            android:layout_marginStart="@dimen/space_2x"
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
             android:textColor="@color/black"
@@ -93,7 +94,8 @@
             app:layout_constraintTop_toBottomOf="@id/guideName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/price"
-            tools:text="Cairo" />
+            tools:text="Cairo"
+            app:drawableStartCompat="@drawable/ic_location_primary" />
 
         <TextView
             android:id="@+id/price"
@@ -101,7 +103,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_1_5x"
-            android:drawableStart="@drawable/ic_money_dollar_coin"
+            android:layout_marginEnd="@dimen/space_3x"
+            app:drawableStartCompat="@drawable/ic_money_dollar_coin"
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
             android:textColor="@color/black"
@@ -118,7 +121,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/space_3x"
-            android:drawableStart="@drawable/ic_country"
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
             android:textColor="@color/black"
@@ -128,7 +130,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="English, Arabic" />
+            android:text="English, Arabic"
+            app:drawableStartCompat="@drawable/ic_country" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

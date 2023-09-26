@@ -85,17 +85,23 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
                     initView(it.data.offer)
                     // driverAdapter.submitData(it.data.drivers)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("Error->DriverList", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                 }
-                else -> {
-                    toast("Else")
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+
                 }
+
+                else -> {}
             }
         }
     }

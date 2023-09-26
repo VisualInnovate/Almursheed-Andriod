@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.databinding.ItemAllDriverBinding
-import com.visualinnovate.almursheed.home.model.DriverItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 
 class AllDriverAdapter(
-    private val btnDriverClickCallBack: (driver: DriverItem) -> Unit
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit
 ) : RecyclerView.Adapter<AllDriverAdapter.AllDriverViewHolder>() {
 
-    private var allDriversList: List<DriverItem?>? = ArrayList()
+    private var allDriversList: List<DriverAndGuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemAllDriverBinding
 
@@ -42,7 +42,7 @@ class AllDriverAdapter(
         bindData(holder, position, driver!!)
     }
 
-    private fun bindData(holder: AllDriverViewHolder, position: Int, driver: DriverItem) {
+    private fun bindData(holder: AllDriverViewHolder, position: Int, driver: DriverAndGuideItem) {
         Glide.with(holder.itemView.context)
             .load(driver.imageBackground)
             .into(holder.imgDriver)
@@ -61,7 +61,7 @@ class AllDriverAdapter(
         return allDriversList?.size ?: 0
     }
 
-    fun submitData(data: List<DriverItem?>?) {
+    fun submitData(data: List<DriverAndGuideItem?>?) {
         allDriversList = data
         notifyDataSetChanged()
     }

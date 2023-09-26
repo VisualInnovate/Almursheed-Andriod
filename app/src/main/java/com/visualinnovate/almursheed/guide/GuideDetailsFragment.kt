@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentGuideDetailsBinding
 import com.visualinnovate.almursheed.home.model.GuideItem
@@ -20,7 +20,7 @@ import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class GuideDetailsFragment : Fragment() {
+class GuideDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentGuideDetailsBinding? = null
     private val binding get() = _binding!!
@@ -28,10 +28,6 @@ class GuideDetailsFragment : Fragment() {
     private val vm: HomeViewModel by viewModels()
 
     private var guideId: Int? = null
-
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +55,7 @@ class GuideDetailsFragment : Fragment() {
         binding.appBarGuidesDetails.setTitleCenter(true)
         binding.appBarGuidesDetails.useBackButton(
             true,
-            btnBackCallBackFunc,
+            { findNavController().navigateUp() },
             R.drawable.ic_back
         )
     }
@@ -81,11 +77,15 @@ class GuideDetailsFragment : Fragment() {
 
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
 
-                else -> {
-                    toast("Else")
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }

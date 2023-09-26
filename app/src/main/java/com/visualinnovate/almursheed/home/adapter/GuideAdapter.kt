@@ -5,9 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.invisible
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
 import com.visualinnovate.almursheed.home.model.GuideItem
+import com.visualinnovate.almursheed.utils.Constant
 
 class GuideAdapter(
     private val btnGuideClickCallBack: (guide: GuideItem) -> Unit
@@ -48,6 +52,11 @@ class GuideAdapter(
 
     private fun bindData(holder: GuideViewHolder, guide: GuideItem) {
         holder.imgStatus.invisible()
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+            binding.btnBookNow.gone()
+        } else {
+            binding.btnBookNow.visible()
+        }
         // set data
         Glide.with(holder.itemView.context)
              .load(guide.imageBackground)
