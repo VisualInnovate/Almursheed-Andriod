@@ -29,7 +29,7 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.MainActivity
-import com.visualinnovate.almursheed.home.adapter.DaysAdapter
+import com.visualinnovate.almursheed.home.adapter.PricesCitesAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.Order
 import com.visualinnovate.almursheed.home.model.OrderDetail
@@ -55,10 +55,14 @@ class HireFragment : BaseFragment() {
     private var startDate: Date = Date()
     private var endDate: Date = Date()
     private var currentLocation: Location? = null
+
     private var selectedDays = ArrayList<DayModel>()
     private var orderDetailsList = ArrayList<OrderDetail>()
+
     private var isForStartDate: Boolean = true
-    private lateinit var daysAdapter: DaysAdapter
+
+    private lateinit var daysAdapter: PricesCitesAdapter
+
     private var datePickerDialog: DatePickerDialog? = null
     private lateinit var permissionHelper: PermissionHelper
 
@@ -76,8 +80,10 @@ class HireFragment : BaseFragment() {
     }
 
     private val selectDriverGuideClickCalBack: (user: DriverAndGuideItem) -> Unit = {
+        vm.getUserCities(user = it)
         selectedDriverGuideId = it.id!!
         binding.chooseDriver.text = it.name
+        daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
     }
 
     override fun onCreateView(
@@ -129,6 +135,7 @@ class HireFragment : BaseFragment() {
     }
 
     private fun initView() {
+        initSelectedDaysRecyclerView()
         binding.inCityCheckBox.isChecked = true
     }
 
@@ -254,13 +261,12 @@ class HireFragment : BaseFragment() {
     }
 
     private fun initSelectedDaysRecyclerView() {
-        daysAdapter = DaysAdapter(selectDaysAndCityCallback, true)
+        daysAdapter = PricesCitesAdapter(selectDaysAndCityCallback, true)
         binding.daysRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             daysAdapter.setHasStableIds(true)
             adapter = daysAdapter
         }
-        daysAdapter.submitData(selectedDays)
     }
 
     private fun initDriversOrGuidesRecyclerView() {
@@ -309,13 +315,13 @@ class HireFragment : BaseFragment() {
 
         val days = startDate.getDatesBetweenTwoDates(endDate)
         days.forEach {
-            var day = DayModel("", it)
+            val day = DayModel("", it)
             selectedDays.add(day)
         }
 
-        if (selectedDays.isNotEmpty()) {
+        /*if (selectedDays.isNotEmpty()) {
             initSelectedDaysRecyclerView()
-        }
+        }*/
     }
 
     private fun validate(): Boolean {

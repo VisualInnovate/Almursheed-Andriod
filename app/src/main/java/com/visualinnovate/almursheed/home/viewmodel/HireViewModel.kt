@@ -11,6 +11,7 @@ import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.CreateOrderResponse
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
+import com.visualinnovate.almursheed.home.model.PriceServicesItem
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
@@ -26,6 +27,15 @@ class HireViewModel @Inject constructor(
 ) : BaseApiResponse(application) {
 
     var order: CreateOrderResponse? = null
+
+    var selectedDriverAndGuideCities: ArrayList<PriceServicesItem> = ArrayList()
+
+    fun getUserCities(user: DriverAndGuideItem) {
+        selectedDriverAndGuideCities.clear()
+        user.priceServices!!.forEach {
+            selectedDriverAndGuideCities.add(it!!)
+        }
+    }
 
     init {
         getAllDriversByDistCityId()

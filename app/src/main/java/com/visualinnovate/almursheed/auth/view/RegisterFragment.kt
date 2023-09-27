@@ -10,8 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.RegisterViewModel
-import com.visualinnovate.almursheed.common.*
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.isEmptySting
+import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentRegisterBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
@@ -71,18 +76,22 @@ class RegisterFragment : BaseFragment() {
                     bundle.putString(Constant.TYPE_OTP, "0")
                     findNavController().customNavigate(R.id.verifyAccountFragment, data = bundle)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                     showAuthLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
                     hideAuthLoading()
                 }
+
                 else -> {
                     toast("Else")
                 }
@@ -92,8 +101,12 @@ class RegisterFragment : BaseFragment() {
 
     private fun initView() {
         if (role == ROLE_TOURIST) {
-            binding.txtCountry.text = getString(R.string.destination_country)
-            binding.txtCity.text = getString(R.string.destination_city)
+            // binding.txtCountry.text = getString(R.string.destination_country)
+            // binding.txtCity.text = getString(R.string.destination_city)
+            binding.txtCountry.gone()
+            binding.txtCity.gone()
+            binding.spinnerCountry.root.gone()
+            binding.spinnerCity.root.gone()
         }
         //    binding.btnUploadPicture.gone()
         //   binding.txtPersonalPicture.gone()
@@ -224,9 +237,40 @@ class RegisterFragment : BaseFragment() {
         binding.btnNext.onDebouncedListener {
             if (validate()) {
                 when (role) {
-                    ROLE_GUIDE -> {vm.registerGuide(username, email, password, nationalityName, countryId!!, cityId!!, role)}
-                    ROLE_DRIVER -> { vm.registerDriver(username, email, password, nationalityName, countryId!!, cityId!!, role) }
-                    ROLE_TOURIST -> { vm.registerTourist(username, email, password, nationalityName, cityId!!, role) }
+                    ROLE_GUIDE -> {
+                        vm.registerGuide(
+                            username,
+                            email,
+                            password,
+                            nationalityName,
+                            countryId!!,
+                            cityId!!,
+                            role
+                        )
+                    }
+
+                    ROLE_DRIVER -> {
+                        vm.registerDriver(
+                            username,
+                            email,
+                            password,
+                            nationalityName,
+                            countryId!!,
+                            cityId!!,
+                            role
+                        )
+                    }
+
+                    ROLE_TOURIST -> {
+                        vm.registerTourist(
+                            username,
+                            email,
+                            password,
+                            nationalityName,
+                            cityId!!,
+                            role
+                        )
+                    }
                 }
             }
         }
