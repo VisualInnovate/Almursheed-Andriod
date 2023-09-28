@@ -261,7 +261,7 @@ class HireFragment : BaseFragment() {
     }
 
     private fun initSelectedDaysRecyclerView() {
-        daysAdapter = PricesCitesAdapter(selectDaysAndCityCallback, true)
+        daysAdapter = PricesCitesAdapter(selectDaysAndCityCallback)
         binding.daysRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             daysAdapter.setHasStableIds(true)
@@ -319,6 +319,7 @@ class HireFragment : BaseFragment() {
             selectedDays.add(day)
         }
 
+        daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
         /*if (selectedDays.isNotEmpty()) {
             initSelectedDaysRecyclerView()
         }*/
@@ -347,11 +348,6 @@ class HireFragment : BaseFragment() {
 
         if (selectedDriverGuideId == -1) {
             toast("Please choose Driver or Guide")
-            isValid = false
-        }
-
-        if (SharedPreference.getUser()?.desCityId == null || SharedPreference.getUser()?.destCityId == null) {
-            toast("Please set destinarion city from update profile")
             isValid = false
         }
 

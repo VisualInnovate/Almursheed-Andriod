@@ -55,18 +55,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_3x"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/day_number"
             app:layout_constraintTop_toBottomOf="@id/btn_collapse" />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/routeView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/day_number"
@@ -78,12 +75,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/space_2x"
                 android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="@+id/destination"
+                app:layout_constraintBottom_toBottomOf="@+id/txtDestination"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/destination"
+                app:layout_constraintTop_toTopOf="@id/txtDestination"
                 app:srcCompat="@drawable/ic_location_route" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <!--<androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/destination"
                 style="@style/EditTextStyleRegular"
                 android:layout_width="0dp"
@@ -95,31 +92,29 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="@dimen/space_3x"
-
                 android:shadowColor="@color/dark_grey"
                 android:textColorHint="@color/grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:id="@+id/txtDestination"-->
-<!--                style="@style/EditTextStyleRegular"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="@dimen/space_3x"-->
-<!--                android:layout_marginVertical="@dimen/space_3x"-->
-<!--                android:background="@drawable/bg_rectangle_corner_grey_border"-->
-<!--                android:hint="@string/where_to"-->
-<!--                android:inputType="text"-->
-<!--                android:maxLines="1"-->
-<!--                android:visibility="gone"-->
-<!--                android:padding="@dimen/space_3x"-->
-<!--                android:shadowColor="@color/dark_grey"-->
-<!--                android:textColorHint="@color/grey"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toEndOf="@id/icLocationRoute1"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtDestination"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginVertical="@dimen/space_3x"
+                android:hint="@string/where_to"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/space_3x"
+                android:shadowColor="@color/dark_grey"
+                android:textColorHint="@color/grey"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

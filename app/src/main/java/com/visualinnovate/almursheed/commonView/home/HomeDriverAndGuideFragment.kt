@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.myOrders.adapters.MyOrderDriverAdapter
 import com.visualinnovate.almursheed.databinding.FragmentHomeDriverAndGuideBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
-import com.visualinnovate.almursheed.home.adapter.MyOrdersDriverAdapter
 import com.visualinnovate.almursheed.home.model.BannerModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ class HomeDriverAndGuideFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
-    private lateinit var myOrdersAdapter: MyOrdersDriverAdapter
+    private lateinit var myOrdersAdapter: MyOrderDriverAdapter
 
     // m.nassar@visualinnovate.com
     private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
@@ -105,7 +105,7 @@ class HomeDriverAndGuideFragment : Fragment() {
     }
 
     private fun initOrdersRecyclerView() {
-        myOrdersAdapter = MyOrdersDriverAdapter()
+        myOrdersAdapter = MyOrderDriverAdapter()
         binding.myOrdersRecyclerView.apply {
             itemAnimator = DefaultItemAnimator()
             myOrdersAdapter.setHasStableIds(true)

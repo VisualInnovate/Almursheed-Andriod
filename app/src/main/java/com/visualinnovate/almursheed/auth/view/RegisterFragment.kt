@@ -14,7 +14,6 @@ import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.isEmptySting
-import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentRegisterBinding
@@ -234,7 +233,7 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
-        binding.btnNext.onDebouncedListener {
+        binding.btnNext.setOnClickListener {
             if (validate()) {
                 when (role) {
                     ROLE_GUIDE -> {
@@ -267,7 +266,7 @@ class RegisterFragment : BaseFragment() {
                             email,
                             password,
                             nationalityName,
-                            cityId!!,
+                            cityId,
                             role
                         )
                     }
@@ -297,7 +296,7 @@ class RegisterFragment : BaseFragment() {
         } else {
             binding.edtEmailAddress.error = null
         }
-        if (password.isEmpty()) {
+        if (password.isEmptySting()) {
             binding.edtPassword.error = getString(R.string.required)
             isValid = false
         } else if (password.length < 8) {
@@ -306,18 +305,18 @@ class RegisterFragment : BaseFragment() {
         } else {
             binding.edtPassword.error = null
         }
-        if (nationalityName.isEmptySting()) {
+        /*if (nationalityName.isEmptySting()) {
             toast("Please choose nationality")
             isValid = false
-        }
-        if (countryId == null) {
+        }*/
+        /*if (countryId == null) {
             toast("Please choose country")
             isValid = false
         }
         if (cityId == null) {
             toast("Please choose city")
             isValid = false
-        }
+        }*/
         return isValid
     }
 

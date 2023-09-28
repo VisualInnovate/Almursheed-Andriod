@@ -53,7 +53,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun registerTourist(name: String, email: String, password: String, nationality: String, cityId: Int, type: String) {
+    fun registerTourist(name: String, email: String, password: String, nationality: String, cityId: Int?, type: String) {
         val requestBody = createBodyRequestTourist(name, email, password, nationality, cityId, type)
         viewModelScope.launch {
             safeApiCall {
@@ -91,7 +91,7 @@ class RegisterViewModel @Inject constructor(
         return jsonData.toRequestBody("application/json".toMediaTypeOrNull())
     }
 
-    private fun createBodyRequestTourist(name: String, email: String, password: String, nationality: String, cityId: Int, type: String): RequestBody {
+    private fun createBodyRequestTourist(name: String, email: String, password: String, nationality: String, cityId: Int?, type: String): RequestBody {
         val requestData = mapOf(
             "name" to name,
             "email" to email,

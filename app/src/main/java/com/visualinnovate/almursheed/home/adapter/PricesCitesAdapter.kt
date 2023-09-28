@@ -19,7 +19,6 @@ import com.visualinnovate.almursheed.home.model.PriceServicesItem
 
 class PricesCitesAdapter(
     private val selectDaysCallback: ((day: String, cityId: Int) -> Unit)? = null,
-    private val enableEdit: Boolean = true,
 ) : RecyclerView.Adapter<PricesCitesAdapter.PricesCitesViewHolder>() {
 
     private var citesList: List<PriceServicesItem> = ArrayList()
@@ -33,7 +32,6 @@ class PricesCitesAdapter(
         val dayNumber = itemView.dayNumber
         val btnCollapse = itemView.btnCollapse
         val routeView = itemView.routeView
-        val destination = itemView.destination
 
         // val txtDestination = itemView.txtDestination
         val spinnerCity = itemView.spinnerCity
@@ -42,11 +40,11 @@ class PricesCitesAdapter(
             btnCollapse.onDebouncedListener {
                 if (routeView.isVisible) {
                     btnCollapse.setBackgroundResource(R.drawable.bg_plus_curved_green)
-                    routeView.gone()
+                    // routeView.gone()
                     spinnerCity.getRoot().gone()
                 } else {
                     btnCollapse.setBackgroundResource(R.drawable.bg_minus_curved_green)
-                    routeView.visible()
+                    // routeView.visible()
                     spinnerCity.getRoot().visible()
                 }
             }
@@ -60,7 +58,7 @@ class PricesCitesAdapter(
 
     override fun onBindViewHolder(holder: PricesCitesViewHolder, position: Int) {
         val day = days[position]
-        val data = citesList[position]
+        // val data = citesList[position]
         // bind view
         bindData(holder, day)
     }
@@ -68,14 +66,7 @@ class PricesCitesAdapter(
     private fun bindData(holder: PricesCitesViewHolder, day: DayModel) {
         holder.dayNumber.text = day.date
 
-        if (enableEdit) {
-            initCitySpinner(holder.itemView.context, holder, day)
-            //  holder.txtDestination.gone()
-        } else {
-            holder.destination.gone()
-            //  holder.txtDestination.visible()
-            //    holder.txtDestination.text = day.date
-        }
+        initCitySpinner(holder.itemView.context, holder, day)
     }
 
     override fun getItemCount(): Int {
@@ -127,6 +118,7 @@ class PricesCitesAdapter(
                     val selectedCityName = citesList[position]
                     cityId = selectedCityName.cityId
                     Log.d("Adapter--initCitySpinner2", "selectedCityName $selectedCityName")
+                    Log.d("Adapter--initCitySpinner3", "id ${selectedCityName.id}")
                     Log.d("Adapter--initCitySpinner2", "cityId $cityId")
                     selectDaysCallback?.invoke(day.date.toString(), cityId!!)
                 }

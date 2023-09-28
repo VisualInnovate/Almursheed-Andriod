@@ -43,6 +43,7 @@ class MyOrdersFragment : BaseFragment() {
     private val btnRejectClickCallback: (item: MyOrdersItem) -> Unit = {
         Log.d("MyDebugData", "MyOrdersFragment :  :  " + it)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -87,6 +88,7 @@ class MyOrdersFragment : BaseFragment() {
                 setTextColor(resources.getColor(R.color.grey))
             }
         }
+
         binding.txtOpen.onDebouncedListener {
             vm.getOrders(Constant.OPEN)
             binding.txtOpen.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
@@ -99,6 +101,7 @@ class MyOrdersFragment : BaseFragment() {
                 setTextColor(resources.getColor(R.color.grey))
             }
         }
+
         binding.txtClose.onDebouncedListener {
             vm.getOrders(Constant.Close)
             binding.txtClose.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
@@ -122,7 +125,9 @@ class MyOrdersFragment : BaseFragment() {
                         Constant.ROLE_DRIVER, Constant.ROLE_GUIDE -> {
                             myOrdersDriverAdapter.submitData(data)
                         }
-                        else -> { myOrdersTouristAdapter.submitData(data) }
+                        else -> {
+                            myOrdersTouristAdapter.submitData(data)
+                        }
                     }
                 }
 
@@ -145,14 +150,20 @@ class MyOrdersFragment : BaseFragment() {
             }
         }
     }
+
     private fun initRecyclerView() {
         when (userRole) {
             Constant.ROLE_DRIVER, Constant.ROLE_GUIDE -> initDriverGuideRecyclerView()
             else -> initTouristRecyclerView()
         }
     }
+
     private fun initDriverGuideRecyclerView() {
-        myOrdersDriverAdapter = MyOrderDriverAdapter()
+        myOrdersDriverAdapter = MyOrderDriverAdapter(
+            onAllDetailsClickCallback,
+            btnApproveClickCallback,
+            btnRejectClickCallback
+        )
         binding.ordersRv.apply {
             itemAnimator = DefaultItemAnimator()
             myOrdersDriverAdapter.setHasStableIds(true)
@@ -161,13 +172,14 @@ class MyOrdersFragment : BaseFragment() {
     }
 
     private fun initTouristRecyclerView() {
-        myOrdersTouristAdapter = MyOrdersTouristAdapter(onAllDetailsClickCallback, btnApproveClickCallback, btnRejectClickCallback)
+        myOrdersTouristAdapter = MyOrdersTouristAdapter()
         binding.ordersRv.apply {
             itemAnimator = DefaultItemAnimator()
             myOrdersTouristAdapter.setHasStableIds(true)
             adapter = myOrdersTouristAdapter
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

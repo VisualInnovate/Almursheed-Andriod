@@ -18,9 +18,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.view.LiveEvent
-import java.lang.IllegalStateException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -114,19 +114,27 @@ fun Activity.startHomeActivity() {
     this.finish()
 }
 
+fun Activity.startAuthActivity() {
+    val intent = Intent(this, AuthActivity::class.java)
+    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+    startActivity(intent)
+    this.finish()
+}
+
+
 val EditText.value
     get() = text?.toString()?.trim() ?: ""
 // ex: val name = etName.value
 
 fun String.isEmptySting(): Boolean {
     return (
-        TextUtils.isEmpty(this) ||
-            this.equals("", ignoreCase = true) ||
-            this.equals("{}", ignoreCase = true) ||
-            this.equals("null", ignoreCase = true) ||
-            this.equals("nullnullnullnull", ignoreCase = true) ||
-            this.equals("undefined", ignoreCase = true)
-        )
+            TextUtils.isEmpty(this) ||
+                    this.equals("", ignoreCase = true) ||
+                    this.equals("{}", ignoreCase = true) ||
+                    this.equals("null", ignoreCase = true) ||
+                    this.equals("nullnullnullnull", ignoreCase = true) ||
+                    this.equals("undefined", ignoreCase = true)
+            )
 }
 
 fun <T> LiveData<T>.toSingleEvent(): LiveData<T> {
@@ -170,6 +178,7 @@ fun Fragment.showDialog(dialog: DialogFragment, tag: String) {
     } catch (e: Exception) {
     }
 }
+
 fun Fragment.showBottomSheet(dialog: BottomSheetDialogFragment, tag: String) {
     try {
         if (!dialog.isVisible) {
@@ -179,7 +188,12 @@ fun Fragment.showBottomSheet(dialog: BottomSheetDialogFragment, tag: String) {
     }
 }
 
-fun Fragment.showAlertDialog(title: String, message: String, cancelable:Boolean = false,onPositiveCallback: () -> Unit = {}) {
+fun Fragment.showAlertDialog(
+    title: String,
+    message: String,
+    cancelable: Boolean = false,
+    onPositiveCallback: () -> Unit = {}
+) {
     try {
         val builder = AlertDialog.Builder(
             this.requireContext(),

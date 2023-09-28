@@ -28,10 +28,11 @@ class DaysAdapter(
     inner class DaysViewHolder(itemView: ItemDaysBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         val dayNumber = itemView.dayNumber
-        val btnCollapse = itemView.btnCollapse
-        val routeView = itemView.routeView
-        val destination = itemView.destination
-      //  val txtDestination = itemView.txtDestination
+        private val btnCollapse = itemView.btnCollapse
+        private val routeView = itemView.routeView
+
+        // val destination = itemView.destination
+        val txtDestination = itemView.txtDestination
         val spinnerCity = itemView.spinnerCity
 
         init {
@@ -42,7 +43,7 @@ class DaysAdapter(
                     spinnerCity.getRoot().gone()
                 } else {
                     btnCollapse.setBackgroundResource(R.drawable.bg_minus_curved_green)
-                     routeView.visible()
+                    routeView.visible()
                     spinnerCity.getRoot().visible()
                 }
             }
@@ -65,11 +66,11 @@ class DaysAdapter(
 
         if (enableEdit) {
             initCitySpinner(holder.itemView.context, holder, day)
-          //  holder.txtDestination.gone()
+            holder.txtDestination.gone()
         } else {
-            holder.destination.gone()
-          //  holder.txtDestination.visible()
-        //    holder.txtDestination.text = day.date
+            holder.spinnerCity.root.gone()
+            holder.txtDestination.visible()
+            holder.txtDestination.text = day.date
         }
     }
 

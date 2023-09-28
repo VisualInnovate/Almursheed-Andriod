@@ -11,6 +11,8 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.startAuthActivity
+import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
 import com.visualinnovate.almursheed.home.MainActivity
@@ -63,8 +65,9 @@ class MoreFragment : Fragment() {
             findNavController().customNavigate(R.id.editProfileFragment)
         }
         binding.logout.onDebouncedListener {
+            SharedPreference.saveUser(null)
             SharedPreference.setUserToken(null)
-            findNavController().customNavigate(R.id.loginFragment)
+            requireActivity().startAuthActivity()
         }
 
         binding.myOrders.onDebouncedListener {
