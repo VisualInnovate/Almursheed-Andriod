@@ -118,5 +118,10 @@
         android:name="com.visualinnovate.almursheed.commonView.myOrders.view.MyOrdersFragment"
         android:label="fragment_my_orders"
         tools:layout="@layout/fragment_my_orders" />
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.myOrders.view.OrderDetailsFragment"
+        android:label="fragment_order_details"
+        tools:layout="@layout/fragment_order_details" />
 
 </navigation>

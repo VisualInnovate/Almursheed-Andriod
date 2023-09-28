@@ -144,6 +144,8 @@
     <string name="terms_and_conditions">Terms and conditions</string>
     <string name="my_account">My Account</string>
     <string name="my_orders">My Orders</string>
+    <string name="notifictions">Notifictions</string>
+    <string name="order_details">Order Details</string>
     <string name="my_profile">My Profile</string>
     <string name="logout">Logout</string>
     <string name="reset_password">Reset Password</string>

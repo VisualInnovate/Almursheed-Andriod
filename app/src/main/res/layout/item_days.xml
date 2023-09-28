@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/space_3x"
@@ -36,8 +37,8 @@
             android:text="Day One"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/btn_collapse"
             app:layout_constraintBottom_toBottomOf="@id/btn_collapse"
+            app:layout_constraintEnd_toStartOf="@id/btn_collapse"
             app:layout_constraintStart_toEndOf="@id/view"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,6 +65,7 @@
             android:id="@+id/routeView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/day_number"
@@ -104,8 +106,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginVertical="@dimen/space_3x"
-                android:hint="@string/where_to"
+                android:layout_marginVertical="@dimen/space_2x"
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="@dimen/space_3x"
@@ -114,7 +115,8 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/icLocationRoute1"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:hint="@string/where_to" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -9,8 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
-import com.visualinnovate.almursheed.common.*
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.isEmptySting
+import com.visualinnovate.almursheed.common.startHomeActivity
+import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentLoginBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,7 +91,10 @@ class LoginFragment : BaseFragment() {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.setUserToken(it.data?.token)
-                    Log.d("Success", "${SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId}")
+                    Log.d(
+                        "Success",
+                        "${SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId}"
+                    )
                     requireActivity().startHomeActivity()
                 }
 
@@ -100,10 +108,12 @@ class LoginFragment : BaseFragment() {
                     // show a progress bar
                     showAuthLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
                     hideAuthLoading()
                 }
+
                 else -> {}
             }
         }
@@ -111,14 +121,14 @@ class LoginFragment : BaseFragment() {
 
     private fun validate(): Boolean {
         var isValid = true
-        // email = binding.edtEmailAddress.value
-        // password = binding.edtPassword.value
+        email = binding.edtEmailAddress.value
+        password = binding.edtPassword.value
 
 //        email = "mohamed.driver77@gmail.com"
 //        password = "123456789"
 
-         email = "mohamed.nasar8710@gmail.com"
-         password = "123456789"
+        // email = "mohamed.nasar8710@gmail.com"
+        // password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

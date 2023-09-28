@@ -22,13 +22,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_3x"
             android:background="@color/light_green"
-            android:paddingStart="@dimen/space_5x"
-            android:paddingTop="@dimen/space_2x"
-            android:paddingEnd="@dimen/space_5x"
-            android:paddingBottom="@dimen/space_2x"
+            android:paddingStart="@dimen/space_4x"
+            android:paddingTop="@dimen/space_1x"
+            android:paddingEnd="@dimen/space_4x"
+            android:paddingBottom="@dimen/space_1x"
             android:text="Active"
             android:textColor="@color/white"
-            android:textSize="@dimen/space_16x_sp"
+            android:textSize="@dimen/space_14x_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +45,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/status" />
-
 
         <TextView
             android:id="@+id/txtCountry"

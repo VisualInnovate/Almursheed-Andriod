@@ -102,9 +102,7 @@ class RegisterFragment : BaseFragment() {
         if (role == ROLE_TOURIST) {
             // binding.txtCountry.text = getString(R.string.destination_country)
             // binding.txtCity.text = getString(R.string.destination_city)
-            binding.txtCountry.gone()
             binding.txtCity.gone()
-            binding.spinnerCountry.root.gone()
             binding.spinnerCity.root.gone()
         }
         //    binding.btnUploadPicture.gone()
@@ -266,6 +264,7 @@ class RegisterFragment : BaseFragment() {
                             email,
                             password,
                             nationalityName,
+                            countryId!!,
                             cityId,
                             role
                         )

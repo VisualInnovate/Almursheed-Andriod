@@ -6,12 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.myOrders.adapters.MyOrderDriverAdapter
@@ -19,7 +21,6 @@ import com.visualinnovate.almursheed.commonView.myOrders.adapters.MyOrdersTouris
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.commonView.myOrders.viewModel.MyOrdersViewModel
 import com.visualinnovate.almursheed.databinding.FragmentMyOrdersBinding
-import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,18 +31,20 @@ class MyOrdersFragment : BaseFragment() {
     private var _binding: FragmentMyOrdersBinding? = null
     private val binding get() = _binding!!
     private lateinit var userRole: String
-    private val vm: MyOrdersViewModel by viewModels()
+    private val vm: MyOrdersViewModel by activityViewModels()
     private lateinit var myOrdersDriverAdapter: MyOrderDriverAdapter
     private lateinit var myOrdersTouristAdapter: MyOrdersTouristAdapter
 
     private val onAllDetailsClickCallback: (item: MyOrdersItem) -> Unit = {
-        Log.d("MyDebugData", "MyOrdersFragment :  :  " + it)
+        Log.d("MyDebugData", "MyOrdersFragment : $it")
+        vm.orderDetails = it
+        findNavController().customNavigate(R.id.orderDetailsFragment)
     }
     private val btnApproveClickCallback: (item: MyOrdersItem) -> Unit = {
-        Log.d("MyDebugData", "MyOrdersFragment :  :  " + it)
+        Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
     }
     private val btnRejectClickCallback: (item: MyOrdersItem) -> Unit = {
-        Log.d("MyDebugData", "MyOrdersFragment :  :  " + it)
+        Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
     }
 
     override fun onCreateView(
@@ -55,7 +58,7 @@ class MyOrdersFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_more)
+        // (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_more)
         userRole = SharedPreference.getUserRole() ?: ""
         initToolbar()
         setBtnListener()
@@ -67,7 +70,7 @@ class MyOrdersFragment : BaseFragment() {
 
     private fun initToolbar() {
         binding.appBar.setTitleString(getString(R.string.my_orders))
-        binding.appBar.setTitleCenter(false)
+        binding.appBar.setTitleCenter(true)
         binding.appBar.useBackButton(
             true,
             { findNavController().navigateUp() },
@@ -125,6 +128,7 @@ class MyOrdersFragment : BaseFragment() {
                         Constant.ROLE_DRIVER, Constant.ROLE_GUIDE -> {
                             myOrdersDriverAdapter.submitData(data)
                         }
+
                         else -> {
                             myOrdersTouristAdapter.submitData(data)
                         }

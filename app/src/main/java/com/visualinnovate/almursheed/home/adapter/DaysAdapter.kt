@@ -13,6 +13,7 @@ import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
+import com.visualinnovate.almursheed.commonView.myOrders.models.OrderDetailsItem
 import com.visualinnovate.almursheed.databinding.ItemDaysBinding
 import com.visualinnovate.almursheed.utils.Utils
 
@@ -22,6 +23,7 @@ class DaysAdapter(
 ) : RecyclerView.Adapter<DaysAdapter.DaysViewHolder>() {
 
     private var days: List<DayModel> = ArrayList()
+    private var orderDetailsList: List<OrderDetailsItem?>? = ArrayList()
 
     private lateinit var binding: ItemDaysBinding
 
@@ -40,11 +42,11 @@ class DaysAdapter(
                 if (routeView.isVisible) {
                     btnCollapse.setBackgroundResource(R.drawable.bg_plus_curved_green)
                     routeView.gone()
-                    spinnerCity.getRoot().gone()
+                    // spinnerCity.getRoot().gone()
                 } else {
                     btnCollapse.setBackgroundResource(R.drawable.bg_minus_curved_green)
                     routeView.visible()
-                    spinnerCity.getRoot().visible()
+                    // spinnerCity.getRoot().visible()
                 }
             }
         }
@@ -57,20 +59,22 @@ class DaysAdapter(
 
     override fun onBindViewHolder(holder: DaysViewHolder, position: Int) {
         val day = days[position]
+        val orderDetails = orderDetailsList?.get(position)
         // bind view
-        bindData(holder, day)
+        bindData(holder, day, orderDetails)
     }
 
-    private fun bindData(holder: DaysViewHolder, day: DayModel) {
+    private fun bindData(holder: DaysViewHolder, day: DayModel, orderDetails: OrderDetailsItem?) {
         holder.dayNumber.text = day.date
 
         if (enableEdit) {
             initCitySpinner(holder.itemView.context, holder, day)
             holder.txtDestination.gone()
+            holder.spinnerCity.root.visible()
         } else {
             holder.spinnerCity.root.gone()
             holder.txtDestination.visible()
-            holder.txtDestination.text = day.date
+            holder.txtDestination.text = orderDetails?.state ?: ""
         }
     }
 
@@ -78,8 +82,9 @@ class DaysAdapter(
         return days.size
     }
 
-    fun submitData(data: ArrayList<DayModel>) {
+    fun submitData(data: ArrayList<DayModel>, orders: List<OrderDetailsItem?>?) {
         days = data
+        orderDetailsList = orders
         notifyDataSetChanged()
     }
 

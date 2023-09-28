@@ -29,7 +29,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <TextView
             android:id="@+id/txtCountry"
             style="@style/TextStyleRegular"
@@ -111,37 +110,40 @@
         <TextView
             android:id="@+id/txtAllDetails"
             style="@style/TextStyleRegular"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_3x"
-            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_1x"
+            android:paddingVertical="@dimen/space_2x"
             android:text="@string/all_details"
+            android:drawablePadding="@dimen/space_2x"
             android:textColor="@color/accent"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtDateOfExit" />
-
+            app:layout_constraintTop_toBottomOf="@id/txtDateOfExit"
+            app:drawableEndCompat="@drawable/ic_red_arrow_right" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnApprove"
             style="@style/customButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_4x"
+            android:padding="@dimen/space_2x"
+            android:layout_marginVertical="@dimen/space_3x"
             android:text="@string/approve"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnReject"
             app:layout_constraintTop_toBottomOf="@id/txtAllDetails" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnReject"
             style="@style/customButtonStyleRoundedBorder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_4x"
+            android:layout_marginVertical="@dimen/space_3x"
             android:text="@string/reject"
+            android:padding="@dimen/space_2x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btnApprove"
             app:layout_constraintTop_toBottomOf="@id/txtAllDetails"

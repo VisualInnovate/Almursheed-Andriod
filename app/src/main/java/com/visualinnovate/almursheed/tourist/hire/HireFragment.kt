@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.formatDate
 import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
 import com.visualinnovate.almursheed.common.onDebouncedListener
@@ -104,6 +105,25 @@ class HireFragment : BaseFragment() {
         setBtnListener()
         initView()
         subscribeData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(
+            "onStart",
+            "SharedPreference.getUser()?.desCityId ${SharedPreference.getUser()?.desCityId}"
+        )
+        if (SharedPreference.getUser()?.desCityId != null || SharedPreference.getUser()?.destCityId != null) {
+            vm.getAllDriversByDistCityId()
+            vm.getAllGuidesByDistCityId()
+        } else {
+            showAlertDialog(
+                "Destination city id is empty",
+                "Please go to add city from update profile"
+            ) {
+                findNavController().customNavigate(R.id.editProfileFragment)
+            }
+        }
     }
 
     private fun askForLocationPermission() {
@@ -206,7 +226,7 @@ class HireFragment : BaseFragment() {
                 userChoosedType = 1
                 showDriversGuidesBottomSheet("Driver", vm.allDrivers)
             } else {
-                userChoosedType = 1
+                userChoosedType = 2
                 showDriversGuidesBottomSheet("Guide", vm.allGuides)
             }
         }

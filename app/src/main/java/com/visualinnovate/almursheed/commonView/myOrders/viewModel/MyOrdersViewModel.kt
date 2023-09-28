@@ -24,6 +24,8 @@ class MyOrdersViewModel @Inject constructor(
         MutableLiveData()
     val orders: LiveData<ResponseHandler<MyOrdersModel?>?> = _orders
 
+    var orderDetails: MyOrdersItem? = null
+
     private var job: Job? = null
     fun getOrders(status: String) {
         job?.cancel()

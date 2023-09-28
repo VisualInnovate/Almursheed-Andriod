@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/bg_edit_text"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/bg_edit_text">
 
     <com.visualinnovate.almursheed.common.AppBarView
         android:id="@+id/appBar"
@@ -12,17 +12,16 @@
         android:layout_height="@dimen/app_bar_height"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/filterConstraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3x"
-        android:padding="@dimen/space_1_5x"
         android:layout_marginStart="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_3x"
         android:layout_marginEnd="@dimen/space_4x"
-        android:backgroundTint="@color/white"
         android:background="@drawable/bg_rectangle_corner_blue"
+        android:backgroundTint="@color/white"
+        android:padding="@dimen/space_1_5x"
         app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <TextView
@@ -30,62 +29,61 @@
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/bg_rectangle_corner_primary"
+            android:gravity="center"
             android:padding="@dimen/space_3x"
             android:text="@string/all"
             android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@drawable/bg_rectangle_corner_primary"
             android:textSize="@dimen/space_14x_sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/txtOpen"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/txtOpen"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtOpen"
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@string/open"
-            android:padding="@dimen/space_3x"
-            android:textColor="@color/grey"
-            android:gravity="center"
             android:layout_marginHorizontal="@dimen/space_3x"
+            android:gravity="center"
+            android:padding="@dimen/space_3x"
+            android:text="@string/open"
+            android:textColor="@color/grey"
             android:textSize="@dimen/space_14x_sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/txtClose"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/txtAll" />
-<TextView
+            app:layout_constraintEnd_toStartOf="@id/txtClose"
+            app:layout_constraintStart_toEndOf="@id/txtAll"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
             android:id="@+id/txtClose"
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@string/close"
-            android:padding="@dimen/space_3x"
-            android:textColor="@color/grey"
-            android:gravity="center"
             android:layout_marginHorizontal="@dimen/space_3x"
+            android:gravity="center"
+            android:padding="@dimen/space_3x"
+            android:text="@string/close"
+            android:textColor="@color/grey"
             android:textSize="@dimen/space_14x_sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/txtOpen" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/txtOpen"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/orders_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/space_4x"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filterConstraint"
+        tools:itemCount="2"
         tools:listitem="@layout/item_my_order_tourist" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

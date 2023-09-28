@@ -37,10 +37,10 @@ class HireViewModel @Inject constructor(
         }
     }
 
-    init {
+    /*init {
         getAllDriversByDistCityId()
         getAllGuidesByDistCityId()
-    }
+    }*/
 
     var allDrivers = ArrayList<DriverAndGuideItem>()
     var allGuides = ArrayList<DriverAndGuideItem>()
@@ -60,7 +60,7 @@ class HireViewModel @Inject constructor(
     val submitOrderLiveData: LiveData<ResponseHandler<MessageResponse?>> =
         _submitOrderMutableData.toSingleEvent()
 
-    private fun getAllDriversByDistCityId() {
+    fun getAllDriversByDistCityId() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
@@ -77,7 +77,7 @@ class HireViewModel @Inject constructor(
         }
     }
 
-    private fun getAllGuidesByDistCityId() {
+    fun getAllGuidesByDistCityId() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
@@ -96,6 +96,7 @@ class HireViewModel @Inject constructor(
     }
 
     fun createOrder(requestCreateOrder: RequestCreateOrder) {
+        Log.d("createOrder", "requestCreateOrder11 ${SharedPreference.getUser()?.countryId}")
         Log.d("createOrder", "requestCreateOrder $requestCreateOrder")
         viewModelScope.launch {
             safeApiCall {

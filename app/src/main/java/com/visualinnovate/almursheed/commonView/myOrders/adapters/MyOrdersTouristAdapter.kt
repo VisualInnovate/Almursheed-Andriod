@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
+import com.visualinnovate.almursheed.commonView.myOrders.models.OrderDetailsItem
 import com.visualinnovate.almursheed.databinding.ItemMyOrderDGHomeBinding
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
 
@@ -14,6 +15,7 @@ class MyOrdersTouristAdapter : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewH
 
     private var orders: List<MyOrdersItem?>? = ArrayList()
     private var days: ArrayList<DayModel> = ArrayList()
+
     private lateinit var daysAdapter: DaysAdapter
 
     private lateinit var binding: ItemMyOrderDGHomeBinding
@@ -43,7 +45,7 @@ class MyOrdersTouristAdapter : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewH
         if (days.isEmpty()) {
             getDaysList(order)
         }
-        initRecyclerView(holder, days)
+        initRecyclerView(holder, days, order?.orderDetails)
         holder.country.text = order?.countryId.toString()
         holder.dateOfEntry.text = order?.startDate
         holder.dateOfExit.text = order?.endDate
@@ -87,14 +89,18 @@ class MyOrdersTouristAdapter : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewH
         }
     }
 
-    private fun initRecyclerView(holder: ViewHolder, selectedDays: ArrayList<DayModel>) {
+    private fun initRecyclerView(
+        holder: ViewHolder,
+        selectedDays: ArrayList<DayModel>,
+        orderDetails: List<OrderDetailsItem?>?
+    ) {
         daysAdapter = DaysAdapter(null, false)
         holder.days.apply {
             itemAnimator = DefaultItemAnimator()
             daysAdapter.setHasStableIds(true)
             adapter = daysAdapter
         }
-        daysAdapter.submitData(selectedDays)
+        daysAdapter.submitData(selectedDays, orderDetails)
     }
 
     override fun getItemCount(): Int {

@@ -25,9 +25,6 @@ data class MyOrdersItem(
 	@field:SerializedName("created_at")
 	val createdAt: String? = null,
 
-	@field:SerializedName("order_details")
-	val orderDetails: List<OrderDetailsItem?>? = null,
-
 	@field:SerializedName("tourist_id")
 	val touristId: Int? = null,
 
@@ -58,12 +55,14 @@ data class MyOrdersItem(
 	@field:SerializedName("start_date")
 	val startDate: String? = null,
 
-
 	@field:SerializedName("longitude")
 	val longitude: String? = null,
 
 	@field:SerializedName("status")
-	val status: String? = null
+	val status: String? = null,
+
+	@field:SerializedName("order_details")
+	val orderDetails: List<OrderDetailsItem?>? = null,
 )
 
 data class OrderDetailsItem(

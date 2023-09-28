@@ -24,6 +24,7 @@ class PricesCitesAdapter(
     private var citesList: List<PriceServicesItem> = ArrayList()
     private var citesListString: ArrayList<String> = ArrayList()
     private var days: List<DayModel> = ArrayList()
+    private var cityId: Int? = null
 
     private lateinit var binding: ItemDaysBinding
 
@@ -38,7 +39,7 @@ class PricesCitesAdapter(
 
         init {
             btnCollapse.onDebouncedListener {
-                if (routeView.isVisible) {
+                if (spinnerCity.getRoot().isVisible) {
                     btnCollapse.setBackgroundResource(R.drawable.bg_plus_curved_green)
                     // routeView.gone()
                     spinnerCity.getRoot().gone()
@@ -74,8 +75,6 @@ class PricesCitesAdapter(
     }
 
     fun submitData(daysList: ArrayList<DayModel>, cities: ArrayList<PriceServicesItem>) {
-        Log.d("Adapter--submitData", "daysList $daysList")
-        Log.d("Adapter--submitData", "data $cities")
         citesList = cities
         citesListString.clear()
         cities.forEach {
@@ -89,7 +88,6 @@ class PricesCitesAdapter(
         return position
     }
 
-    private var cityId: Int? = null
     private fun initCitySpinner(
         context: Context,
         holder: PricesCitesViewHolder,
