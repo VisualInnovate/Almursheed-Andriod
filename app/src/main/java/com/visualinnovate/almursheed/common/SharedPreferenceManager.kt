@@ -30,6 +30,14 @@ object SharedPreference {
         return Hawk.get(Constant.USER_TOKEN)
     }
 
+    fun setUserLoggedIn(isLoggedIn: Boolean) {
+        Hawk.put(Constant.LOGGED_IN, isLoggedIn)
+    }
+
+    fun getUserLoggedIn(): Boolean {
+        return Hawk.get(Constant.LOGGED_IN)?:false
+    }
+
     fun setLanguage(language: String) {
         Hawk.put(Constant.KEY_LANGUAGE, language)
     }

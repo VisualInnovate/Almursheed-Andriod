@@ -28,7 +28,7 @@ class LoginFragment : BaseFragment() {
     private lateinit var email: String
     private lateinit var password: String
 
-    private var rememberMeType: Boolean = false
+    private var rememberMe: Boolean = false
 
     private val vm: AuthViewModel by viewModels()
 
@@ -64,11 +64,11 @@ class LoginFragment : BaseFragment() {
 
     private fun setBtnListener() {
         binding.btnRememberMe.setOnClickListener {
-            if (!rememberMeType) {
-                rememberMeType = true
+            if (!rememberMe) {
+                rememberMe = true
                 binding.imgRememberMe.setImageResource(R.drawable.ic_remember_me_selected)
             } else {
-                rememberMeType = false
+                rememberMe = false
                 binding.imgRememberMe.setImageResource(R.drawable.ic_remember_me_unselected)
             }
         }
@@ -91,10 +91,8 @@ class LoginFragment : BaseFragment() {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.setUserToken(it.data?.token)
-                    Log.d(
-                        "Success",
-                        "${SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId}"
-                    )
+                    if (rememberMe) SharedPreference.setUserLoggedIn(true)
+
                     requireActivity().startHomeActivity()
                 }
 
@@ -127,8 +125,8 @@ class LoginFragment : BaseFragment() {
 //        email = "mohamed.driver77@gmail.com"
 //        password = "123456789"
 
-        // email = "mohamed.nasar8710@gmail.com"
-        // password = "123456789"
+         email = "mohamed.nasar8710@gmail.com"
+         password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

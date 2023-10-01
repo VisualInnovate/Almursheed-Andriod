@@ -13,6 +13,12 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="no_internet">No internet. Connect to wi-fi or cellular network.</string>
+    <string name="retry">Retry</string>
+    <string name="reconnect">Reconnect</string>
+    <string name="cancel">Cancel</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome_to_mursheed">Welcome \nTo \nMursheed</string>
     <string name="get_the_best_deals_on_mursheed_app_we_are_excited_to_have_you_on_board_as_a_tourist_tour_guide_or_car_driver">Get the best deals on Mursheed App, \nWe are excited to have you on board as a \ntourist, tour guide, or car driver.</string>

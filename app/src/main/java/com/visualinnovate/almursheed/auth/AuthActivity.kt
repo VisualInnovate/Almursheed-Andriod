@@ -1,8 +1,16 @@
 package com.visualinnovate.almursheed.auth
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Bundle
+import android.provider.Settings
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.Car
@@ -29,12 +37,16 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
 
     private lateinit var binding: ActivityAuthBinding
 
+    var snackbar: Snackbar? = null
+    private lateinit var networkConnectionManager: ConnectivityManager
+    private lateinit var networkConnectionCallback: ConnectivityManager.NetworkCallback
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        initConnectivityManager()
         setupDataForCountryAndNationality()
         setupDataForCarModelAndYear()
         setupDataForLanguage()
@@ -135,4 +147,60 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
     override fun hideLoading() {
         binding.AuthProgressLoading.gone()
     }
+
+    private fun initConnectivityManager() {
+        networkConnectionManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        networkConnectionCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                if (snackbar != null) {
+                    if (snackbar!!.isShown) {
+                        snackbar!!.dismiss()
+                    }
+                }
+            }
+
+            override fun onLost(network: Network) {
+                showSnackBar()
+            }
+        }
+        networkConnectionManager.registerDefaultNetworkCallback(networkConnectionCallback)
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            networkConnectionManager.unregisterNetworkCallback(networkConnectionCallback)
+        } catch (ex: IllegalArgumentException) {
+            // ignore this error
+        }
+    }
+
+    fun showSnackBar() {
+        snackbar = Snackbar.make(
+            findViewById(R.id.mainActivity_root),
+            getString(R.string.no_internet),
+            Snackbar.LENGTH_INDEFINITE,
+        ).setActionTextColor(ContextCompat.getColor(this, R.color.accent))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setAction(getString(R.string.reconnect)) {
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.no_internet)
+                    .setPositiveButton(R.string.action_settings) { paramDialogInterface, _ ->
+                        startActivity(
+                            Intent(
+                                Settings.ACTION_WIRELESS_SETTINGS,
+                            ),
+                        )
+                        paramDialogInterface.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancel) { _, _ ->
+                        snackbar?.show()
+                    }.setCancelable(false)
+                    .show()
+            }
+
+    }
+
 }

@@ -1,11 +1,19 @@
 package com.visualinnovate.almursheed.home
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Bundle
+import android.provider.Settings
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.visualinnovate.almursheed.R
@@ -33,6 +41,10 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
     private lateinit var userRole: String
     private lateinit var navGraph: NavGraph
 
+    var snackbar: Snackbar? = null
+    private lateinit var networkConnectionManager: ConnectivityManager
+    private lateinit var networkConnectionCallback: ConnectivityManager.NetworkCallback
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userRole = SharedPreference.getUserRole()!!
@@ -41,7 +53,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
 
         navController = findNavController(R.id.nav_host_fragment_content_home)
         navGraph = navController.navInflater.inflate(R.navigation.nav_home)
-
+        initConnectivityManager()
         /*if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
         } else {
@@ -57,7 +69,6 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
                     R.id.action_home_tourist -> navController.customNavigate(R.id.homeFragment)
                     R.id.action_hireFragment -> {
                         if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
-
                         } else {
                             navController.customNavigate(R.id.hireFragment)
                         }
@@ -95,6 +106,59 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         }
     }
 
+    private fun initConnectivityManager() {
+        networkConnectionManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        networkConnectionCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                if (snackbar != null) {
+                    if (snackbar!!.isShown) {
+                        snackbar!!.dismiss()
+                    }
+                }
+            }
+
+            override fun onLost(network: Network) {
+                showSnackBar()
+            }
+        }
+        networkConnectionManager.registerDefaultNetworkCallback(networkConnectionCallback)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            networkConnectionManager.unregisterNetworkCallback(networkConnectionCallback)
+        } catch (ex: IllegalArgumentException) {
+            // ignore this error
+        }
+    }
+
+    fun showSnackBar() {
+        snackbar = Snackbar.make(
+            findViewById(R.id.mainActivity_root),
+            getString(R.string.no_internet),
+            Snackbar.LENGTH_INDEFINITE,
+        ).setActionTextColor(ContextCompat.getColor(this, R.color.accent))
+            .setTextColor(ContextCompat.getColor(this, R.color.white))
+            .setAction(getString(R.string.reconnect)) {
+                AlertDialog.Builder(this)
+                    .setMessage(R.string.no_internet)
+                    .setPositiveButton(R.string.action_settings) { paramDialogInterface, _ ->
+                        startActivity(
+                            Intent(
+                                Settings.ACTION_WIRELESS_SETTINGS,
+                            ),
+                        )
+                        paramDialogInterface.dismiss()
+                    }
+                    .setNegativeButton(R.string.cancel) { _, _ ->
+                        snackbar?.show()
+                    }.setCancelable(false)
+                    .show()
+            }
+        snackbar?.show()
+    }
     private fun setupDriverOrGuideViews() {
         navGraph.setStartDestination(R.id.homeDriveAndGuideFragment)
         binding.bottomNavBar.setMenuResource(R.menu.driver_guide_menu_bottom_nav)

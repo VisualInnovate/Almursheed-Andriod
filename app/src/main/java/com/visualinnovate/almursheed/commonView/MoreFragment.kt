@@ -12,7 +12,6 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.startAuthActivity
-import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
 import com.visualinnovate.almursheed.home.MainActivity
@@ -28,7 +27,7 @@ class MoreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentMoreBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,7 +47,7 @@ class MoreFragment : Fragment() {
         binding.appBarMore.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
     }
 
@@ -67,6 +66,7 @@ class MoreFragment : Fragment() {
         binding.logout.onDebouncedListener {
             SharedPreference.saveUser(null)
             SharedPreference.setUserToken(null)
+            SharedPreference.setUserLoggedIn(false)
             requireActivity().startAuthActivity()
         }
 

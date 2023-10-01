@@ -30,4 +30,5 @@ object Constant {
     const val ALL = "all"
     const val OPEN = "open"
     const val Close = "close"
+    const val LOGGED_IN = "logged_in"
 }
