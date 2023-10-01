@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemOfferBinding
 import com.visualinnovate.almursheed.home.model.OfferItem
+import com.visualinnovate.almursheed.utils.Constant
 
 class OfferAdapter(
     private val btnBoobNowOfferCallBack: (offer: OfferItem) -> Unit,
@@ -50,6 +54,12 @@ class OfferAdapter(
 
     @SuppressLint("SetTextI18n")
     private fun bindData(holder: OfferViewHolder, offer: OfferItem) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+            binding.btnBookNow.gone()
+        } else {
+            binding.btnBookNow.visible()
+        }
+
         // set data
         // Utils.loadImage(holder.itemView.context, offer.offerImage, holder.imgOffer)
         Utils.loadImage(holder.itemView.context, R.drawable.img_test, holder.imgOffer)

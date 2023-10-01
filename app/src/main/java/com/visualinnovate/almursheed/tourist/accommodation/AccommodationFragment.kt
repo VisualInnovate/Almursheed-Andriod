@@ -5,10 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationBinding
@@ -21,7 +21,7 @@ import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AccommodationFragment : Fragment() {
+class AccommodationFragment : BaseFragment() {
 
     private var _binding: FragmentAccommodationBinding? = null
 
@@ -40,10 +40,6 @@ class AccommodationFragment : Fragment() {
             bundle.putInt(Constant.ACCOMMODATION_ID, accommodation.id!!)
             findNavController().customNavigate(R.id.accommodationDetailsFragment, false, bundle)
         }
-
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
 
     private val btnSortCallBackFunc: () -> Unit = {
         toast("Clicked btnSortCallBackFunc")
@@ -80,7 +76,7 @@ class AccommodationFragment : Fragment() {
         binding.appBarAccommodation.setTitleCenter(true)
         binding.appBarAccommodation.useBackButton(
             true,
-            btnBackCallBackFunc,
+            { findNavController().navigateUp() },
             R.drawable.ic_back
         )
         binding.appBarAccommodation.showButtonSortAndFilter(
@@ -111,14 +107,23 @@ class AccommodationFragment : Fragment() {
                     // bind data to the view
                     accommodationAdapter.submitData(it.data!!.accommodations)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                     Log.d("ResponseHandler.Error", it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
+
+                is ResponseHandler.StopLoading -> {
+                    // hide a progress bar
+                    hideMainLoading()
+                }
+
                 else -> {
                     toast("Else")
                 }

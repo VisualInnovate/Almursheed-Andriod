@@ -17,14 +17,17 @@ import com.visualinnovate.almursheed.auth.model.Car
 import com.visualinnovate.almursheed.auth.model.City
 import com.visualinnovate.almursheed.auth.model.Country
 import com.visualinnovate.almursheed.auth.model.Language
+import com.visualinnovate.almursheed.auth.model.StatesItem
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ActivityAuthBinding
+import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.carBrand
 import com.visualinnovate.almursheed.utils.Utils.carType
 import com.visualinnovate.almursheed.utils.Utils.carYears
 import com.visualinnovate.almursheed.utils.Utils.cities
+import com.visualinnovate.almursheed.utils.Utils.citiesModel
 import com.visualinnovate.almursheed.utils.Utils.countries
 import com.visualinnovate.almursheed.utils.Utils.languages
 import com.visualinnovate.almursheed.utils.Utils.nationalities
@@ -125,6 +128,9 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
             city.states?.map {
                 val stateId = it.stateId
                 val stateName = it.state
+                val countryId = it.countryId
+                val statesItem = StatesItem(countryId, stateId, stateName)
+                citiesModel[statesItem] = stateId
                 cities[stateName] = stateId
             }
         } catch (e: JSONException) {

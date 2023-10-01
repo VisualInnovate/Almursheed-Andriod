@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         }*/
         setupTouristViews()
 
+        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
+            binding.bottomNavBar.removeViewAt(1)
+        }
+
         binding.bottomNavBar.setOnItemSelectedListener(object :
             ChipNavigationBar.OnItemSelectedListener {
             override fun onItemSelected(id: Int) {
@@ -159,6 +163,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
             }
         snackbar?.show()
     }
+
     private fun setupDriverOrGuideViews() {
         navGraph.setStartDestination(R.id.homeDriveAndGuideFragment)
         binding.bottomNavBar.setMenuResource(R.menu.driver_guide_menu_bottom_nav)

@@ -38,9 +38,6 @@ class FlightReservationFragment : BaseFragment() {
             shareNews(flight.link)
         }
 
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
 
     private val btnSortCallBackFunc: () -> Unit = {
         toast("Clicked btnSortCallBackFunc")
@@ -81,7 +78,7 @@ class FlightReservationFragment : BaseFragment() {
         binding.appBarFlight.setTitleCenter(true)
         binding.appBarFlight.useBackButton(
             true,
-            btnBackCallBackFunc,
+            { findNavController().navigateUp() },
             R.drawable.ic_back
         )
         binding.appBarFlight.showButtonSortAndFilter(

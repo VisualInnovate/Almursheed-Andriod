@@ -12,7 +12,9 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
@@ -66,10 +68,11 @@ class HomeFragment : BaseFragment() {
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
-    private val btnLocationClickCallBack: (attractives: AttractivesItem) -> Unit = { attractives ->
-        // val bundle = Bundle()
-        // bundle.putInt(Constant.ATTRACTIVE_ID, attractives.id!!)
-        // findNavController().customNavigate(R.id.locationDetailsFragment, false, bundle)
+    private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit = { location ->
+        Log.d("btnLocationClickCallBack", "Clicked Item location $location")
+        val bundle = Bundle()
+        bundle.putInt(Constant.LOCATION_DETAILS, location.id!!)
+        findNavController().customNavigate(R.id.locationDetailsFragment, false, bundle)
     }
 
     private val btnBoobNowOfferCallBack: (offer: OfferItem) -> Unit = { offer ->
@@ -142,8 +145,10 @@ class HomeFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
+                    binding.page.visible()
+                    binding.shimmer.gone()
                     Log.d("Success11", "${it.data!!.drivers}")
-                    driverAdapter.submitData(it.data!!.drivers)
+                    driverAdapter.submitData(it.data.drivers)
                 }
 
                 is ResponseHandler.Error -> {
@@ -172,6 +177,8 @@ class HomeFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
+                    binding.page.visible()
+                    binding.shimmer.gone()
                     Log.d("Success22", "${it.data!!.guides}")
                     guideAdapter.submitData(it.data.guides)
                 }
@@ -202,6 +209,8 @@ class HomeFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
+                    binding.page.visible()
+                    binding.shimmer.gone()
                     offerAdapter.submitData(it.data!!.offers)
                 }
 
@@ -228,6 +237,8 @@ class HomeFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
+                    binding.page.visible()
+                    binding.shimmer.gone()
                     locationAdapter.submitData(it.data!!.attractives)
                 }
 

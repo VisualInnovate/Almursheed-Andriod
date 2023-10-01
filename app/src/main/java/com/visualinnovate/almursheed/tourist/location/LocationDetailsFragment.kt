@@ -13,6 +13,7 @@ import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentLocationDetailsBinding
 import com.visualinnovate.almursheed.home.model.Attracive
+import com.visualinnovate.almursheed.home.model.AttractiveLocation
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -29,10 +30,6 @@ class LocationDetailsFragment : BaseFragment() {
     private val vm: HomeViewModel by viewModels()
 
     private var locationId: Int? = null
-
-    private val btnBackCallBackFunc: () -> Unit = {
-        findNavController().navigateUp()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +48,16 @@ class LocationDetailsFragment : BaseFragment() {
         subscribeData()
     }
 
+    private fun initToolbar() {
+        binding.appBarLocationDetails.setTitleString(getString(R.string.location_details))
+        binding.appBarLocationDetails.setTitleCenter(true)
+        binding.appBarLocationDetails.useBackButton(
+            true,
+            { findNavController().navigateUp() },
+            R.drawable.ic_back
+        )
+    }
+
     override fun onStart() {
         super.onStart()
         vm.getAttractivesDetailsById(locationId)
@@ -61,7 +68,7 @@ class LocationDetailsFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    initView(it.data!!.attracive)
+                    initView(it.data!!.attractiveLocation)
                 }
                 is ResponseHandler.Error -> {
                     // show error message
@@ -82,22 +89,14 @@ class LocationDetailsFragment : BaseFragment() {
         }
     }
 
-    private fun initToolbar() {
-        binding.appBarLocationDetails.setTitleString(getString(R.string.location_details))
-        binding.appBarLocationDetails.setTitleCenter(true)
-        binding.appBarLocationDetails.useBackButton(
-            true,
-            btnBackCallBackFunc,
-            R.drawable.ic_back
-        )
-    }
-
-    private fun initView(attracive: Attracive?) {
+    private fun initView(attractive: AttractiveLocation?) {
         Glide.with(requireContext())
-            .load(attracive?.media?.get(0)?.originalUrl)
+            .load(attractive?.photos?.get(0))
             .into(binding.detailsImage)
-        binding.detailsDescription.text = attracive?.name?.gb
-        binding.detailsDescription.text = attracive?.description?.gb
+        binding.pinDetails.text = attractive?.name
+        binding.detailsCountry.text = attractive?.country
+        binding.detailsCity.text = attractive?.state
+        binding.detailsDescription.text = attractive?.description
     }
 
     private fun setBtnListener() {

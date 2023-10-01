@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.auth.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.StatesItem
 import com.visualinnovate.almursheed.auth.viewmodel.RegisterViewModel
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
@@ -23,6 +25,7 @@ import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Constant.ROLE_TOURIST
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.cities
+import com.visualinnovate.almursheed.utils.Utils.citiesModel
 import com.visualinnovate.almursheed.utils.Utils.countries
 import com.visualinnovate.almursheed.utils.Utils.nationalities
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,8 +105,8 @@ class RegisterFragment : BaseFragment() {
         if (role == ROLE_TOURIST) {
             // binding.txtCountry.text = getString(R.string.destination_country)
             // binding.txtCity.text = getString(R.string.destination_city)
-            binding.txtCity.gone()
-            binding.spinnerCity.root.gone()
+            // binding.txtCity.gone()
+            // binding.spinnerCity.root.gone()
         }
         //    binding.btnUploadPicture.gone()
         //   binding.txtPersonalPicture.gone()
@@ -127,7 +130,7 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun initNationalitySpinner() {
-        val nationalityList = nationalities.keys.toList()
+        val nationalityList = nationalities.keys.toList().sorted()
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
@@ -185,6 +188,7 @@ class RegisterFragment : BaseFragment() {
                     val selectedCountryName = countryList[position]
                     // Retrieve the corresponding country ID from the map
                     countryId = countries[selectedCountryName]!!.toInt()
+                    Log.d("SPINNER", "countryId $countryId")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -199,14 +203,20 @@ class RegisterFragment : BaseFragment() {
 //        }
     }
 
+
+
     private fun initCitySpinner() {
-        val cityList = cities.keys.toList()
+        // val cityList = cities.keys.toList().sorted()
+
+        val cities = citiesModel.keys.toList().filter {
+            it.countryId == countryId
+        }
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
                 requireContext(),
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                cityList,
+                cities.map { it.state },
             )
 
         binding.spinnerCity.spinner.adapter = arrayAdapter
@@ -220,8 +230,13 @@ class RegisterFragment : BaseFragment() {
                     id: Long,
                 ) {
                     // Retrieve the selected country name
-                    val selectedCityName = cityList[position]
-                    cityId = cities[selectedCityName]!!
+                    val selectedCityName = cities[position].stateId
+                    // val selectedCityName = cityList[position].toInt()
+                    //cityId = cityList[selectedCityName].toInt()
+                    val cityId = cities[selectedCityName].stateId
+                    val cityId2 = cities[selectedCityName].stateId
+                    Log.d("SPINNER", "cityId $cityId")
+                    Log.d("SPINNER", "cityId2 $cityId2")
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

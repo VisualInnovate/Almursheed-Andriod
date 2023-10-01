@@ -1,251 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_edit_text"
-    tools:context=".tourist.HomeFragment">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:id="@+id/page"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:visibility="gone"
+        tools:context=".tourist.HomeFragment">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/bgCurveHome"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="fitXY"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bg_curve_home" />
+            android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgHomeLogo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_10x"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_home_logo" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/bgCurveHome"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bg_curve_home" />
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            style="@style/SearchViewStyle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/space_10x"
-            android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_4x"
-            android:background="@drawable/rounded_search_view"
-            app:iconifiedByDefault="false"
-            app:layout_constraintEnd_toStartOf="@id/icNotification"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgHomeLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10x"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_home_logo" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/icNotification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_4x"
-            android:layout_marginEnd="@dimen/space_4x"
-            app:layout_constraintBottom_toBottomOf="@id/searchView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/searchView"
-            app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
-            app:srcCompat="@drawable/ic_notification" />
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                style="@style/SearchViewStyle"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_10x"
+                android:layout_marginHorizontal="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:background="@drawable/rounded_search_view"
+                app:iconifiedByDefault="false"
+                app:layout_constraintEnd_toStartOf="@id/icNotification"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
 
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/rvBanner"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginTop="@dimen/space_1x"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/searchView"-->
-        <!--            tools:itemCount="3"-->
-        <!--            tools:listitem="@layout/item_banner" />-->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:layout_marginEnd="@dimen/space_4x"
+                app:layout_constraintBottom_toBottomOf="@id/searchView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/searchView"
+                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
+                app:srcCompat="@drawable/ic_notification" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/rvBanner"
-            android:layout_width="match_parent"
-            android:layout_height="145dp"
-            android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_6x"
-            app:layout_constraintTop_toBottomOf="@id/searchView" />
+            <!--        <androidx.recyclerview.widget.RecyclerView-->
+            <!--            android:id="@+id/rvBanner"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginTop="@dimen/space_1x"-->
+            <!--            android:orientation="horizontal"-->
+            <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+            <!--            app:layout_constraintTop_toBottomOf="@id/searchView"-->
+            <!--            tools:itemCount="3"-->
+            <!--            tools:listitem="@layout/item_banner" />-->
 
-        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-            android:id="@+id/dotsIndicatorBanner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            app:dotsColor="@color/bg_dots_indicator"
-            app:dotsCornerRadius="@dimen/space_2x"
-            app:dotsSize="@dimen/space_2x"
-            app:dotsSpacing="@dimen/space_1x"
-            app:dotsWidthFactor="2.5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvBanner"
-            app:progressMode="false"
-            app:selectedDotColor="@color/primary" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/rvBanner"
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:layout_marginHorizontal="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_6x"
+                app:layout_constraintTop_toBottomOf="@id/searchView" />
 
-        <TextView
-            android:id="@+id/txtBestDrivers"
-            style="@style/TextStyleBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_3x"
-            android:text="@string/best_drivers"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_18x_sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dotsIndicatorBanner" />
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dotsIndicatorBanner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                app:dotsColor="@color/bg_dots_indicator"
+                app:dotsCornerRadius="@dimen/space_2x"
+                app:dotsSize="@dimen/space_2x"
+                app:dotsSpacing="@dimen/space_1x"
+                app:dotsWidthFactor="2.5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvBanner"
+                app:progressMode="false"
+                app:selectedDotColor="@color/primary" />
 
-        <TextView
-            android:id="@+id/seeAllDivers"
-            style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/space_4x"
-            android:paddingVertical="@dimen/space_3x"
-            android:text="@string/see_all"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_14x_sp"
-            app:layout_constraintBottom_toBottomOf="@id/txtBestDrivers"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txtBestDrivers" />
+            <TextView
+                android:id="@+id/txtBestDrivers"
+                style="@style/TextStyleBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:text="@string/best_drivers"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_18x_sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dotsIndicatorBanner" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDriver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/seeAllDivers"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_driver" />
+            <TextView
+                android:id="@+id/seeAllDivers"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/space_4x"
+                android:paddingVertical="@dimen/space_3x"
+                android:text="@string/see_all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintBottom_toBottomOf="@id/txtBestDrivers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/txtBestDrivers" />
 
-        <TextView
-            android:id="@+id/txtBestGuides"
-            style="@style/TextStyleBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_2x"
-            android:text="@string/best_guides"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_18x_sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvDriver" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDriver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/seeAllDivers"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_driver" />
 
-        <TextView
-            android:id="@+id/seeAllGuides"
-            style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/space_4x"
-            android:paddingVertical="@dimen/space_3x"
-            android:text="@string/see_all"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_14x_sp"
-            app:layout_constraintBottom_toBottomOf="@id/txtBestGuides"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/txtBestGuides" />
+            <TextView
+                android:id="@+id/txtBestGuides"
+                style="@style/TextStyleBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_2x"
+                android:text="@string/best_guides"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_18x_sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvDriver" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvGuide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/seeAllGuides"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_driver" />
+            <TextView
+                android:id="@+id/seeAllGuides"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/space_4x"
+                android:paddingVertical="@dimen/space_3x"
+                android:text="@string/see_all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintBottom_toBottomOf="@id/txtBestGuides"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/txtBestGuides" />
 
-        <TextView
-            android:id="@+id/txtOffers"
-            style="@style/TextStyleBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_1x"
-            android:text="@string/offers"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_18x_sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvGuide" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/seeAllGuides"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_driver" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvOffer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_1x"
-            android:scaleType="fitXY"
-            android:src="@drawable/img_offer"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal"
-            tools:listitem="@layout/item_offer"
-            tools:itemCount="5"
-            app:layout_constraintTop_toBottomOf="@id/txtOffers" />
+            <TextView
+                android:id="@+id/txtOffers"
+                style="@style/TextStyleBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_1x"
+                android:text="@string/offers"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_18x_sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvGuide" />
 
-        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-            android:id="@+id/dotsIndicatorOffer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space_2x"
-            android:layout_marginStart="@dimen/space_4x"
-            app:dotsColor="@color/grey"
-            app:dotsCornerRadius="@dimen/space_2x"
-            app:dotsSize="@dimen/space_2x"
-            app:dotsSpacing="@dimen/space_1x"
-            android:visibility="invisible"
-            app:dotsWidthFactor="2.5"
-            app:layout_constraintStart_toStartOf="@id/rvOffer"
-            app:layout_constraintBottom_toBottomOf="@id/rvOffer"
-            app:progressMode="false"
-            app:selectedDotColor="@color/white" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvOffer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_1x"
+                android:orientation="horizontal"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_offer"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/txtOffers"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_offer" />
 
-        <TextView
-            android:id="@+id/txtPopularLocations"
-            style="@style/TextStyleBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_1x"
-            android:text="@string/popular_locations"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_18x_sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvOffer" />
+            <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                android:id="@+id/dotsIndicatorOffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginBottom="@dimen/space_2x"
+                android:visibility="invisible"
+                app:dotsColor="@color/grey"
+                app:dotsCornerRadius="@dimen/space_2x"
+                app:dotsSize="@dimen/space_2x"
+                app:dotsSpacing="@dimen/space_1x"
+                app:dotsWidthFactor="2.5"
+                app:layout_constraintBottom_toBottomOf="@id/rvOffer"
+                app:layout_constraintStart_toStartOf="@id/rvOffer"
+                app:progressMode="false"
+                app:selectedDotColor="@color/white" />
 
-        <TextView
-            android:id="@+id/seeAllPopularLocations"
-            style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_1x"
-            android:padding="@dimen/space_4x"
-            android:text="@string/see_all"
-            android:textColor="@color/black"
-            android:textSize="@dimen/space_14x_sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtPopularLocations"
-            app:layout_constraintBottom_toBottomOf="@+id/txtPopularLocations"
-            app:layout_constraintTop_toBottomOf="@id/rvOffer" />
+            <TextView
+                android:id="@+id/txtPopularLocations"
+                style="@style/TextStyleBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_1x"
+                android:text="@string/popular_locations"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_18x_sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvOffer" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPopularLocations"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginBottom="@dimen/space_4x"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seeAllPopularLocations"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_popular_location" />
+            <TextView
+                android:id="@+id/seeAllPopularLocations"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_1x"
+                android:padding="@dimen/space_4x"
+                android:text="@string/see_all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintBottom_toBottomOf="@+id/txtPopularLocations"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rvOffer"
+                app:layout_constraintTop_toTopOf="@+id/txtPopularLocations" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPopularLocations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_4x"
+                android:layout_marginBottom="@dimen/space_4x"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seeAllPopularLocations"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_popular_location" />
 
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/shimmer_home_tourist" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

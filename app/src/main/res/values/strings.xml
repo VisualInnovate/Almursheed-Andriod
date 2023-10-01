@@ -18,7 +18,6 @@
     <string name="reconnect">Reconnect</string>
     <string name="cancel">Cancel</string>
 
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="welcome_to_mursheed">Welcome \nTo \nMursheed</string>
     <string name="get_the_best_deals_on_mursheed_app_we_are_excited_to_have_you_on_board_as_a_tourist_tour_guide_or_car_driver">Get the best deals on Mursheed App, \nWe are excited to have you on board as a \ntourist, tour guide, or car driver.</string>
@@ -186,7 +185,7 @@
     <string name="date_of_exit">Date of exit</string>
     <string name="earring">Earning</string>
     <string name="profile">Profile</string>
-    <string name="select_your_prices">Select your prices</string>
+    <string name="select_your_prices_for_10_days">Select your prices for 10 days</string>
     <string name="enter_price">Enter Price</string>
     <string name="price_info">Price info</string>
     <string name="sub_total">Sub total</string>
@@ -212,6 +211,5 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="my_prices">My Prices</string>
-
 
 </resources>

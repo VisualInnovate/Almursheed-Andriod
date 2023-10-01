@@ -7,6 +7,9 @@ data class AttraciveDetailsResponse(
     @field:SerializedName("attracive")
     val attracive: Attracive? = null,
 
+    @field:SerializedName("attractiveLocation")
+    val attractiveLocation: AttractiveLocation? = null,
+
     @field:SerializedName("message")
     val message: String? = null,
 
@@ -55,3 +58,28 @@ data class Attracive(
     @field:SerializedName("city_id")
     val cityId: Int? = null
 )
+
+data class AttractiveLocation(
+
+    @field:SerializedName("country")
+    val country: String? = null,
+
+    @field:SerializedName("description")
+    val description: String? = null,
+
+    @field:SerializedName("photos")
+    val photos: List<String>? = null,
+
+    @field:SerializedName("name")
+    val name: String? = null,
+
+    @field:SerializedName("id")
+    val id: Int? = null,
+
+    @field:SerializedName("state")
+    val state: String? = null,
+
+    @field:SerializedName("url")
+    val url: String? = null,
+)
+

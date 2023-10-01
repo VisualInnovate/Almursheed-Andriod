@@ -193,7 +193,7 @@ class HireFragment : BaseFragment() {
                 trip_type = tripType,
                 start_date = startDate.formatDate(),
                 end_date = endDate.formatDate(),
-                country_id = 1,
+                country_id = SharedPreference.getUser()?.countryId ?: 1,
                 lat = currentLocation?.latitude.toString(),
                 longitude = currentLocation?.longitude.toString(),
             )
