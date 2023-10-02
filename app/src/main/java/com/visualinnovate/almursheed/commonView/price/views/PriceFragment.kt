@@ -19,6 +19,8 @@ import com.visualinnovate.almursheed.databinding.FragmentPriceBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
+import com.visualinnovate.almursheed.utils.Utils.allCities
+import com.visualinnovate.almursheed.utils.Utils.allCitiesString
 import com.visualinnovate.almursheed.utils.Utils.filteredCitiesString
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -154,7 +156,7 @@ class PriceFragment : BaseFragment() {
     }
 
     private fun initCitiesSpinner() {
-        val cityList = filteredCitiesString
+        val cityList = allCitiesString
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
@@ -173,7 +175,7 @@ class PriceFragment : BaseFragment() {
                     position: Int,
                     id: Long,
                 ) {
-                    cityId = Utils.filteredCities[position].stateId
+                    cityId = allCities[position].stateId
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

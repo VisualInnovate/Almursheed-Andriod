@@ -14,6 +14,13 @@ object Utils {
     val allCities = ArrayList<CityItem>()
     val allNationalities = ArrayList<String>()
 
+    val allCitiesString: ArrayList<String>
+        get() {
+            allCities.toMutableList().map { it.state }.also {
+                return it as ArrayList<String>
+            }
+        }
+
     val filteredCitiesString = ArrayList<String>()
     val filteredCities = ArrayList<CityItem>()
 
