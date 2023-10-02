@@ -29,9 +29,13 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils.cities
-import com.visualinnovate.almursheed.utils.Utils.countries
-import com.visualinnovate.almursheed.utils.Utils.nationalities
+import com.visualinnovate.almursheed.utils.Utils
+import com.visualinnovate.almursheed.utils.Utils.allNationalities
+import com.visualinnovate.almursheed.utils.Utils.filterCountriesByNationality
+import com.visualinnovate.almursheed.utils.Utils.filteredCitiesString
+import com.visualinnovate.almursheed.utils.Utils.filteredCountries
+import com.visualinnovate.almursheed.utils.Utils.filteredCountriesString
+import com.visualinnovate.almursheed.utils.Utils.selectedNationalName
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -117,9 +121,7 @@ class EditProfileFragment : BaseFragment() {
         // binding.spinnerNationality.spinnerText.text = getString(R.string.select_your_nationality)
         // binding.spinnerCountry.spinnerText.text = getString(R.string.select_your_country)
         // binding.spinnerCity.spinnerText.text = getString(R.string.select_your_city)
-        initCountrySpinner()
         initNationalitySpinner()
-        initCitySpinner()
         imagePath = currentUser.personalPhoto ?: ""
         if (currentUser.type == "Driver" || currentUser.type == "Guides") {
             binding.btnNext.text = getString(R.string.next)
@@ -140,7 +142,7 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun initNationalitySpinner() {
-        val nationalityList = nationalities.keys.toList()
+        val nationalityList = allNationalities
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
@@ -161,8 +163,9 @@ class EditProfileFragment : BaseFragment() {
                 ) {
                     // Retrieve the selected country name
                     nationalityName = nationalityList[position]
-                    // Retrieve the corresponding country ID from the map
-                    Log.d("MyDebugData", "nationalityName $nationalityName")
+                    selectedNationalName = nationalityName!!
+                    filterCountriesByNationality()
+                    initCountrySpinner()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -176,7 +179,7 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun initCountrySpinner() {
-        val countryList = countries.keys.toList().sorted()
+        val countryList = filteredCountriesString
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
@@ -195,10 +198,11 @@ class EditProfileFragment : BaseFragment() {
                     position: Int,
                     id: Long,
                 ) {
-                    // Retrieve the selected country name
-                    val selectedCountryName = countryList[position]
-                    // Retrieve the corresponding country ID from the map
-                    countryId = countries[selectedCountryName]!!.toInt()
+                    val selectedCountry = filteredCountries[position]
+                    val selectedCountryName = selectedCountry.country
+                    Utils.selectedCountryId = selectedCountry.country_id
+                    countryId = selectedCountry.country_id.toInt()
+                    initCitySpinner()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -214,7 +218,8 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun initCitySpinner() {
-        val cityList = cities.keys.toList().sorted()
+        Utils.filterCitiesByCountryId()
+        val cityList = filteredCitiesString
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
@@ -234,29 +239,15 @@ class EditProfileFragment : BaseFragment() {
                     id: Long,
                 ) {
                     // Retrieve the selected country name
-                    val selectedCityName = cityList[position]
-
-                    // Retrieve the corresponding country ID from the map
-                    cityId = cities[selectedCityName]!!.toInt()
-                    val cityId22 = cities[selectedCityName]!!
+                    val selectedCity = Utils.filteredCities[position]
+                    val selectedCityName = selectedCity.stateId
+                    cityId = selectedCity.stateId.toInt()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     // Handle when nothing is selected
                 }
             }
-
-//        binding.spinnerCity.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-//            // Ret rieve the selected country name
-//            val selectedCityName = cityList[position]
-//            Log.d("readJsonFile", "selectedCityName $selectedCityName")
-//
-//            // Retrieve the corresponding country ID from the map
-//            cityId = cities[selectedCityName]!!
-//            val cityId22 = cities[selectedCityName]!!
-//            Log.d("readJsonFile", "cityId $cityId")
-//            Log.d("readJsonFile", "cityId22 $cityId22")
-//        }
     }
 
     private fun setBtnListener() {
@@ -416,7 +407,6 @@ class EditProfileFragment : BaseFragment() {
         fileUtils.clearTempFile()
     }
 }
-
 
 /*
  private fun performGalleyMultipleSelection() {

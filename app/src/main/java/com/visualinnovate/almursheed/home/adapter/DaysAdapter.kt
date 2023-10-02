@@ -16,6 +16,8 @@ import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.OrderDetailsItem
 import com.visualinnovate.almursheed.databinding.ItemDaysBinding
 import com.visualinnovate.almursheed.utils.Utils
+import com.visualinnovate.almursheed.utils.Utils.filteredCities
+import com.visualinnovate.almursheed.utils.Utils.filteredCitiesString
 
 class DaysAdapter(
     private val selectDaysCallback: ((day: String, cityId: Int) -> Unit)? = null,
@@ -94,7 +96,7 @@ class DaysAdapter(
 
     private var cityId: Int? = null
     private fun initCitySpinner(context: Context, holder: DaysViewHolder, day: DayModel) {
-        val cityList = Utils.cities.keys.toList().sorted()
+        val cityList = filteredCitiesString
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
             ArrayAdapter(
@@ -113,9 +115,9 @@ class DaysAdapter(
                     position: Int,
                     id: Long,
                 ) {
-                    // Retrieve the selected country name
-                    val selectedCityName = cityList[position]
-                    cityId = Utils.cities[selectedCityName]!!
+                    val selectedCity = filteredCities[position]
+                    val selectedCityName = selectedCity.state
+                    cityId = selectedCity.stateId.toInt()
                     selectDaysCallback?.invoke(day.date.toString(), cityId!!)
                 }
 

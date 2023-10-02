@@ -15,22 +15,23 @@ import com.google.gson.Gson
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.Car
 import com.visualinnovate.almursheed.auth.model.City
+import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.Country
 import com.visualinnovate.almursheed.auth.model.Language
-import com.visualinnovate.almursheed.auth.model.StatesItem
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ActivityAuthBinding
-import com.visualinnovate.almursheed.utils.Utils
+import com.visualinnovate.almursheed.utils.Utils.allCities
+import com.visualinnovate.almursheed.utils.Utils.allCountries
+import com.visualinnovate.almursheed.utils.Utils.allNationalities
 import com.visualinnovate.almursheed.utils.Utils.carBrand
 import com.visualinnovate.almursheed.utils.Utils.carType
 import com.visualinnovate.almursheed.utils.Utils.carYears
-import com.visualinnovate.almursheed.utils.Utils.cities
 import com.visualinnovate.almursheed.utils.Utils.citiesModel
-import com.visualinnovate.almursheed.utils.Utils.countries
+import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
 import com.visualinnovate.almursheed.utils.Utils.languages
-import com.visualinnovate.almursheed.utils.Utils.nationalities
+import com.visualinnovate.almursheed.utils.Utils.selectedCountryId
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
@@ -62,18 +63,17 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         val jsonFile = readJSONFromRawResource(resources, R.raw.countries)
 
         try {
+            allCountries.clear()
             val jsonObject = JSONObject(jsonFile)
             val country: Country = Gson().fromJson(jsonObject.toString(), Country::class.java)
             country.countryList?.filter {
                 it.lang == SharedPreference.getLanguage()
             }.also {
                 it?.forEach { item ->
-                    val countryName = item.country
-                    val countryId = item.country_id
-                    val nationalName = item.nationality
-                    countries[countryName] = countryId
-                    nationalities[nationalName] = countryId
+                    allCountries.add(item)
+                    allNationalities.add(item.nationality)
                 }
+                selectedCountryId = allCountries[0].country_id
             }
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -123,16 +123,19 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         val jsonFile = readJSONFromRawResource(resources, R.raw.cities)
 
         try {
+            allCities.clear()
             val jsonObject = JSONObject(jsonFile)
             val city: City = Gson().fromJson(jsonObject.toString(), City::class.java)
             city.states?.map {
                 val stateId = it.stateId
                 val stateName = it.state
                 val countryId = it.countryId
-                val statesItem = StatesItem(countryId, stateId, stateName)
-                citiesModel[statesItem] = stateId
-                cities[stateName] = stateId
+                val cityItem = CityItem(countryId, stateId, stateName)
+                allCities.add(it)
+                citiesModel[cityItem] = stateId
+                //  cities[stateName] = stateId
             }
+            filterCitiesByCountryId()
         } catch (e: JSONException) {
             e.printStackTrace()
         }
@@ -173,7 +176,6 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         networkConnectionManager.registerDefaultNetworkCallback(networkConnectionCallback)
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         try {
@@ -206,7 +208,5 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
                     }.setCancelable(false)
                     .show()
             }
-
     }
-
 }

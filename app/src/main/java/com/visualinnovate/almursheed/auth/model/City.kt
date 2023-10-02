@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName
 data class City(
 
     @field:SerializedName("states")
-    val states: List<StatesItem>?
+    val states: List<CityItem>?
 )
 
-data class StatesItem(
+data class CityItem(
 
     @field:SerializedName("country_id")
-    var countryId: Int,
+    var countryId: String,
 
     @field:SerializedName("state_id")
-    val stateId: Int,
+    val stateId: String,
 
     @field:SerializedName("state")
     val state: String
