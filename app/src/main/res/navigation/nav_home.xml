@@ -124,4 +124,11 @@
         android:label="fragment_order_details"
         tools:layout="@layout/fragment_order_details" />
 
+
+ <fragment
+        android:id="@+id/FilterDriversFragment"
+        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterDriverFragment"
+        android:label="fragment_filter_driver"
+        tools:layout="@layout/fragment_filter_driver" />
+
 </navigation>

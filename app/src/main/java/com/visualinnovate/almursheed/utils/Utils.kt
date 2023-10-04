@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.CountryItem
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 
 object Utils {
 
@@ -27,10 +28,13 @@ object Utils {
     val filteredCountriesString = ArrayList<String>()
     val filteredCountries = ArrayList<CountryItem>()
 
+    val allCarModels = ArrayList<ChooserItemModel>()
+
     val citiesModel = HashMap<CityItem, String>()
     val carYears = HashMap<String, String>()
     val carBrand = HashMap<String, String>()
     val carType = HashMap<String, String>()
+    val carModel = HashMap<String, String>()
     val languages = HashMap<String, Int>()
 
     fun loadImage(context: Context, urlToImage: Int, imgView: ImageView) {

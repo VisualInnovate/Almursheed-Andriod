@@ -21,7 +21,9 @@ import com.visualinnovate.almursheed.auth.model.Language
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.ActivityAuthBinding
+import com.visualinnovate.almursheed.utils.Utils.allCarModels
 import com.visualinnovate.almursheed.utils.Utils.allCities
 import com.visualinnovate.almursheed.utils.Utils.allCountries
 import com.visualinnovate.almursheed.utils.Utils.allNationalities
@@ -91,10 +93,14 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
                 val carId = item.id
                 val year = item.year
                 val makeAndModel = item.make
+                val model = item.model
                 val makeType = "${item.make} - ${item.model}"
                 carYears[year] = carId
                 carBrand[makeAndModel] = carId
                 carType[makeType] = carId
+
+                val car = ChooserItemModel(carId, year)
+                allCarModels.add(car)
             }
         } catch (e: JSONException) {
             e.printStackTrace()

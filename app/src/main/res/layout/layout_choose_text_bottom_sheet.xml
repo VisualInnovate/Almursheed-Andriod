@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_curve_edge">
+
+
+    <ImageView
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_4x"
+        />
+
+    <TextView
+        android:id="@+id/txtChoose"
+        style="@style/TextStyleBold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:layout_marginStart="@dimen/space_4x"
+        android:ellipsize="end"
+        android:gravity="start"
+        android:maxLines="1"
+        android:text="@string/choose_a"
+        android:textColor="@color/dark_grey"
+        android:textSize="@dimen/space_18x_sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/btnClose" />
+
+
+
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        style="@style/SearchViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10x"
+        android:layout_marginHorizontal="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_4x"
+        android:background="@drawable/bg_rectangle_corner_grey_border"
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toBottomOf="@id/txtChoose" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/texts_RV"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginVertical="@dimen/space_4x"
+        android:layout_marginStart="@dimen/space_4x"
+        android:layout_marginEnd="@dimen/space_4x"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/space_2x"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:itemCount="20"
+        tools:listitem="@layout/item_text_match" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
