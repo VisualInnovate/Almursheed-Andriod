@@ -124,6 +124,14 @@
             app:layout_constraintStart_toEndOf="@id/txtDateOfExit"
             app:layout_constraintTop_toTopOf="@id/txtDateOfExit" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnAddRate"
+            android:layout_width="@dimen/space_30x"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/space_3x"
+            android:src="@drawable/ic_group_rate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtDateOfEntry" />
 
         <View
             android:id="@+id/view"

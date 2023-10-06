@@ -63,7 +63,7 @@
             app:drawableEndCompat="@drawable/ic_arrow_right" />
 
         <TextView
-            android:id="@+id/terms_and_conditions"
+            android:id="@+id/termsAndConditions"
             style="@style/TextStyleRegular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,10 +84,11 @@
             android:layout_marginTop="@dimen/space_2x"
             android:paddingVertical="@dimen/space_2x"
             android:text="@string/privacy_policy"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:gravity="start|center_vertical"
             android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/terms_and_conditions"
+            app:layout_constraintTop_toBottomOf="@id/termsAndConditions"
             app:drawableEndCompat="@drawable/ic_arrow_right" />
 
         <TextView

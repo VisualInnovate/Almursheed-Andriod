@@ -130,5 +130,10 @@
         android:name="com.visualinnovate.almursheed.driver.filter.views.FilterDriverFragment"
         android:label="fragment_filter_driver"
         tools:layout="@layout/fragment_filter_driver" />
+    <dialog
+        android:id="@+id/addRateDialogFragment"
+        android:name="com.visualinnovate.almursheed.commonView.myOrders.view.AddRateDialogFragment"
+        android:label="fragment_add_rate_dialog"
+        tools:layout="@layout/fragment_add_rate_dialog" />
 
 </navigation>

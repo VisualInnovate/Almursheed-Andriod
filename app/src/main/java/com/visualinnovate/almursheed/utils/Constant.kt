@@ -2,6 +2,8 @@ package com.visualinnovate.almursheed.utils
 
 object Constant {
 
+    const val CHANNEL_ID = "Message Channel"
+
     const val KEY_LANGUAGE = "language"
     const val USER = "user"
     const val USER_TOKEN = "user_token"

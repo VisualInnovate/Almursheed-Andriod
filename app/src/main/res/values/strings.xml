@@ -229,5 +229,7 @@
     <string name="accommodation_category">Accomodation Category</string>
     <string name="number_of_rooms">Number of rooms</string>
     <string name="location_review">Location Review</string>
+    <string name="write_your_rate_here">Write Your Rate here</string>
+    <string name="must_give_rate">Must give rate</string>
 
 </resources>

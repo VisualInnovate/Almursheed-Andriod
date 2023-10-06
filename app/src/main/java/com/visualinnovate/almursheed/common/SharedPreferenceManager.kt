@@ -30,6 +30,14 @@ object SharedPreference {
         return Hawk.get(Constant.USER_TOKEN)
     }
 
+    fun saveDeviceToken(currentToken: String) {
+        Hawk.put("DeviceToken", currentToken)
+    }
+
+    fun getDeviceToken(): String? {
+        return Hawk.get<String>("DeviceToken")
+    }
+
     fun setUserLoggedIn(isLoggedIn: Boolean) {
         Hawk.put(Constant.LOGGED_IN, isLoggedIn)
     }
