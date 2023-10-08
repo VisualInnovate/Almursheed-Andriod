@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SearchView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.LayoutChooseTextBottomSheetBinding
 
@@ -24,6 +25,7 @@ class ChooseTextBottomSheet(
 
     private val selectedItemClickCallback: (data: ChooserItemModel, position: Int) -> Unit = {
             item, pos ->
+        toast(pos.toString())
         selectedItemCallback.invoke(item, pos)
         dialog?.dismiss()
     }
@@ -54,11 +56,14 @@ class ChooseTextBottomSheet(
     private fun setBtnListeners() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                searchQuery = query.toString().trim()
+                chooseTextAdapter.filter.filter(searchQuery)
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 searchQuery = newText.toString().trim()
+                chooseTextAdapter.filter.filter(searchQuery)
                 return false
             }
         })

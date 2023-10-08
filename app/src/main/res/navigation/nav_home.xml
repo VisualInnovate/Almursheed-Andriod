@@ -131,4 +131,20 @@
         android:label="fragment_filter_driver"
         tools:layout="@layout/fragment_filter_driver" />
 
+    <fragment
+        android:id="@+id/FilterGuidesFragment"
+        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterGuideFragment"
+        tools:layout="@layout/fragment_filter_guide" />
+
+<fragment
+        android:id="@+id/FilterAccommodationFragment"
+        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterAccommodationFragment"
+        tools:layout="@layout/fragment_filter_accomodation" />
+
+ <fragment
+        android:id="@+id/FilterFragment"
+        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterFragment"
+        android:label="fragment_filter_driver"
+        tools:layout="@layout/fragment_filter" />
+
 </navigation>

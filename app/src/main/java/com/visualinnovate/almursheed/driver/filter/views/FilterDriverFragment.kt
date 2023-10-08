@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.FragmentFilterDriverBinding
+import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.utils.Utils.allCarModels
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +22,7 @@ class FilterDriverFragment : Fragment() {
 
     private var _binding: FragmentFilterDriverBinding? = null
     private val binding get() = _binding!!
+    private val vm: FilterViewModel by activityViewModels()
 
     private var carCategory: String? = null
     private var carModel: String? = null
@@ -41,19 +43,8 @@ class FilterDriverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initToolbar()
         initData()
         setBtnListener()
-    }
-
-    private fun initToolbar() {
-        binding.appBar.setTitleString(getString(R.string.search))
-        binding.appBar.setTitleCenter(true)
-        binding.appBar.useBackButton(
-            true,
-            { findNavController().navigateUp() },
-            R.drawable.ic_back,
-        )
     }
 
     private fun initData() {
@@ -62,6 +53,14 @@ class FilterDriverFragment : Fragment() {
     }
 
     private fun setBtnListener() {
+        binding.btnSearch.onDebouncedListener {
+            vm.carCategory = carCategory
+            vm.carModel = carModel
+            vm.price = price
+            vm.rate = rate
+            vm.type = "Driver"
+        }
+
         binding.carCategory.onDebouncedListener {
             showCarCategoryChooser()
         }
@@ -96,6 +95,7 @@ class FilterDriverFragment : Fragment() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_category), carCategories) { data, position ->
             carCategory = data.name
+            binding.carCategory.text = carCategory
         }
         showBottomSheet(chooseTextBottomSheet!!, "CarCategoryBottomSheet")
     }

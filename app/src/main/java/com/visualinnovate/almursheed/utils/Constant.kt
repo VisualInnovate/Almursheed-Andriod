@@ -27,6 +27,8 @@ object Constant {
     const val ROLE_TOURIST = "Tourist"
     const val ROLE_GUIDE = "Guide"
     const val ROLE_DRIVER = "Driver"
+
+    const val ACCOMMODATION = "accommodation"
     const val ALL = "all"
     const val OPEN = "open"
     const val Close = "close"

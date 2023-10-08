@@ -1,93 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_edit_text">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <com.visualinnovate.almursheed.common.AppBarView
-            android:id="@+id/appBar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/app_bar_height"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            style="@style/SearchViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space_10x"
-            android:layout_marginHorizontal="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_4x"
-            android:background="@drawable/rounded_search_view"
-            app:iconifiedByDefault="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar" />
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/filterConstraint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_3x"
-            android:layout_marginEnd="@dimen/space_4x"
-            android:background="@drawable/bg_rectangle_corner_blue"
-            android:backgroundTint="@color/white"
-            android:padding="@dimen/space_1_5x"
-            app:layout_constraintTop_toBottomOf="@id/searchView">
-
-            <TextView
-                android:id="@+id/txtDriver"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_rectangle_corner_primary"
-                android:gravity="center"
-                android:padding="@dimen/space_3x"
-                android:text="@string/driver"
-                android:textColor="@color/white"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txtGuide"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtGuide"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:gravity="center"
-                android:padding="@dimen/space_3x"
-                android:text="@string/guide"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/txtAccmodation"
-                app:layout_constraintStart_toEndOf="@id/txtDriver"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtAccmodation"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/space_2x"
-                android:gravity="center"
-                android:text="@string/accommodation"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/txtGuide"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,9 +15,8 @@
             android:layout_marginTop="@dimen/space_4x"
             android:layout_marginEnd="@dimen/space_4x"
             android:layout_marginBottom="@dimen/space_10x"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/bg_rectangle_corner_white"
-            app:layout_constraintTop_toBottomOf="@id/filterConstraint">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/txtCarCategory"
@@ -247,7 +164,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

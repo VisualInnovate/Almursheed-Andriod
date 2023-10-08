@@ -40,14 +40,15 @@ class AllDriversFragment : BaseFragment() {
     }
 
     private val btnFilterCallBackFunc: () -> Unit = {
-        // findNavController().navigateUp()
-        findNavController().customNavigate(R.id.FilterDriversFragment)
+        val bundle = Bundle()
+        bundle.putString("from", Constant.ROLE_DRIVER)
+        findNavController().customNavigate(R.id.FilterFragment, data = bundle)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentAllDriversBinding.inflate(inflater, container, false)
@@ -72,7 +73,7 @@ class AllDriversFragment : BaseFragment() {
         binding.appBarSeeAllDrivers.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
         binding.appBarSeeAllDrivers.showButtonSortAndFilter(
             getString(R.string.sort),
@@ -80,7 +81,7 @@ class AllDriversFragment : BaseFragment() {
             R.drawable.ic_sort,
             R.drawable.ic_filter,
             btnSortCallBackFunc,
-            btnFilterCallBackFunc
+            btnFilterCallBackFunc,
         )
     }
 

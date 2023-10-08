@@ -2,6 +2,8 @@ package com.visualinnovate.almursheed.commonView.bottomSheets
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
@@ -10,9 +12,10 @@ import com.visualinnovate.almursheed.databinding.ItemTextMatchBinding
 
 class ChooseTextAdapter(
     private val onItemClickCallBack: (item: ChooserItemModel, position: Int) -> Unit,
-) : RecyclerView.Adapter<ChooseTextAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ChooseTextAdapter.ViewHolder>(), Filterable {
 
     private var items: List<ChooserItemModel> = ArrayList()
+    var itemsListFiltered: List<ChooserItemModel> = ArrayList()
 
     private lateinit var binding: ItemTextMatchBinding
 
@@ -28,7 +31,7 @@ class ChooseTextAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val order = items.get(position)
+        val order = itemsListFiltered[position]
         // bind view
         bindData(holder, order)
     }
@@ -59,17 +62,47 @@ class ChooseTextAdapter(
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return itemsListFiltered.size
     }
 
     fun submitData(data: ArrayList<ChooserItemModel>) {
         items = data
+        itemsListFiltered = data
         notifyDataSetChanged()
     }
 
     private fun handleSelectedItem(item: ChooserItemModel) {
         items.forEach {
             it.isSelected = item.name == it.name
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint?.toString() ?: ""
+                if (charString.isEmpty()) {
+                    itemsListFiltered = items
+                } else {
+                    val filteredList = ArrayList<ChooserItemModel>()
+                    items
+                        .filter {
+                            (it.name!!.lowercase().contains(constraint!!))
+                        }
+                        .forEach { filteredList.add(it) }
+                    itemsListFiltered = filteredList
+                }
+                return FilterResults().apply { values = itemsListFiltered }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                itemsListFiltered = if (results?.values == null) {
+                    ArrayList()
+                } else {
+                    results.values as List<ChooserItemModel>
+                }
+                notifyDataSetChanged()
+            }
         }
     }
 }
