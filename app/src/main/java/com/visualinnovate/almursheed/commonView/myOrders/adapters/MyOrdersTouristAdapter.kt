@@ -5,13 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.commonView.myOrders.models.OrderDetailsItem
 import com.visualinnovate.almursheed.databinding.ItemMyOrderDGHomeBinding
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
 
-class MyOrdersTouristAdapter : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewHolder>() {
+class MyOrdersTouristAdapter(
+    private val onAddRateClickCallback: (item: MyOrdersItem) -> Unit = {},
+) : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewHolder>() {
 
     private var orders: List<MyOrdersItem?>? = ArrayList()
     private var days: ArrayList<DayModel> = ArrayList()
@@ -27,6 +30,7 @@ class MyOrdersTouristAdapter : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewH
         val dateOfExit = itemView.exitDate
         val status = itemView.status
         val days = itemView.daysRecyclerView
+        val btnAddRate = itemView.btnAddRate
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -77,6 +81,10 @@ class MyOrdersTouristAdapter : RecyclerView.Adapter<MyOrdersTouristAdapter.ViewH
                     text = "Cancel"
                 }
             }
+        }
+
+        holder.btnAddRate.onDebouncedListener {
+            onAddRateClickCallback.invoke(order!!)
         }
     }
 

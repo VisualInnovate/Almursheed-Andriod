@@ -122,8 +122,8 @@ class LoginFragment : BaseFragment() {
         email = binding.edtEmailAddress.value
         password = binding.edtPassword.value
 
-        email = "mohamed.driver77@gmail.com"
-        password = "123456789"
+        // email = "mohamed.driver77@gmail.com"
+        // password = "123456789"
 
 //         email = "mohamed.nasar8710@gmail.com"
 //         password = "123456789"

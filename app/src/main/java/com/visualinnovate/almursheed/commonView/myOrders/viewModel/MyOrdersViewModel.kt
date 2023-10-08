@@ -27,6 +27,7 @@ class MyOrdersViewModel @Inject constructor(
     var orderDetails: MyOrdersItem? = null
 
     private var job: Job? = null
+
     fun getOrders(status: String) {
         job?.cancel()
         job = viewModelScope.launch {
@@ -36,6 +37,10 @@ class MyOrdersViewModel @Inject constructor(
                 _orders.value = it
             }
         }
+    }
+
+    fun addRate(rate: Float, rateComment: String?) {
+
     }
 
 }

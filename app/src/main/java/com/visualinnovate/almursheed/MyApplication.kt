@@ -2,6 +2,7 @@ package com.visualinnovate.almursheed
 
 import android.app.Application
 import com.orhanobut.hawk.Hawk
+import com.pusher.pushnotifications.PushNotifications
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
@@ -11,5 +12,8 @@ class MyApplication : Application() {
 
         // Initialize Hawk as like shared preference
         Hawk.init(applicationContext).build()
+
+        // Initialize Hawk as like shared preference
+        PushNotifications.start(applicationContext, "YOUR_INSTANCE_ID");
     }
 }

@@ -77,6 +77,10 @@ class MoreFragment : Fragment() {
         binding.myPrices.onDebouncedListener {
             findNavController().customNavigate(R.id.priceFragment)
         }
+
+        binding.aboutUs.onDebouncedListener {
+            findNavController().customNavigate(R.id.priceFragment)
+        }
     }
 
     override fun onDestroy() {

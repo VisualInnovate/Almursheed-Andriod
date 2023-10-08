@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
@@ -30,19 +29,33 @@ class MyOrdersFragment : BaseFragment() {
 
     private var _binding: FragmentMyOrdersBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var userRole: String
     private val vm: MyOrdersViewModel by activityViewModels()
     private lateinit var myOrdersDriverAdapter: MyOrderDriverAdapter
     private lateinit var myOrdersTouristAdapter: MyOrdersTouristAdapter
 
+    // clicked to tourist add rate to order (trip)
+    private val onAddRateClickCallback: (item: MyOrdersItem) -> Unit = {
+        Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
+        vm.orderDetails = it
+        val ratDialogFragment = AddRateDialogFragment()
+        ratDialogFragment.show(parentFragmentManager, "MyDialogFragment")
+    }
+
+    // clicked to (tourist, Driver, and Guide) to show order details (trip details)
     private val onAllDetailsClickCallback: (item: MyOrdersItem) -> Unit = {
         Log.d("MyDebugData", "MyOrdersFragment : $it")
         vm.orderDetails = it
         findNavController().customNavigate(R.id.orderDetailsFragment)
     }
+
+    // clicked to driver approve order (trip)
     private val btnApproveClickCallback: (item: MyOrdersItem) -> Unit = {
         Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
     }
+
+    // clicked to driver reject order (trip)
     private val btnRejectClickCallback: (item: MyOrdersItem) -> Unit = {
         Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
     }
@@ -176,7 +189,7 @@ class MyOrdersFragment : BaseFragment() {
     }
 
     private fun initTouristRecyclerView() {
-        myOrdersTouristAdapter = MyOrdersTouristAdapter()
+        myOrdersTouristAdapter = MyOrdersTouristAdapter(onAddRateClickCallback)
         binding.ordersRv.apply {
             itemAnimator = DefaultItemAnimator()
             myOrdersTouristAdapter.setHasStableIds(true)
