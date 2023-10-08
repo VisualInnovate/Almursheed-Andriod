@@ -3,6 +3,7 @@ package com.visualinnovate.almursheed.network
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
+import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
 import com.visualinnovate.almursheed.commonView.price.models.PricesResponse
 import com.visualinnovate.almursheed.home.model.*
 import okhttp3.RequestBody
@@ -201,4 +202,12 @@ interface ApiService {
     suspend fun getMyOrders(
         @Query("status") status: String,
     ): Response<MyOrdersModel>
+
+    @POST("rating/create")
+    suspend fun addRate(
+        @Query("tourist_rating") touristRating: String,
+        @Query("comment") comment: String,
+        @Query("reviewable_id") reviewableId: Int,
+        @Query("type") type: Int,
+    ): Response<RateResponse>
 }
