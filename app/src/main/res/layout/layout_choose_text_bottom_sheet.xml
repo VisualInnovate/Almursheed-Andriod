@@ -11,20 +11,19 @@
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_4x"
+        android:layout_marginEnd="@dimen/space_4x"
         android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="@dimen/space_4x"
-        android:layout_marginTop="@dimen/space_4x"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtChoose"
         style="@style/TextStyleBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3x"
         android:layout_marginStart="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_3x"
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="1"
@@ -33,9 +32,6 @@
         android:textSize="@dimen/space_18x_sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/btnClose" />
-
-
-
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
@@ -55,11 +51,11 @@
         android:layout_marginVertical="@dimen/space_4x"
         android:layout_marginStart="@dimen/space_4x"
         android:layout_marginEnd="@dimen/space_4x"
-        android:orientation="vertical"
         android:layout_marginBottom="@dimen/space_2x"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
         tools:itemCount="20"
         tools:listitem="@layout/item_text_match" />
 
