@@ -109,6 +109,12 @@
         <item>Bus</item>
     </array>
 
+    <array name="languages">
+        <item>All</item>
+        <item>Arabic</item>
+        <item>English</item>
+    </array>
+
     <string name="search_murcheed_app">Search Murcheed App</string>
     <string name="best_drivers">Best Drivers</string>
     <string name="see_all">See all</string>
@@ -231,5 +237,6 @@
     <string name="location_review">Location Review</string>
     <string name="write_your_rate_here">Write Your Rate here</string>
     <string name="must_give_rate">Must give rate</string>
+    <string name="cityy">City</string>
 
 </resources>

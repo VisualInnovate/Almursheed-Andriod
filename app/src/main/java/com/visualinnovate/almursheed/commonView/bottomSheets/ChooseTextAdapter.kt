@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.commonView.bottomSheets
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
@@ -38,7 +39,6 @@ class ChooseTextAdapter(
 
     private fun bindData(holder: ViewHolder, item: ChooserItemModel) {
         holder.text.text = item.name
-
         if (item.isSelected) {
             val pL: Int = holder.text.paddingLeft
             val pT: Int = holder.text.paddingTop
@@ -81,16 +81,16 @@ class ChooseTextAdapter(
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val charString = constraint?.toString() ?: ""
-                if (charString.isEmpty()) {
-                    itemsListFiltered = items
+                itemsListFiltered = if (charString.isEmpty()) {
+                    items
                 } else {
                     val filteredList = ArrayList<ChooserItemModel>()
                     items
                         .filter {
-                            (it.name!!.lowercase().contains(constraint!!))
+                            (it.name!!.lowercase().trim().contains(constraint!!, true))
                         }
                         .forEach { filteredList.add(it) }
-                    itemsListFiltered = filteredList
+                    filteredList
                 }
                 return FilterResults().apply { values = itemsListFiltered }
             }
@@ -104,5 +104,9 @@ class ChooseTextAdapter(
                 notifyDataSetChanged()
             }
         }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }

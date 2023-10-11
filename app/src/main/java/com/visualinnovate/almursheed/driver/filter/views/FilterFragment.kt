@@ -8,14 +8,17 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.FragmentFilterBinding
 import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
-import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.Constant.ACCOMMODATION
+import com.visualinnovate.almursheed.utils.Constant.GUIDE_ID
+import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
+import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
+import com.visualinnovate.almursheed.utils.Constant.SEARCH
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +33,7 @@ class FilterFragment : Fragment() {
     private var filterGuideFragment: FilterGuideFragment? = null
     private var filterAccommodationFragment: FilterAccommodationFragment? = null
 
-    private var from = Constant.ROLE_DRIVER
+    private var from = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +53,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun subscribeSearchView() {
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return false
             }
@@ -59,7 +62,6 @@ class FilterFragment : Fragment() {
                 vm.searchData = text.toString().trim()
                 return false
             }
-
         })
     }
 
@@ -78,47 +80,44 @@ class FilterFragment : Fragment() {
         filterGuideFragment = FilterGuideFragment()
         filterAccommodationFragment = FilterAccommodationFragment()
         when (from) {
-            Constant.ROLE_DRIVER -> navigateToDriversFragment()
-            Constant.ROLE_GUIDE -> navigateToGuidesFragment()
-            Constant.ACCOMMODATION -> { navigateToAccommodationFragment() }
+            Constant.ROLE_DRIVER -> {
+                initDriverView()
+                navigateToDriversFragment()
+                vm.from = ROLE_DRIVER
+            }
+            Constant.ROLE_GUIDE -> {
+                initGuideView()
+                navigateToGuidesFragment()
+                vm.from = ROLE_GUIDE
+            }
+            Constant.ACCOMMODATION -> {
+                initAccommodationView()
+                navigateToAccommodationFragment()
+                vm.from = ACCOMMODATION
+            }
             Constant.ALL -> {
                 navigateToDriversFragment()
                 setBtnListener()
+                vm.from = SEARCH
             }
         }
     }
 
     private fun setBtnListener() {
         binding.txtDriver.onDebouncedListener {
-            selectedRole = 1
-            binding.txtDriver.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
-            binding.txtGuide.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
-            binding.txtAccommodation.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
-            binding.txtDriver.setTextColor(resources.getColor(R.color.white))
-            binding.txtGuide.setTextColor(resources.getColor(R.color.grey))
-            binding.txtAccommodation.setTextColor(resources.getColor(R.color.grey))
+            initDriverView()
+            vm.clearDataOnInit()
             navigateToDriversFragment()
         }
         binding.txtGuide.onDebouncedListener {
-            selectedRole = 2
-            binding.txtGuide.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
-            binding.txtDriver.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
-            binding.txtAccommodation.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
-            binding.txtGuide.setTextColor(resources.getColor(R.color.white))
-            binding.txtDriver.setTextColor(resources.getColor(R.color.grey))
-            binding.txtAccommodation.setTextColor(resources.getColor(R.color.grey))
-
+            initGuideView()
+            vm.clearDataOnInit()
             navigateToGuidesFragment()
         }
 
         binding.txtAccommodation.onDebouncedListener {
-            selectedRole = 3
-            binding.txtAccommodation.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
-            binding.txtDriver.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
-            binding.txtGuide.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
-            binding.txtAccommodation.setTextColor(resources.getColor(R.color.white))
-            binding.txtDriver.setTextColor(resources.getColor(R.color.grey))
-            binding.txtGuide.setTextColor(resources.getColor(R.color.grey))
+            initAccommodationView()
+            vm.clearDataOnInit()
             navigateToAccommodationFragment()
         }
     }
@@ -141,6 +140,35 @@ class FilterFragment : Fragment() {
         }
     }
 
+    private fun initGuideView() {
+        selectedRole = 2
+        binding.txtGuide.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
+        binding.txtDriver.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
+        binding.txtAccommodation.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
+        binding.txtGuide.setTextColor(resources.getColor(R.color.white))
+        binding.txtDriver.setTextColor(resources.getColor(R.color.grey))
+        binding.txtAccommodation.setTextColor(resources.getColor(R.color.grey))
+    }
+
+    private fun initDriverView() {
+        selectedRole = 1
+        binding.txtDriver.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
+        binding.txtGuide.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
+        binding.txtAccommodation.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
+        binding.txtDriver.setTextColor(resources.getColor(R.color.white))
+        binding.txtGuide.setTextColor(resources.getColor(R.color.grey))
+        binding.txtAccommodation.setTextColor(resources.getColor(R.color.grey))
+    }
+
+    private fun initAccommodationView() {
+        selectedRole = 3
+        binding.txtAccommodation.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
+        binding.txtDriver.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
+        binding.txtGuide.setBackgroundResource(R.drawable.bg_rectangle_corner_white)
+        binding.txtAccommodation.setTextColor(resources.getColor(R.color.white))
+        binding.txtDriver.setTextColor(resources.getColor(R.color.grey))
+        binding.txtGuide.setTextColor(resources.getColor(R.color.grey))
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

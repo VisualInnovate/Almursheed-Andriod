@@ -17,19 +17,80 @@
             android:background="@drawable/bg_rectangle_corner_white"
             app:layout_constraintTop_toTopOf="parent">
 
+
+
+
+            <TextView
+                android:id="@+id/txtCountry"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_5x"
+                android:text="@string/countryy"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_16x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/country"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:layout_marginEnd="@dimen/space_4x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtCountry" />
+
+            <TextView
+                android:id="@+id/txtCity"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:text="@string/cityy"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_16x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/country" />
+
+            <TextView
+                android:id="@+id/city"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:layout_marginEnd="@dimen/space_4x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtCity" />
+
             <TextView
                 android:id="@+id/txtAccommodationCategory"
                 style="@style/TextStyleRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_5x"
+                android:layout_marginTop="@dimen/space_3x"
                 android:text="@string/accommodation_category"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/space_16x_sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/city" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_RV"

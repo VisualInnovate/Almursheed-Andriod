@@ -13,6 +13,7 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
@@ -271,6 +272,11 @@ class HomeFragment : BaseFragment() {
         }
         binding.seeAllPopularLocations.setOnClickListener {
             findNavController().customNavigate(R.id.allLocationFragment)
+        }
+        binding.searchView.onDebouncedListener {
+            val bundle = Bundle()
+            bundle.putString("from", Constant.ALL)
+            findNavController().customNavigate(R.id.FilterFragment, data = bundle)
         }
     }
 

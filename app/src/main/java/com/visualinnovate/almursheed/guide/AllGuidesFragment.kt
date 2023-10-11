@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
@@ -12,6 +13,7 @@ import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
+import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.home.adapter.AllGuideAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
@@ -26,6 +28,7 @@ class AllGuidesFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val vm: HomeViewModel by viewModels()
+    private val filterVm: FilterViewModel by activityViewModels()
 
     private lateinit var allGuideAdapter: AllGuideAdapter
 
@@ -41,7 +44,9 @@ class AllGuidesFragment : BaseFragment() {
     }
 
     private val btnFilterCallBackFunc: () -> Unit = {
-        toast("Clicked btnFilterCallBackFunc")
+        val bundle = Bundle()
+        bundle.putString("from", Constant.ROLE_GUIDE)
+        findNavController().customNavigate(R.id.FilterFragment, data = bundle)
     }
 
     override fun onCreateView(

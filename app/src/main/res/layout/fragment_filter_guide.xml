@@ -6,16 +6,76 @@
     android:background="@color/bg_edit_text">
 
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_9x"
             android:layout_marginEnd="@dimen/space_4x"
-            android:layout_marginBottom="@dimen/space_10x"
+            android:layout_marginBottom="@dimen/space_12x"
             android:background="@drawable/bg_rectangle_corner_white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/txtCountry"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_5x"
+                android:text="@string/countryy"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_16x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/country"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:layout_marginEnd="@dimen/space_4x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtCountry" />
+
+            <TextView
+                android:id="@+id/txtCity"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:text="@string/cityy"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_16x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/country" />
+
+            <TextView
+                android:id="@+id/city"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:layout_marginEnd="@dimen/space_4x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtCity" />
+
+
 
             <TextView
                 android:id="@+id/txtLanguage"
@@ -29,7 +89,7 @@
                 android:textSize="@dimen/space_16x_sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/city" />
 
             <TextView
                 android:id="@+id/language"
@@ -62,21 +122,21 @@
                 app:layout_constraintTop_toBottomOf="@id/language" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/rate"
-                style="@style/TextStyleRegular"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginStart="@dimen/space_4x"
                 android:layout_marginTop="@dimen/space_3x"
                 android:layout_marginEnd="@dimen/space_4x"
                 android:background="@drawable/bg_item_spinner_selected_with_ic_down"
-                android:gravity="center_vertical"
+                android:gravity="start"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_stars_5"
                 android:text="@string/all"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_14x_sp"
                 app:layout_constraintTop_toBottomOf="@id/txtRating" />
-
 
             <androidx.appcompat.widget.AppCompatSeekBar
                 android:id="@+id/price"
@@ -124,7 +184,7 @@
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8x"
-                android:layout_marginBottom="@dimen/space_4x"
+                android:layout_marginBottom="@dimen/space_8x"
                 android:text="@string/search"
                 android:textAllCaps="false"
                 app:layout_constraintBottom_toBottomOf="parent"

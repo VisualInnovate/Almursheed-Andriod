@@ -31,6 +31,7 @@ object Constant {
     const val ROLE_DRIVER = "Driver"
 
     const val ACCOMMODATION = "accommodation"
+    const val SEARCH = "search"
     const val ALL = "all"
     const val OPEN = "open"
     const val Close = "close"

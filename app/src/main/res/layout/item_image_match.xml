@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <TextView
+        android:id="@+id/background"
+        style="@style/TextStyleRegular"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_marginTop="@dimen/space_3x"
+        android:background="@drawable/bg_item_spinner_selected_with_ic_done"
+        android:gravity="start|center_vertical"
+        android:paddingStart="@dimen/space_2x"
+        android:paddingEnd="@dimen/space_2x"
+        android:paddingTop="@dimen/space_1x"
+        android:textStyle="bold"
+        tools:text="all"
+        android:textSize="@dimen/space_16x_sp"
+        android:paddingBottom="@dimen/space_2x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+ <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image"
+        style="@style/TextStyleRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3x"
+        android:paddingStart="@dimen/space_4x"
+        android:paddingTop="@dimen/space_2x"
+        android:paddingEnd="@dimen/space_2x"
+        android:paddingBottom="@dimen/space_2x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
