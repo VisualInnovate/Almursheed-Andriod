@@ -40,6 +40,7 @@ class AllGuidesFragment : BaseFragment() {
         }
 
     private val onFavoriteClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
+        vm.selectedUserPosition = guide.id!!
         vm.addAndRemoveFavorite(guide.id.toString(), "1")
     }
 
@@ -106,6 +107,7 @@ class AllGuidesFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // bind data to the view
                     allGuideAdapter.submitData(it.data!!.drivers)
+                    vm.guidesList = it.data.drivers
                 }
 
                 is ResponseHandler.Error -> {
@@ -132,6 +134,7 @@ class AllGuidesFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
+                    vm.handleIsFavouriteGuides(it.data?.isFavourite)
                     toast(it.data?.message.toString())
                 }
 

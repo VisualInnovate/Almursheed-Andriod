@@ -72,14 +72,14 @@ interface ApiService {
         @Query("password_confirmation") passwordConfirmation: String?,
     ): Response<MessageResponse>
 
-    @GET("guides/latest/{id}")
+    @GET("guides/latest")
     suspend fun getLatestGuide(
-        @Path("id") cityId: Int
+        @Query("state_id") stateId: Int?
     ): Response<DriversAndGuidesListResponse>
 
-    @GET("drivers/latest/{id}") // https://mursheed.visualinnovate.net/api/drivers/latest/42
+    @GET("drivers/latest") // https://mursheed.visualinnovate.net/api/drivers/latest?stateId=0
     suspend fun getLatestDriver(
-        @Path("id") cityId: Int,
+        @Query("state_id") stateId: Int?,
     ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/all")

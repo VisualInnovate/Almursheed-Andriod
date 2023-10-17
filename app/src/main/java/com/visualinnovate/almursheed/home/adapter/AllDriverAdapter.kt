@@ -25,7 +25,7 @@ class AllDriverAdapter(
         val driverName = itemView.driverName
         val price = itemView.price
         val city = itemView.city
-        val driverRating = itemView.driverRating
+        val rating = itemView.rating
 
         init {
             itemView.root.setOnClickListener {
@@ -51,6 +51,7 @@ class AllDriverAdapter(
             .into(holder.imgDriver)
         holder.driverName.text = driver.name ?: ""
         holder.city.text = driver.stateName
+        holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
         // check favorite
         if (driver.isFavourite == false) { // 0 -> un favorite

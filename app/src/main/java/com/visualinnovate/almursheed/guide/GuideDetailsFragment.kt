@@ -13,6 +13,7 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentGuideDetailsBinding
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
@@ -91,7 +92,7 @@ class GuideDetailsFragment : BaseFragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initViews(guide: GuideItem?) {
+    private fun initViews(guide: DriverAndGuideItem?) {
         Glide.with(requireContext())
             .load(guide?.personalPhoto)
             .into(binding.imgGuide)
@@ -101,6 +102,7 @@ class GuideDetailsFragment : BaseFragment() {
         binding.guideCountry.text = guide?.state ?: ""
         binding.guideDescription.text = guide?.bio ?: ""
         // binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
+        binding.guideReview.text = "(${guide?.count_rate ?: 0} review)"
     }
 
     override fun onDestroy() {

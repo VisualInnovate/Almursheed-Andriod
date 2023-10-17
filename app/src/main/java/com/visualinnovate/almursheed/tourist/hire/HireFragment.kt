@@ -161,7 +161,7 @@ class HireFragment : BaseFragment() {
     }
 
     private var citiesList = ArrayList<ChooserItemModel>()
-
+    private var inCity: String? = null
 
     private fun initView() {
         binding.inCityCheckBox.isChecked = true
@@ -169,7 +169,7 @@ class HireFragment : BaseFragment() {
 
         citiesList = setupCitiesList(Utils.allCities)
 
-        binding.dayNumber.onDebouncedListener {
+        binding.city.onDebouncedListener {
             showCityChooser()
         }
 
@@ -182,7 +182,7 @@ class HireFragment : BaseFragment() {
     private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         cities.forEach {
-            val item = ChooserItemModel(name = it.state , id = it.stateId)
+            val item = ChooserItemModel(name = it.state, id = it.stateId)
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -190,11 +190,12 @@ class HireFragment : BaseFragment() {
 
     private fun showCityChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, position ->
-            // city = data.name
-            // binding.city.text = city
-            toast(data.toString())
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, position ->
+                inCity = data.id
+                binding.city.text = data.name
+                toast(data.toString())
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
     }
 
@@ -239,6 +240,11 @@ class HireFragment : BaseFragment() {
                 lat = currentLocation?.latitude.toString(),
                 longitude = currentLocation?.longitude.toString(),
             )
+
+            if (tripType == 1){
+                orderDetailsList.add(OrderDetail(date = binding.dayNumber.text.toString(), inCity!!.toInt()))
+            }
+
 
             val requestCreateOrder = RequestCreateOrder(
                 user_id = selectedDriverGuideId,

@@ -67,13 +67,13 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:maxLength="15"
                     android:maxLines="1"
-                    android:text="(1200 review)"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/space_9x_sp"
                     app:layout_constraintBottom_toBottomOf="@id/driverName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/driverName"
-                    app:layout_constraintTop_toTopOf="@id/driverName" />
+                    app:layout_constraintTop_toTopOf="@id/driverName"
+                    tools:text="(1200 review)" />
 
                 <TextView
                     android:id="@+id/driverName"
@@ -317,6 +317,7 @@
                             android:id="@+id/imgCar"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
+                            android:scaleType="fitXY"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/img_car" />
 
@@ -342,11 +343,11 @@
                                 android:text="Accent 2022"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/space_10x_sp"
+                                app:drawableStartCompat="@drawable/ic_car_trunk"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/view"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/imgCar"
-                                app:drawableStartCompat="@drawable/ic_car_trunk" />
+                                app:layout_constraintTop_toBottomOf="@id/imgCar" />
 
                             <View
                                 android:id="@+id/view"
@@ -372,11 +373,11 @@
                                 android:text="SUV"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/space_10x_sp"
+                                app:drawableStartCompat="@drawable/ic_car_trunk"
                                 app:layout_constraintBottom_toBottomOf="@id/carName"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/view"
-                                app:layout_constraintTop_toTopOf="@id/carName"
-                                app:drawableStartCompat="@drawable/ic_car_trunk" />
+                                app:layout_constraintTop_toTopOf="@id/carName" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 

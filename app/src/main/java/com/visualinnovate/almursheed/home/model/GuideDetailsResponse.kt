@@ -11,6 +11,6 @@ data class GuideDetailsResponse(
 	val message: String? = null,
 
 	@field:SerializedName("user")
-	val guide: GuideItem? = null
+	val guide: DriverAndGuideItem? = null
 )
 

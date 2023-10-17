@@ -26,7 +26,6 @@ import com.visualinnovate.almursheed.home.adapter.OfferAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.model.BannerModel
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
-import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
 import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.view.OfferDetailsFragment
@@ -64,8 +63,14 @@ class HomeFragment : BaseFragment() {
         // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
-    private val onFavoriteClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
+    private val onFavoriteLatestDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
+        vm.selectedUserPosition = driver.id!!
         vm.addAndRemoveFavorite(driver.id.toString(), "0")
+    }
+
+    private val onFavoriteLatestGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
+        vm.selectedUserPosition = guide.id!!
+        vm.addAndRemoveFavorite(guide.id.toString(), "1")
     }
 
     private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
@@ -120,17 +125,19 @@ class HomeFragment : BaseFragment() {
         initView()
         setBtnListener()
         subscribeData()
+
+        Log.d("DEBUG  onViewCreated()", "${SharedPreference.getUser()}")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("onStart()", "getUser  ${SharedPreference.getUser()}")
-        Log.d("onStart()", "stateId  ${SharedPreference.getUser()?.stateId}")
-        Log.d("onStart()", "desCityId  ${SharedPreference.getUser()?.desCityId}")
-        vm.getLatestDriver(SharedPreference.getUser()?.stateId ?: 0)
-        vm.getLatestGuides(SharedPreference.getUser()?.stateId ?: 0)
-        // vm.fetchAllDrivers()
-        // vm.fetchAllGuides()
+        Log.d("DEBUG  onStart()", "SharedPreference.getUser()?.stateId  ${SharedPreference.getUser()?.stateId}")
+        vm.getLatestDriver(
+            SharedPreference.getUser()?.stateId ?: 0
+        )
+        vm.getLatestGuides(
+            SharedPreference.getUser()?.stateId ?: 0
+        )
         vm.fetchOfferResponse()
         vm.fetchAttractivesList()
     }
@@ -153,33 +160,7 @@ class HomeFragment : BaseFragment() {
                     binding.shimmer.gone()
                     Log.d("Success11", "${it.data!!.drivers}")
                     driverAdapter.submitData(it.data.drivers)
-                }
-
-                is ResponseHandler.Error -> {
-                    // show error message
-                    toast(it.message)
-                    Log.d("Error->DriverList", it.message)
-                }
-
-                is ResponseHandler.Loading -> {
-                    // show a progress bar
-                    showMainLoading()
-                }
-
-                is ResponseHandler.StopLoading -> {
-                    // show a progress bar
-                    hideMainLoading()
-                }
-
-                else -> {}
-            }
-        }
-
-        vm.isFavoriteResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResponseHandler.Success -> {
-                    // bind data to the view
-                    toast(it.data?.message.toString())
+                    vm.latestGuidesList = it.data.drivers
                 }
 
                 is ResponseHandler.Error -> {
@@ -210,6 +191,7 @@ class HomeFragment : BaseFragment() {
                     binding.shimmer.gone()
                     Log.d("Success22", "${it.data!!.drivers}")
                     guideAdapter.submitData(it.data.drivers)
+                    vm.latestDriversList = it.data.drivers
                 }
 
                 is ResponseHandler.Error -> {
@@ -228,9 +210,7 @@ class HomeFragment : BaseFragment() {
                     hideMainLoading()
                 }
 
-                else -> {
-                    toast("Else")
-                }
+                else -> {}
             }
         }
         // observe in offers list
@@ -274,6 +254,35 @@ class HomeFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
+
+        vm.isFavoriteResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    vm.handleIsFavouriteLatestGuides(it.data?.isFavourite)
+                    vm.handleIsFavouriteLatestDrivers(it.data?.isFavourite)
+                    toast(it.data?.message.toString())
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -338,14 +347,14 @@ class HomeFragment : BaseFragment() {
 
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
-            driverAdapter = DriverAdapter(btnDriverClickCallBack, onFavoriteClickCallBack)
+            driverAdapter = DriverAdapter(btnDriverClickCallBack, onFavoriteLatestDriverClickCallBack)
             adapter = driverAdapter
         }
     }
 
     private fun initGuideRecycler() {
         binding.rvGuide.apply {
-            guideAdapter = GuideAdapter(btnGuideClickCallBack, onFavoriteClickCallBack)
+            guideAdapter = GuideAdapter(btnGuideClickCallBack, onFavoriteLatestGuideClickCallBack)
             adapter = guideAdapter
         }
     }

@@ -65,7 +65,7 @@ class GuideAdapter(
             .into(holder.imgDriver)
         holder.username.text = guide.name
         holder.city.text = guide.stateName
-        holder.rating.text = guide.totalRating
+        holder.rating.text = (guide.totalRating ?: 0.0).toString()
 
         // check favorite
         if (guide.isFavourite == false) { // false -> un favorite

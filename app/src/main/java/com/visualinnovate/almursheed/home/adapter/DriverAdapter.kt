@@ -67,7 +67,7 @@ class DriverAdapter(
             .into(holder.imgDriver)
         holder.username.text = driver.name ?: ""
         holder.city.text = driver.stateName
-        holder.rating.text = driver.totalRating
+        holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
         // check status
         /*if (driver.status == 1) { // false -> offline
@@ -75,8 +75,6 @@ class DriverAdapter(
         } else {
             holder.imgStatus.setImageResource(R.drawable.ic_offline_active)
         }*/
-
-        Log.d("DriverAdapter", "driver.isFavourite ==  ${driver.isFavourite}")
 
         // check favorite
         if (driver.isFavourite == false) { // false -> un favorite

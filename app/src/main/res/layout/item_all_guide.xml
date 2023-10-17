@@ -40,7 +40,7 @@
             app:srcCompat="@drawable/ic_un_favorite" />
 
         <TextView
-            android:id="@+id/guideRating"
+            android:id="@+id/rating"
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintTop_toBottomOf="@id/guideRating"
+            app:layout_constraintTop_toBottomOf="@id/rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Ahmed khaled " />

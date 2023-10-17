@@ -24,7 +24,7 @@ class AllGuideAdapter(
         RecyclerView.ViewHolder(itemView.root) {
         val imgGuide = itemView.imgGuide
         val imgFavorite = itemView.imgFavorite
-        val guideRating = itemView.guideRating
+        val rating = itemView.rating
         val guideName = itemView.guideName
         val price = itemView.price
         val city = itemView.city
@@ -59,6 +59,7 @@ class AllGuideAdapter(
         // holder.price.text = "$ ${guide.guidePrice}"
         holder.city.text = guide.stateName
         // holder.language.text = guide.language
+        holder.rating.text = (guide.totalRating ?: 0.0).toString()
 
         // check favorite
         if (guide.isFavourite == false) { // false -> un favorite

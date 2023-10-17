@@ -82,6 +82,9 @@ data class DriverAndGuideItem(
     @field:SerializedName("ratings_count")
     val ratingsCount: Int? = null,
 
+    @field:SerializedName("count_rate")
+    val count_rate: Int? = null,
+
     @field:SerializedName("email")
     val email: String? = null,
 
@@ -89,7 +92,7 @@ data class DriverAndGuideItem(
     val status: Any? = null,
 
     @field:SerializedName("is_favourite")
-    var isFavourite: Boolean? = false,
+    var isFavourite: Boolean? = null,
 
     @field:SerializedName("price_services")
     val priceServices: List<PriceServicesItem?>? = null,

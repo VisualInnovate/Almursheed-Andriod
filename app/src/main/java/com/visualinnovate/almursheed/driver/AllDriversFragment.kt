@@ -120,7 +120,6 @@ class AllDriversFragment : BaseFragment() {
                     // show error message
                     hideMainLoading()
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -133,10 +132,7 @@ class AllDriversFragment : BaseFragment() {
                     hideMainLoading()
                 }
 
-                else -> {
-                    hideMainLoading()
-                    toast("Else")
-                }
+                else -> {}
             }
         }
 
@@ -144,14 +140,13 @@ class AllDriversFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    vm.handleIsFavourite(it.data?.isFavourite)
+                    vm.handleIsFavouriteDrivers(it.data?.isFavourite)
                     toast(it.data?.message.toString())
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {

@@ -27,7 +27,11 @@ class HomeViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(apiService, application) {
 
+    var latestDriversList: List<DriverAndGuideItem?>? = ArrayList()
+    var latestGuidesList: List<DriverAndGuideItem?>? = ArrayList()
     var driversList: List<DriverAndGuideItem?>? = ArrayList()
+    var guidesList: List<DriverAndGuideItem?>? = ArrayList()
+
     private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
     val driverLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
@@ -37,7 +41,6 @@ class HomeViewModel @Inject constructor(
         MutableLiveData()
     val guideLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         _guideLatestMutableData
-
 
     private val _driverMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
@@ -220,7 +223,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun handleIsFavourite(favourite: Boolean?) {
+    fun handleIsFavouriteDrivers(favourite: Boolean?) {
         when (_driverMutableData.value) {
             is ResponseHandler.Success -> {
                 val list =
@@ -233,6 +236,63 @@ class HomeViewModel @Inject constructor(
                 (_driverMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
                     list!!.drivers
                 _driverMutableData.value = _driverMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    fun handleIsFavouriteGuides(favourite: Boolean?) {
+        when (_guideMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_guideMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_guideMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _guideMutableData.value = _guideMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    fun handleIsFavouriteLatestGuides(favourite: Boolean?) {
+        when (_guideLatestMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_guideLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_guideLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _guideLatestMutableData.value = _guideLatestMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    fun handleIsFavouriteLatestDrivers(favourite: Boolean?) {
+        when (_driverLatestMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_driverLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_driverLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _driverLatestMutableData.value = _driverLatestMutableData.value
             }
 
             else -> {}
