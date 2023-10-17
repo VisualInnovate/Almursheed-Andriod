@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.driver
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,8 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.databinding.FragmentAllDriversBinding
-import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.home.adapter.AllDriverAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
@@ -67,7 +66,7 @@ class AllDriversFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        vm.fetchAllDrivers()
+        vm.fetchAllDrivers(filterVm.countryId, filterVm.cityId, filterVm.carCategory, filterVm.carModel, filterVm.searchData, filterVm.price, filterVm.rate)
     }
 
     private fun initToolbar() {
@@ -113,7 +112,6 @@ class AllDriversFragment : BaseFragment() {
                     // show error message
                     hideMainLoading()
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -128,7 +126,6 @@ class AllDriversFragment : BaseFragment() {
 
                 else -> {
                     hideMainLoading()
-                    toast("Else")
                 }
             }
         }

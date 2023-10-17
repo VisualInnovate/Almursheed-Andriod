@@ -127,7 +127,7 @@
 
  <fragment
         android:id="@+id/FilterDriversFragment"
-        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterDriverFragment"
+        android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterDriverFragment"
         android:label="fragment_filter_driver"
         tools:layout="@layout/fragment_filter_driver" />
     <dialog
@@ -138,17 +138,17 @@
 
     <fragment
         android:id="@+id/FilterGuidesFragment"
-        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterGuideFragment"
+        android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterGuideFragment"
         tools:layout="@layout/fragment_filter_guide" />
 
 <fragment
         android:id="@+id/FilterAccommodationFragment"
-        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterAccommodationFragment"
+        android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterAccommodationFragment"
         tools:layout="@layout/fragment_filter_accomodation" />
 
  <fragment
         android:id="@+id/FilterFragment"
-        android:name="com.visualinnovate.almursheed.driver.filter.views.FilterFragment"
+        android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterFragment"
         android:label="fragment_filter_driver"
         tools:layout="@layout/fragment_filter" />
 

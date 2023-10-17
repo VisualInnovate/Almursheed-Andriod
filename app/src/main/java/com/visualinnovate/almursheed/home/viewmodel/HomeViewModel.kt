@@ -96,11 +96,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchAllDrivers() {
+    fun fetchAllDrivers(
+        country: String?=null,
+        city: String?=null,
+        carCategory: String?=null,
+        carModel: String?=null,
+        searchData: String?=null,
+        price: String?=null,
+        rate: String?=null,
+    ) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDrivers()
+                apiService.getAllDrivers(country,city,carCategory,carModel,searchData , price,rate)
             }.collect{
                 _driverMutableData.value = it
             }

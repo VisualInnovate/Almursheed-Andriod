@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.driver.filter.views
+package com.visualinnovate.almursheed.commonView.filter.views
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.driver.filter.views
+package com.visualinnovate.almursheed.commonView.filter.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.FragmentFilterBinding
-import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
+import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ACCOMMODATION
 import com.visualinnovate.almursheed.utils.Constant.GUIDE_ID

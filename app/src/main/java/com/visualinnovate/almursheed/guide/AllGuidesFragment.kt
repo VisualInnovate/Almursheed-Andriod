@@ -13,7 +13,7 @@ import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
-import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
+import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.home.adapter.AllGuideAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel

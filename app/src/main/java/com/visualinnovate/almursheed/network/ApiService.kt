@@ -81,7 +81,15 @@ interface ApiService {
     ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/all")
-    suspend fun getAllDrivers(): Response<DriversAndGuidesListResponse>
+    suspend fun getAllDrivers(
+        @Query("country_id") countryId: String?,
+        @Query("state_id") cityId: String?,
+        @Query("car_type") carType: String?,
+        @Query("car_model") carModel: String?,
+        @Query("name") searchData: String?,
+        @Query("price") price: String?,
+        @Query("rate") rate: String?,
+        ): Response<DriversAndGuidesListResponse>
 
     @POST("drivers/get-driver-by-city")
     suspend fun getAllDriversByDistCityId(

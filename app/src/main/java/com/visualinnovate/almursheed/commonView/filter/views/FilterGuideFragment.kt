@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.driver.filter.views
+package com.visualinnovate.almursheed.commonView.filter.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,41 +14,38 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
-import com.visualinnovate.almursheed.databinding.FragmentFilterDriverBinding
-import com.visualinnovate.almursheed.driver.filter.viewModel.FilterViewModel
+import com.visualinnovate.almursheed.databinding.FragmentFilterGuideBinding
+import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Utils
-import com.visualinnovate.almursheed.utils.Utils.allCarModels
-import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
-import com.visualinnovate.almursheed.utils.Utils.selectedCountryId
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FilterDriverFragment : Fragment() {
+class FilterGuideFragment : Fragment() {
 
-    private var _binding: FragmentFilterDriverBinding? = null
+    private var _binding: FragmentFilterGuideBinding? = null
     private val binding get() = _binding!!
+
     private val vm: FilterViewModel by activityViewModels()
 
-    private var carCategory: String? = null
-    private var carModel: String? = null
+    private var price: Int = 0
+    private var language: String? =null
     private var rate: String? = null
     private var city: String? = null
     private var country: String? = null
-    private var price: Int = 0
 
-    private var carCategories = ArrayList<ChooserItemModel>()
+    private var allLanguages = ArrayList<ChooserItemModel>()
+    private var ratingList = ArrayList<ChooserItemModel>()
     private var allCountries = ArrayList<ChooserItemModel>()
     private var citiesList = ArrayList<ChooserItemModel>()
-    private var ratingList = ArrayList<ChooserItemModel>()
-    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
+    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentFilterDriverBinding.inflate(inflater, container, false)
+        _binding = FragmentFilterGuideBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,17 +56,17 @@ class FilterDriverFragment : Fragment() {
     }
 
     private fun initData() {
-        carCategory = getString(R.string.all)
-        carModel = getString(R.string.all)
+        language = getString(R.string.all)
         rate = getString(R.string.all)
         city = getString(R.string.all)
         country = getString(R.string.all)
 
-        val carCategoriesList = resources.getStringArray(R.array.car_categories)
-        carCategories = setupCarCategoriesList(carCategoriesList)
+        val languages = resources.getStringArray(R.array.languages)
+        allLanguages = setupLanguagesList(languages)
         allCountries = setupCountriesList()
         citiesList = setupCitiesList(Utils.allCities)
         ratingList = setupRateList()
+
     }
 
     private fun setBtnListener() {
@@ -80,12 +77,8 @@ class FilterDriverFragment : Fragment() {
             showCityChooser()
         }
 
-        binding.carCategory.onDebouncedListener {
-            showCarCategoryChooser()
-        }
-
-        binding.carModel.onDebouncedListener {
-            showCarModelChooser()
+        binding.language.onDebouncedListener {
+            showLanguagesChooser()
         }
 
         binding.rate.onDebouncedListener {
@@ -103,21 +96,19 @@ class FilterDriverFragment : Fragment() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {} })
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
 
         binding.btnSearch.onDebouncedListener {
-            vm.carCategory = carCategory
-            vm.carModel = carModel
-            vm.price = price
+            vm.language = language
+            vm.price = price.toString()
             vm.rate = rate
-            vm.country = country
-            vm.city = city
-            vm.type = "Driver"
-
-            if (vm.from == Constant.ROLE_DRIVER) {
-                findNavController().navigateUp()
-            } else {
+            vm.countryId = country
+            vm.cityId = city
+            vm.type = "Guide"
+            if (vm.from == Constant.ROLE_GUIDE)
+            findNavController().navigateUp()
+            else {
                 // navigate to specific screen
             }
         }
@@ -126,7 +117,7 @@ class FilterDriverFragment : Fragment() {
     private fun showCountryChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, position ->
-            selectedCountryId = data.id ?: "-1"
+            Utils.selectedCountryId = data.id ?: "-1"
             if (data.name == getString(R.string.all)) {
                 citiesList = setupCitiesList(Utils.allCities)
             } else {
@@ -150,22 +141,13 @@ class FilterDriverFragment : Fragment() {
         showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
     }
 
-    private fun showCarCategoryChooser() {
+    private fun showLanguagesChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_category), carCategories, { data, position ->
-            carCategory = data.name
-            binding.carCategory.text = carCategory
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.language_text), allLanguages, { data, position ->
+            language = data.name
+            binding.language.text = rate
         })
-        showBottomSheet(chooseTextBottomSheet!!, "CarCategoryBottomSheet")
-    }
-
-    private fun showCarModelChooser() {
-        chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), allCarModels, { data, position ->
-            carModel = data.name
-            binding.carModel.text = carModel
-        })
-        showBottomSheet(chooseTextBottomSheet!!, "CarModelBottomSheet")
+        showBottomSheet(chooseTextBottomSheet!!, "LanguageBottomSheet")
     }
 
     private fun showRateChooser() {
@@ -181,8 +163,7 @@ class FilterDriverFragment : Fragment() {
         }, "image")
         showBottomSheet(chooseTextBottomSheet!!, "RatingBottomSheet")
     }
-
-    private fun setupCarCategoriesList(list: Array<String>): ArrayList<ChooserItemModel> {
+    private fun setupLanguagesList(list: Array<String>): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         list.forEach {
             val item = ChooserItemModel(name = it)
@@ -190,7 +171,6 @@ class FilterDriverFragment : Fragment() {
         }
         return chooserItemList
     }
-
     private fun setupCountriesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         val all = ChooserItemModel(name = getString(R.string.all))
@@ -202,7 +182,7 @@ class FilterDriverFragment : Fragment() {
         return chooserItemList
     }
     private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
-        filterCitiesByCountryId()
+        Utils.filterCitiesByCountryId()
         val chooserItemList = ArrayList<ChooserItemModel>()
         val all = ChooserItemModel(name = getString(R.string.all))
         chooserItemList.add(all)
@@ -212,6 +192,7 @@ class FilterDriverFragment : Fragment() {
         }
         return chooserItemList
     }
+
     private fun setupRateList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         chooserItemList.add(ChooserItemModel(name = getString(R.string.all)))
