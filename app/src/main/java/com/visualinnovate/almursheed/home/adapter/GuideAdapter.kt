@@ -8,16 +8,18 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.invisible
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
-import com.visualinnovate.almursheed.home.model.GuideItem
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.utils.Constant
 
 class GuideAdapter(
-    private val btnGuideClickCallBack: (guide: GuideItem) -> Unit
+    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit,
+    private val onFavoriteClickCallBack: (guide: DriverAndGuideItem) -> Unit,
 ) : RecyclerView.Adapter<GuideAdapter.GuideViewHolder>() {
 
-    private var guidesList: List<GuideItem?>? = ArrayList()
+    private var guidesList: List<DriverAndGuideItem?>? = ArrayList()
 
     private lateinit var binding: ItemDriverBinding
 
@@ -50,7 +52,7 @@ class GuideAdapter(
         bindData(holder, guide!!)
     }
 
-    private fun bindData(holder: GuideViewHolder, guide: GuideItem) {
+    private fun bindData(holder: GuideViewHolder, guide: DriverAndGuideItem) {
         holder.imgStatus.invisible()
         if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
             binding.btnBookNow.gone()
@@ -59,24 +61,29 @@ class GuideAdapter(
         }
         // set data
         Glide.with(holder.itemView.context)
-             .load(guide.imageBackground)
+            .load(guide.imageBackground)
             .into(holder.imgDriver)
         holder.username.text = guide.name
         holder.city.text = guide.stateName
+        holder.rating.text = guide.totalRating
 
         // check favorite
-        /*if (!guide.guideFavorite) { // false -> un favorite
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        if (guide.isFavourite == false) { // false -> un favorite
+            holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)
         } else {
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }*/
+            holder.imgFavorite.setImageResource(R.drawable.ic_favorite)
+        }
+
+        holder.imgFavorite.onDebouncedListener {
+            onFavoriteClickCallBack.invoke(guide)
+        }
     }
 
     override fun getItemCount(): Int {
         return guidesList?.size ?: 0
     }
 
-    fun submitData(data: List<GuideItem?>?) {
+    fun submitData(data: List<DriverAndGuideItem?>?) {
         guidesList = data
         notifyDataSetChanged()
     }

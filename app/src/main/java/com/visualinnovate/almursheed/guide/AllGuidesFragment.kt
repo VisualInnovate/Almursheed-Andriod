@@ -39,6 +39,10 @@ class AllGuidesFragment : BaseFragment() {
             findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
         }
 
+    private val onFavoriteClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
+        vm.addAndRemoveFavorite(guide.id.toString(), "1")
+    }
+
     private val btnSortCallBackFunc: () -> Unit = {
         toast("Clicked btnSortCallBackFunc")
     }
@@ -90,7 +94,7 @@ class AllGuidesFragment : BaseFragment() {
 
     private fun initSeeAllDriverRecycler() {
         binding.rvSeeAllGuides.apply {
-            allGuideAdapter = AllGuideAdapter(btnGuideClickCallBack)
+            allGuideAdapter = AllGuideAdapter(btnGuideClickCallBack, onFavoriteClickCallBack)
             adapter = allGuideAdapter
         }
     }
@@ -102,6 +106,33 @@ class AllGuidesFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // bind data to the view
                     allGuideAdapter.submitData(it.data!!.drivers)
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
+
+        vm.isFavoriteResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    toast(it.data?.message.toString())
                 }
 
                 is ResponseHandler.Error -> {

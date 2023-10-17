@@ -238,5 +238,10 @@
     <string name="write_your_rate_here">Write Your Rate here</string>
     <string name="must_give_rate">Must give rate</string>
     <string name="cityy">City</string>
+    <string name="pending">Pending</string>
+    <string name="approved">Approved</string>
+    <string name="expired">Expired</string>
+    <string name="paid">Paid</string>
+    <string name="notcompleted">notCompleted</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,7 @@ class AddRateDialogFragment : DialogFragment() {
 
     private val vm: MyOrdersViewModel by activityViewModels()
 
-    private var rate: Float = 0.0F
+    private var rate: Int = 0
     private var rateComment: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +51,18 @@ class AddRateDialogFragment : DialogFragment() {
     }
 
     private fun setBtnListeners() {
+        binding.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
+            // This callback is called when the user changes the rating
+            if (fromUser) {
+                Log.d("AddRateDialogFragment", "Rating $rating")
+                Log.d("AddRateDialogFragment", "Rating-Int ${rating.toInt()}")
+                rate = rating.toInt()
+            }
+        }
+
         binding.btnSubmit.onDebouncedListener {
             if (validate()) {
+                Log.d("AddRateDialogFragment", "rate $rate")
                 // call api add rate
                 vm.addRate(
                     rate,
@@ -70,6 +81,7 @@ class AddRateDialogFragment : DialogFragment() {
                 is ResponseHandler.Success -> {
                     toast(it.data?.message ?: "")
                     dialog?.dismiss()
+                    toast(it.data?.message.toString())
                     findNavController().navigateUp()
                 }
 
@@ -97,10 +109,10 @@ class AddRateDialogFragment : DialogFragment() {
     private fun validate(): Boolean {
         var isValid = true
 
-        rate = binding.ratingBar.rating
+        // rate = binding.ratingBar.rating
         rateComment = binding.edtRateComment.value
 
-        if (rate == 0.0f) {
+        if (rate == 0) {
             toast(getString(R.string.must_give_rate))
             isValid = false
         }

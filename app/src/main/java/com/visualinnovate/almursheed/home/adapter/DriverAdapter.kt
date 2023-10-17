@@ -1,18 +1,22 @@
 package com.visualinnovate.almursheed.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemDriverBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.utils.Constant
 
 class DriverAdapter(
-    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit,
+    private val onFavoriteClickCallBack: (driver: DriverAndGuideItem) -> Unit,
 ) : RecyclerView.Adapter<DriverAdapter.DriverViewHolder>() {
 
     private var driversList: List<DriverAndGuideItem?>? = ArrayList()
@@ -63,18 +67,27 @@ class DriverAdapter(
             .into(holder.imgDriver)
         holder.username.text = driver.name ?: ""
         holder.city.text = driver.stateName
+        holder.rating.text = driver.totalRating
+
         // check status
         /*if (driver.status == 1) { // false -> offline
             holder.imgStatus.setImageResource(R.drawable.ic_active_online)
         } else {
             holder.imgStatus.setImageResource(R.drawable.ic_offline_active)
         }*/
+
+        Log.d("DriverAdapter", "driver.isFavourite ==  ${driver.isFavourite}")
+
         // check favorite
-//        if (!driver.driverFavorite) { // false -> un favorite
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-//        } else {
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-//        }
+        if (driver.isFavourite == false) { // false -> un favorite
+            holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)
+        } else {
+            holder.imgFavorite.setImageResource(R.drawable.ic_favorite)
+        }
+
+        holder.imgFavorite.onDebouncedListener {
+            onFavoriteClickCallBack.invoke(driver)
+        }
     }
 
     override fun getItemCount(): Int {

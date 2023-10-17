@@ -26,6 +26,7 @@ import com.visualinnovate.almursheed.home.adapter.OfferAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.model.BannerModel
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
 import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.view.OfferDetailsFragment
@@ -63,7 +64,11 @@ class HomeFragment : BaseFragment() {
         // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
-    private val btnGuideClickCallBack: (guide: GuideItem) -> Unit = { guide ->
+    private val onFavoriteClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
+        vm.addAndRemoveFavorite(driver.id.toString(), "0")
+    }
+
+    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
@@ -119,13 +124,11 @@ class HomeFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        Log.d("onStart()", "${SharedPreference.getUser()}")
-        vm.getLatestDriver(
-            SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId
-        )
-        vm.getLatestGuides(
-            SharedPreference.getUser()?.stateId ?: SharedPreference.getUser()?.desCityId
-        )
+        Log.d("onStart()", "getUser  ${SharedPreference.getUser()}")
+        Log.d("onStart()", "stateId  ${SharedPreference.getUser()?.stateId}")
+        Log.d("onStart()", "desCityId  ${SharedPreference.getUser()?.desCityId}")
+        vm.getLatestDriver(SharedPreference.getUser()?.stateId ?: 0)
+        vm.getLatestGuides(SharedPreference.getUser()?.stateId ?: 0)
         // vm.fetchAllDrivers()
         // vm.fetchAllGuides()
         vm.fetchOfferResponse()
@@ -168,9 +171,34 @@ class HomeFragment : BaseFragment() {
                     hideMainLoading()
                 }
 
-                else -> {
-                    toast("Driver Else")
+                else -> {}
+            }
+        }
+
+        vm.isFavoriteResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    toast(it.data?.message.toString())
                 }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
             }
         }
         // observe in guides list
@@ -180,8 +208,8 @@ class HomeFragment : BaseFragment() {
                     // bind data to the view
                     binding.page.visible()
                     binding.shimmer.gone()
-                    Log.d("Success22", "${it.data!!.guides}")
-                    guideAdapter.submitData(it.data.guides)
+                    Log.d("Success22", "${it.data!!.drivers}")
+                    guideAdapter.submitData(it.data.drivers)
                 }
 
                 is ResponseHandler.Error -> {
@@ -310,14 +338,14 @@ class HomeFragment : BaseFragment() {
 
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
-            driverAdapter = DriverAdapter(btnDriverClickCallBack)
+            driverAdapter = DriverAdapter(btnDriverClickCallBack, onFavoriteClickCallBack)
             adapter = driverAdapter
         }
     }
 
     private fun initGuideRecycler() {
         binding.rvGuide.apply {
-            guideAdapter = GuideAdapter(btnGuideClickCallBack)
+            guideAdapter = GuideAdapter(btnGuideClickCallBack, onFavoriteClickCallBack)
             adapter = guideAdapter
         }
     }

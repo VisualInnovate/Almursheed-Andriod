@@ -122,8 +122,8 @@ class LoginFragment : BaseFragment() {
         email = binding.edtEmailAddress.value
         password = binding.edtPassword.value
 
-        // email = "mohamed.driver77@gmail.com"
-        // password = "123456789"
+//        email = "mohamed.driver77@gmail.com"
+//        password = "123456789"
 
         email = "mohamed.nasar8710@gmail.com"
         password = "123456789"
@@ -141,7 +141,7 @@ class LoginFragment : BaseFragment() {
             binding.edtPassword.error = getString(R.string.required)
             isValid = false
         } else if (password.length < 8) {
-            binding.edtPassword.error = "password should be more than 8 characters"
+            binding.edtPassword.error = getString(R.string.password_should_be_more_than_8_characters)
             isValid = false
         } else {
             binding.edtPassword.error = null

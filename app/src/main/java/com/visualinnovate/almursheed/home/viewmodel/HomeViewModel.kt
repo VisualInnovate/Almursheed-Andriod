@@ -4,9 +4,18 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.visualinnovate.almursheed.home.model.*
+import com.visualinnovate.almursheed.common.base.BaseViewModel
+import com.visualinnovate.almursheed.home.model.AccommodationDetailsResponse
+import com.visualinnovate.almursheed.home.model.AccommodationResponse
+import com.visualinnovate.almursheed.home.model.AttraciveDetailsResponse
+import com.visualinnovate.almursheed.home.model.AttractivesListResponse
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.home.model.DriverDetailsResponse
+import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
+import com.visualinnovate.almursheed.home.model.GuideDetailsResponse
+import com.visualinnovate.almursheed.home.model.OfferDetailsResponse
+import com.visualinnovate.almursheed.home.model.OfferResponse
 import com.visualinnovate.almursheed.network.ApiService
-import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,20 +25,24 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val apiService: ApiService,
     application: Application
-) : BaseApiResponse(application) {
+) : BaseViewModel(apiService, application) {
 
+    var driversList: List<DriverAndGuideItem?>? = ArrayList()
     private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
     val driverLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         _driverLatestMutableData
 
-    private val _guideLatestMutableData: MutableLiveData<ResponseHandler<GuideListResponse?>> =
+    private val _guideLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val guideLatestLiveData: LiveData<ResponseHandler<GuideListResponse?>> = _guideLatestMutableData
+    val guideLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
+        _guideLatestMutableData
+
 
     private val _driverMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val driverLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _driverMutableData
+    val driverLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
+        _driverMutableData
 
     private val _guideMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
@@ -79,7 +92,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestDriver(cityId!!)
-            }.collect{
+            }.collect {
                 _driverLatestMutableData.value = it
             }
         }
@@ -90,7 +103,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestGuide(cityId!!)
-            }.collect{
+            }.collect {
                 _guideLatestMutableData.value = it
             }
         }
@@ -101,7 +114,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllDrivers()
-            }.collect{
+            }.collect {
                 _driverMutableData.value = it
             }
         }
@@ -112,8 +125,9 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllGuides()
-            }.collect{
-                _guideMutableData.value = it ///////////////////////////////////////////////////////////////////////////////////////////////////
+            }.collect {
+                _guideMutableData.value =
+                    it ///////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
     }
@@ -123,7 +137,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllOffers()
-            }.collect{
+            }.collect {
                 _offerMutableData.value = it
             }
         }
@@ -134,7 +148,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getOfferDetailsById(offerId)
-            }.collect{
+            }.collect {
                 _offerDetailsMutableData.value = it
             }
         }
@@ -145,7 +159,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllAccommodation()
-            }.collect{
+            }.collect {
                 _accommodationMutableData.value = it
             }
         }
@@ -156,7 +170,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAccommodationDetailsById(id)
-            }.collect{
+            }.collect {
                 _accommodationDetailsMutable.value = it
             }
         }
@@ -167,7 +181,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractives()
-            }.collect{
+            }.collect {
                 _attractivesMutableData.value = it
             }
         }
@@ -178,7 +192,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractiveDetailsById(locationId!!)
-            }.collect{
+            }.collect {
                 _attractivesDetailsMutableData.value = it
             }
         }
@@ -189,7 +203,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getDriverDetailsById(driverId!!)
-            }.collect{
+            }.collect {
                 _driverDetailsMutable.value = it
             }
         }
@@ -200,9 +214,30 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getGuideDetailsById(driverId!!)
-            }.collect{
+            }.collect {
                 _guideDetailsMutable.value = it
             }
         }
     }
+
+    fun handleIsFavourite(favourite: Boolean?) {
+        when (_driverMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_driverMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_driverMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _driverMutableData.value = _driverMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    var selectedUserPosition = -1
 }

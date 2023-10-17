@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.pusher.pushnotifications.PushNotifications
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.Car
 import com.visualinnovate.almursheed.auth.model.City
@@ -52,6 +53,10 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize PushNotification
+        // PushNotifications.start(applicationContext, "140343aa-f173-4a2d-940a-7724c7c12be1");
+
         initConnectivityManager()
         setupDataForCountryAndNationality()
         setupDataForCarModelAndYear()

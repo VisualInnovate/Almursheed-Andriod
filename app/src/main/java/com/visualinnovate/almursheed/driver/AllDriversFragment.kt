@@ -20,6 +20,7 @@ import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.FieldPosition
 
 @AndroidEntryPoint
 class AllDriversFragment : BaseFragment() {
@@ -36,6 +37,11 @@ class AllDriversFragment : BaseFragment() {
         val bundle = Bundle()
         bundle.putInt(Constant.DRIVER_ID, driver.id!!)
         findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
+    }
+
+    private val onFavoriteClickCallBack: (position: Int, driver: DriverAndGuideItem) -> Unit = { position, driver ->
+        vm.selectedUserPosition = driver.id!!
+        vm.addAndRemoveFavorite(driver.id.toString(), "0")
     }
 
     private val btnSortCallBackFunc: () -> Unit = {
@@ -94,7 +100,7 @@ class AllDriversFragment : BaseFragment() {
 
     private fun initSeeAllDriverRecycler() {
         binding.rvSeeAllDrivers.apply {
-            allDriverAdapter = AllDriverAdapter(btnDriverClickCallBack)
+            allDriverAdapter = AllDriverAdapter(btnDriverClickCallBack, onFavoriteClickCallBack)
             adapter = allDriverAdapter
         }
     }
@@ -107,6 +113,7 @@ class AllDriversFragment : BaseFragment() {
                     // bind data to the view
                     hideMainLoading()
                     allDriverAdapter.submitData(it.data!!.drivers)
+                    vm.driversList = it.data.drivers
                 }
 
                 is ResponseHandler.Error -> {
@@ -130,6 +137,34 @@ class AllDriversFragment : BaseFragment() {
                     hideMainLoading()
                     toast("Else")
                 }
+            }
+        }
+
+        vm.isFavoriteResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    vm.handleIsFavourite(it.data?.isFavourite)
+                    toast(it.data?.message.toString())
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
             }
         }
     }

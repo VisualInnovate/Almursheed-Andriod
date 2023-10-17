@@ -26,11 +26,11 @@
             android:paddingTop="@dimen/space_1x"
             android:paddingEnd="@dimen/space_4x"
             android:paddingBottom="@dimen/space_1x"
-            android:text="Active"
             android:textColor="@color/white"
             android:textSize="@dimen/space_14x_sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Active" />
 
         <TextView
             android:id="@+id/txtTripInfo"
@@ -143,8 +143,50 @@
             android:background="#DAD9D9"
             app:layout_constraintTop_toBottomOf="@id/txtDateOfExit" />
 
-
         <TextView
+            android:id="@+id/txtAllDetails"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_1x"
+            android:paddingVertical="@dimen/space_2x"
+            android:text="@string/all_details"
+            android:drawablePadding="@dimen/space_2x"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view"
+            app:drawableEndCompat="@drawable/ic_red_arrow_right" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnPaid"
+            style="@style/customButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_2x"
+            android:layout_marginVertical="@dimen/space_3x"
+            android:text="@string/paid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnCancel"
+            app:layout_constraintTop_toBottomOf="@id/txtAllDetails" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            style="@style/customButtonStyleRoundedBorder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/space_3x"
+            android:text="@string/cancel"
+            android:padding="@dimen/space_2x"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnPaid"
+            app:layout_constraintTop_toBottomOf="@id/txtAllDetails"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <!--<TextView
             android:id="@+id/txtRouteInfo"
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
@@ -171,7 +213,7 @@
             app:layout_constraintTop_toBottomOf="@id/txtRouteInfo"
             tools:itemCount="3"
             tools:listitem="@layout/item_days" />
-
+-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
