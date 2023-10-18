@@ -130,7 +130,7 @@ class FilterDriverFragment : Fragment() {
             vm.cityId = cityId
             vm.cityName = cityName
             vm.type = "Driver"
-
+            vm.setFromFilter(true)
             if (vm.from == Constant.ROLE_DRIVER) {
                 findNavController().navigateUp()
             } else {

@@ -89,7 +89,7 @@ interface ApiService {
         @Query("name") searchData: String?,
         @Query("price") price: String?,
         @Query("rate") rate: String?,
-        ): Response<DriversAndGuidesListResponse>
+    ): Response<DriversAndGuidesListResponse>
 
     @POST("drivers/get-driver-by-city")
     suspend fun getAllDriversByDistCityId(
@@ -97,7 +97,14 @@ interface ApiService {
     ): Response<DriversAndGuidesListResponse>
 
     @GET("guides/all")
-    suspend fun getAllGuides(): Response<DriversAndGuidesListResponse>
+    suspend fun getAllGuides(
+        @Query("country_id") countryId: String?,
+        @Query("state_id") cityId: String?,
+        @Query("language") language: String?,
+        @Query("name") searchData: String?,
+        @Query("price") price: String?,
+        @Query("rate") rate: String?,
+    ): Response<DriversAndGuidesListResponse>
 
     @POST("guides/get-guide-by-city")
     suspend fun getAllGuidesByDistCityId(

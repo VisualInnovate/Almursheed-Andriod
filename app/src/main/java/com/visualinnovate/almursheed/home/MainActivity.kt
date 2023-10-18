@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -37,7 +38,10 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), MainViewsManager {
+class MainActivity :
+    AppCompatActivity(),
+    MainViewsManager,
+    NavController.OnDestinationChangedListener {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
@@ -56,6 +60,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
 
         navController = findNavController(R.id.nav_host_fragment_content_home)
         navGraph = navController.navInflater.inflate(R.navigation.nav_home)
+        navController.addOnDestinationChangedListener(this)
         initConnectivityManager()
         /*if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
@@ -269,5 +274,13 @@ class MainActivity : AppCompatActivity(), MainViewsManager {
         inputStream.read(buffer)
         inputStream.close()
         return String(buffer, Charsets.UTF_8)
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?,
+    ) {
+        hideLoading()
     }
 }

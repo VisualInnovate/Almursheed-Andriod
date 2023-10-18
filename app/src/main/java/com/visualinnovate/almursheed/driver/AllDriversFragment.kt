@@ -62,11 +62,7 @@ class AllDriversFragment : BaseFragment() {
         initToolbar()
         initViews()
         subscribeData()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        vm.fetchAllDrivers(filterVm.countryId, filterVm.cityId, filterVm.carCategory, filterVm.carModel, filterVm.searchData, filterVm.price, filterVm.rate)
+        getAllDriversData()
     }
 
     private fun initToolbar() {
@@ -98,6 +94,14 @@ class AllDriversFragment : BaseFragment() {
         }
     }
 
+    private fun getAllDriversData() {
+        if (filterVm.checkDestinationFromFilter()) {
+            vm.fetchAllDrivers(filterVm.countryId, filterVm.cityId, filterVm.carCategory, filterVm.carModel, filterVm.searchData, filterVm.price, filterVm.rate)
+            filterVm.setFromFilter(false)
+        } else {
+            vm.fetchAllDrivers()
+        }
+    }
     private fun subscribeData() {
         // observe in drivers list
         vm.driverLiveData.observe(viewLifecycleOwner) {

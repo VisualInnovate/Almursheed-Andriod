@@ -35,12 +35,7 @@ class ChooserRatingAdapter(
     }
 
     private fun bindData(holder: ViewHolder, item: ChooserItemModel, position: Int) {
-        if (position == 0) {
-            holder.background.text = item.name
-        } else {
-            holder.image.setImageResource(item.name!!.toInt())
-        }
-
+        holder.image.setImageResource(item.name!!.toInt())
         if (item.isSelected) {
             val pL: Int = holder.background.paddingLeft
             val pT: Int = holder.background.paddingTop

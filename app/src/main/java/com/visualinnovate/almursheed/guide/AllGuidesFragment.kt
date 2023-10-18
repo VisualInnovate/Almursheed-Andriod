@@ -12,8 +12,8 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
-import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
 import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
+import com.visualinnovate.almursheed.databinding.FragmentAllGuidesBinding
 import com.visualinnovate.almursheed.home.adapter.AllGuideAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
@@ -52,7 +52,7 @@ class AllGuidesFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAllGuidesBinding.inflate(inflater, container, false)
         return binding.root
@@ -63,12 +63,9 @@ class AllGuidesFragment : BaseFragment() {
         initToolbar()
         initSeeAllDriverRecycler()
         subscribeData()
+        getAllGuidesData()
     }
 
-    override fun onStart() {
-        super.onStart()
-        vm.fetchAllGuides()
-    }
 
     private fun initToolbar() {
         binding.appBarSeeAllGuides.setTitleString(getString(R.string.guides))
@@ -76,7 +73,7 @@ class AllGuidesFragment : BaseFragment() {
         binding.appBarSeeAllGuides.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
         binding.appBarSeeAllGuides.showButtonSortAndFilter(
             getString(R.string.sort),
@@ -84,7 +81,7 @@ class AllGuidesFragment : BaseFragment() {
             R.drawable.ic_sort,
             R.drawable.ic_filter,
             btnSortCallBackFunc,
-            btnFilterCallBackFunc
+            btnFilterCallBackFunc,
         )
     }
 
@@ -95,6 +92,14 @@ class AllGuidesFragment : BaseFragment() {
         }
     }
 
+    private fun getAllGuidesData() {
+        if (filterVm.checkDestinationFromFilter()) {
+            vm.fetchAllGuides(filterVm.countryId, filterVm.cityId, filterVm.language, filterVm.searchData, filterVm.price, filterVm.rate)
+            filterVm.setFromFilter(false)
+        } else {
+            vm.fetchAllGuides()
+        }
+    }
     private fun subscribeData() {
         // observe in drivers list
         vm.guideLiveData.observe(viewLifecycleOwner) {

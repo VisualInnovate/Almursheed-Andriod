@@ -20,11 +20,11 @@ class FilterViewModel @Inject constructor(
     var countryName: String? = null
     var carModel: String? = null
     var rate: String? = null
-    var language: String? = appContext.getString(R.string.all)
+    var language: String? = null
     var price: String? = null
     var type = "Driver"
 
-    var isFromFilter = false
+    private var isFromFilter = false
 
     fun clearDataOnInit() {
         carCategory = null
@@ -32,14 +32,18 @@ class FilterViewModel @Inject constructor(
         rate = null
         countryId = null
         cityId = null
-        cityName= null
+        cityName = null
         countryName = null
         language = null
         price = null
         type = "Driver"
     }
 
-    fun isFromFilter(){
+    fun checkDestinationFromFilter(): Boolean {
+        return isFromFilter
+    }
 
+    fun setFromFilter(fromFilter: Boolean) {
+        isFromFilter = fromFilter
     }
 }

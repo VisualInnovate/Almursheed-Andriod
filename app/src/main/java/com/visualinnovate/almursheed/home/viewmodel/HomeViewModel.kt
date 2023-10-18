@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val apiService: ApiService,
-    application: Application
+    application: Application,
 ) : BaseApiResponse(application) {
 
     private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
@@ -79,7 +79,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestDriver(cityId!!)
-            }.collect{
+            }.collect {
                 _driverLatestMutableData.value = it
             }
         }
@@ -90,38 +90,46 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getLatestGuide(cityId!!)
-            }.collect{
+            }.collect {
                 _guideLatestMutableData.value = it
             }
         }
     }
 
     fun fetchAllDrivers(
-        country: String?=null,
-        city: String?=null,
-        carCategory: String?=null,
-        carModel: String?=null,
-        searchData: String?=null,
-        price: String?=null,
-        rate: String?=null,
+        country: String? = null,
+        city: String? = null,
+        carCategory: String? = null,
+        carModel: String? = null,
+        searchData: String? = null,
+        price: String? = null,
+        rate: String? = null,
     ) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDrivers(country,city,carCategory,carModel,searchData , price,rate)
-            }.collect{
+                apiService.getAllDrivers(country, city, carCategory, carModel, searchData, price, rate)
+            }.collect {
                 _driverMutableData.value = it
             }
         }
     }
 
-    fun fetchAllGuides() {
+    fun fetchAllGuides(
+        country: String? = null,
+        city: String? = null,
+        language: String? = null,
+        searchData: String? = null,
+        price: String? = null,
+        rate: String? = null,
+
+    ) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllGuides()
-            }.collect{
-                _guideMutableData.value = it ///////////////////////////////////////////////////////////////////////////////////////////////////
+                apiService.getAllGuides(country, city, language, searchData, price, rate)
+            }.collect {
+                _guideMutableData.value = it
             }
         }
     }
@@ -131,7 +139,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllOffers()
-            }.collect{
+            }.collect {
                 _offerMutableData.value = it
             }
         }
@@ -142,7 +150,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getOfferDetailsById(offerId)
-            }.collect{
+            }.collect {
                 _offerDetailsMutableData.value = it
             }
         }
@@ -153,7 +161,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAllAccommodation()
-            }.collect{
+            }.collect {
                 _accommodationMutableData.value = it
             }
         }
@@ -164,7 +172,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAccommodationDetailsById(id)
-            }.collect{
+            }.collect {
                 _accommodationDetailsMutable.value = it
             }
         }
@@ -175,7 +183,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractives()
-            }.collect{
+            }.collect {
                 _attractivesMutableData.value = it
             }
         }
@@ -186,7 +194,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractiveDetailsById(locationId!!)
-            }.collect{
+            }.collect {
                 _attractivesDetailsMutableData.value = it
             }
         }
@@ -197,7 +205,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getDriverDetailsById(driverId!!)
-            }.collect{
+            }.collect {
                 _driverDetailsMutable.value = it
             }
         }
@@ -208,7 +216,7 @@ class HomeViewModel @Inject constructor(
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getGuideDetailsById(driverId!!)
-            }.collect{
+            }.collect {
                 _guideDetailsMutable.value = it
             }
         }
