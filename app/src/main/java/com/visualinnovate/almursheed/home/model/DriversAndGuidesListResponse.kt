@@ -11,7 +11,7 @@ data class DriversAndGuidesListResponse(
     val message: String? = null,
 
     @SerializedName(value = "drivers", alternate = ["guides", "driver", "guide"]) // guides
-    val drivers: List<DriverAndGuideItem?>? = null,
+    var drivers: List<DriverAndGuideItem?>? = null,
 )
 
 data class DriverAndGuideItem(
@@ -82,11 +82,17 @@ data class DriverAndGuideItem(
     @field:SerializedName("ratings_count")
     val ratingsCount: Int? = null,
 
+    @field:SerializedName("count_rate")
+    val count_rate: Int? = null,
+
     @field:SerializedName("email")
     val email: String? = null,
 
     @field:SerializedName("status")
     val status: Any? = null,
+
+    @field:SerializedName("is_favourite")
+    var isFavourite: Boolean? = null,
 
     @field:SerializedName("price_services")
     val priceServices: List<PriceServicesItem?>? = null,

@@ -12,6 +12,20 @@
     <color name="dark_grey">#515151</color>
     <color name="shimmer_placeholder">#dddddd</color>
 
+    <!-- status colors -->
+
+    <color name="colorPending">#F38B1D</color> <!-- case  pending = '1'; -->
+    <color name="colorApproved">#34A853</color> <!-- case  approved = '2'; -->
+    <color name="colorReject">#000000</color> <!-- case  reject = '3'; -->
+    <color name="colorExpire">#606060</color> <!-- case  expired = '4'; -->
+    <color name="colorCancel">#D80E0E</color> <!-- case  canceled = '5'; -->
+    <color name="colorActive">#312F9D</color> <!-- case  pending = '1'; -->
+
+    <!--
+    case notCompleted = '7';2
+    case  paid = '6';
+    -->
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

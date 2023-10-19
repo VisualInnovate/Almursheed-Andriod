@@ -30,6 +30,10 @@ class MyOrdersViewModel @Inject constructor(
         MutableLiveData()
     val addRate: LiveData<ResponseHandler<RateResponse?>?> = _addRate
 
+    private val _changeStatus: MutableLiveData<ResponseHandler<Void?>?> =
+        MutableLiveData()
+    val changeStatus: LiveData<ResponseHandler<Void?>?> = _changeStatus
+
     var orderDetails: MyOrdersItem? = null
 
     private var job: Job? = null
@@ -46,16 +50,26 @@ class MyOrdersViewModel @Inject constructor(
     }
 
     fun addRate(
-        rate: Float, // rate -> tourist_rating
+        rate: Int, // rate -> tourist_rating
         comment: String,
         reviewableId: Int, // driver_id or guide_id
         type: Int, // 0 is driver, 1  is guide
     ) {
         viewModelScope.launch {
             safeApiCall {
-                apiService.addRate(rate.toString(), comment, reviewableId, type)
+                apiService.addRate(rate, comment, reviewableId, type)
             }.collect {
                 _addRate.value = it
+            }
+        }
+    }
+
+    fun changeStatus(orderId: Int?, status: String) {
+        viewModelScope.launch {
+            safeApiCall {
+                apiService.changeStatus(orderId, status)
+            }.collect {
+                _changeStatus.value = it
             }
         }
     }

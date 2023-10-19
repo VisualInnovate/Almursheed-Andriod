@@ -19,7 +19,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(
+class  RegisterViewModel @Inject constructor(
     private val apiService: ApiService,
     application: Application,
 ) : BaseApiResponse(application) {

@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.ItemAllGuideBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.GuideItem
 
 class AllGuideAdapter(
-    private val btnAccommodationClickCallBack: (guide: DriverAndGuideItem) -> Unit
+    private val btnAccommodationClickCallBack: (guide: DriverAndGuideItem) -> Unit,
+    private val onFavoriteClickCallBack: (guide: DriverAndGuideItem) -> Unit,
 ) : RecyclerView.Adapter<AllGuideAdapter.AllGuideViewHolder>() {
 
     private var allGuideList: List<DriverAndGuideItem?>? = ArrayList()
@@ -21,7 +24,7 @@ class AllGuideAdapter(
         RecyclerView.ViewHolder(itemView.root) {
         val imgGuide = itemView.imgGuide
         val imgFavorite = itemView.imgFavorite
-        val guideRating = itemView.guideRating
+        val rating = itemView.rating
         val guideName = itemView.guideName
         val price = itemView.price
         val city = itemView.city
@@ -56,13 +59,18 @@ class AllGuideAdapter(
         // holder.price.text = "$ ${guide.guidePrice}"
         holder.city.text = guide.stateName
         // holder.language.text = guide.language
+        holder.rating.text = (guide.totalRating ?: 0.0).toString()
 
         // check favorite
-        /*if (!guide.guideFavorite) { // false -> un favorite
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        if (guide.isFavourite == false) { // false -> un favorite
+            holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)
         } else {
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }*/
+            holder.imgFavorite.setImageResource(R.drawable.ic_favorite)
+        }
+
+        holder.imgFavorite.onDebouncedListener {
+            onFavoriteClickCallBack.invoke(guide)
+        }
     }
 
     override fun getItemCount(): Int {

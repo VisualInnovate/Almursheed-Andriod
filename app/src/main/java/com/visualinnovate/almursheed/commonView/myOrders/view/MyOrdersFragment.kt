@@ -37,7 +37,7 @@ class MyOrdersFragment : BaseFragment() {
 
     // clicked to tourist add rate to order (trip)
     private val onAddRateClickCallback: (item: MyOrdersItem) -> Unit = {
-        Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
+        Log.d("MyDebugData", " RATE MyOrdersFragment :  :  $it")
         vm.orderDetails = it
         val ratDialogFragment = AddRateDialogFragment()
         ratDialogFragment.show(parentFragmentManager, "MyDialogFragment")
@@ -53,11 +53,25 @@ class MyOrdersFragment : BaseFragment() {
     // clicked to driver approve order (trip)
     private val btnApproveClickCallback: (item: MyOrdersItem) -> Unit = {
         Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
+        vm.changeStatus(it.id, "2")
     }
 
     // clicked to driver reject order (trip)
     private val btnRejectClickCallback: (item: MyOrdersItem) -> Unit = {
         Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
+        vm.changeStatus(it.id, "3")
+    }
+
+    // clicked to tourist paid order (trip)
+    private val onPaidClickCallback: (item: MyOrdersItem) -> Unit = {
+        Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
+        vm.changeStatus(it.id, "6")
+    }
+
+    // clicked to tourist cancel order (trip)
+    private val onCancelClickCallback: (item: MyOrdersItem) -> Unit = {
+        Log.d("MyDebugData", "MyOrdersFragment :  :  $it")
+        vm.changeStatus(it.id, "5")
     }
 
     override fun onCreateView(
@@ -166,6 +180,31 @@ class MyOrdersFragment : BaseFragment() {
                 else -> {}
             }
         }
+
+        vm.changeStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -189,7 +228,12 @@ class MyOrdersFragment : BaseFragment() {
     }
 
     private fun initTouristRecyclerView() {
-        myOrdersTouristAdapter = MyOrdersTouristAdapter(onAddRateClickCallback)
+        myOrdersTouristAdapter = MyOrdersTouristAdapter(
+            onAddRateClickCallback,
+            onAllDetailsClickCallback,
+            onPaidClickCallback,
+            onCancelClickCallback
+        )
         binding.ordersRv.apply {
             itemAnimator = DefaultItemAnimator()
             myOrdersTouristAdapter.setHasStableIds(true)

@@ -69,15 +69,17 @@ interface ApiService {
         @Query("identifier") email: String?,
         @Query("otp") otp: String?,
         @Query("password") newPassword: String?,
-        @Query("password_confirmation") password_confirmation: String?,
+        @Query("password_confirmation") passwordConfirmation: String?,
     ): Response<MessageResponse>
 
-    @GET("guides/latest/{id}")
-    suspend fun getLatestGuide(@Path("id") cityId: Int): Response<GuideListResponse>
+    @GET("guides/latest")
+    suspend fun getLatestGuide(
+        @Query("state_id") stateId: Int?
+    ): Response<DriversAndGuidesListResponse>
 
-    @GET("drivers/latest/{id}") // https://mursheed.visualinnovate.net/api/drivers/latest/42
+    @GET("drivers/latest") // https://mursheed.visualinnovate.net/api/drivers/latest?stateId=0
     suspend fun getLatestDriver(
-        @Path("id") cityId: Int,
+        @Query("state_id") stateId: Int?,
     ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/all")
@@ -153,18 +155,18 @@ interface ApiService {
     @POST("drivers/update")
     suspend fun updateDriver(
         @Part("name") name: RequestBody,
-        @Part("country_id") country_id: RequestBody,
-        @Part("state_id") state_id: RequestBody,
+        @Part("country_id") countryId: RequestBody,
+        @Part("state_id") stateId: RequestBody,
         @Part("gender") gender: RequestBody,
         @Part("phone") phone: RequestBody,
         // @Part("bio") bio: RequestBody,
-        @Part("gov_id") gov_id: RequestBody,
+        @Part("gov_id") govId: RequestBody,
         // @Part("languages[]") languages: List<Int>
         // @Part personal_pictures: MultipartBody.Part,
         @Part("driver_licence_number") driver_licence_number: RequestBody,
         // @Part car_photos: List<MultipartBody.Part>,
-        @Part("car_number") car_number: RequestBody,
-        @Part("car_type") car_type: RequestBody,
+        @Part("car_number") carNumber: RequestBody,
+        @Part("car_type") carType: RequestBody,
         @Part("car_brand_name") car_brand_name: RequestBody,
         @Part("car_manufacturing_date") car_manufacturing_date: RequestBody,
     ): Response<UpdateResponse>
@@ -173,7 +175,7 @@ interface ApiService {
     @POST("tourists/update")
     suspend fun updateTourist(
         @Part("name") name: RequestBody,
-        @Part("dest_city_id") dest_city_id: Int,
+        @Part("dest_city_id") destCityId: Int,
         @Part("gender") gender: RequestBody,
         @Part("nationality") nationality: RequestBody,
         // @Part personal_pictures: MultipartBody.Part,
@@ -184,8 +186,8 @@ interface ApiService {
     @POST("guides/update")
     suspend fun updateGuide(
         @Part("name") name: RequestBody,
-        @Part("country_id") country_id: Int?,
-        @Part("state_id") dest_city_id: Int?,
+        @Part("country_id") countryId: Int?,
+        @Part("state_id") destCityId: Int?,
         @Part("gender") gender: RequestBody,
         @Part("phone") phone: RequestBody,
         @Part("bio") bio: RequestBody,
@@ -221,9 +223,21 @@ interface ApiService {
 
     @POST("rating/create")
     suspend fun addRate(
-        @Query("tourist_rating") touristRating: String,
+        @Query("tourist_rating") touristRating: Int,
         @Query("comment") comment: String,
         @Query("reviewable_id") reviewableId: Int,
         @Query("type") type: Int,
     ): Response<RateResponse>
+
+    @POST("orders/status{id}")
+    suspend fun changeStatus(
+        @Path("id") orderId: Int?,
+        @Query("status") status: String
+    ): Response<Void>
+
+    @POST("favourite/create")
+    suspend fun addAndRemoveFavorite(
+        @Query("service_id") serviceId: String,
+        @Query("type") type: String
+    ): Response<FavoriteResponse>
 }

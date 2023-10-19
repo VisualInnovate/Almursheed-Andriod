@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="170dp"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/space_1x"
-    android:layout_marginHorizontal="@dimen/space_1x"
+    android:layout_margin="@dimen/space_2x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
@@ -37,7 +36,7 @@
             app:srcCompat="@drawable/ic_un_favorite" />
 
         <TextView
-            android:id="@+id/driverRating"
+            android:id="@+id/rating"
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +46,7 @@
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:paddingStart="@dimen/space_2x"
+            android:paddingStart="@dimen/space_1_5x"
             android:text="4.0"
             android:textColor="@color/white"
             android:textSize="@dimen/space_9x_sp"
@@ -71,7 +70,7 @@
             android:textSize="@dimen/space_12x_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/driverRating"
+            app:layout_constraintTop_toBottomOf="@id/rating"
             tools:text="Ahmed khaled " />
 
         <TextView

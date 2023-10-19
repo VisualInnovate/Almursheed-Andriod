@@ -163,22 +163,6 @@
                 app:layout_constraintTop_toBottomOf="@id/txtDriver" />
 
             <TextView
-                android:id="@+id/txtRouteInfo"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:layout_marginTop="@dimen/space_4x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:maxLines="1"
-                android:text="@string/route_info"
-                android:textColor="@color/dark_grey"
-                android:textSize="@dimen/space_14x_sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/startDate" />
-
-            <TextView
                 android:id="@+id/txtDate"
                 style="@style/TextStyleRegular"
                 android:layout_width="match_parent"
@@ -249,12 +233,30 @@
                 app:layout_constraintTop_toTopOf="@id/startDate"
                 app:srcCompat="@drawable/ic_switch_arrow" />
 
+            <TextView
+                android:id="@+id/txtRouteInfo"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/route_info"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/startDate" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintInCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2x"
                 android:padding="@dimen/space_2x"
                 android:paddingBottom="@dimen/space_3x"
+                app:layout_constraintBottom_toTopOf="@id/btnHire"
                 app:layout_constraintTop_toBottomOf="@id/txtRouteInfo">
 
                 <View
@@ -290,12 +292,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <include
-                    android:id="@+id/spinnerCity"
-                    layout="@layout/layout_spinner_bg_grey"
+                <TextView
+                    android:id="@+id/city"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="35dp"
                     android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/all"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/day_number"
@@ -309,10 +316,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_2x"
                 android:orientation="vertical"
-                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/btnHire"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/txtRouteInfo"
                 tools:itemCount="1"
+                android:visibility="gone"
                 tools:listitem="@layout/item_days" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -373,8 +381,7 @@
                 android:layout_margin="@dimen/space_4x"
                 android:layout_marginTop="100dp"
                 android:text="@string/next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/constraintPrice" />
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

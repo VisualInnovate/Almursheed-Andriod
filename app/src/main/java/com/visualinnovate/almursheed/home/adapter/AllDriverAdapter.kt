@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.ItemAllDriverBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 
 class AllDriverAdapter(
-    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit
+    private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit,
+    private val onFavoriteClickCallBack: (position: Int, driver: DriverAndGuideItem) -> Unit,
 ) : RecyclerView.Adapter<AllDriverAdapter.AllDriverViewHolder>() {
 
     private var allDriversList: List<DriverAndGuideItem?>? = ArrayList()
@@ -22,7 +25,7 @@ class AllDriverAdapter(
         val driverName = itemView.driverName
         val price = itemView.price
         val city = itemView.city
-        val driverRating = itemView.driverRating
+        val rating = itemView.rating
 
         init {
             itemView.root.setOnClickListener {
@@ -48,13 +51,18 @@ class AllDriverAdapter(
             .into(holder.imgDriver)
         holder.driverName.text = driver.name ?: ""
         holder.city.text = driver.stateName
+        holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
         // check favorite
-        /*if (!driver.driverFavorite) { // false -> un favorite
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+        if (driver.isFavourite == false) { // 0 -> un favorite
+            holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)
         } else {
-            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }*/
+            holder.imgFavorite.setImageResource(R.drawable.ic_favorite)
+        }
+
+        holder.imgFavorite.onDebouncedListener {
+            onFavoriteClickCallBack.invoke(position, driver)
+        }
     }
 
     override fun getItemCount(): Int {

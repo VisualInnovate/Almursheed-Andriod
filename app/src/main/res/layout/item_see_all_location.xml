@@ -23,7 +23,7 @@
             android:layout_margin="@dimen/space_2x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_unfavorite" />
+            app:srcCompat="@drawable/ic_un_favorite" />
 
         <TextView
             android:id="@+id/locationName"

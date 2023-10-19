@@ -101,12 +101,14 @@ class DriverDetailsFragment : BaseFragment() {
         Glide.with(requireContext())
             .load(driver?.carPhoto!![0])
             .into(binding.imgCar)
-        binding.driverName.text = driver?.name ?: ""
-        binding.driverCountry.text = driver?.country ?: ""
-        binding.driverCity.text = driver?.state ?: ""
-        binding.driverDescription.text = driver?.bio ?: ""
-        binding.carName.text = driver?.carModel ?: ""
-        binding.carType.text = driver?.carType ?: ""
+        binding.driverName.text = driver.name ?: ""
+        binding.driverCountry.text = driver.country ?: ""
+        binding.driverCity.text = driver.state ?: ""
+        binding.driverDescription.text = driver.bio ?: ""
+        binding.carName.text = driver.carModel ?: ""
+        binding.carType.text = driver.carType ?: ""
+        binding.driverReview.text = "(${driver.count_rate} review)"
+
         // binding.driverPrice.text = "$ ${d?.driverPrice}"
         // binding.driverCity.text = driverArgs?.driverCity ?: ""
     }

@@ -62,13 +62,13 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:maxLength="15"
                 android:maxLines="1"
-                android:text="(1200 review)"
                 android:textColor="@color/primary"
                 android:textSize="@dimen/space_9x_sp"
                 app:layout_constraintBottom_toBottomOf="@id/guideName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideName"
-                app:layout_constraintTop_toTopOf="@id/guideName" />
+                app:layout_constraintTop_toTopOf="@id/guideName"
+                tools:text="(1200 review)" />
 
             <TextView
                 android:id="@+id/guideName"

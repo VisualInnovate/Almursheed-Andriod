@@ -9,12 +9,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.commonView.myOrders.viewModel.MyOrdersViewModel
 import com.visualinnovate.almursheed.databinding.FragmentOrderDetailsBinding
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
+import com.visualinnovate.almursheed.utils.Constant
 
 class OrderDetailsFragment : Fragment() {
 
@@ -27,6 +31,8 @@ class OrderDetailsFragment : Fragment() {
 
     private var days: ArrayList<DayModel> = ArrayList()
 
+    private lateinit var userRole: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +44,8 @@ class OrderDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userRole = SharedPreference.getUserRole() ?: ""
+
         initToolbar()
         initView()
         setBtnListener()
@@ -46,6 +54,21 @@ class OrderDetailsFragment : Fragment() {
     private fun initView() {
         if (days.isEmpty()) {
             getDaysList(vm.orderDetails)
+        }
+        when (userRole) {
+            Constant.ROLE_DRIVER, Constant.ROLE_GUIDE -> {
+                binding.btnReject.visible()
+                binding.btnApprove.visible()
+                binding.btnPaid.gone()
+                binding.btnCancel.gone()
+            }
+
+            else -> {
+                binding.btnReject.gone()
+                binding.btnApprove.gone()
+                binding.btnPaid.visible()
+                binding.btnCancel.visible()
+            }
         }
         initRecyclerView(days)
         binding.country.text = vm.orderDetails?.countryId.toString()
@@ -65,11 +88,19 @@ class OrderDetailsFragment : Fragment() {
 
     private fun setBtnListener() {
         binding.btnApprove.onDebouncedListener {
-
+            vm.changeStatus(orderId = vm.orderDetails?.id, "2")
         }
 
         binding.btnReject.onDebouncedListener {
+            vm.changeStatus(orderId = vm.orderDetails?.id, "3")
+        }
 
+        binding.btnPaid.onDebouncedListener {
+            vm.changeStatus(orderId = vm.orderDetails?.id, "6")
+        }
+
+        binding.btnCancel.onDebouncedListener {
+            vm.changeStatus(orderId = vm.orderDetails?.id, "5")
         }
     }
 
