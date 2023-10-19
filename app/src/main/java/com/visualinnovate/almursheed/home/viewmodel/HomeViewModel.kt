@@ -18,14 +18,19 @@ class HomeViewModel @Inject constructor(
     application: Application,
 ) : BaseApiResponse(application) {
 
+    var latestDriversList: List<DriverAndGuideItem?>? = ArrayList()
+    var latestGuidesList: List<DriverAndGuideItem?>? = ArrayList()
+    var driversList: List<DriverAndGuideItem?>? = ArrayList()
+    var guidesList: List<DriverAndGuideItem?>? = ArrayList()
+
     private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
     val driverLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         _driverLatestMutableData
 
-    private val _guideLatestMutableData: MutableLiveData<ResponseHandler<GuideListResponse?>> =
+    private val _guideLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val guideLatestLiveData: LiveData<ResponseHandler<GuideListResponse?>> = _guideLatestMutableData
+    val guideLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _guideLatestMutableData
 
     private val _driverMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
@@ -229,4 +234,82 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun handleIsFavouriteDrivers(favourite: Boolean?) {
+        when (_driverMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_driverMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_driverMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _driverMutableData.value = _driverMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    fun handleIsFavouriteGuides(favourite: Boolean?) {
+        when (_guideMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_guideMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_guideMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _guideMutableData.value = _guideMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    fun handleIsFavouriteLatestGuides(favourite: Boolean?) {
+        when (_guideLatestMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_guideLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_guideLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _guideLatestMutableData.value = _guideLatestMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    fun handleIsFavouriteLatestDrivers(favourite: Boolean?) {
+        when (_driverLatestMutableData.value) {
+            is ResponseHandler.Success -> {
+                val list =
+                    (_driverLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data
+                list?.drivers?.forEach {
+                    if (it?.id == selectedUserPosition) {
+                        it.isFavourite = favourite
+                    }
+                }
+                (_driverLatestMutableData.value as ResponseHandler.Success<DriversAndGuidesListResponse?>).data!!.drivers =
+                    list!!.drivers
+                _driverLatestMutableData.value = _driverLatestMutableData.value
+            }
+
+            else -> {}
+        }
+    }
+
+    var selectedUserPosition = -1
 }
