@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.FavoriteResponse
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
@@ -21,7 +22,7 @@ open class BaseViewModel @Inject constructor(
     private val _isFavoriteResponse: MutableLiveData<ResponseHandler<FavoriteResponse?>> =
         MutableLiveData()
     val isFavoriteResponse: LiveData<ResponseHandler<FavoriteResponse?>> =
-        _isFavoriteResponse
+        _isFavoriteResponse.toSingleEvent()
 
     fun addAndRemoveFavorite(driverAndGuideId: String, type: String) {
         viewModelScope.launch {

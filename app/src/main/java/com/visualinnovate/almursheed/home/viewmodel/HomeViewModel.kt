@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.visualinnovate.almursheed.common.base.BaseViewModel
+import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.*
 import com.visualinnovate.almursheed.network.ApiService
-import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val apiService: ApiService,
-    application: Application,
-) : BaseApiResponse(application) {
+    private val application: Application,
+) : BaseViewModel(apiService, application) {
 
     var latestDriversList: List<DriverAndGuideItem?>? = ArrayList()
     var latestGuidesList: List<DriverAndGuideItem?>? = ArrayList()
@@ -26,58 +27,58 @@ class HomeViewModel @Inject constructor(
     private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
     val driverLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
-        _driverLatestMutableData
+        _driverLatestMutableData.toSingleEvent()
 
     private val _guideLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val guideLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _guideLatestMutableData
+    val guideLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _guideLatestMutableData.toSingleEvent()
 
     private val _driverMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val driverLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _driverMutableData
+    val driverLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _driverMutableData.toSingleEvent()
 
     private val _guideMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val guideLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _guideMutableData
+    val guideLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _guideMutableData.toSingleEvent()
 
     private val _offerMutableData: MutableLiveData<ResponseHandler<OfferResponse?>> =
         MutableLiveData()
-    val offerLiveData: LiveData<ResponseHandler<OfferResponse?>> = _offerMutableData
+    val offerLiveData: LiveData<ResponseHandler<OfferResponse?>> = _offerMutableData.toSingleEvent()
 
     private val _offerDetailsMutableData: MutableLiveData<ResponseHandler<OfferDetailsResponse?>> =
         MutableLiveData()
     val offerDetailsLiveData: LiveData<ResponseHandler<OfferDetailsResponse?>> =
-        _offerDetailsMutableData
+        _offerDetailsMutableData.toSingleEvent()
 
     private val _accommodationMutableData: MutableLiveData<ResponseHandler<AccommodationResponse?>> =
         MutableLiveData()
     val accommodationLiveData: LiveData<ResponseHandler<AccommodationResponse?>> =
-        _accommodationMutableData
+        _accommodationMutableData.toSingleEvent()
 
     private val _accommodationDetailsMutable: MutableLiveData<ResponseHandler<AccommodationDetailsResponse?>> =
         MutableLiveData()
     val accommodationDetailsLiveData: LiveData<ResponseHandler<AccommodationDetailsResponse?>> =
-        _accommodationDetailsMutable
+        _accommodationDetailsMutable.toSingleEvent()
 
     private val _attractivesMutableData: MutableLiveData<ResponseHandler<AttractivesListResponse?>> =
         MutableLiveData()
     val attractivesLiveData: LiveData<ResponseHandler<AttractivesListResponse?>> =
-        _attractivesMutableData
+        _attractivesMutableData.toSingleEvent()
 
     private val _attractivesDetailsMutableData: MutableLiveData<ResponseHandler<AttraciveDetailsResponse?>> =
         MutableLiveData()
     val attractivesDetailsLiveData: LiveData<ResponseHandler<AttraciveDetailsResponse?>> =
-        _attractivesDetailsMutableData
+        _attractivesDetailsMutableData.toSingleEvent()
 
     private val _driverDetailsMutable: MutableLiveData<ResponseHandler<DriverDetailsResponse?>> =
         MutableLiveData()
     val driverDetailsLiveData: LiveData<ResponseHandler<DriverDetailsResponse?>> =
-        _driverDetailsMutable
+        _driverDetailsMutable.toSingleEvent()
 
     private val _guideDetailsMutable: MutableLiveData<ResponseHandler<GuideDetailsResponse?>> =
         MutableLiveData()
     val guideDetailsLiveData: LiveData<ResponseHandler<GuideDetailsResponse?>> =
-        _guideDetailsMutable
+        _guideDetailsMutable.toSingleEvent()
 
     fun getLatestDriver(cityId: Int?) {
         viewModelScope.launch {
