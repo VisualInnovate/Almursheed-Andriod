@@ -11,11 +11,10 @@ import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
-import com.visualinnovate.almursheed.databinding.FragmentFilterBinding
 import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
+import com.visualinnovate.almursheed.databinding.FragmentFilterBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ACCOMMODATION
-import com.visualinnovate.almursheed.utils.Constant.GUIDE_ID
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Constant.SEARCH
@@ -73,6 +72,9 @@ class FilterFragment : Fragment() {
             { findNavController().navigateUp() },
             R.drawable.ic_back,
         )
+        binding.appBar.showTextRight(getString(R.string.reset), R.drawable.ic_reset) {
+            vm.clearDataOnInit()
+        }
     }
 
     private fun initData() {

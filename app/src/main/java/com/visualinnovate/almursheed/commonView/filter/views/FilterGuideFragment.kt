@@ -59,13 +59,21 @@ class FilterGuideFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initData()
         setBtnListener()
+        subscribeData()
     }
 
+    private fun subscribeData() {
+        vm.resetData.observe(viewLifecycleOwner) {
+            if (it) {
+                initData()
+                binding.rate.setImageResource(R.drawable.ic_stars_5)
+            }
+        }
+    }
     private fun initData() {
         allLanguages = setupLanguagesList()
         allCountries = setupCountriesList()
         selectedCountryId = allCountries[0].id ?: "-1"
-        citiesList = setupCitiesList(Utils.filteredCities)
         ratingList = setupRateList()
 
         countryId = vm.countryId
@@ -137,19 +145,21 @@ class FilterGuideFragment : Fragment() {
 
     private fun showCountryChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, _ ->
             selectedCountryId = data.id ?: "-1"
             citiesList = setupCitiesList(Utils.filteredCities)
             countryId = data.id
             countryName = data.name
             binding.country.text = countryName
+            cityName = null
+            binding.city.text = getString(R.string.all)
         })
         showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
     }
 
     private fun showCityChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ ->
             cityId = data.id
             cityName = data.name
             binding.city.text = cityName
@@ -159,7 +169,7 @@ class FilterGuideFragment : Fragment() {
 
     private fun showLanguagesChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.language_text), allLanguages, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.language_text), allLanguages, { data, _ ->
             languageName = data.name
             languageId = data.id
             binding.language.text = languageName
@@ -169,9 +179,9 @@ class FilterGuideFragment : Fragment() {
 
     private fun showRateChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, _ ->
             binding.rate.setImageResource(data.name!!.toInt())
-            rate = (position + 1).toString()
+            rate = (ratingList.indexOf(data)+1).toString()
         }, "image")
         showBottomSheet(chooseTextBottomSheet!!, "RatingBottomSheet")
     }
@@ -179,7 +189,7 @@ class FilterGuideFragment : Fragment() {
     private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         Utils.allLanguages.forEach {
-            val item = ChooserItemModel(name = it.lang, id = it.id.toString())
+            val item = ChooserItemModel(name = it.lang, id = it.id.toString() , isSelected = vm.languageName == it.lang)
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -188,7 +198,7 @@ class FilterGuideFragment : Fragment() {
     private fun setupCountriesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         Utils.allCountries.forEach {
-            val item = ChooserItemModel(name = it.country, id = it.country_id)
+            val item = ChooserItemModel(name = it.country, id = it.country_id , isSelected = vm.countryName==it.country)
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -197,7 +207,7 @@ class FilterGuideFragment : Fragment() {
         Utils.filterCitiesByCountryId()
         val chooserItemList = ArrayList<ChooserItemModel>()
         cities.forEach {
-            val item = ChooserItemModel(name = it.state, id = it.stateId)
+            val item = ChooserItemModel(name = it.state, id = it.stateId , isSelected = vm.cityName==it.state)
             chooserItemList.add(item)
         }
         return chooserItemList

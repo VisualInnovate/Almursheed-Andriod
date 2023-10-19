@@ -92,13 +92,13 @@
     <string name="please_enter_your_email_address_to_receive_a_verification_code">Please enter your email address to \nreceive a verification code</string>
     <string name="send">Send</string>
 
-    <array name="options">
+    <string-array name="options">
         <item>Driver</item>
         <item>Guide</item>
         <item>Tourist</item>
-    </array>
+    </string-array>
 
-    <array name="car_categories">
+    <string-array name="car_categories">
         <item>SUV</item>
         <item>Sport</item>
         <item>Family</item>
@@ -106,8 +106,22 @@
         <item>Sedan</item>
         <item>Hatshbag</item>
         <item>Bus</item>
-    </array>
-    
+    </string-array>
+
+    <string-array name="accommodation_categories">
+        <item>Apartments</item>
+        <item>Cottages</item>
+        <item>Hotels</item>
+        <item>Flights</item>
+    </string-array>
+
+    <string-array name="numbers_of_rooms">
+        <item>One Room</item>
+        <item>Two Rooms</item>
+        <item>3 Rooms</item>
+        <item>+5 Rooms</item>
+    </string-array>
+
     <string-array name="car_years">
         <item>2013</item>
         <item>2014</item>
@@ -258,5 +272,6 @@
     <string name="expired">Expired</string>
     <string name="paid">Paid</string>
     <string name="notcompleted">notCompleted</string>
+    <string name="reset">Reset</string>
 
 </resources>

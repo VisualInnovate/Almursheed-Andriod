@@ -7,221 +7,221 @@
     android:background="@color/bg_edit_text">
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_4x"
+        android:layout_marginTop="@dimen/space_10x"
+        android:layout_marginEnd="@dimen/space_4x"
+        android:layout_marginBottom="@dimen/space_13x"
+        android:background="@drawable/bg_rectangle_corner_white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+
+        <TextView
+            android:id="@+id/txtCountry"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_4x"
-            android:layout_marginTop="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/countryy"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/country"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
             android:layout_marginEnd="@dimen/space_4x"
-            android:layout_marginBottom="@dimen/space_10x"
-            android:background="@drawable/bg_rectangle_corner_white"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+            android:gravity="center_vertical"
+            android:text="@string/all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintTop_toBottomOf="@id/txtCountry" />
+
+        <TextView
+            android:id="@+id/txtCity"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/cityy"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/country" />
+
+        <TextView
+            android:id="@+id/city"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginEnd="@dimen/space_4x"
+            android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+            android:gravity="center_vertical"
+            android:text="@string/all"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            app:layout_constraintTop_toBottomOf="@id/txtCity" />
+
+        <TextView
+            android:id="@+id/txtAccommodationCategory"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/accommodation_category"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/city" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_RV"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_2x"
+            android:layout_marginEnd="@dimen/space_2x"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/txtAccommodationCategory"
+            app:spanCount="3"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_text_wrapped" />
 
 
+        <TextView
+            android:id="@+id/txtNumberRoom"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/number_of_rooms"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_RV" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rooms_RV"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_2x"
+            android:layout_marginEnd="@dimen/space_2x"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/txtNumberRoom"
+            app:spanCount="3"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_text_wrapped" />
 
 
-            <TextView
-                android:id="@+id/txtCountry"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_5x"
-                android:text="@string/countryy"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/txtLocationReview"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_5x"
+            android:text="@string/location_review"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rooms_RV" />
 
-            <TextView
-                android:id="@+id/country"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:layout_marginEnd="@dimen/space_4x"
-                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
-                android:gravity="center_vertical"
-                android:text="@string/all"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintTop_toBottomOf="@id/txtCountry" />
-
-            <TextView
-                android:id="@+id/txtCity"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:text="@string/cityy"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/country" />
-
-            <TextView
-                android:id="@+id/city"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:layout_marginEnd="@dimen/space_4x"
-                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
-                android:gravity="center_vertical"
-                android:text="@string/all"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintTop_toBottomOf="@id/txtCity" />
-
-            <TextView
-                android:id="@+id/txtAccommodationCategory"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:text="@string/accommodation_category"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/city" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/category_RV"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_2x"
-                android:layout_marginTop="@dimen/space_2x"
-                android:layout_marginEnd="@dimen/space_2x"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/txtAccommodationCategory"
-                app:spanCount="3"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_text_wrapped" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/location_RV"
+            style="@style/TextStyleRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_2x"
+            android:layout_marginEnd="@dimen/space_2x"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/txtLocationReview"
+            app:spanCount="3"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_text_wrapped" />
 
 
-            <TextView
-                android:id="@+id/txtNumberRoom"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_5x"
-                android:text="@string/number_of_rooms"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/category_RV" />
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_7x"
+            android:layout_marginEnd="@dimen/space_3x"
+            android:max="2000"
+            android:progress="10"
+            app:layout_constraintTop_toBottomOf="@id/location_RV" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rooms_RV"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_2x"
-                android:layout_marginTop="@dimen/space_2x"
-                android:layout_marginEnd="@dimen/space_2x"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/txtNumberRoom"
-                app:spanCount="3"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_text_wrapped" />
+        <TextView
+            android:id="@+id/txtStartPrice"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_5x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="0 $"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price" />
 
-
-            <TextView
-                android:id="@+id/txtLocationReview"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_5x"
-                android:text="@string/location_review"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rooms_RV" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/location_RV"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_2x"
-                android:layout_marginTop="@dimen/space_2x"
-                android:layout_marginEnd="@dimen/space_2x"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/txtLocationReview"
-                app:spanCount="3"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_text_wrapped" />
+        <TextView
+            android:id="@+id/txtEndPrice"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:layout_marginEnd="@dimen/space_5x"
+            android:text="2000 $"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_16x_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price" />
 
 
-            <androidx.appcompat.widget.AppCompatSeekBar
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_3x"
-                android:layout_marginTop="@dimen/space_7x"
-                android:layout_marginEnd="@dimen/space_3x"
-                android:max="2000"
-                android:progress="10"
-                app:layout_constraintTop_toBottomOf="@id/location_RV" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSearch"
+            style="@style/customButtonStyle"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_8x"
+            android:layout_marginBottom="@dimen/space_9x"
+            android:text="@string/search"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtStartPrice" />
 
-            <TextView
-                android:id="@+id/txtStartPrice"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_5x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:text="0 $"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/price" />
-
-            <TextView
-                android:id="@+id/txtEndPrice"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_3x"
-                android:layout_marginEnd="@dimen/space_5x"
-                android:text="2000 $"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/space_16x_sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/price" />
-
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSearch"
-                style="@style/customButtonStyle"
-                android:layout_width="230dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8x"
-                android:layout_marginBottom="@dimen/space_4x"
-                android:text="@string/search"
-                android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtStartPrice" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

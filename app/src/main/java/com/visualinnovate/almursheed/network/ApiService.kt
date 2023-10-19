@@ -103,7 +103,6 @@ interface ApiService {
         @Query("country_id") countryId: String?,
         @Query("state_id") cityId: String?,
         @Query("language_id") language_id: String?,
-       // @QueryMap(encoded = false) language: Map<String, Int?>?,
         @Query("name") searchData: String?,
         @Query("price") price: String?,
         @Query("rate") rate: String?,
@@ -131,7 +130,14 @@ interface ApiService {
     ): Response<OfferDetailsResponse>
 
     @GET("accommodition")
-    suspend fun getAllAccommodation(): Response<AccommodationResponse>
+    suspend fun getAllAccommodation(
+        @Query("country_id") countryId: String?,
+        @Query("state_id") cityId: String?,
+        @Query("category_id") category: String?,
+        @Query("rooms") roomCCount: String?,
+        @Query("name") searchData: String?,
+        @Query("price") price: String?,
+    ): Response<AccommodationResponse>
 
     @GET("accommodition/{id}")
     suspend fun getAccommodationDetailsById(

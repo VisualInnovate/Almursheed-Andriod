@@ -170,11 +170,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun fetchAccommodationsList() {
+    fun fetchAccommodationsList(
+        country: String? = null,
+        city: String? = null,
+        category: String? = null,
+        roomCount: String? = null,
+        searchData: String? = null,
+        price: String? = null,
+    ) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllAccommodation()
+                apiService.getAllAccommodation(country,city,category,roomCount,searchData,price)
             }.collect {
                 _accommodationMutableData.value = it
             }

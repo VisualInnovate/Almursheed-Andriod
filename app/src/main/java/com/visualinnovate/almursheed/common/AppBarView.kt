@@ -117,6 +117,14 @@ class AppBarView @JvmOverloads constructor(
         // filter
         showButtonTwoWithText(text2, icon2, action2)
     }
+    fun showTextRight(
+        text: String,
+        @DrawableRes icon: Int,
+        action1: (() -> Unit)?,
+    ) {
+        // sort
+        showButtonOneWithText(text, icon, action1)
+    }
 
     fun showButtonOneWithoutImage(text: String, action: (() -> Unit)?) {
         binding.btnOneWithoutImage.visibility = View.VISIBLE

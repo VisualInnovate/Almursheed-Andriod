@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.home.adapter.AccommodationAdapter
@@ -30,6 +32,7 @@ class AccommodationFragment : BaseFragment() {
 
     // initialize home view model to call api and make observe
     private val vm: HomeViewModel by viewModels()
+    private val filterVm: FilterViewModel by activityViewModels()
 
     private lateinit var accommodationAdapter: AccommodationAdapter
 
@@ -46,13 +49,15 @@ class AccommodationFragment : BaseFragment() {
     }
 
     private val btnFilterCallBackFunc: () -> Unit = {
-        toast("Clicked btnFilterCallBackFunc")
+        val bundle = Bundle()
+        bundle.putString("from", Constant.ACCOMMODATION)
+        findNavController().customNavigate(R.id.FilterFragment, data = bundle)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentAccommodationBinding.inflate(inflater, container, false)
         return binding.root
@@ -64,11 +69,16 @@ class AccommodationFragment : BaseFragment() {
         initToolbar()
         initViews()
         subscribeData()
+        getAccommodationData()
     }
 
-    override fun onStart() {
-        super.onStart()
-        vm.fetchAccommodationsList()
+    private fun getAccommodationData() {
+        if (filterVm.checkDestinationFromFilter()) {
+            vm.fetchAccommodationsList(filterVm.countryId, filterVm.cityId, filterVm.accommodationCategoryId, filterVm.roomsCountId, filterVm.searchData, filterVm.price)
+            filterVm.setFromFilter(false)
+        } else {
+            vm.fetchAccommodationsList()
+        }
     }
 
     private fun initToolbar() {
@@ -77,7 +87,7 @@ class AccommodationFragment : BaseFragment() {
         binding.appBarAccommodation.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
         binding.appBarAccommodation.showButtonSortAndFilter(
             getString(R.string.sort),
@@ -85,7 +95,7 @@ class AccommodationFragment : BaseFragment() {
             R.drawable.ic_sort,
             R.drawable.ic_filter,
             btnSortCallBackFunc,
-            btnFilterCallBackFunc
+            btnFilterCallBackFunc,
         )
     }
 

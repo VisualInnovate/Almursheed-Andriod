@@ -59,17 +59,25 @@ class FilterDriverFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initData()
         setBtnListener()
+        subscribeData()
+    }
+
+    private fun subscribeData() {
+        vm.resetData.observe(viewLifecycleOwner) {
+            if (it) {
+                initData()
+                binding.rate.setImageResource(R.drawable.ic_stars_5)
+            }
+        }
     }
 
     private fun initData() {
         val carCategoriesList = resources.getStringArray(R.array.car_categories)
         val carYearsList = resources.getStringArray(R.array.car_years)
-
         allCarYears = setupCarModelsList(carYearsList)
         carCategories = setupCarCategoriesList(carCategoriesList)
         allCountries = setupCountriesList()
         selectedCountryId = allCountries[0].id ?: "-1"
-        citiesList = setupCitiesList(Utils.filteredCities)
         ratingList = setupRateList()
 
         countryId = vm.countryId
@@ -144,12 +152,14 @@ class FilterDriverFragment : Fragment() {
 
     private fun showCountryChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, _ ->
             selectedCountryId = data.id ?: "-1"
             citiesList = setupCitiesList(Utils.filteredCities)
             countryId = data.id
             countryName = data.name
             binding.country.text = countryName
+            cityName = null
+            binding.city.text = getString(R.string.all)
         })
         showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
     }
@@ -175,7 +185,7 @@ class FilterDriverFragment : Fragment() {
 
     private fun showCarModelChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), allCarYears, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), allCarYears, { data, _ ->
             carModel = data.name
             binding.carModel.text = carModel
         })
@@ -184,9 +194,9 @@ class FilterDriverFragment : Fragment() {
 
     private fun showRateChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, _ ->
             binding.rate.setImageResource(data.name!!.toInt())
-            rate = (position + 1).toString()
+            rate = (ratingList.indexOf(data) + 1).toString()
         }, "image")
         showBottomSheet(chooseTextBottomSheet!!, "RatingBottomSheet")
     }
@@ -194,7 +204,7 @@ class FilterDriverFragment : Fragment() {
     private fun setupCarCategoriesList(list: Array<String>): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         list.forEach {
-            val item = ChooserItemModel(name = it)
+            val item = ChooserItemModel(name = it, isSelected = vm.carCategory == it)
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -202,7 +212,7 @@ class FilterDriverFragment : Fragment() {
     private fun setupCarModelsList(list: Array<String>): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         list.forEach {
-            val item = ChooserItemModel(name = it)
+            val item = ChooserItemModel(name = it, isSelected = it == vm.carModel)
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -211,7 +221,7 @@ class FilterDriverFragment : Fragment() {
     private fun setupCountriesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         Utils.allCountries.forEach {
-            val item = ChooserItemModel(name = it.country, id = it.country_id)
+            val item = ChooserItemModel(name = it.country, id = it.country_id, isSelected = vm.countryName == it.country)
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -220,7 +230,7 @@ class FilterDriverFragment : Fragment() {
         filterCitiesByCountryId()
         val chooserItemList = ArrayList<ChooserItemModel>()
         cities.forEach {
-            val item = ChooserItemModel(name = it.state, id = it.stateId)
+            val item = ChooserItemModel(name = it.state, id = it.stateId, isSelected = vm.cityName == it.state)
             chooserItemList.add(item)
         }
         return chooserItemList
