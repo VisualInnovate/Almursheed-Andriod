@@ -20,7 +20,8 @@ class FilterViewModel @Inject constructor(
     var countryName: String? = null
     var carModel: String? = null
     var rate: String? = null
-    var language: String? = null
+    var languageName: String? = null
+    var languageId: ArrayList<Int?>?= null
     var price: String? = null
     var type = "Driver"
 
@@ -34,7 +35,8 @@ class FilterViewModel @Inject constructor(
         cityId = null
         cityName = null
         countryName = null
-        language = null
+        languageId = null
+        languageName = null
         price = null
         type = "Driver"
     }

@@ -37,7 +37,8 @@ class FilterGuideFragment : Fragment() {
     private var countryId: String? = null
     private var price: String? = null
 
-    private var language: String? = null
+    private var languageName: String? = null
+    private var languageId: String? = null
 
     private var allLanguages = ArrayList<ChooserItemModel>()
     private var ratingList = ArrayList<ChooserItemModel>()
@@ -61,8 +62,7 @@ class FilterGuideFragment : Fragment() {
     }
 
     private fun initData() {
-        val languages = resources.getStringArray(R.array.languages)
-        allLanguages = setupLanguagesList(languages)
+        allLanguages = setupLanguagesList()
         allCountries = setupCountriesList()
         selectedCountryId = allCountries[0].id ?: "-1"
         citiesList = setupCitiesList(Utils.filteredCities)
@@ -74,11 +74,11 @@ class FilterGuideFragment : Fragment() {
         cityName = vm.cityName
         price = vm.price
         rate = vm.rate
-        language = vm.language
+        languageName = vm.languageName
 
         binding.country.text = countryName ?: getString(R.string.all)
         binding.city.text = cityName ?: getString(R.string.all)
-        binding.language.text = language ?: getString(R.string.all)
+        binding.language.text = languageName ?: getString(R.string.all)
         binding.txtStartPrice.text = (price ?: 0).toString()
         binding.price.progress = price?.toInt() ?: 0
     }
@@ -120,9 +120,12 @@ class FilterGuideFragment : Fragment() {
             vm.countryName = countryName
             vm.cityId = cityId
             vm.cityName = cityName
+            vm.languageName = languageName
+            languageId?.let {
+                vm.languageId = ArrayList()
+                vm.languageId!!.add(0, languageId?.toInt())
+            }
             vm.type = "Guide"
-            vm.language = language
-
             vm.setFromFilter(true)
             if (vm.from == Constant.ROLE_GUIDE) {
                 findNavController().navigateUp()
@@ -157,8 +160,9 @@ class FilterGuideFragment : Fragment() {
     private fun showLanguagesChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.language_text), allLanguages, { data, position ->
-            language = data.name
-            binding.language.text = language
+            languageName = data.name
+            languageId = data.id
+            binding.language.text = languageName
         })
         showBottomSheet(chooseTextBottomSheet!!, "LanguageBottomSheet")
     }
@@ -166,20 +170,16 @@ class FilterGuideFragment : Fragment() {
     private fun showRateChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, position ->
-            if (position == 0) {
-                rate = "1"
-            } else {
-                binding.rate.setImageResource(data.name!!.toInt())
-                rate = (position + 1).toString()
-            }
+            binding.rate.setImageResource(data.name!!.toInt())
+            rate = (position + 1).toString()
         }, "image")
         showBottomSheet(chooseTextBottomSheet!!, "RatingBottomSheet")
     }
 
-    private fun setupLanguagesList(list: Array<String>): ArrayList<ChooserItemModel> {
+    private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
-        list.forEach {
-            val item = ChooserItemModel(name = it)
+        Utils.allLanguages.forEach {
+            val item = ChooserItemModel(name = it.lang, id = it.id.toString())
             chooserItemList.add(item)
         }
         return chooserItemList

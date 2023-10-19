@@ -100,7 +100,8 @@ interface ApiService {
     suspend fun getAllGuides(
         @Query("country_id") countryId: String?,
         @Query("state_id") cityId: String?,
-        @Query("language") language: String?,
+        @Query("language_id") language_id: String?,
+       // @QueryMap(encoded = false) language: Map<String, Int?>?,
         @Query("name") searchData: String?,
         @Query("price") price: String?,
         @Query("rate") rate: String?,

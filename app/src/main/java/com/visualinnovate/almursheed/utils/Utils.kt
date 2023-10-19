@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.CountryItem
+import com.visualinnovate.almursheed.auth.model.LanguageItem
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 
 object Utils {
@@ -12,6 +13,7 @@ object Utils {
     var selectedCountryId: String = ""
     var selectedNationalName: String = ""
     val allCountries = ArrayList<CountryItem>()
+    val allLanguages = ArrayList<LanguageItem>()
     val allCities = ArrayList<CityItem>()
     val allNationalities = ArrayList<String>()
 

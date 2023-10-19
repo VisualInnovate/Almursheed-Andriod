@@ -94,7 +94,7 @@ class AllGuidesFragment : BaseFragment() {
 
     private fun getAllGuidesData() {
         if (filterVm.checkDestinationFromFilter()) {
-            vm.fetchAllGuides(filterVm.countryId, filterVm.cityId, filterVm.language, filterVm.searchData, filterVm.price, filterVm.rate)
+            vm.fetchAllGuides(filterVm.countryId, filterVm.cityId, filterVm.languageId, filterVm.searchData, filterVm.price, filterVm.rate)
             filterVm.setFromFilter(false)
         } else {
             vm.fetchAllGuides()

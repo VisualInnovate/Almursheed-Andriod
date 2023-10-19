@@ -118,22 +118,30 @@ class HomeViewModel @Inject constructor(
     fun fetchAllGuides(
         country: String? = null,
         city: String? = null,
-        language: String? = null,
+        language: ArrayList<Int?>? = null,
         searchData: String? = null,
         price: String? = null,
         rate: String? = null,
-
     ) {
+        val lang = language?.toString()
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllGuides(country, city, language, searchData, price, rate)
+                apiService.getAllGuides(country, city, lang, searchData, price, rate)
             }.collect {
                 _guideMutableData.value = it
             }
         }
     }
 
+    private fun formatLanguageToArray(language: ArrayList<Int?>?): Map<String, Int?> {
+        // this method to send array at queryParameter like this status[0]=pending&status[1]=approved
+        val requestData = mutableMapOf<String, Int?>()
+        language?.forEachIndexed { index, lang ->
+            requestData["language_id[$index]"] = lang
+        }
+        return requestData
+    }
     fun fetchOfferResponse() {
         viewModelScope.launch {
             safeApiCall {

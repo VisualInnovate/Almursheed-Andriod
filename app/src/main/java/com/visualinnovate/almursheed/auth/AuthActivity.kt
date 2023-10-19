@@ -18,6 +18,7 @@ import com.visualinnovate.almursheed.auth.model.City
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.Country
 import com.visualinnovate.almursheed.auth.model.Language
+import com.visualinnovate.almursheed.auth.model.LanguageItem
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
@@ -26,6 +27,7 @@ import com.visualinnovate.almursheed.databinding.ActivityAuthBinding
 import com.visualinnovate.almursheed.utils.Utils.allCarModels
 import com.visualinnovate.almursheed.utils.Utils.allCities
 import com.visualinnovate.almursheed.utils.Utils.allCountries
+import com.visualinnovate.almursheed.utils.Utils.allLanguages
 import com.visualinnovate.almursheed.utils.Utils.allNationalities
 import com.visualinnovate.almursheed.utils.Utils.carBrand
 import com.visualinnovate.almursheed.utils.Utils.carType
@@ -114,10 +116,16 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         try {
             val jsonObject = JSONObject(jsonFile)
             val language: Language = Gson().fromJson(jsonObject.toString(), Language::class.java)
+            allLanguages.clear()
             language.languageList?.map {
                 val langId = it.id
                 val langName = it.lang
                 languages[langName] = langId
+            }
+
+            language.languageList!!.forEach {
+                val lang = LanguageItem(id = it.id, lang = it.lang)
+                allLanguages.add(lang)
             }
         } catch (e: JSONException) {
             e.printStackTrace()

@@ -19,7 +19,6 @@ import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.databinding.FragmentFilterDriverBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Utils
-import com.visualinnovate.almursheed.utils.Utils.allCarModels
 import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
 import com.visualinnovate.almursheed.utils.Utils.selectedCountryId
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +41,7 @@ class FilterDriverFragment : Fragment() {
 
     private var carCategories = ArrayList<ChooserItemModel>()
     private var allCountries = ArrayList<ChooserItemModel>()
+    private var allCarYears = ArrayList<ChooserItemModel>()
     private var citiesList = ArrayList<ChooserItemModel>()
     private var ratingList = ArrayList<ChooserItemModel>()
     private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
@@ -63,6 +63,9 @@ class FilterDriverFragment : Fragment() {
 
     private fun initData() {
         val carCategoriesList = resources.getStringArray(R.array.car_categories)
+        val carYearsList = resources.getStringArray(R.array.car_years)
+
+        allCarYears = setupCarModelsList(carYearsList)
         carCategories = setupCarCategoriesList(carCategoriesList)
         allCountries = setupCountriesList()
         selectedCountryId = allCountries[0].id ?: "-1"
@@ -172,7 +175,7 @@ class FilterDriverFragment : Fragment() {
 
     private fun showCarModelChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), allCarModels, { data, position ->
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), allCarYears, { data, position ->
             carModel = data.name
             binding.carModel.text = carModel
         })
@@ -182,17 +185,21 @@ class FilterDriverFragment : Fragment() {
     private fun showRateChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, position ->
-            if (position == 0) {
-                rate = "1"
-            } else {
-                binding.rate.setImageResource(data.name!!.toInt())
-                rate = (position + 1).toString()
-            }
+            binding.rate.setImageResource(data.name!!.toInt())
+            rate = (position + 1).toString()
         }, "image")
         showBottomSheet(chooseTextBottomSheet!!, "RatingBottomSheet")
     }
 
     private fun setupCarCategoriesList(list: Array<String>): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        list.forEach {
+            val item = ChooserItemModel(name = it)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+    private fun setupCarModelsList(list: Array<String>): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         list.forEach {
             val item = ChooserItemModel(name = it)

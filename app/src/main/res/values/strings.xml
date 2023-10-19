@@ -99,7 +99,6 @@
     </array>
 
     <array name="car_categories">
-        <item>All</item>
         <item>SUV</item>
         <item>Sport</item>
         <item>Family</item>
@@ -108,6 +107,23 @@
         <item>Hatshbag</item>
         <item>Bus</item>
     </array>
+    
+    <string-array name="car_years">
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        </string-array>
+
+
 
     <array name="languages">
         <item>Arabic</item>

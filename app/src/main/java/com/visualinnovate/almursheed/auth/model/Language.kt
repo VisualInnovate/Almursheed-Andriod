@@ -8,11 +8,11 @@ data class Language(
 )
 
 data class LanguageItem(
-    val id: Int,
-    val lang: String,
-    val isoCode: String,
-    val isDefault: Int,
-    val isRtl: Int,
-    val isActive: Int,
-    val jsonMemberNative: String
+    val id: Int = -1,
+    var lang: String = "",
+    val isoCode: String = "",
+    val isDefault: Int = -1,
+    val isRtl: Int = -1,
+    val isActive: Int = -1,
+    val jsonMemberNative: String = ""
 )
