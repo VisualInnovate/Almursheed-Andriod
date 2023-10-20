@@ -43,7 +43,6 @@ import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.home.viewmodel.HireViewModel
 import com.visualinnovate.almursheed.utils.LocationHelper
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 import java.util.Date
@@ -91,6 +90,12 @@ class HireFragment : BaseFragment() {
         selectedDriverGuideId = it.id!!
         binding.chooseDriver.text = it.name
         daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
+
+        Log.d("initView", "vm.selectedDriverAndGuideCities ${vm.selectedDriverAndGuideCities}")
+        vm.selectedDriverAndGuideCities.forEach {
+            val item = ChooserItemModel(name = it.stateName, id = it.cityId.toString())
+            citiesList.add(item)
+        }
     }
 
     override fun onCreateView(
@@ -167,8 +172,6 @@ class HireFragment : BaseFragment() {
         binding.inCityCheckBox.isChecked = true
         // binding.constraintInCity.visible()
 
-        citiesList = setupCitiesList(Utils.allCities)
-
         binding.city.onDebouncedListener {
             showCityChooser()
         }
@@ -241,8 +244,13 @@ class HireFragment : BaseFragment() {
                 longitude = currentLocation?.longitude.toString(),
             )
 
-            if (tripType == 1){
-                orderDetailsList.add(OrderDetail(date = binding.dayNumber.text.toString(), inCity!!.toInt()))
+            if (tripType == 1) {
+                orderDetailsList.add(
+                    OrderDetail(
+                        date = binding.dayNumber.text.toString(),
+                        inCity!!.toInt()
+                    )
+                )
             }
 
 

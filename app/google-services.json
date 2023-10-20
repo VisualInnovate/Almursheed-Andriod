@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35663142823",
+    "project_id": "almursheed-c0dd4",
+    "storage_bucket": "almursheed-c0dd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35663142823:android:926460c9e0babb74276082",
+        "android_client_info": {
+          "package_name": "com.visualinnovate.almursheed"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZibtFQGk-rC7wRUu4DwJF83Wz8cdnatE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
