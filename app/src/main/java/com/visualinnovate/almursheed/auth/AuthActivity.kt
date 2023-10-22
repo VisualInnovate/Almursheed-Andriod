@@ -59,6 +59,9 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         // Initialize PushNotification
         // PushNotifications.start(applicationContext, "140343aa-f173-4a2d-940a-7724c7c12be1");
 
+        PushNotifications.start(this, "140343aa-f173-4a2d-940a-7724c7c12be1");
+        PushNotifications.addDeviceInterest("users");
+
         initConnectivityManager()
         setupDataForCountryAndNationality()
         setupDataForCarModelAndYear()

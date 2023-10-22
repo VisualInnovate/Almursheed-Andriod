@@ -29,12 +29,8 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.allNationalities
 import com.visualinnovate.almursheed.utils.Utils.filterCountriesByNationality
-import com.visualinnovate.almursheed.utils.Utils.filteredCitiesString
-import com.visualinnovate.almursheed.utils.Utils.filteredCountries
-import com.visualinnovate.almursheed.utils.Utils.filteredCountriesString
 import com.visualinnovate.almursheed.utils.Utils.selectedNationalName
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,40 +73,10 @@ class EditProfileFragment : BaseFragment() {
         subscribeData()
     }
 
-    private fun subscribeData() {
-        vm.updateTouristLiveData.observe(viewLifecycleOwner) {
-            when (it) {
-                is ResponseHandler.Success -> {
-                    // save user
-                    SharedPreference.saveUser(it.data?.user!![0])
-                    toast(it.data.message.toString())
-                }
-
-                is ResponseHandler.Error -> {
-                    // show error message
-                    toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
-                }
-
-                is ResponseHandler.Loading -> {
-                    // show a progress bar
-                    showMainLoading()
-                }
-
-                is ResponseHandler.StopLoading -> {
-                    // show a progress bar
-                    hideMainLoading()
-                }
-
-                else -> {}
-            }
-        }
-    }
-
     private fun initToolbar() {
-        binding.appBarEditProfile1.setTitleString(getString(R.string.edit_profile))
-        binding.appBarEditProfile1.setTitleCenter(true)
-        binding.appBarEditProfile1.useBackButton(
+        binding.appBar.setTitleString(getString(R.string.edit_profile))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
             true,
             { findNavController().navigateUp() },
             R.drawable.ic_back,
@@ -118,9 +84,6 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun initView() {
-        // binding.spinnerNationality.spinnerText.text = getString(R.string.select_your_nationality)
-        // binding.spinnerCountry.spinnerText.text = getString(R.string.select_your_country)
-        // binding.spinnerCity.spinnerText.text = getString(R.string.select_your_city)
         initNationalitySpinner()
         imagePath = currentUser.personalPhoto ?: ""
         if (currentUser.type == "Driver" || currentUser.type == "Guides") {
@@ -137,8 +100,6 @@ class EditProfileFragment : BaseFragment() {
         binding.edtUserName.setText(currentUser.name)
         binding.edtEmailAddress.setText(currentUser.email)
         binding.edtEmailAddress.isEnabled = false
-
-        // binding.spinnerNationality.spinner.selectedView
     }
 
     private fun initNationalitySpinner() {
@@ -165,83 +126,6 @@ class EditProfileFragment : BaseFragment() {
                     nationalityName = nationalityList[position]
                     selectedNationalName = nationalityName!!
                     filterCountriesByNationality()
-                    initCountrySpinner()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-//        binding.spinnerNationality.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-//            // Retrieve the selected country name
-//            nationalityName = nationalityList[position]
-//        }
-    }
-
-    private fun initCountrySpinner() {
-        val countryList = filteredCountriesString
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                countryList,
-            )
-
-        binding.spinnerCountry.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerCountry.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    val selectedCountry = filteredCountries[position]
-                    val selectedCountryName = selectedCountry.country
-                    Utils.selectedCountryId = selectedCountry.country_id
-                    countryId = selectedCountry.country_id.toInt()
-                    initCitySpinner()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-//        binding.spinnerCountry.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-//            // Retrieve the selected country name
-//            val selectedCountryName = countryList[position]
-//            // Retrieve the corresponding country ID from the map
-//            countryId = countries[selectedCountryName]!!
-//        }
-    }
-
-    private fun initCitySpinner() {
-        Utils.filterCitiesByCountryId()
-        val cityList = filteredCitiesString
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                cityList,
-            )
-
-        binding.spinnerCity.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerCity.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected country name
-                    val selectedCity = Utils.filteredCities[position]
-                    val selectedCityName = selectedCity.stateId
-                    cityId = selectedCity.stateId.toInt()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -249,6 +133,7 @@ class EditProfileFragment : BaseFragment() {
                 }
             }
     }
+
 
     private fun setBtnListener() {
         binding.txtMale.setOnClickListener {
@@ -299,6 +184,36 @@ class EditProfileFragment : BaseFragment() {
                     // call api update tourist
                     vm.updateTourist(currentUser)
                 }
+            }
+        }
+    }
+
+    private fun subscribeData() {
+        vm.updateTouristLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // save user
+                    SharedPreference.saveUser(it.data?.user!![0])
+                    toast(it.data.message.toString())
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("ResponseHandler.Error", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
             }
         }
     }
@@ -418,5 +333,77 @@ class EditProfileFragment : BaseFragment() {
         chooserIntent.putExtra(Intent.EXTRA_INTENT, galleryIntent)
         chooserIntent.putExtra(Intent.EXTRA_TITLE, "Select from:")
         launchActivityForResult(chooserIntent)
+    }
+
+    private fun initCountrySpinner() {
+        val countryList = filteredCountriesString
+
+        val arrayAdapter = // android.R.layout.simple_spinner_item
+            ArrayAdapter(
+                requireContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                countryList,
+            )
+
+        binding.spinnerCountry.spinner.adapter = arrayAdapter
+        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+        binding.spinnerCountry.spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    val selectedCountry = filteredCountries[position]
+                    val selectedCountryName = selectedCountry.country
+                    Utils.selectedCountryId = selectedCountry.country_id
+                    countryId = selectedCountry.country_id.toInt()
+                    initCitySpinner()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Handle when nothing is selected
+                }
+            }
+//        binding.spinnerCountry.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
+//            // Retrieve the selected country name
+//            val selectedCountryName = countryList[position]
+//            // Retrieve the corresponding country ID from the map
+//            countryId = countries[selectedCountryName]!!
+//        }
+    }
+
+    private fun initCitySpinner() {
+        Utils.filterCitiesByCountryId()
+        val cityList = filteredCitiesString
+
+        val arrayAdapter = // android.R.layout.simple_spinner_item
+            ArrayAdapter(
+                requireContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                cityList,
+            )
+
+        binding.spinnerCity.spinner.adapter = arrayAdapter
+        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+        binding.spinnerCity.spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    // Retrieve the selected country name
+                    val selectedCity = Utils.filteredCities[position]
+                    val selectedCityName = selectedCity.stateId
+                    cityId = selectedCity.stateId.toInt()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Handle when nothing is selected
+                }
+            }
     }
  */

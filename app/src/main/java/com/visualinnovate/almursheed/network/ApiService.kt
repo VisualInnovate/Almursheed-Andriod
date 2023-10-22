@@ -185,7 +185,14 @@ interface ApiService {
         @Part("gender") gender: RequestBody,
         @Part("nationality") nationality: RequestBody,
         // @Part personal_pictures: MultipartBody.Part,
-//        @Body requestBody: RequestBody,
+        // @Body requestBody: RequestBody,
+    ): Response<UpdateResponse>
+
+    @Multipart
+    @POST("tourists/update")
+    suspend fun updateLocationTourist(
+        @Part("country_id") countryId: RequestBody,
+        @Part("state_id") stateId: RequestBody,
     ): Response<UpdateResponse>
 
     @Multipart

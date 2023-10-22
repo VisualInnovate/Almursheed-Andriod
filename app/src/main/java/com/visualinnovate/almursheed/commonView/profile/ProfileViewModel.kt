@@ -42,6 +42,11 @@ class ProfileViewModel @Inject constructor(
     val updateTouristLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
         _updateTouristMutableData.toSingleEvent()
 
+    private val _editLocationTourist: MutableLiveData<ResponseHandler<UpdateResponse?>> =
+        MutableLiveData()
+    val editLocationTouristLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
+        _editLocationTourist.toSingleEvent()
+
     private val _updateGuideMutableData: MutableLiveData<ResponseHandler<UpdateResponse?>> =
         MutableLiveData()
     val updateGuideLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
@@ -175,6 +180,26 @@ class ProfileViewModel @Inject constructor(
                 // apiService.updateTourist(requestBody)
             }.collect {
                 _updateTouristMutableData.value = it
+            }
+        }
+    }
+
+    fun updateLocationTourist(currentUser: User) {
+        Log.d("updateLocationTourist", "currentUser: $currentUser")
+        val countryId =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.countryId.toString())
+        val stateId =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
+
+        viewModelScope.launch {
+            safeApiCall {
+                apiService.updateLocationTourist(
+                    countryId,
+                    stateId
+                )
+                // apiService.updateTourist(requestBody)
+            }.collect {
+                _editLocationTourist.value = it
             }
         }
     }

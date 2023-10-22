@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <com.visualinnovate.almursheed.common.AppBarView
-            android:id="@+id/appBarEditProfile1"
+            android:id="@+id/appBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_height"
             app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
             android:layout_marginVertical="@dimen/space_3x"
             android:layout_marginHorizontal="@dimen/space_4x"
             app:cardCornerRadius="@dimen/space_4x"
-            app:layout_constraintTop_toBottomOf="@id/appBarEditProfile1">
+            app:layout_constraintTop_toBottomOf="@id/appBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                     android:layout_marginTop="@dimen/space_3x"
                     app:layout_constraintTop_toBottomOf="@id/txtNationality" />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/txtCountry"
                     style="@style/TextStyleBold"
                     android:layout_width="match_parent"
@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
-                    app:layout_constraintTop_toBottomOf="@id/txtCity" />
+                    app:layout_constraintTop_toBottomOf="@id/txtCity" />-->
 
                 <TextView
                     android:id="@+id/txtGender"
@@ -168,7 +168,7 @@
                     android:text="@string/gender"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCity" />
+                    app:layout_constraintTop_toBottomOf="@id/spinnerNationality" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintGender"

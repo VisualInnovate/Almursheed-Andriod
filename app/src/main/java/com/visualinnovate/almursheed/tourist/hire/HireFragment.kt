@@ -156,9 +156,9 @@ class HireFragment : BaseFragment() {
     }
 
     private fun initToolbar() {
-        binding.appBarHire.setTitleString(getString(R.string.hire))
-        binding.appBarHire.setTitleCenter(true)
-        binding.appBarHire.useBackButton(
+        binding.appBar.setTitleString(getString(R.string.hire))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
             true,
             { findNavController().navigateUp() },
             R.drawable.ic_back,
@@ -245,14 +245,10 @@ class HireFragment : BaseFragment() {
             )
 
             if (tripType == 1) {
-                orderDetailsList.add(
-                    OrderDetail(
-                        date = binding.dayNumber.text.toString(),
-                        inCity!!.toInt()
-                    )
-                )
+                selectedDays.forEach {
+                    orderDetailsList.add(OrderDetail(date = it.date!!, inCity!!.toInt()))
+                }
             }
-
 
             val requestCreateOrder = RequestCreateOrder(
                 user_id = selectedDriverGuideId,

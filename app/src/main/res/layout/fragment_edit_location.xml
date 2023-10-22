@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_edit_text"
+    tools:context=".commonView.EditLocationFragment">
+
+    <com.visualinnovate.almursheed.common.AppBarView
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvDriverRegisterFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/space_3x"
+        android:layout_marginHorizontal="@dimen/space_4x"
+        app:cardCornerRadius="@dimen/space_4x"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/space_4x">
+
+            <TextView
+                android:id="@+id/txtCountry"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2x"
+                android:text="@string/countryy"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_16x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/country"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtCountry" />
+
+            <TextView
+                android:id="@+id/txtCity"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/cityy"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_16x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/country" />
+
+            <TextView
+                android:id="@+id/city"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginVertical="@dimen/space_3x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtCity"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSubmit"
+        style="@style/customButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_4x"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

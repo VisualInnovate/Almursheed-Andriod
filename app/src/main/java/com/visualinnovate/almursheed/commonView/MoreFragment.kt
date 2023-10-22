@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.pusher.pushnotifications.PushNotifications
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.customNavigate
@@ -67,6 +68,7 @@ class MoreFragment : Fragment() {
             SharedPreference.saveUser(null)
             SharedPreference.setUserToken(null)
             SharedPreference.setUserLoggedIn(false)
+            PushNotifications.clearAllState()
             requireActivity().startAuthActivity()
         }
 
@@ -80,6 +82,10 @@ class MoreFragment : Fragment() {
 
         binding.aboutUs.onDebouncedListener {
             findNavController().customNavigate(R.id.priceFragment)
+        }
+
+        binding.editLocation.onDebouncedListener {
+            findNavController().customNavigate(R.id.editLocationFragment)
         }
     }
 

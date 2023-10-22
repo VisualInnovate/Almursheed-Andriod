@@ -7,8 +7,10 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.pusher.pushnotifications.fcm.MessagingService
 import com.visualinnovate.almursheed.R
@@ -18,38 +20,26 @@ import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.utils.Constant.CHANNEL_ID
 import java.util.Random
 
-class MessagingNotificationService : MessagingService() {
+class MessagingNotificationService : FirebaseMessagingService() {
 
-    override fun onNewToken(token: String) {
-        // Incoming device token from FCM 🔒
-        updateToken(token)
-    }
 
-    private fun updateToken(token: String) {
-        val user: User? = SharedPreference.getUser()
-        if (user != null) {
-            /*val databaseReference =
-                FirebaseDatabase.getInstance().getReference("Users").child(user.userId)
-            val map: MutableMap<String, Any> = HashMap()
-            map["token"] = token
-            databaseReference.updateChildren(map)*/
-        }
-    }
+
+
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // We just got a notification 🔥
-        if (remoteMessage.data.isNotEmpty()) {
-            val data: Map<String, String> = remoteMessage.data
-            val notification: RemoteMessage.Notification? = remoteMessage.notification
+        // val data: Map<String, String> = remoteMessage.data
+        // val notification: RemoteMessage.Notification? = remoteMessage.notification
 
-            notification?.let {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-                    createOreoNotification(notification)
-                } else {
-                    createNormalNotification(notification)
-                }
+        Log.d("onMessageReceived", "data  ${remoteMessage.data}")
+
+        /*notification?.let {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                createOreoNotification(notification)
+            } else {
+                createNormalNotification(notification)
             }
-        }
+        }*/
     }
 
     // create normal notification in case if android less than android(Oreo) [android 8]
