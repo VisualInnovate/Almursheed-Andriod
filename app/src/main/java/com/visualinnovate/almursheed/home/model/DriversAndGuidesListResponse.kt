@@ -28,6 +28,7 @@ data class DriverAndGuideItem(
     @field:SerializedName("state_id")
     val stateId: Int? = null,
 
+
     @field:SerializedName("image_background")
     val imageBackground: String? = null,
 

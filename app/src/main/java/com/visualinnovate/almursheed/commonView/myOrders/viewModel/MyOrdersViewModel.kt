@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
@@ -24,15 +25,15 @@ class MyOrdersViewModel @Inject constructor(
 
     private val _orders: MutableLiveData<ResponseHandler<MyOrdersModel?>?> =
         MutableLiveData()
-    val orders: LiveData<ResponseHandler<MyOrdersModel?>?> = _orders
+    val orders: LiveData<ResponseHandler<MyOrdersModel?>?> = _orders.toSingleEvent()
 
     private val _addRate: MutableLiveData<ResponseHandler<RateResponse?>?> =
         MutableLiveData()
-    val addRate: LiveData<ResponseHandler<RateResponse?>?> = _addRate
+    val addRate: LiveData<ResponseHandler<RateResponse?>?> = _addRate.toSingleEvent()
 
     private val _changeStatus: MutableLiveData<ResponseHandler<Void?>?> =
         MutableLiveData()
-    val changeStatus: LiveData<ResponseHandler<Void?>?> = _changeStatus
+    val changeStatus: LiveData<ResponseHandler<Void?>?> = _changeStatus.toSingleEvent()
 
     var orderDetails: MyOrdersItem? = null
 

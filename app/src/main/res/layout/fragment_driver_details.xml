@@ -59,7 +59,6 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginEnd="@dimen/space_4x"
-                    android:drawableStart="@drawable/ic_stars"
                     android:drawablePadding="@dimen/space_1_5x"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
@@ -73,7 +72,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/driverName"
                     app:layout_constraintTop_toTopOf="@id/driverName"
-                    tools:text="(1200 review)" />
+                    android:text="(0 review)"
+                    app:drawableStartCompat="@drawable/ic_group_rate" />
 
                 <TextView
                     android:id="@+id/driverName"
@@ -91,7 +91,7 @@
                     app:layout_constraintEnd_toStartOf="@id/driverReview"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/imgDriver"
-                    tools:text="Ahmed khaled" />
+                    android:text="Driver Name" />
 
                 <TextView
                     android:id="@+id/txtPrice"
@@ -129,7 +129,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/txtPrice"
                     app:layout_constraintTop_toBottomOf="@id/driverName"
-                    tools:text="$150.00" />
+                    android:text="$00.00" />
 
                 <TextView
                     android:id="@+id/txtLocationInfo"
@@ -161,7 +161,7 @@
                     android:maxLength="15"
                     android:maxLines="1"
                     android:padding="@dimen/space_2x"
-                    android:text="Egypt"
+                    android:text="Nationality"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_12x_sp"
                     android:textStyle="bold"
@@ -191,7 +191,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/driverCountry"
                     app:layout_constraintStart_toEndOf="@id/driverCountry"
                     app:layout_constraintTop_toTopOf="@id/driverCountry"
-                    tools:text="Cairo" />
+                    android:text="Country" />
 
                 <TextView
                     android:id="@+id/txtLanguage"
@@ -317,7 +317,7 @@
                             android:id="@+id/imgCar"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
-                            android:scaleType="fitXY"
+                            android:scaleType="fitCenter"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/img_car" />
 

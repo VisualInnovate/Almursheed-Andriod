@@ -17,6 +17,7 @@ import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class DriverDetailsFragment : BaseFragment() {
@@ -35,7 +36,7 @@ class DriverDetailsFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentDriverDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -59,7 +60,7 @@ class DriverDetailsFragment : BaseFragment() {
         binding.appBarDriverDetails.useBackButton(
             true,
             btnBackCallBackFunc,
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
     }
 
@@ -107,6 +108,17 @@ class DriverDetailsFragment : BaseFragment() {
         binding.driverDescription.text = driver.bio ?: ""
         binding.carName.text = driver.carModel ?: ""
         binding.carType.text = driver.carType ?: ""
+        binding.driverReview.text = "(${driver.count_rate} review)"
+        val rateImage = when (driver.totalRating?.toDouble()?.roundToInt() ?: 0) {
+            1 -> R.drawable.ic_star_1
+            2 -> R.drawable.ic_stars_2
+            3 -> R.drawable.ic_stars_3
+            4 -> R.drawable.ic_stars_4
+            5 -> R.drawable.ic_stars_5
+            else -> R.drawable.ic_group_rate
+        }
+
+        binding.driverReview.setCompoundDrawables(null, null, resources.getDrawable(rateImage), null)
         binding.driverReview.text = "(${driver.count_rate} review)"
 
         // binding.driverPrice.text = "$ ${d?.driverPrice}"

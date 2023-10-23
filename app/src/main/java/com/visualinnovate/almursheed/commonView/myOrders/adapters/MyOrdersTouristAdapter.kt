@@ -2,15 +2,14 @@ package com.visualinnovate.almursheed.commonView.myOrders.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
-import com.visualinnovate.almursheed.commonView.myOrders.models.OrderDetailsItem
 import com.visualinnovate.almursheed.databinding.ItemMyOrderDGHomeBinding
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
+import kotlin.math.roundToInt
 
 class MyOrdersTouristAdapter(
     private val onAddRateClickCallback: (item: MyOrdersItem) -> Unit = {},
@@ -32,6 +31,7 @@ class MyOrdersTouristAdapter(
         val dateOfEntry = itemView.entryDate
         val dateOfExit = itemView.exitDate
         val status = itemView.status
+
         // val days = itemView.daysRecyclerView
         val btnAddRate = itemView.btnAddRate
         val txtAllDetails = itemView.txtAllDetails
@@ -89,7 +89,7 @@ class MyOrdersTouristAdapter(
                     text = context.getString(R.string.expired)
                 }
             }
-            
+
             "5" -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorCancel))
@@ -112,6 +112,15 @@ class MyOrdersTouristAdapter(
             }
         }
 
+        val orderRate: Int = order?.rate.toString().toDouble().roundToInt() ?: 1
+        when (orderRate) {
+            1 -> binding.btnAddRate.setImageResource(R.drawable.ic_star_1)
+            2 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_2)
+            3 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_3)
+            4 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_4)
+            5 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_5)
+            else -> binding.btnAddRate.setImageResource(R.drawable.ic_group_rate)
+        }
         holder.btnAddRate.onDebouncedListener {
             onAddRateClickCallback.invoke(order!!)
         }

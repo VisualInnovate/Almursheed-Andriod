@@ -54,15 +54,12 @@ class AddRateDialogFragment : DialogFragment() {
         binding.ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
             // This callback is called when the user changes the rating
             if (fromUser) {
-                Log.d("AddRateDialogFragment", "Rating $rating")
-                Log.d("AddRateDialogFragment", "Rating-Int ${rating.toInt()}")
                 rate = rating.toInt()
             }
         }
 
         binding.btnSubmit.onDebouncedListener {
             if (validate()) {
-                Log.d("AddRateDialogFragment", "rate $rate")
                 // call api add rate
                 vm.addRate(
                     rate,
@@ -88,7 +85,6 @@ class AddRateDialogFragment : DialogFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 /*is ResponseHandler.Loading -> {
