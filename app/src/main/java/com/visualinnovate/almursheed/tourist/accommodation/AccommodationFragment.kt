@@ -15,7 +15,7 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationBinding
 import com.visualinnovate.almursheed.home.MainActivity
-import com.visualinnovate.almursheed.home.adapter.AccommodationAdapter
+import com.visualinnovate.almursheed.tourist.accommodation.adapter.AccommodationAdapter
 import com.visualinnovate.almursheed.home.model.AccommodationItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant

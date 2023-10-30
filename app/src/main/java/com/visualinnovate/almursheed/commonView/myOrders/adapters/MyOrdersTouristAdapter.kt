@@ -1,10 +1,13 @@
 package com.visualinnovate.almursheed.commonView.myOrders.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.databinding.ItemMyOrderDGHomeBinding
@@ -127,6 +130,13 @@ class MyOrdersTouristAdapter(
 
         holder.txtAllDetails.onDebouncedListener {
             onAllDetailsClickCallback.invoke(order!!)
+        }
+
+        Log.d("order?.status", "order?.status ${order?.status}")
+        if (order?.status == "2") {
+            holder.btnPaid.visible()
+        } else {
+            holder.btnPaid.gone()
         }
 
         holder.btnPaid.onDebouncedListener {

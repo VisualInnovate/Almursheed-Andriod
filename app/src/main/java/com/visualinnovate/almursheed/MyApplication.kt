@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed
 
 import android.app.Application
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.orhanobut.hawk.Hawk
 import com.pusher.pushnotifications.PushNotifications
 import dagger.hilt.android.HiltAndroidApp
@@ -12,5 +13,8 @@ class MyApplication : Application() {
 
         // Initialize Hawk as like shared preference
         Hawk.init(applicationContext).build()
+
+        // Initialize Crashlytics
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
     }
 }

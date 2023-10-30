@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.visualinnovate.almursheed.tourist.HomeFragment"
+        android:name="com.visualinnovate.almursheed.home.view.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/hireFragment"
-        android:name="com.visualinnovate.almursheed.tourist.hire.HireFragment"
+        android:name="com.visualinnovate.almursheed.tourist.hire.ui.HireFragment"
         android:label="HireFragment"
         tools:layout="@layout/fragment_hire" />
 
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/allLocationFragment"
-        android:name="com.visualinnovate.almursheed.tourist.location.AllLocationFragment"
+        android:name="com.visualinnovate.almursheed.tourist.location.ui.AllLocationFragment"
         android:label="All Location"
         tools:layout="@layout/fragment_all_location" />
 
@@ -67,7 +67,7 @@
 
     <dialog
         android:id="@+id/offerDetailsFragment"
-        android:name="com.visualinnovate.almursheed.home.view.OfferDetailsFragment"
+        android:name="com.visualinnovate.almursheed.tourist.offer.OfferDetailsFragment"
         android:label="Offer Details"
         tools:layout="@layout/fragment_offer_details" />
 
@@ -79,7 +79,7 @@
 
     <fragment
         android:id="@+id/locationDetailsFragment"
-        android:name="com.visualinnovate.almursheed.tourist.location.LocationDetailsFragment"
+        android:name="com.visualinnovate.almursheed.tourist.location.ui.LocationDetailsFragment"
         android:label="fragment_location_details"
         tools:layout="@layout/fragment_location_details" />
     <fragment

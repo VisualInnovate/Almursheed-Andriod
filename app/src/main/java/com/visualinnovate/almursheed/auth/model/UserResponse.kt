@@ -43,6 +43,9 @@ data class User(
     @field:SerializedName("id")
     var id: Int? = null,
 
+    @field:SerializedName("notification_id")
+    var notificationId: Int? = null,
+
     @field:SerializedName("state_id")
     var stateId: Int? = null,
 

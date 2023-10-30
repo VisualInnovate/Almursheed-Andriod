@@ -2,6 +2,8 @@ package com.visualinnovate.almursheed.home
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.Network
@@ -38,9 +40,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class MainActivity :
-    AppCompatActivity(),
-    MainViewsManager,
+class MainActivity : AppCompatActivity(), MainViewsManager,
     NavController.OnDestinationChangedListener {
 
     private lateinit var navController: NavController
@@ -98,6 +98,15 @@ class MainActivity :
                 }
             }
         })
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        // Force the activity back to portrait mode
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -185,6 +194,7 @@ class MainActivity :
         binding.bottomNavBar.setItemSelected(R.id.action_home_tourist)
         navController.graph = navGraph
     }
+
     private fun setupDataForCountryAndNationality() {
         // Read and parse the JSON data from the res/raw directory
         val jsonFile = readJSONFromRawResource(resources, R.raw.countries)

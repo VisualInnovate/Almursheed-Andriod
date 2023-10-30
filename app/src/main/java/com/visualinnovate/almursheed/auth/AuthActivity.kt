@@ -2,6 +2,8 @@ package com.visualinnovate.almursheed.auth
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.Network
@@ -67,6 +69,15 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         setupDataForCarModelAndYear()
         setupDataForLanguage()
         setupDataForCity()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        // Force the activity back to portrait mode
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
     }
 
     // init (readJsonFile)

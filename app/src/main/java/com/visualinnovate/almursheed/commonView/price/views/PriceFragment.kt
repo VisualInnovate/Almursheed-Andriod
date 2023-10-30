@@ -4,24 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.commonView.price.viewModels.PriceViewModel
 import com.visualinnovate.almursheed.databinding.FragmentPriceBinding
 import com.visualinnovate.almursheed.home.MainActivity
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
-import com.visualinnovate.almursheed.utils.Utils.allCities
-import com.visualinnovate.almursheed.utils.Utils.allCitiesString
-import com.visualinnovate.almursheed.utils.Utils.filteredCitiesString
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +30,14 @@ class PriceFragment : BaseFragment() {
     private val vm: PriceViewModel by viewModels()
 
     private lateinit var myPricesAdapter: MyPricesAdapter
-    private var cityId = ""
+
+    private var citiesList = ArrayList<ChooserItemModel>()
+    private var cityName: String? = null
+    private var cityId: String? = null
+
     private lateinit var price: String
+
+    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,8 +68,31 @@ class PriceFragment : BaseFragment() {
     }
 
     private fun initViews() {
-        initCitiesSpinner()
+        binding.city.text = cityName ?: getString(R.string.choose_city)
+        // initCitiesSpinner()
+        citiesList = setupCitiesList(Utils.allCities)
         initMyPricesRecyclerView()
+    }
+
+    private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
+        Utils.filterCitiesByCountryId()
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        cities.forEach {
+            val item = ChooserItemModel(name = it.state, id = it.stateId, isSelected = vm.cityName == it.state)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    private fun showCityChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ -> // position
+                cityId = data.id
+                cityName = data.name
+                binding.city.text = cityName
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
     }
 
     private fun initMyPricesRecyclerView() {
@@ -77,9 +105,13 @@ class PriceFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
+        binding.city.onDebouncedListener {
+            showCityChooser()
+        }
+
         binding.btnUpdate.onDebouncedListener {
             if (validate()) {
-                vm.addNewPrice(cityId, price)
+                vm.addNewPrice(cityId!!, price)
             }
         }
     }
@@ -155,7 +187,7 @@ class PriceFragment : BaseFragment() {
         }
     }
 
-    private fun initCitiesSpinner() {
+    /*private fun initCitiesSpinner() {
         val cityList = allCitiesString
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
@@ -181,7 +213,7 @@ class PriceFragment : BaseFragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
             }
-    }
+    }*/
 
     override fun onStart() {
         super.onStart()

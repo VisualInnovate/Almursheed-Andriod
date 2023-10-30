@@ -6,6 +6,14 @@ import com.visualinnovate.almursheed.utils.Constant
 
 object SharedPreference {
 
+    fun setNotificationId(notificationId: Int?) {
+        Hawk.put(Constant.NOTIFICATION_ID, notificationId)
+    }
+
+    fun getNotificationId(): Int? {
+        return Hawk.get(Constant.NOTIFICATION_ID)
+    }
+
     fun saveUser(user: User?) {
         setUserRole(user?.type)
         Hawk.put(Constant.USER, user)
@@ -22,12 +30,21 @@ object SharedPreference {
     fun getUserRole(): String? {
         return Hawk.get(Constant.USER_Role)
     }
+
     fun setUserToken(token: String?) {
         Hawk.put(Constant.USER_TOKEN, token)
     }
 
     fun getUserToken(): String? {
         return Hawk.get(Constant.USER_TOKEN)
+    }
+
+    fun setStateId(stateId: Int?) {
+        Hawk.put(Constant.STATE_ID, stateId)
+    }
+
+    fun getStateId(): Int? {
+        return Hawk.get(Constant.STATE_ID)
     }
 
     fun saveDeviceToken(currentToken: String) {

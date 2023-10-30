@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.common.toSingleEvent
+import com.visualinnovate.almursheed.commonView.myOrders.models.ChangeStatusResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
@@ -14,7 +15,6 @@ import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.http.Query
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,9 +31,9 @@ class MyOrdersViewModel @Inject constructor(
         MutableLiveData()
     val addRate: LiveData<ResponseHandler<RateResponse?>?> = _addRate.toSingleEvent()
 
-    private val _changeStatus: MutableLiveData<ResponseHandler<Void?>?> =
+    private val _changeStatus: MutableLiveData<ResponseHandler<ChangeStatusResponse?>?> =
         MutableLiveData()
-    val changeStatus: LiveData<ResponseHandler<Void?>?> = _changeStatus.toSingleEvent()
+    val changeStatus: LiveData<ResponseHandler<ChangeStatusResponse?>?> = _changeStatus.toSingleEvent()
 
     var orderDetails: MyOrdersItem? = null
 
@@ -65,10 +65,10 @@ class MyOrdersViewModel @Inject constructor(
         }
     }
 
-    fun changeStatus(orderId: Int?, status: String) {
+    fun changeStatus(orderId: Int?, status: String, driverOrGuideId: String, type: String) {
         viewModelScope.launch {
             safeApiCall {
-                apiService.changeStatus(orderId, status)
+                apiService.changeStatus(orderId, status, driverOrGuideId, type)
             }.collect {
                 _changeStatus.value = it
             }

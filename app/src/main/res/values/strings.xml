@@ -253,6 +253,7 @@
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
     <string name="all">All</string>
+    <string name="choose_country">Choose country</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="my_prices">My Prices</string>
@@ -260,7 +261,7 @@
     <string name="car_model">Car Model</string>
     <string name="rating">Rating</string>
     <string name="search">Search</string>
-    <string name="accommodation_category">Accomodation Category</string>
+    <string name="accommodation_category">Accommodation Category</string>
     <string name="number_of_rooms">Number of rooms</string>
     <string name="location_review">Location Review</string>
     <string name="write_your_rate_here">Write Your Rate here</string>

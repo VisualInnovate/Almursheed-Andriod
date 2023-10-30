@@ -97,8 +97,10 @@ class LoginFragment : BaseFragment() {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.setUserToken(it.data?.token)
+                    SharedPreference.setNotificationId(it.data?.user?.notificationId)
                     if (rememberMe) SharedPreference.setUserLoggedIn(true)
 
+                    PushNotifications.clearAllState()
                     tokenProvider
                     pushNotificationsSetUserId()
 
@@ -144,7 +146,7 @@ class LoginFragment : BaseFragment() {
 
     private fun pushNotificationsSetUserId() {
         PushNotifications.setUserId(
-            SharedPreference.getUser()!!.id.toString(),
+            SharedPreference.getNotificationId().toString(),
             tokenProvider,
             object : BeamsCallback<Void, PusherCallbackError> {
                 override fun onFailure(error: PusherCallbackError) {
@@ -166,7 +168,9 @@ class LoginFragment : BaseFragment() {
 //        email = "mohamed.driver77@gmail.com"
 //        password = "123456789"
 
-        email = "mohamed.nasar8710@gmail.com"
+        // email = "mohamed.nasar8710@gmail.com"
+//        email = "mohamed.tourist11@gmail.com"
+        email = "nassar@gmail.com"
         password = "123456789"
 
         if (email.isEmptySting()) {

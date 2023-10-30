@@ -1,17 +1,19 @@
 package com.visualinnovate.almursheed.commonView.myOrders.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
@@ -19,8 +21,11 @@ import com.visualinnovate.almursheed.commonView.myOrders.viewModel.MyOrdersViewM
 import com.visualinnovate.almursheed.databinding.FragmentOrderDetailsBinding
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
 import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
-class OrderDetailsFragment : Fragment() {
+@AndroidEntryPoint
+class OrderDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentOrderDetailsBinding? = null
     private val binding get() = _binding!!
@@ -49,12 +54,14 @@ class OrderDetailsFragment : Fragment() {
         initToolbar()
         initView()
         setBtnListener()
+        subscribeData()
     }
 
     private fun initView() {
         if (days.isEmpty()) {
             getDaysList(vm.orderDetails)
         }
+
         when (userRole) {
             Constant.ROLE_DRIVER, Constant.ROLE_GUIDE -> {
                 binding.btnReject.visible()
@@ -66,7 +73,13 @@ class OrderDetailsFragment : Fragment() {
             else -> {
                 binding.btnReject.gone()
                 binding.btnApprove.gone()
-                binding.btnPaid.visible()
+
+                if (vm.orderDetails?.status == "2") {
+                    binding.btnPaid.visible()
+                } else {
+                    binding.btnPaid.gone()
+                }
+
                 binding.btnCancel.visible()
             }
         }
@@ -88,19 +101,39 @@ class OrderDetailsFragment : Fragment() {
 
     private fun setBtnListener() {
         binding.btnApprove.onDebouncedListener {
-            vm.changeStatus(orderId = vm.orderDetails?.id, "2")
+            vm.changeStatus(
+                orderId = vm.orderDetails?.id,
+                "2",
+                vm.orderDetails?.userId!!.toString(),
+                vm.orderDetails?.userType!!
+            )
         }
 
         binding.btnReject.onDebouncedListener {
-            vm.changeStatus(orderId = vm.orderDetails?.id, "3")
+            vm.changeStatus(
+                orderId = vm.orderDetails?.id,
+                "3",
+                vm.orderDetails?.userId!!.toString(),
+                vm.orderDetails?.userType!!
+            )
         }
 
         binding.btnPaid.onDebouncedListener {
-            vm.changeStatus(orderId = vm.orderDetails?.id, "6")
+            vm.changeStatus(
+                orderId = vm.orderDetails?.id,
+                "6",
+                vm.orderDetails?.userId!!.toString(),
+                vm.orderDetails?.userType!!
+            )
         }
 
         binding.btnCancel.onDebouncedListener {
-            vm.changeStatus(orderId = vm.orderDetails?.id, "5")
+            vm.changeStatus(
+                orderId = vm.orderDetails?.id,
+                "5",
+                vm.orderDetails?.userId!!.toString(),
+                vm.orderDetails?.userType!!
+            )
         }
     }
 
@@ -121,6 +154,33 @@ class OrderDetailsFragment : Fragment() {
             orderDetails.let {
                 val day = DayModel(it!!.state.toString(), it.date.toString())
                 days.add(day)
+            }
+        }
+    }
+
+    private fun subscribeData() {
+        vm.changeStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    toast(it.data?.message!!)
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
             }
         }
     }

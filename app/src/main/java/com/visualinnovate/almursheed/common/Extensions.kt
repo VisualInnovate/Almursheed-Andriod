@@ -20,7 +20,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.home.MainActivity
-import com.visualinnovate.almursheed.home.view.LiveEvent
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -206,8 +205,7 @@ fun Fragment.showAlertDialog(
                 onPositiveCallback()
             }
         builder.create().show()
-    } catch (ex: IllegalStateException) {
+    } catch (ex: IllegalStateException) { // ex: Exception
         //
-    } catch (ex: Exception) {
     }
 }

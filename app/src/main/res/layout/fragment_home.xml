@@ -12,7 +12,7 @@
         android:fillViewport="true"
         android:fitsSystemWindows="true"
         android:visibility="gone"
-        tools:context=".tourist.HomeFragment">
+        tools:context=".home.view.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

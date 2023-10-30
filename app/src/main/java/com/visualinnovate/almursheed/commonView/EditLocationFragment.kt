@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.commonView
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,8 +68,11 @@ class EditLocationFragment : BaseFragment() {
     }
 
     private fun initView() {
-        binding.country.text = countryName ?: ""
-        binding.city.text = cityName ?: ""
+        // binding.country.text = countryName ?: ""
+        // binding.city.text = cityName ?: ""
+
+        binding.country.text = countryName ?: getString(R.string.choose_country)
+        binding.city.text = cityName ?: SharedPreference.getStateId().toString()
 
         allCountries = setupCountriesList()
     }
@@ -88,8 +90,22 @@ class EditLocationFragment : BaseFragment() {
             currentUser.stateId = cityId?.toInt()
             currentUser.desCityId = cityId?.toInt()
 
-            // call api update tourist
-            vm.updateLocationTourist(currentUser)
+            when (currentUser.type) {
+                "Driver" -> {
+                    // call api update tourist
+                    vm.updateLocationDriver(currentUser)
+                }
+
+                "Guides" -> {
+                    // call api update tourist
+                    vm.updateLocationGuide(currentUser)
+                }
+
+                else -> {
+                    // call api update tourist
+                    vm.updateLocationTourist(currentUser)
+                }
+            }
         }
     }
 
@@ -146,18 +162,17 @@ class EditLocationFragment : BaseFragment() {
     }
 
     private fun subscribeData() {
-        vm.editLocationTouristLiveData.observe(viewLifecycleOwner) {
+        vm.editLocationLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    SharedPreference.saveUser(it.data?.user!![0])
-                    toast(it.data.message.toString())
+                    SharedPreference.setStateId(it.data?.user?.get(0)?.destCityId)
+                    toast(it.data?.message.toString())
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {

@@ -2,6 +2,7 @@ package com.visualinnovate.almursheed.network
 
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
+import com.visualinnovate.almursheed.commonView.myOrders.models.ChangeStatusResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
 import com.visualinnovate.almursheed.commonView.price.models.PricesResponse
@@ -188,11 +189,21 @@ interface ApiService {
         // @Body requestBody: RequestBody,
     ): Response<UpdateResponse>
 
+    @POST("drivers/update")
+    suspend fun updateLocationDriver(
+        @Query("dest_city_id") stateId: RequestBody,
+    ): Response<UpdateResponse>
+
+    @Multipart
+    @POST("guides/update")
+    suspend fun updateLocationGuide(
+        @Part("dest_city_id") stateId: RequestBody,
+    ): Response<UpdateResponse>
+
     @Multipart
     @POST("tourists/update")
     suspend fun updateLocationTourist(
-        @Part("country_id") countryId: RequestBody,
-        @Part("state_id") stateId: RequestBody,
+        @Part("dest_city_id") stateId: RequestBody,
     ): Response<UpdateResponse>
 
     @Multipart
@@ -242,11 +253,13 @@ interface ApiService {
         @Query("type") type: Int,
     ): Response<RateResponse>
 
-    @POST("orders/status{id}")
+    @POST("orders/status/{id}")
     suspend fun changeStatus(
         @Path("id") orderId: Int?,
-        @Query("status") status: String
-    ): Response<Void>
+        @Query("status") status: String,
+        @Query("id") driverOrGuideId: String,
+        @Query("type") type: String
+    ): Response<ChangeStatusResponse>
 
     @POST("favourite/create")
     suspend fun addAndRemoveFavorite(

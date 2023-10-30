@@ -22,6 +22,8 @@ class PriceViewModel @Inject constructor(
     application: Application,
 ) : BaseApiResponse(application) {
 
+    var cityName: String? = null
+
     private val _addNewPrice: MutableLiveData<ResponseHandler<Void?>> =
         MutableLiveData()
     val addNewPrice: LiveData<ResponseHandler<Void?>> = _addNewPrice

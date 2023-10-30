@@ -12,7 +12,7 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationDetailsBinding
-import com.visualinnovate.almursheed.home.adapter.AccommodationImagesAdapter
+import com.visualinnovate.almursheed.tourist.accommodation.adapter.AccommodationImagesAdapter
 import com.visualinnovate.almursheed.home.model.AccommodationItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant

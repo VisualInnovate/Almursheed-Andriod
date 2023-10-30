@@ -52,22 +52,22 @@ class MyOrdersFragment : BaseFragment() {
 
     // clicked to driver approve order (trip)
     private val btnApproveClickCallback: (item: MyOrdersItem) -> Unit = {
-        vm.changeStatus(it.id, "2")
+        vm.changeStatus(it.id, "2", it.userId!!.toString(), it.userType!!)
     }
 
     // clicked to driver reject order (trip)
     private val btnRejectClickCallback: (item: MyOrdersItem) -> Unit = {
-        vm.changeStatus(it.id, "3")
+        vm.changeStatus(it.id, "3", it.userId!!.toString(), it.userType!!)
     }
 
     // clicked to tourist paid order (trip)
     private val onPaidClickCallback: (item: MyOrdersItem) -> Unit = {
-        vm.changeStatus(it.id, "6")
+        vm.changeStatus(it.id, "6", it.userId!!.toString(), it.userType!!)
     }
 
     // clicked to tourist cancel order (trip)
     private val onCancelClickCallback: (item: MyOrdersItem) -> Unit = {
-        vm.changeStatus(it.id, "5")
+        vm.changeStatus(it.id, "5", it.userId!!.toString(), it.userType!!)
     }
 
     override fun onCreateView(
@@ -180,6 +180,7 @@ class MyOrdersFragment : BaseFragment() {
         vm.changeStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
+                    toast(it.data?.message!!)
                 }
 
                 is ResponseHandler.Error -> {
