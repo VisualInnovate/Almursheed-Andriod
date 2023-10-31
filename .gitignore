@@ -10,8 +10,6 @@
 /.idea/misc.xml
 /.idea/shelf
 /.idea/ktlint.xml
-/*/.gradle*/
-/*/.gradle/*.lock
 .DS_Store
 /build
 /captures
@@ -21,5 +19,7 @@
 .gradle*
 .externalNativeBuild
 misc.xml
+*.iml
 .gradle
 .idea
+/.gradle/

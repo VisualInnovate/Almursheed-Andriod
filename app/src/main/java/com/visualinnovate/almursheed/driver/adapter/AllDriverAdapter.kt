@@ -53,6 +53,11 @@ class AllDriverAdapter(
         holder.city.text = driver.stateName
         holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
+        driver.priceServices?.let {
+            if (it.isNotEmpty()) {
+                holder.price.text = it[0]?.price.toString() +" $"
+            }
+        }
         // check favorite
         if (driver.isFavourite == false) { // 0 -> un favorite
             holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)

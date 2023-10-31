@@ -79,6 +79,12 @@ class GuideAdapter(
         holder.imgFavorite.onDebouncedListener {
             onFavoriteClickCallBack.invoke(guide)
         }
+
+        guide.priceServices?.let {
+            if (it.isNotEmpty()) {
+                holder.price.text = it[0]?.price.toString() +" $"
+            }
+        }
     }
 
     override fun getItemCount(): Int {

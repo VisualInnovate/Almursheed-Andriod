@@ -70,6 +70,11 @@ class DriverAdapter(
         holder.city.text = driver.stateName
         holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
+        driver.priceServices?.let {
+            if (it.isNotEmpty()) {
+                holder.price.text = it[0]?.price.toString() +" $"
+            }
+        }
         // check status
         /*if (driver.status == 1) { // false -> offline
             holder.imgStatus.setImageResource(R.drawable.ic_active_online)

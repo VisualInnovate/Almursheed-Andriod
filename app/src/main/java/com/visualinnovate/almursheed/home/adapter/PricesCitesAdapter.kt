@@ -14,6 +14,7 @@ import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
+import com.visualinnovate.almursheed.commonView.price.models.PriceItem
 import com.visualinnovate.almursheed.databinding.ItemDaysBinding
 import com.visualinnovate.almursheed.home.model.PriceServicesItem
 
@@ -21,7 +22,7 @@ class PricesCitesAdapter(
     private val selectDaysCallback: ((day: String, cityId: Int) -> Unit)? = null,
 ) : RecyclerView.Adapter<PricesCitesAdapter.PricesCitesViewHolder>() {
 
-    private var citesList: List<PriceServicesItem> = ArrayList()
+    private var citesList: List<PriceItem> = ArrayList()
     private var citesListString: ArrayList<String> = ArrayList()
     private var days: List<DayModel> = ArrayList()
     private var cityId: Int? = null
@@ -74,11 +75,11 @@ class PricesCitesAdapter(
         return days.size
     }
 
-    fun submitData(daysList: ArrayList<DayModel>, cities: ArrayList<PriceServicesItem>) {
+    fun submitData(daysList: ArrayList<DayModel>, cities: ArrayList<PriceItem>) {
         citesList = cities
         citesListString.clear()
         cities.forEach {
-            citesListString.add(it.stateName.toString())
+            citesListString.add(it.cityName.toString())
         }
         days = daysList
         notifyDataSetChanged()

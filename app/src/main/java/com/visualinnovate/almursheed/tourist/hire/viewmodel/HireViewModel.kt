@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.toSingleEvent
+import com.visualinnovate.almursheed.commonView.price.models.PriceItem
 import com.visualinnovate.almursheed.home.model.CreateOrderResponse
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
@@ -28,7 +29,7 @@ class HireViewModel @Inject constructor(
 
     var order: CreateOrderResponse? = null
 
-    var selectedDriverAndGuideCities: ArrayList<PriceServicesItem> = ArrayList()
+    var selectedDriverAndGuideCities: ArrayList<PriceItem> = ArrayList()
 
     fun getUserCities(user: DriverAndGuideItem) {
         selectedDriverAndGuideCities.clear()
@@ -96,8 +97,6 @@ class HireViewModel @Inject constructor(
     }
 
     fun createOrder(requestCreateOrder: RequestCreateOrder) {
-        Log.d("createOrder", "requestCreateOrder11 ${SharedPreference.getUser()?.countryId}")
-        Log.d("createOrder", "requestCreateOrder $requestCreateOrder")
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
@@ -109,7 +108,6 @@ class HireViewModel @Inject constructor(
     }
 
     fun submitOrder(orderId: Int) {
-        Log.d("submitOrder", "orderId $orderId")
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar

@@ -60,6 +60,11 @@ class AllGuideAdapter(
         // holder.language.text = guide.language
         holder.rating.text = (guide.totalRating ?: 0.0).toString()
 
+        guide.priceServices?.let {
+            if (it.isNotEmpty()) {
+                holder.price.text = it[0]?.price.toString() +" $"
+            }
+        }
         // check favorite
         if (guide.isFavourite == false) { // false -> un favorite
             holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)

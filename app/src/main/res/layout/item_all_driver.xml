@@ -104,7 +104,7 @@
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:text="$150.0"
+            android:text="$00.00"
             android:textColor="@color/black"
             android:textSize="@dimen/space_10x_sp"
             app:layout_constraintEnd_toEndOf="parent"

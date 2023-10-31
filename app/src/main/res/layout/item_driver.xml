@@ -92,7 +92,7 @@
             android:ellipsize="end"
             android:gravity="end|center_vertical"
             android:maxLines="1"
-            android:text="$150.00"
+            android:text="$00.00"
             android:textColor="@color/white"
             android:textSize="@dimen/space_12x_sp"
             app:layout_constraintBottom_toBottomOf="@id/btnBookNow"

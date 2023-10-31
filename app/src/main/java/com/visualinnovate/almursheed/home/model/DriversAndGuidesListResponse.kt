@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.home.model
 
 import com.google.gson.annotations.SerializedName
+import com.visualinnovate.almursheed.commonView.price.models.PriceItem
 
 data class DriversAndGuidesListResponse(
 
@@ -27,7 +28,6 @@ data class DriverAndGuideItem(
 
     @field:SerializedName("state_id")
     val stateId: Int? = null,
-
 
     @field:SerializedName("image_background")
     val imageBackground: String? = null,
@@ -95,8 +95,8 @@ data class DriverAndGuideItem(
     @field:SerializedName("is_favourite")
     var isFavourite: Boolean? = null,
 
-    @field:SerializedName("price_services")
-    val priceServices: List<PriceServicesItem?>? = null,
+    @field:SerializedName(value = "price_services", alternate = ["priceServices"])
+    val priceServices: ArrayList<PriceItem?>? = null,
 )
 
 data class PriceServicesItem(

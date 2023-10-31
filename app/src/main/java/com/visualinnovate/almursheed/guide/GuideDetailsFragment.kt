@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.databinding.FragmentGuideDetailsBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
-import com.visualinnovate.almursheed.home.model.GuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -30,6 +31,8 @@ class GuideDetailsFragment : BaseFragment() {
 
     private var guideId: Int? = null
 
+    private lateinit var pricesAdapter: MyPricesAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +46,7 @@ class GuideDetailsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         guideId = requireArguments().getInt(Constant.GUIDE_ID)
         initToolbar()
+        initPricesRecyclerView()
         subscribeData()
     }
 
@@ -68,6 +72,7 @@ class GuideDetailsFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // bind data to the view
                     initViews(it.data!!.guide)
+                    pricesAdapter.submitData(it.data.guide!!.priceServices)
                 }
 
                 is ResponseHandler.Error -> {
@@ -103,6 +108,15 @@ class GuideDetailsFragment : BaseFragment() {
         binding.guideDescription.text = guide?.bio ?: ""
         // binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
         binding.guideReview.text = "(${guide?.count_rate ?: 0} review)"
+    }
+
+    private fun initPricesRecyclerView() {
+        pricesAdapter = MyPricesAdapter()
+        binding.pricesRV.apply {
+            itemAnimator = DefaultItemAnimator()
+            pricesAdapter.setHasStableIds(true)
+            adapter = pricesAdapter
+        }
     }
 
     override fun onDestroy() {

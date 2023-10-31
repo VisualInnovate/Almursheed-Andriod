@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.databinding.FragmentDriverDetailsBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
@@ -28,6 +30,8 @@ class DriverDetailsFragment : BaseFragment() {
     private val vm: HomeViewModel by viewModels()
 
     private var driverId: Int? = null
+    private lateinit var pricesAdapter: MyPricesAdapter
+
 
     private val btnBackCallBackFunc: () -> Unit = {
         findNavController().navigateUp()
@@ -47,6 +51,7 @@ class DriverDetailsFragment : BaseFragment() {
         driverId = requireArguments().getInt(Constant.DRIVER_ID)
         initToolbar()
         subscribeData()
+        initPricesRecyclerView()
     }
 
     override fun onStart() {
@@ -71,6 +76,8 @@ class DriverDetailsFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // bind data to the view
                     initViews(it.data!!.driver)
+                    pricesAdapter.submitData(it.data.driver!!.priceServices)
+
                 }
 
                 is ResponseHandler.Error -> {
@@ -125,6 +132,14 @@ class DriverDetailsFragment : BaseFragment() {
         // binding.driverCity.text = driverArgs?.driverCity ?: ""
     }
 
+    private fun initPricesRecyclerView() {
+        pricesAdapter = MyPricesAdapter()
+        binding.pricesRV.apply {
+            itemAnimator = DefaultItemAnimator()
+            pricesAdapter.setHasStableIds(true)
+            adapter = pricesAdapter
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

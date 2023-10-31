@@ -90,10 +90,8 @@ class HireFragment : BaseFragment() {
         selectedDriverGuideId = it.id!!
         binding.chooseDriver.text = it.name
         daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
-
-        Log.d("initView", "vm.selectedDriverAndGuideCities ${vm.selectedDriverAndGuideCities}")
         vm.selectedDriverAndGuideCities.forEach {
-            val item = ChooserItemModel(name = it.stateName, id = it.cityId.toString())
+            val item = ChooserItemModel(name = it.cityName, id = it.cityId.toString())
             citiesList.add(item)
         }
     }
@@ -120,17 +118,14 @@ class HireFragment : BaseFragment() {
     }
 
     private fun callGetDriverAndGuide() {
-        Log.d(
-            "onStart",
-            "SharedPreference.getUser()?.desCityId ${SharedPreference.getUser()?.desCityId}"
-        )
+        Log.d("MyDebugData","HireViewModel : getAllDriversByDistCityId :  " +SharedPreference.getStateId()?.toInt()    );
         if (SharedPreference.getUser()?.desCityId != null || SharedPreference.getUser()?.destCityId != null || SharedPreference.getStateId() != null) {
             vm.getAllDriversByDistCityId()
             vm.getAllGuidesByDistCityId()
         } else {
             showAlertDialog(
-                "Destination city id is empty",
-                "Please go to add city from update profile"
+                "Destination city is empty",
+                "Please go to add city from update profile",
             ) {
                 findNavController().customNavigate(R.id.editLocationFragment)
             }
@@ -194,10 +189,9 @@ class HireFragment : BaseFragment() {
     private fun showCityChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet =
-            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, position ->
+            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ ->
                 inCity = data.id
                 binding.city.text = data.name
-                toast(data.toString())
             })
         showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
     }
@@ -212,8 +206,6 @@ class HireFragment : BaseFragment() {
             isForStartDate = false
             showDatePicker()
         }
-
-        binding.icSwitchDate.onDebouncedListener {}
 
         binding.driver.onDebouncedListener {
             selectedDriverGuideId = -1
@@ -234,7 +226,6 @@ class HireFragment : BaseFragment() {
         }
 
         binding.btnHire.onDebouncedListener {
-            // navigate to payment screen
             val order = Order(
                 trip_type = tripType,
                 start_date = startDate.formatDate(),
@@ -246,7 +237,7 @@ class HireFragment : BaseFragment() {
 
             if (tripType == 1) {
                 selectedDays.forEach {
-                    orderDetailsList.add(OrderDetail(date = it.date!!, inCity!!.toInt()))
+                    orderDetailsList.add(OrderDetail(date = it.date ?: "", inCity?.toInt() ?: 0))
                 }
             }
 
@@ -297,8 +288,8 @@ class HireFragment : BaseFragment() {
         vm.createOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    Log.d("ResponseHandler.Error", it.data.toString())
                     vm.order = it.data
+                    selectedDays.clear()
                     showReceiptDialog()
                 }
 
@@ -306,7 +297,6 @@ class HireFragment : BaseFragment() {
                     // show error message
                     toast(it.message)
                     // showReceiptDialog()
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -391,7 +381,6 @@ class HireFragment : BaseFragment() {
 
     private fun updateSelectedDatesTextView() {
         // binding.daysRecyclerView.visible()
-
         if (isForStartDate) {
             binding.startDate.text = startDate.formatDate()
             binding.dayNumber.text = startDate.formatDate()

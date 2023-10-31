@@ -7,6 +7,7 @@
     android:background="@color/bg_edit_text"
     tools:context=".driver.DriverDetailsFragment">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -385,6 +386,18 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pricesRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="@dimen/space_3x"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/cvCarInfo"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_price" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHire"
                     style="@style/customButtonStyle"
@@ -394,12 +407,14 @@
                     android:layout_marginBottom="@dimen/space_4x"
                     android:text="@string/hire"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cvCarInfo" />
+                    app:layout_constraintTop_toBottomOf="@id/pricesRV" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </ScrollView>
