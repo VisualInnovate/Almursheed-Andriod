@@ -118,8 +118,8 @@ class HireFragment : BaseFragment() {
     }
 
     private fun callGetDriverAndGuide() {
-        Log.d("MyDebugData","HireViewModel : getAllDriversByDistCityId :  " +SharedPreference.getStateId()?.toInt()    );
-        if (SharedPreference.getUser()?.desCityId != null || SharedPreference.getUser()?.destCityId != null || SharedPreference.getStateId() != null) {
+        if (SharedPreference.getUser().desCityId != null || SharedPreference.getUser().destCityId != null || SharedPreference.getStateId() != null) {
+            // Log.d("MyDebugData","HireViewModel : getAllDriversByDistCityId :  " + SharedPreference.getStateId().toString());
             vm.getAllDriversByDistCityId()
             vm.getAllGuidesByDistCityId()
         } else {

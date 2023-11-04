@@ -17,12 +17,35 @@ object Utils {
     val allCities = ArrayList<CityItem>()
     val allNationalities = ArrayList<String>()
 
+    fun getStateName(stateId: Int): String {
+        var stateName = ""
+        allCities.forEach { it ->
+            if (it.stateId == stateId.toString()) {
+                stateName = it.state
+            }
+        }
+        return stateName
+    }
+
+    fun getCountryName(stateId: Int): String {
+        var stateName = ""
+        allCities.forEach { it ->
+            if (it.stateId == stateId.toString()) {
+                stateName = it.state
+            }
+        }
+        return stateName
+    }
+
     val allCitiesString: ArrayList<String>
         get() {
             allCities.toMutableList().map { it.state }.also {
                 return it as ArrayList<String>
             }
         }
+
+    val filteredNationalitiesString = ArrayList<String>()
+    val filteredNationalities = ArrayList<CountryItem>()
 
     val filteredCitiesString = ArrayList<String>()
     val filteredCities = ArrayList<CityItem>()

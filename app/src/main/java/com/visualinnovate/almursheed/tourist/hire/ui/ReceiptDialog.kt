@@ -79,7 +79,6 @@ class ReceiptDialog : DialogFragment() {
     }
 
     private fun setBtnListener() {
-        Log.d("vm.order?.order_id!!", "vm.order?.order_id!! ${vm.order?.order_id!!}")
         binding.btnHire.onDebouncedListener {
             vm.submitOrder(vm.order?.order_id!!)
         }

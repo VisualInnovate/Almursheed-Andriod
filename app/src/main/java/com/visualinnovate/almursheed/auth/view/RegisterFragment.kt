@@ -34,9 +34,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment() {
+
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
+
     private val vm: RegisterViewModel by viewModels()
+
     private lateinit var role: String
     private lateinit var username: String
     private lateinit var email: String
@@ -44,11 +47,6 @@ class RegisterFragment : BaseFragment() {
     private var countryId: Int? = null
     private var cityId: Int? = null
     private lateinit var password: String
-
-    private val btnLoginCallBackListener: () -> Unit = {
-        // navigate to login
-        findNavController().customNavigate(R.id.loginFragment)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,7 +110,7 @@ class RegisterFragment : BaseFragment() {
         }
         //    binding.btnUploadPicture.gone()
         //   binding.txtPersonalPicture.gone()
-        initNationalitySpinner()
+        // initNationalitySpinner()
     }
 
     private fun initToolbar() {
@@ -125,8 +123,51 @@ class RegisterFragment : BaseFragment() {
         )
         binding.appBar.showButtonOneWithoutImage(
             getString(R.string.login),
-            btnLoginCallBackListener,
-        )
+        ) { findNavController().customNavigate(R.id.loginFragment) }
+    }
+
+    private fun setBtnListener() {
+        binding.btnNext.setOnClickListener {
+            if (validate()) {
+                when (role) {
+                    ROLE_GUIDE -> {
+                        vm.registerGuide(
+                            username,
+                            email,
+                            password,
+                            nationalityName,
+                            countryId,
+                            cityId,
+                            role,
+                        )
+                    }
+
+                    ROLE_DRIVER -> {
+                        vm.registerDriver(
+                            username,
+                            email,
+                            password,
+                            nationalityName,
+                            countryId,
+                            cityId,
+                            role,
+                        )
+                    }
+
+                    ROLE_TOURIST -> {
+                        vm.registerTourist(
+                            username,
+                            email,
+                            password,
+                            nationalityName,
+                            countryId,
+                            cityId,
+                            role,
+                        )
+                    }
+                }
+            }
+        }
     }
 
     private fun initNationalitySpinner() {
@@ -231,49 +272,6 @@ class RegisterFragment : BaseFragment() {
             }
     }
 
-    private fun setBtnListener() {
-        binding.btnNext.setOnClickListener {
-            if (validate()) {
-                when (role) {
-                    ROLE_GUIDE -> {
-                        vm.registerGuide(
-                            username,
-                            email,
-                            password,
-                            nationalityName,
-                            countryId!!,
-                            cityId!!,
-                            role,
-                        )
-                    }
-
-                    ROLE_DRIVER -> {
-                        vm.registerDriver(
-                            username,
-                            email,
-                            password,
-                            nationalityName,
-                            countryId!!,
-                            cityId!!,
-                            role,
-                        )
-                    }
-
-                    ROLE_TOURIST -> {
-                        vm.registerTourist(
-                            username,
-                            email,
-                            password,
-                            nationalityName,
-                            countryId!!,
-                            cityId,
-                            role,
-                        )
-                    }
-                }
-            }
-        }
-    }
 
     private fun validate(): Boolean {
         var isValid = true
@@ -324,4 +322,17 @@ class RegisterFragment : BaseFragment() {
         super.onDestroy()
         _binding = null
     }
+
+    /*private fun mapStringToChooserItemList(list: ArrayList<String>): ArrayList<ChooserItemModel> {
+        val list = ArrayList<ChooserItemModel>()
+        list.forEach {
+            val chooserItemModel = ChooserItemModel()
+            // chooserItemModel.name =
+        }
+    }*/
 }
+
+/*
+
+
+ */

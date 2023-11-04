@@ -74,7 +74,6 @@ class FilterAccommodationFragment : Fragment() {
                 initData()
                 initView()
             }
-
         }
     }
 
@@ -103,6 +102,7 @@ class FilterAccommodationFragment : Fragment() {
 
         // accommodationCategoryAdapter.submitData(data)
     }
+
     private fun setBtnListener() {
         binding.country.onDebouncedListener {
             showCountryChooser()

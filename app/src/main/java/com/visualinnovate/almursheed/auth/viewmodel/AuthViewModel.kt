@@ -26,12 +26,10 @@ class AuthViewModel @Inject constructor(
     val loginLiveData: LiveData<ResponseHandler<UserResponse?>> =
         _loginMutableData
 
-
     private val _forgetPasswordMutableData: MutableLiveData<ResponseHandler<MessageResponse?>> =
         MutableLiveData()
     val forgetPasswordLiveData: LiveData<ResponseHandler<MessageResponse?>> =
         _forgetPasswordMutableData.toSingleEvent()
-
 
     private val _resetPasswordMutableData: MutableLiveData<ResponseHandler<MessageResponse?>> =
         MutableLiveData()
@@ -39,7 +37,6 @@ class AuthViewModel @Inject constructor(
         _resetPasswordMutableData.toSingleEvent()
 
     fun login(email: String, password: String) {
-        Log.d("login", "email $email password $password")
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar

@@ -65,7 +65,7 @@ class HireViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDriversByDistCityId(SharedPreference.getStateId()!!.toInt())
+                apiService.getAllDriversByDistCityId(SharedPreference.getStateId()!!)
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {

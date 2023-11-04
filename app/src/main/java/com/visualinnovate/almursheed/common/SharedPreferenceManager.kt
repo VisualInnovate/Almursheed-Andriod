@@ -19,7 +19,7 @@ object SharedPreference {
         Hawk.put(Constant.USER, user)
     }
 
-    fun getUser(): User? {
+    fun getUser(): User {
         return Hawk.get(Constant.USER)
     }
 

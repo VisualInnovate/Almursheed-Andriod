@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.commonView
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.visualinnovate.almursheed.commonView.profile.ProfileViewModel
 import com.visualinnovate.almursheed.databinding.FragmentEditLocationBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
+import com.visualinnovate.almursheed.utils.Utils.getStateName
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +32,7 @@ class EditLocationFragment : BaseFragment() {
 
     private val vm: ProfileViewModel by viewModels()
 
-    private val currentUser: User = SharedPreference.getUser()!!
+    private val currentUser: User = SharedPreference.getUser()
 
     private var cityId: String? = null
     private var cityName: String? = null
@@ -68,11 +70,15 @@ class EditLocationFragment : BaseFragment() {
     }
 
     private fun initView() {
-        // binding.country.text = countryName ?: ""
-        // binding.city.text = cityName ?: ""
-
         binding.country.text = countryName ?: getString(R.string.choose_country)
-        binding.city.text = cityName ?: SharedPreference.getStateId().toString()
+        // binding.city.text = cityName ?: SharedPreference.getStateId().toString()
+
+        if (SharedPreference.getStateId() != null) {
+            val name = getStateName(SharedPreference.getStateId()!!)
+            binding.city.text = cityName ?: name
+        } else {
+            binding.country.text = getString(R.string.choose_city)
+        }
 
         allCountries = setupCountriesList()
     }
@@ -119,7 +125,7 @@ class EditLocationFragment : BaseFragment() {
                 countryName = data.name
                 binding.country.text = countryName
                 cityName = null
-                binding.city.text = getString(R.string.all)
+                binding.city.text = getString(R.string.choose_city)
             })
         showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
     }
@@ -166,8 +172,8 @@ class EditLocationFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    SharedPreference.setStateId(it.data?.user?.get(0)?.destCityId)
-                    toast(it.data?.message.toString())
+                    SharedPreference.setStateId(it.data?.user?.get(0)?.destCityId!!)
+                    toast(it.data.message.toString())
                 }
 
                 is ResponseHandler.Error -> {

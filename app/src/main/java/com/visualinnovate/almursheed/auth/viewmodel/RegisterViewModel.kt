@@ -29,7 +29,7 @@ class  RegisterViewModel @Inject constructor(
     val registerUserLive: LiveData<ResponseHandler<UserResponse?>> =
         _registerUserMutable.toSingleEvent()
 
-    fun registerGuide(name: String, email: String, password: String, nationality: String, countryId: Int, cityId: Int, type: String) {
+    fun registerGuide(name: String, email: String, password: String, nationality: String?, countryId: Int?, cityId: Int?, type: String) {
         val requestBody = createBodyRequestDriverOrGuide(name, email, password, nationality, countryId, cityId, type)
         viewModelScope.launch {
             safeApiCall {
@@ -41,7 +41,7 @@ class  RegisterViewModel @Inject constructor(
         }
     }
 
-    fun registerDriver(name: String, email: String, password: String, nationality: String, countryId: Int, cityId: Int, type: String) {
+    fun registerDriver(name: String, email: String, password: String, nationality: String?, countryId: Int?, cityId: Int?, type: String) {
         val requestBody = createBodyRequestDriverOrGuide(name, email, password, nationality, countryId, cityId, type)
         viewModelScope.launch {
             safeApiCall {
@@ -53,7 +53,7 @@ class  RegisterViewModel @Inject constructor(
         }
     }
 
-    fun registerTourist(name: String, email: String, password: String, nationality: String, countryId: Int, cityId: Int?, type: String) {
+    fun registerTourist(name: String, email: String, password: String, nationality: String?, countryId: Int?, cityId: Int?, type: String) {
         val requestBody = createBodyRequestTourist(name, email, password, nationality, countryId, cityId, type)
         viewModelScope.launch {
             safeApiCall {
@@ -76,7 +76,7 @@ class  RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun createBodyRequestDriverOrGuide(name: String, email: String, password: String, nationality: String, countryId: Int, cityId: Int, type: String): RequestBody {
+    private fun createBodyRequestDriverOrGuide(name: String, email: String, password: String, nationality: String?, countryId: Int?, cityId: Int?, type: String): RequestBody {
         val requestData = mapOf(
             "name" to name,
             "email" to email,
@@ -91,7 +91,7 @@ class  RegisterViewModel @Inject constructor(
         return jsonData.toRequestBody("application/json".toMediaTypeOrNull())
     }
 
-    private fun createBodyRequestTourist(name: String, email: String, password: String, nationality: String, countryId: Int?, cityId: Int?, type: String): RequestBody {
+    private fun createBodyRequestTourist(name: String, email: String, password: String, nationality: String?, countryId: Int?, cityId: Int?, type: String): RequestBody {
         val requestData = mapOf(
             "name" to name,
             "email" to email,

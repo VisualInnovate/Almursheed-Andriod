@@ -28,7 +28,6 @@ class ProfileViewModel @Inject constructor(
     application: Application,
 ) : BaseApiResponse(application) {
 
-
     // var updateDriveItem = UpdateDriveItem()
     private val imagesList = ArrayList<MultipartBody.Part>()
 

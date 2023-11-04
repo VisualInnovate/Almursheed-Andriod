@@ -8,7 +8,7 @@
     tools:context=".commonView.MoreFragment">
 
     <com.visualinnovate.almursheed.common.AppBarView
-        android:id="@+id/appBarMore"
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_height"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,7 +19,7 @@
         android:layout_marginHorizontal="@dimen/space_4x"
         android:padding="@dimen/space_3x"
         android:background="@drawable/bg_rectangle_corner_white"
-        app:layout_constraintTop_toBottomOf="@id/appBarMore">
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <TextView
             android:id="@+id/liveChat"

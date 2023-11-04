@@ -46,8 +46,8 @@ class ForgetPasswordFragment : BaseFragment() {
     }
 
     private fun initToolbar() {
-        binding.appBarForgetPassword.setTitleString(getString(R.string.forgot_password))
-        binding.appBarForgetPassword.setTitleCenter(false)
+        binding.appBar.setTitleString(getString(R.string.forgot_password))
+        binding.appBar.setTitleCenter(false)
     }
 
     private fun setBtnListener() {
@@ -63,8 +63,7 @@ class ForgetPasswordFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     hideAuthLoading()
-                    Log.d("Success", "${it.data!!.message}")
-                    toast(it.data.message.toString())
+                    toast(it.data?.message.toString())
                     // navigate to verify and pass email
                     val bundle = Bundle()
                     bundle.putString(Constant.EMAIL, email)
@@ -94,7 +93,6 @@ class ForgetPasswordFragment : BaseFragment() {
     private fun validate(): Boolean {
         var isValid = true
         email = binding.edtEmailAddress.value
-        email = "mohamed.nasar8710@gmail.com"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

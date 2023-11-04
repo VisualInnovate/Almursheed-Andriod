@@ -78,6 +78,7 @@ class LoginFragment : BaseFragment() {
                 binding.imgRememberMe.setImageResource(R.drawable.ic_remember_me_unselected)
             }
         }
+
         binding.txtForgetPassword.setOnClickListener {
             findNavController().customNavigate(R.id.forgetPasswordFragment)
         }
@@ -97,6 +98,7 @@ class LoginFragment : BaseFragment() {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.setUserToken(it.data?.token)
+                    // SharedPreference.setStateId(it.data?.user?.desCityId)
                     SharedPreference.setNotificationId(it.data?.user?.notificationId)
                     if (rememberMe) SharedPreference.setUserLoggedIn(true)
 
@@ -128,36 +130,33 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-    private val tokenProvider = BeamsTokenProvider(
-        "https://mursheed.visualinnovate.net/api/pusher/beams-auth",
-        object : AuthDataGetter {
-            override fun getAuthData(): AuthData {
-                return AuthData(
-                    // Headers and URL query params your auth endpoint needs to
-                    // request a Beams Token for a given user
-                    headers = hashMapOf(
-                        // for example:
-                        "Authorization" to "Bearer ${SharedPreference.getUserToken()!!}"
-                    ),
-                )
-            }
-        }
-    )
+    private val tokenProvider =
+        BeamsTokenProvider("https://mursheed.visualinnovate.net/api/pusher/beams-auth",
+            object : AuthDataGetter {
+                override fun getAuthData(): AuthData {
+                    return AuthData(
+                        // Headers and URL query params your auth endpoint needs to
+                        // request a Beams Token for a given user
+                        headers = hashMapOf(
+                            // for example:
+                            "Authorization" to "Bearer ${SharedPreference.getUserToken()!!}"
+                        ),
+                    )
+                }
+            })
 
     private fun pushNotificationsSetUserId() {
-        PushNotifications.setUserId(
-            SharedPreference.getNotificationId().toString(),
+        PushNotifications.setUserId(SharedPreference.getNotificationId().toString(),
             tokenProvider,
             object : BeamsCallback<Void, PusherCallbackError> {
                 override fun onFailure(error: PusherCallbackError) {
-                    Log.e("BeamsAuth", "Could not login to Beams: ${error.message}");
+                    Log.e("BeamsAuth", "Could not login to Beams: ${error.message}")
                 }
 
                 override fun onSuccess(vararg values: Void) {
-                    Log.i("BeamsAuth", "Beams login success");
+                    Log.i("BeamsAuth", "Beams login success")
                 }
-            }
-        )
+            })
     }
 
     private fun validate(): Boolean {
@@ -165,14 +164,13 @@ class LoginFragment : BaseFragment() {
         email = binding.edtEmailAddress.value
         password = binding.edtPassword.value
 
-//        email = "mohamed.driver77@gmail.com"
-//        password = "123456789"
-
+        // email = "mohamed.driver@gmail.com"
+        // password = "123456789"
 
         // email = "mohamed.nasar8710@gmail.com"
 //        email = "mohamed.tourist11@gmail.com"
-        email = "mohamed.tourist11@gmail.com"
-        password = "123456789"
+//        email = "nassar@gmail.com"
+//        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

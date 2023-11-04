@@ -43,9 +43,9 @@ class MoreFragment : Fragment() {
     }
 
     private fun initToolbar() {
-        binding.appBarMore.setTitleString(getString(R.string.more))
-        binding.appBarMore.setTitleCenter(true)
-        binding.appBarMore.useBackButton(
+        binding.appBar.setTitleString(getString(R.string.more))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
             true,
             { findNavController().navigateUp() },
             R.drawable.ic_back,
@@ -68,6 +68,7 @@ class MoreFragment : Fragment() {
             SharedPreference.saveUser(null)
             SharedPreference.setUserToken(null)
             SharedPreference.setUserLoggedIn(false)
+            SharedPreference.setStateId(null)
             PushNotifications.clearAllState()
             requireActivity().startAuthActivity()
         }
