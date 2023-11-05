@@ -10,6 +10,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.auth.viewmodel.VerificationViewModel
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
@@ -28,14 +29,16 @@ class VerifyAccountFragment : BaseFragment() {
     private var _binding: FragmentVerifyAccountBinding? = null
     private val binding get() = _binding!!
     private val vm: VerificationViewModel by viewModels()
+    private val authVm: AuthViewModel by viewModels()
 
     private lateinit var email: String
     private lateinit var type: String
     private var otpCode: String? = null
     private var timeLeft: Long = 0
     private var countDownTimer: CountDownTimer? = null
-    private var TIMER_COUNTDOWN_INITIAL: Long = 120000
+    private var TIMER_COUNTDOWN_INITIAL: Long = 30000
     private var enableResendCode = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,7 +87,9 @@ class VerifyAccountFragment : BaseFragment() {
         }
         binding.resendCode.onDebouncedListener {
             if (enableResendCode) {
-            } // call api
+                // call api
+                authVm.forgetPassword(email, "2")
+            }
         }
         //
         binding.btnVerify.onDebouncedListener {
@@ -99,6 +104,7 @@ class VerifyAccountFragment : BaseFragment() {
         vm.validateOtpLive.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
+                    setTimer(TIMER_COUNTDOWN_INITIAL)
                     toast(it.data?.message ?: "")
                     // navigate to verify and pass email
                     val bundle = Bundle()
@@ -114,7 +120,6 @@ class VerifyAccountFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error ", "forgetPassword ${it.message}")
                 }
 
                 is ResponseHandler.Loading -> {
@@ -127,6 +132,27 @@ class VerifyAccountFragment : BaseFragment() {
                     hideAuthLoading()
                 }
 
+                else -> {}
+            }
+        }
+
+        authVm.forgetPasswordLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    toast(it.data?.message.toString())
+                }
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                }
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showAuthLoading()
+                }
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideAuthLoading()
+                }
                 else -> {}
             }
         }

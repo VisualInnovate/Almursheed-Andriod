@@ -8,7 +8,8 @@ object Constant {
     const val USER = "user"
     const val USER_TOKEN = "user_token"
     const val NOTIFICATION_ID = "notification_id"
-    const val STATE_ID = "state_id" //state_id or dest_city_id or des_city_id
+    const val CITY_ID = "city_id" //state_id or dest_city_id or des_city_id
+    const val COUNTRY_ID = "country_id"
     const val USER_Role = "user_role"
 
     const val KEY_CITY_TOURIST_CHOOSSED = "City tourist choossed"
@@ -30,6 +31,7 @@ object Constant {
     const val ACCOMMODATION_ID = "AccommodationId"
     const val ROLE_TOURIST = "Tourist"
     const val ROLE_GUIDE = "Guide"
+    const val ROLE_GUIDES = "Guides"
     const val ROLE_DRIVER = "Driver"
 
     const val ACCOMMODATION = "accommodation"

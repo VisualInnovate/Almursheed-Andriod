@@ -6,9 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemAllGuideBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.utils.Constant
 
 class AllGuideAdapter(
     private val btnAccommodationClickCallBack: (guide: DriverAndGuideItem) -> Unit,
@@ -50,12 +54,19 @@ class AllGuideAdapter(
 
     @SuppressLint("SetTextI18n")
     private fun bindData(holder: AllGuideViewHolder, guide: DriverAndGuideItem) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER
+            || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
+        ) {
+            binding.imgFavorite.gone()
+        } else {
+            binding.imgFavorite.visible()
+        }
+
         // set data
         Glide.with(holder.itemView.context)
             .load(guide.imageBackground)
             .into(holder.imgGuide)
         holder.guideName.text = guide.name
-        // holder.price.text = "$ ${guide.guidePrice}"
         holder.city.text = guide.stateName
         // holder.language.text = guide.language
         holder.rating.text = (guide.totalRating ?: 0.0).toString()

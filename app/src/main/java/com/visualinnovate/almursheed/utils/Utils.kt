@@ -12,30 +12,12 @@ object Utils {
 
     var selectedCountryId: String = ""
     var selectedNationalName: String = ""
-    val allCountries = ArrayList<CountryItem>()
-    val allLanguages = ArrayList<LanguageItem>()
-    val allCities = ArrayList<CityItem>()
+
     val allNationalities = ArrayList<String>()
+    val allCountries = ArrayList<CountryItem>()
+    val allCities = ArrayList<CityItem>()
 
-    fun getStateName(stateId: Int): String {
-        var stateName = ""
-        allCities.forEach { it ->
-            if (it.stateId == stateId.toString()) {
-                stateName = it.state
-            }
-        }
-        return stateName
-    }
-
-    fun getCountryName(stateId: Int): String {
-        var stateName = ""
-        allCities.forEach { it ->
-            if (it.stateId == stateId.toString()) {
-                stateName = it.state
-            }
-        }
-        return stateName
-    }
+    val allLanguages = ArrayList<LanguageItem>()
 
     val allCitiesString: ArrayList<String>
         get() {

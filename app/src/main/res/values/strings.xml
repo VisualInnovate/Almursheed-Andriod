@@ -78,7 +78,7 @@
     <string name="biography">Biography <font fgcolor='#FF0000'> *</font></string>
     <string name="enter_your_biography">Enter Your Biography</string>
     <string name="choose_destination">Choose Destination <font fgcolor='#FF0000'> *</font></string>
-    <string name="choose_city">Choose City <font fgcolor='#FF0000'> *</font></string>
+    <string name="choose_city">Choose City</string>
     <string name="license_number">License Number <font fgcolor='#FF0000'> *</font></string>
     <string name="select_your_license_number">Select Your License Number</string>
     <string name="car_type">Car Type <font fgcolor='#FF0000'> *</font></string>
@@ -253,6 +253,7 @@
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
     <string name="all">All</string>
+    <string name="choose_nationality">Choose nationality</string>
     <string name="choose_country">Choose country</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -273,5 +274,8 @@
     <string name="paid">Paid</string>
     <string name="notcompleted">notCompleted</string>
     <string name="reset">Reset</string>
+    <string name="please_choose_nationality">Please choose nationality</string>
+    <string name="please_choose_country">Please choose country</string>
+    <string name="please_choose_city">Please choose city</string>
 
 </resources>

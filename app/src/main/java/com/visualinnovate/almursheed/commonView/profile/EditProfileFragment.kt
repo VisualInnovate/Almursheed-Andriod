@@ -9,13 +9,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.SharedPreference
@@ -25,13 +24,16 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
+import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
+import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
+import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils.allNationalities
-import com.visualinnovate.almursheed.utils.Utils.filterCountriesByNationality
-import com.visualinnovate.almursheed.utils.Utils.selectedNationalName
+import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,11 +44,20 @@ class EditProfileFragment : BaseFragment() {
 
     private val vm: ProfileViewModel by viewModels()
 
-    private val currentUser: User = SharedPreference.getUser()!!
-    private var nationalityName: String? = null
-    private var countryId: Int? = null
-    private var cityId: Int? = null
+    private val currentUser: User = SharedPreference.getUser()
+
+    private var nationalityName: String = ""
+    private var cityId: String? = null
+    private var cityName: String? = null
+    private var countryName: String? = null
+    private var countryId: String? = null
     private var gender: String? = "1"
+
+    private var allCountries = ArrayList<ChooserItemModel>()
+    private var allNationality = ArrayList<ChooserItemModel>()
+    private var citiesList = ArrayList<ChooserItemModel>()
+
+    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
     // for image
     private var imagePath: String = ""
@@ -84,9 +95,15 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun initView() {
-        initNationalitySpinner()
+        binding.nationality.text =
+            (currentUser.nationality ?: R.string.choose_nationality).toString()
+        binding.country.text = (currentUser.countryId?.let { vm.getCountryName(it) }
+            ?: R.string.choose_country).toString()
+        binding.city.text =
+            (currentUser.desCityId?.let { vm.getCityName(it) } ?: R.string.choose_city).toString()
+
         imagePath = currentUser.personalPhoto ?: ""
-        if (currentUser.type == "Driver" || currentUser.type == "Guides") {
+        if (currentUser.type == ROLE_DRIVER || currentUser.type == ROLE_GUIDE) {
             binding.btnNext.text = getString(R.string.next)
         } else {
             binding.btnNext.text = getString(R.string.submit)
@@ -100,42 +117,24 @@ class EditProfileFragment : BaseFragment() {
         binding.edtUserName.setText(currentUser.name)
         binding.edtEmailAddress.setText(currentUser.email)
         binding.edtEmailAddress.isEnabled = false
+
+        allNationality = setupNationalitiesList()
+        allCountries = setupCountriesList()
     }
-
-    private fun initNationalitySpinner() {
-        val nationalityList = allNationalities
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                nationalityList,
-            )
-
-        binding.spinnerNationality.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerNationality.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected country name
-                    nationalityName = nationalityList[position]
-                    selectedNationalName = nationalityName!!
-                    filterCountriesByNationality()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-    }
-
 
     private fun setBtnListener() {
+        binding.nationality.onDebouncedListener {
+            showNationalityChooser()
+        }
+
+        binding.country.onDebouncedListener {
+            showCountryChooser()
+        }
+
+        binding.city.onDebouncedListener {
+            showCityChooser()
+        }
+
         binding.txtMale.setOnClickListener {
             binding.txtMale.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
             binding.txtMale.setTextColor(resources.getColor(R.color.white, resources.newTheme()))
@@ -162,14 +161,15 @@ class EditProfileFragment : BaseFragment() {
             currentUser.phone = binding.edtPhone.value
             currentUser.personalPhoto = imagePath
             currentUser.gender = gender.toString()
-            currentUser.countryId = countryId
-            currentUser.stateId = cityId
-            currentUser.desCityId = cityId
+            currentUser.countryId = countryId?.toInt()
+            currentUser.stateId = cityId?.toInt()
+            currentUser.desCityId = cityId?.toInt()
+            currentUser.destCityId = cityId?.toInt()
 
             val bundle = Bundle()
             bundle.putParcelable("userData", currentUser)
             when (currentUser.type) {
-                "Driver" -> {
+                ROLE_DRIVER -> {
                     findNavController().customNavigate(
                         R.id.editProfileDriverFragment,
                         data = bundle,
@@ -188,12 +188,87 @@ class EditProfileFragment : BaseFragment() {
         }
     }
 
+    private fun showNationalityChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.nationality), allNationality, { data, _ ->
+                binding.nationality.text = data.name
+                nationalityName = data.name.toString()
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
+    }
+
+    private fun showCountryChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, _ ->
+                Utils.selectedCountryId = data.id ?: "-1"
+                citiesList = setupCitiesList(Utils.filteredCities)
+                countryId = data.id
+                countryName = data.name
+                binding.country.text = countryName
+                // cityName = null
+                // binding.city.text = getString(R.string.choose_city)
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
+    }
+
+    private fun showCityChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ ->
+                cityId = data.id
+                cityName = data.name
+                binding.city.text = cityName
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
+    }
+
+    private fun setupNationalitiesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        Utils.allNationalities.forEach {
+            val item = ChooserItemModel(
+                name = it,
+                isSelected = nationalityName == it
+            )
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    private fun setupCountriesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        Utils.allCountries.forEach {
+            val item = ChooserItemModel(
+                name = it.country,
+                id = it.country_id,
+                isSelected = countryName == it.country
+            )
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
+        Utils.filterCitiesByCountryId()
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        cities.forEach {
+            val item = ChooserItemModel(
+                name = it.state,
+                id = it.stateId,
+                isSelected = cityName == it.state
+            )
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
     private fun subscribeData() {
         vm.updateTouristLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    SharedPreference.saveUser(it.data?.user!![0])
+                    SharedPreference.saveUser(it.data?.user!!)
                     toast(it.data.message.toString())
                 }
 
@@ -324,6 +399,38 @@ class EditProfileFragment : BaseFragment() {
 }
 
 /*
+private fun initNationalitySpinner() {
+        val nationalityList = allNationalities
+
+        val arrayAdapter = // android.R.layout.simple_spinner_item
+            ArrayAdapter(
+                requireContext(),
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                nationalityList,
+            )
+
+        binding.spinnerNationality.spinner.adapter = arrayAdapter
+        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
+        binding.spinnerNationality.spinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long,
+                ) {
+                    // Retrieve the selected country name
+                    nationalityName = nationalityList[position]
+                    selectedNationalName = nationalityName!!
+                    filterCountriesByNationality()
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Handle when nothing is selected
+                }
+            }
+    }
+
  private fun performGalleyMultipleSelection() {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryIntent.type = "image/*"

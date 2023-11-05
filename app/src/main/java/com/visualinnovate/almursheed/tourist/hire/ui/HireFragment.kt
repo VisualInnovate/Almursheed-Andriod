@@ -7,7 +7,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,7 +117,7 @@ class HireFragment : BaseFragment() {
     }
 
     private fun callGetDriverAndGuide() {
-        if (SharedPreference.getUser().desCityId != null || SharedPreference.getUser().destCityId != null || SharedPreference.getStateId() != null) {
+        if (SharedPreference.getUser().desCityId != null || SharedPreference.getUser().destCityId != null || SharedPreference.getCityId() != null) {
             // Log.d("MyDebugData","HireViewModel : getAllDriversByDistCityId :  " + SharedPreference.getStateId().toString());
             vm.getAllDriversByDistCityId()
             vm.getAllGuidesByDistCityId()

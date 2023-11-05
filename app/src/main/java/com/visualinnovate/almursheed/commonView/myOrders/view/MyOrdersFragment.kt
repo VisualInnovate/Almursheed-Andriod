@@ -37,11 +37,11 @@ class MyOrdersFragment : BaseFragment() {
 
     // clicked to tourist add rate to order (trip)
     private val onAddRateClickCallback: (item: MyOrdersItem) -> Unit = {
-        if (it.rate?.trim()?.isEmptySting() == true || it.rate?.trim() == "0.0") {
+//        if (it.rate?.trim()?.isEmptySting() == true || it.rate?.trim() == "0.0") {
             vm.orderDetails = it
             val ratDialogFragment = AddRateDialogFragment()
             ratDialogFragment.show(childFragmentManager, "RateDialog")
-        }
+//        }
     }
 
     // clicked to (tourist, Driver, and Guide) to show order details (trip details)

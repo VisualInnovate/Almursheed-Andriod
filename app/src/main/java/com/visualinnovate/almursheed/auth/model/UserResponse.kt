@@ -29,7 +29,7 @@ data class User(
     var gender: String? = null,
 
     @field:SerializedName("dest_city_id")
-    val destCityId: Int? = null,
+    var destCityId: Int? = null,
 
     @field:SerializedName("email")
     val email: String? = null,

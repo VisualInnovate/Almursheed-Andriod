@@ -125,7 +125,7 @@ class EditProfileGuideFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    SharedPreference.saveUser(it.data?.user!![0])
+                    SharedPreference.saveUser(it.data?.user!!)
                     toast(it.data.message.toString())
                     findNavController().navigateUp()
                 }

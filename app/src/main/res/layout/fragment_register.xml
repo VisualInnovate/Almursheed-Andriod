@@ -88,16 +88,19 @@
                     android:text="@string/nationality"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/edtEmailAddress" />
 
-                <include
-                    android:id="@+id/spinnerNationality"
-                    layout="@layout/layout_spinner_bg_green"
+                <TextView
+                    android:id="@+id/nationality"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/space_3x"
-                    android:visibility="gone"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_nationality"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/txtNationality" />
 
                 <TextView
@@ -109,16 +112,19 @@
                     android:text="@string/country"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerNationality" />
+                    app:layout_constraintTop_toBottomOf="@id/nationality"/>
 
-                <include
-                    android:id="@+id/spinnerCountry"
-                    layout="@layout/layout_spinner_bg_green"
+                <TextView
+                    android:id="@+id/country"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/space_3x"
-                    android:visibility="gone"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_country"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/txtCountry" />
 
                 <TextView
@@ -130,8 +136,37 @@
                     android:text="@string/city"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCountry" />
+                    app:layout_constraintTop_toBottomOf="@id/country" />
+
+                <TextView
+                    android:id="@+id/city"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_city"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintTop_toBottomOf="@id/txtCity" />
+
+                <!--/>
+                <include
+                    android:id="@+id/spinnerNationality"
+                    layout="@layout/layout_spinner_bg_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    app:layout_constraintTop_toBottomOf="@id/txtNationality" />
+
+                <include
+                    android:id="@+id/spinnerCountry"
+                    layout="@layout/layout_spinner_bg_green"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    app:layout_constraintTop_toBottomOf="@id/txtCountry" />
 
                 <include
                     android:id="@+id/spinnerCity"
@@ -139,8 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toBottomOf="@id/txtCity" />
+                    app:layout_constraintTop_toBottomOf="@id/txtCity" />-->
 
                 <TextView
                     android:id="@+id/txtPassword"
@@ -151,7 +185,7 @@
                     android:text="@string/password"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCity" />
+                    app:layout_constraintTop_toBottomOf="@id/city" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtInputPassword"

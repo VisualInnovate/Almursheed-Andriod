@@ -17,18 +17,18 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
-import com.visualinnovate.almursheed.home.MainActivity
-import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.driver.adapter.DriverAdapter
 import com.visualinnovate.almursheed.guide.adapter.GuideAdapter
-import com.visualinnovate.almursheed.tourist.location.adapter.LocationAdapter
-import com.visualinnovate.almursheed.tourist.offer.adapter.OfferAdapter
+import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.model.BannerModel
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.tourist.location.adapter.LocationAdapter
 import com.visualinnovate.almursheed.tourist.offer.OfferDetailsFragment
+import com.visualinnovate.almursheed.tourist.offer.adapter.OfferAdapter
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,10 +62,11 @@ class HomeFragment : BaseFragment() {
         // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
-    private val onFavoriteLatestDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
-        vm.selectedUserPosition = driver.id!!
-        vm.addAndRemoveFavorite(driver.id.toString(), "0")
-    }
+    private val onFavoriteLatestDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit =
+        { driver ->
+            vm.selectedUserPosition = driver.id!!
+            vm.addAndRemoveFavorite(driver.id.toString(), "0")
+        }
 
     private val onFavoriteLatestGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
         vm.selectedUserPosition = guide.id!!
@@ -124,19 +125,27 @@ class HomeFragment : BaseFragment() {
         initView()
         setBtnListener()
         subscribeData()
-
-        Log.d("DEBUG  onViewCreated()", "${SharedPreference.getUser()}")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("DEBUG  onStart()", "SharedPreference.getUser()?.stateId  ${SharedPreference.getUser()?.stateId}")
-        vm.getLatestDriver(
-            SharedPreference.getUser()?.stateId ?: 0
-        )
-        vm.getLatestGuides(
-            SharedPreference.getUser()?.stateId ?: 0
-        )
+        Log.d("DEBUG ", ".stateId  ${SharedPreference.getUser().stateId}")
+        Log.d("DEBUG ", ".desCityId  ${SharedPreference.getUser().desCityId}")
+        Log.d("DEBUG ", ".getCityId()  ${SharedPreference.getCityId()}")
+        if (SharedPreference.getUser().stateId != null) {
+            vm.getLatestDriver(SharedPreference.getUser().stateId)
+            vm.getLatestGuides(SharedPreference.getUser().stateId)
+        } else if (SharedPreference.getUser().desCityId != null) {
+            vm.getLatestDriver(SharedPreference.getUser().stateId)
+            vm.getLatestGuides(SharedPreference.getUser().stateId)
+        } else if (SharedPreference.getCityId() != null) {
+            vm.getLatestDriver(SharedPreference.getCityId())
+            vm.getLatestGuides(SharedPreference.getCityId())
+        } else {
+            vm.getLatestDriver(0)
+            vm.getLatestGuides(0)
+        }
+
         vm.fetchOfferResponse()
         vm.fetchAttractivesList()
     }
@@ -157,9 +166,8 @@ class HomeFragment : BaseFragment() {
                     // bind data to the view
                     binding.page.visible()
                     binding.shimmer.gone()
-                    Log.d("Success11", "${it.data!!.drivers}")
-                    driverAdapter.submitData(it.data.drivers)
-                    vm.latestGuidesList = it.data.drivers
+                    driverAdapter.submitData(it.data?.drivers)
+                    vm.latestGuidesList = it.data?.drivers
                 }
 
                 is ResponseHandler.Error -> {
@@ -346,7 +354,8 @@ class HomeFragment : BaseFragment() {
 
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
-            driverAdapter = DriverAdapter(btnDriverClickCallBack, onFavoriteLatestDriverClickCallBack)
+            driverAdapter =
+                DriverAdapter(btnDriverClickCallBack, onFavoriteLatestDriverClickCallBack)
             adapter = driverAdapter
         }
     }

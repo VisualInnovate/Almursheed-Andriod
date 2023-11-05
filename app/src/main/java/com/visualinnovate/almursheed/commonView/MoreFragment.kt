@@ -53,10 +53,12 @@ class MoreFragment : Fragment() {
     }
 
     private fun initView() {
-        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
             binding.myPrices.visible()
+            binding.editLocation.gone()
         } else {
             binding.myPrices.gone()
+            binding.editLocation.visible()
         }
     }
 
@@ -68,7 +70,8 @@ class MoreFragment : Fragment() {
             SharedPreference.saveUser(null)
             SharedPreference.setUserToken(null)
             SharedPreference.setUserLoggedIn(false)
-            SharedPreference.setStateId(null)
+            SharedPreference.setCityId(null)
+            SharedPreference.setCountryId(null)
             PushNotifications.clearAllState()
             requireActivity().startAuthActivity()
         }
@@ -82,7 +85,7 @@ class MoreFragment : Fragment() {
         }
 
         binding.aboutUs.onDebouncedListener {
-            findNavController().customNavigate(R.id.priceFragment)
+            // findNavController().customNavigate(R.id.priceFragment)
         }
 
         binding.editLocation.onDebouncedListener {

@@ -32,6 +32,7 @@ import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ActivityMainBinding
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
+import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDES
 import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.allNationalities
 import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager,
         }*/
         setupTouristViews()
 
-        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
+        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER || userRole == ROLE_GUIDES) {
             binding.bottomNavBar.removeViewAt(1)
         }
 
@@ -80,7 +81,8 @@ class MainActivity : AppCompatActivity(), MainViewsManager,
                     // Tourist
                     R.id.action_home_tourist -> navController.customNavigate(R.id.homeFragment)
                     R.id.action_hireFragment -> {
-                        if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
+                        if (userRole == ROLE_GUIDE || userRole == ROLE_GUIDES || userRole == ROLE_DRIVER) {
+                            binding.bottomNavBar.removeViewAt(1)
                         } else {
                             navController.customNavigate(R.id.hireFragment)
                         }

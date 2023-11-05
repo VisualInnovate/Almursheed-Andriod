@@ -128,7 +128,7 @@ class EditProfileDriverFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    SharedPreference.saveUser(it.data?.user!![0])
+                    SharedPreference.saveUser(it.data?.user!!)
                     toast(it.data.message ?: "")
                     findNavController().navigateUp()
                 }

@@ -7,7 +7,7 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.commonView.price.models.PriceItem
 import com.visualinnovate.almursheed.databinding.ItemPriceBinding
 
-class MyPricesAdapter() : RecyclerView.Adapter<MyPricesAdapter.ViewHolder>() {
+class MyPricesAdapter : RecyclerView.Adapter<MyPricesAdapter.ViewHolder>() {
 
     private var prices: List<PriceItem?>? = ArrayList()
     private lateinit var binding: ItemPriceBinding

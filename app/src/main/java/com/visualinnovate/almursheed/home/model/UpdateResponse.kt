@@ -9,7 +9,7 @@ data class UpdateResponse(
     val message: String? = null,
 
     @field:SerializedName("user")
-    val user: List<User?>? = null,
+    val user: User? = null,
 
     @field:SerializedName("status")
     val status: Boolean? = null

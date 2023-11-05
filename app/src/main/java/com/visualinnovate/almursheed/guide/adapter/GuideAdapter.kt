@@ -54,7 +54,9 @@ class GuideAdapter(
 
     private fun bindData(holder: GuideViewHolder, guide: DriverAndGuideItem) {
         holder.imgStatus.invisible()
-        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER
+            || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
+        ) {
             binding.btnBookNow.gone()
             binding.imgFavorite.gone()
         } else {
@@ -82,7 +84,7 @@ class GuideAdapter(
 
         guide.priceServices?.let {
             if (it.isNotEmpty()) {
-                holder.price.text = it[0]?.price.toString() +" $"
+                holder.price.text = it[0]?.price.toString() + " $"
             }
         }
     }

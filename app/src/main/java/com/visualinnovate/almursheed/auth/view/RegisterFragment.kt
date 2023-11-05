@@ -4,32 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.viewmodel.RegisterViewModel
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.isEmptySting
+import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.FragmentRegisterBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Constant.ROLE_TOURIST
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils.allNationalities
+import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
-import com.visualinnovate.almursheed.utils.Utils.filterCountriesByNationality
 import com.visualinnovate.almursheed.utils.Utils.filteredCities
-import com.visualinnovate.almursheed.utils.Utils.filteredCitiesString
-import com.visualinnovate.almursheed.utils.Utils.filteredCountries
-import com.visualinnovate.almursheed.utils.Utils.filteredCountriesString
 import com.visualinnovate.almursheed.utils.Utils.selectedCountryId
-import com.visualinnovate.almursheed.utils.Utils.selectedNationalName
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,9 +43,17 @@ class RegisterFragment : BaseFragment() {
     private lateinit var username: String
     private lateinit var email: String
     private var nationalityName: String = ""
-    private var countryId: Int? = null
-    private var cityId: Int? = null
+    private var cityId: String? = null
+    private var cityName: String? = null
+    private var countryName: String? = null
+    private var countryId: String? = null
     private lateinit var password: String
+
+    private var allCountries = ArrayList<ChooserItemModel>()
+    private var allNationality = ArrayList<ChooserItemModel>()
+    private var citiesList = ArrayList<ChooserItemModel>()
+
+    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,14 +110,17 @@ class RegisterFragment : BaseFragment() {
 
     private fun initView() {
         if (role == ROLE_TOURIST) {
-            // binding.txtCountry.text = getString(R.string.destination_country)
-            // binding.txtCity.text = getString(R.string.destination_city)
-            // binding.txtCity.gone()
-            // binding.spinnerCity.root.gone()
+            binding.txtNationality.gone()
+            binding.txtCountry.gone()
+            binding.txtCity.gone()
+            binding.nationality.gone()
+            binding.country.gone()
+            binding.city.gone()
         }
-        //    binding.btnUploadPicture.gone()
-        //   binding.txtPersonalPicture.gone()
         // initNationalitySpinner()
+
+        allNationality = setupNationalitiesList()
+        allCountries = setupCountriesList()
     }
 
     private fun initToolbar() {
@@ -127,6 +137,18 @@ class RegisterFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
+        binding.nationality.onDebouncedListener {
+            showNationalityChooser()
+        }
+
+        binding.country.onDebouncedListener {
+            showCountryChooser()
+        }
+
+        binding.city.onDebouncedListener {
+            showCityChooser()
+        }
+
         binding.btnNext.setOnClickListener {
             if (validate()) {
                 when (role) {
@@ -136,8 +158,8 @@ class RegisterFragment : BaseFragment() {
                             email,
                             password,
                             nationalityName,
-                            countryId,
-                            cityId,
+                            countryId?.toInt(),
+                            cityId?.toInt(),
                             role,
                         )
                     }
@@ -148,8 +170,8 @@ class RegisterFragment : BaseFragment() {
                             email,
                             password,
                             nationalityName,
-                            countryId,
-                            cityId,
+                            countryId?.toInt(),
+                            cityId?.toInt(),
                             role,
                         )
                     }
@@ -160,8 +182,8 @@ class RegisterFragment : BaseFragment() {
                             email,
                             password,
                             nationalityName,
-                            countryId,
-                            cityId,
+                            countryId?.toInt(),
+                            cityId?.toInt(),
                             role,
                         )
                     }
@@ -170,7 +192,83 @@ class RegisterFragment : BaseFragment() {
         }
     }
 
-    private fun initNationalitySpinner() {
+
+    private fun showNationalityChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.nationality), allNationality, { data, _ ->
+                binding.nationality.text = data.name
+                nationalityName = data.name.toString()
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
+    }
+
+    private fun showCountryChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, _ ->
+                selectedCountryId = data.id ?: "-1"
+                citiesList = setupCitiesList(filteredCities)
+                countryId = data.id
+                countryName = data.name
+                binding.country.text = countryName
+                cityName = null
+                binding.city.text = getString(R.string.choose_city)
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
+    }
+
+    private fun showCityChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ ->
+                cityId = data.id
+                cityName = data.name
+                binding.city.text = cityName
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
+    }
+
+    private fun setupNationalitiesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        Utils.allNationalities.forEach {
+            val item = ChooserItemModel(
+                name = it,
+                isSelected = nationalityName == it
+            )
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    private fun setupCountriesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        Utils.allCountries.forEach {
+            val item = ChooserItemModel(
+                name = it.country,
+                id = it.country_id,
+                isSelected = countryName == it.country
+            )
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
+        filterCitiesByCountryId()
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        cities.forEach {
+            val item = ChooserItemModel(
+                name = it.state,
+                id = it.stateId,
+                isSelected = cityName == it.state
+            )
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    /*private fun initNationalitySpinner() {
         val nationalityList = allNationalities
 
         val arrayAdapter = // android.R.layout.simple_spinner_item
@@ -270,7 +368,7 @@ class RegisterFragment : BaseFragment() {
                     // Handle when nothing is selected
                 }
             }
-    }
+    }*/
 
 
     private fun validate(): Boolean {
@@ -303,18 +401,20 @@ class RegisterFragment : BaseFragment() {
         } else {
             binding.edtPassword.error = null
         }
-        /*if (nationalityName.isEmptySting()) {
-            toast("Please choose nationality")
-            isValid = false
-        }*/
-        /*if (countryId == null) {
-            toast("Please choose country")
-            isValid = false
+        if (role == ROLE_DRIVER || role == ROLE_GUIDE) {
+            if (nationalityName.isEmptySting()) {
+                toast(getString(R.string.please_choose_nationality))
+                isValid = false
+            }
+            if (countryId == null || countryId?.isEmptySting() == true) {
+                toast(getString(R.string.please_choose_country))
+                isValid = false
+            }
+            if (cityId == null || cityId?.isEmptySting() == true) {
+                toast(getString(R.string.please_choose_city))
+                isValid = false
+            }
         }
-        if (cityId == null) {
-            toast("Please choose city")
-            isValid = false
-        }*/
         return isValid
     }
 

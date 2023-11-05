@@ -39,12 +39,20 @@ object SharedPreference {
         return Hawk.get(Constant.USER_TOKEN)
     }
 
-    fun setStateId(stateId: Int?) {
-        Hawk.put(Constant.STATE_ID, stateId)
+    fun setCityId(stateId: Int?) {
+        Hawk.put(Constant.CITY_ID, stateId)
     }
 
-    fun getStateId(): Int? {
-        return Hawk.get(Constant.STATE_ID)
+    fun getCityId(): Int? {
+        return Hawk.get(Constant.CITY_ID)
+    }
+
+    fun setCountryId(stateId: Int?) {
+        Hawk.put(Constant.COUNTRY_ID, stateId)
+    }
+
+    fun getCountryId(): Int? {
+        return Hawk.get(Constant.COUNTRY_ID)
     }
 
     fun saveDeviceToken(currentToken: String) {

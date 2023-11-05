@@ -95,10 +95,10 @@
             android:text="$00.00"
             android:textColor="@color/white"
             android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintBottom_toBottomOf="@id/btnBookNow"
+            app:layout_constraintBottom_toBottomOf="@id/username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgStatus"
-            app:layout_constraintTop_toBottomOf="@id/rating" />
+            app:layout_constraintTop_toTopOf="@id/username" />
 
         <TextView
             android:id="@+id/city"

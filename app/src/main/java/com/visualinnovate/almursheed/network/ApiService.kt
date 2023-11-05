@@ -182,7 +182,7 @@ interface ApiService {
     @POST("tourists/update")
     suspend fun updateTourist(
         @Part("name") name: RequestBody,
-        @Part("dest_city_id") destCityId: Int,
+        @Part("dest_city_id") destCityId: RequestBody,
         @Part("gender") gender: RequestBody,
         @Part("nationality") nationality: RequestBody,
         // @Part personal_pictures: MultipartBody.Part,

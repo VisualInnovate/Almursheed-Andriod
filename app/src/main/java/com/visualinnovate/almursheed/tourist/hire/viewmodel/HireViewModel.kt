@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.tourist.hire.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,7 +11,6 @@ import com.visualinnovate.almursheed.commonView.price.models.PriceItem
 import com.visualinnovate.almursheed.home.model.CreateOrderResponse
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
-import com.visualinnovate.almursheed.home.model.PriceServicesItem
 import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
@@ -65,7 +63,7 @@ class HireViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDriversByDistCityId(SharedPreference.getStateId()!!)
+                apiService.getAllDriversByDistCityId(SharedPreference.getCityId()!!)
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
@@ -82,7 +80,7 @@ class HireViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllGuidesByDistCityId(SharedPreference.getStateId()!!.toInt())
+                apiService.getAllGuidesByDistCityId(SharedPreference.getCityId()!!.toInt())
             }.collect {
                 // _allGuideMutableData.value = it
                 when (it) {

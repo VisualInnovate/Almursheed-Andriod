@@ -55,7 +55,7 @@ class DriverAdapter(
     }
 
     private fun bindData(holder: DriverViewHolder, position: Int, driver: DriverAndGuideItem) {
-        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
             binding.btnBookNow.gone()
             binding.imgFavorite.gone()
         } else {
@@ -72,7 +72,7 @@ class DriverAdapter(
 
         driver.priceServices?.let {
             if (it.isNotEmpty()) {
-                holder.price.text = it[0]?.price.toString() +" $"
+                holder.price.text = it[0]?.price.toString() + " $"
             }
         }
         // check status

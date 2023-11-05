@@ -12,6 +12,7 @@ import com.visualinnovate.almursheed.home.model.UpdateResponse
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
+import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -148,8 +149,13 @@ class ProfileViewModel @Inject constructor(
         Log.d("updateTourist", "currentUser: $currentUser")
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
-        // val des_city_id =
-        // RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.desCityId.toString().toInt())
+
+        val stateId =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
+
+
+        val cityId =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.desCityId.toString())
 
         val gender =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.gender.toString())
@@ -162,7 +168,7 @@ class ProfileViewModel @Inject constructor(
 
         val profilePicPart = profilePicRequestBody?.let {
             MultipartBody.Part.createFormData(
-                "personal_pictures", // personal_pictures
+                "personal_pictures",
                 profilePicFile.name,
                 it
             )
@@ -171,9 +177,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 apiService.updateTourist(
-                    name, currentUser.desCityId!!,
+                    name, stateId,
                     gender,
-                    nationalityPart
+                    nationalityPart,
                     // profilePicPart!!
                 )
                 // apiService.updateTourist(requestBody)
@@ -184,8 +190,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateLocationDriver(currentUser: User) {
-        Log.d("updateLocationTourist", "currentUser: $currentUser")
-        // val countryId = RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.countryId.toString())
         val stateId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
 
@@ -199,8 +203,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateLocationGuide(currentUser: User) {
-        Log.d("updateLocationTourist", "currentUser: $currentUser")
-        // val countryId = RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.countryId.toString())
         val stateId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
 
@@ -215,8 +217,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateLocationTourist(currentUser: User) {
-        Log.d("updateLocationTourist", "currentUser: $currentUser")
-        // val countryId = RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.countryId.toString())
         val stateId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
 
@@ -245,7 +245,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateGuide(currentUser: User) {
-        Log.d("updateTourist", "currentUser: $currentUser")
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
         val phone =
@@ -291,5 +290,25 @@ class ProfileViewModel @Inject constructor(
                 _updateGuideMutableData.value = it
             }
         }
+    }
+
+    fun getCityName(stateId: Int): String {
+        var stateName = ""
+        Utils.allCities.forEach {
+            if (it.stateId == stateId.toString()) {
+                stateName = it.state
+            }
+        }
+        return stateName
+    }
+
+    fun getCountryName(countryId: Int): String {
+        var countryName = ""
+        Utils.allCountries.forEach {
+            if (it.country_id == countryId.toString()) {
+                countryName = it.country
+            }
+        }
+        return countryName
     }
 }

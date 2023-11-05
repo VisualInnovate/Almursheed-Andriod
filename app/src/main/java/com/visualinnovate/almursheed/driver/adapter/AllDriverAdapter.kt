@@ -5,9 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemAllDriverBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.utils.Constant
 
 class AllDriverAdapter(
     private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit,
@@ -46,6 +50,14 @@ class AllDriverAdapter(
     }
 
     private fun bindData(holder: AllDriverViewHolder, position: Int, driver: DriverAndGuideItem) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER
+            || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
+        ) {
+            binding.imgFavorite.gone()
+        } else {
+            binding.imgFavorite.visible()
+        }
+
         Glide.with(holder.itemView.context)
             .load(driver.imageBackground)
             .into(holder.imgDriver)
