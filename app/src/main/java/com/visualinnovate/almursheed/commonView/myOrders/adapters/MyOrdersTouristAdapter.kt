@@ -1,6 +1,5 @@
 package com.visualinnovate.almursheed.commonView.myOrders.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +9,8 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
-import com.visualinnovate.almursheed.databinding.ItemMyOrderDGHomeBinding
+import com.visualinnovate.almursheed.databinding.ItemMyOrderTouristBinding
 import com.visualinnovate.almursheed.home.adapter.DaysAdapter
-import kotlin.math.roundToInt
 
 class MyOrdersTouristAdapter(
     private val onAddRateClickCallback: (item: MyOrdersItem) -> Unit = {},
@@ -26,16 +24,15 @@ class MyOrdersTouristAdapter(
 
     private lateinit var daysAdapter: DaysAdapter
 
-    private lateinit var binding: ItemMyOrderDGHomeBinding
+    private lateinit var binding: ItemMyOrderTouristBinding
 
-    inner class ViewHolder(itemView: ItemMyOrderDGHomeBinding) :
+    inner class ViewHolder(itemView: ItemMyOrderTouristBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         val country = itemView.country
         val dateOfEntry = itemView.entryDate
         val dateOfExit = itemView.exitDate
         val status = itemView.status
-
-        // val days = itemView.daysRecyclerView
+        val price = itemView.price
         val btnAddRate = itemView.btnAddRate
         val txtAllDetails = itemView.txtAllDetails
         val btnPaid = itemView.btnPaid
@@ -44,7 +41,7 @@ class MyOrdersTouristAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding =
-            ItemMyOrderDGHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemMyOrderTouristBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -64,12 +61,16 @@ class MyOrdersTouristAdapter(
         holder.country.text = order?.countryId.toString()
         holder.dateOfEntry.text = order?.startDate
         holder.dateOfExit.text = order?.endDate
+        holder.price.text = order?.cost + " $"
+
         when (order?.status) {
             "1" -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorPending))
                     text = context.getString(R.string.pending)
                 }
+                holder.btnPaid.visible()
+                holder.btnCancel.visible()
             }
 
             "2" -> {
@@ -77,6 +78,8 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.colorApproved))
                     text = context.getString(R.string.approved)
                 }
+                holder.btnPaid.visible()
+                holder.btnCancel.visible()
             }
 
             "3" -> {
@@ -84,6 +87,8 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.colorReject))
                     text = context.getString(R.string.reject)
                 }
+                holder.btnPaid.gone()
+                holder.btnCancel.gone()
             }
 
             "4" -> {
@@ -91,6 +96,8 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.colorExpire))
                     text = context.getString(R.string.expired)
                 }
+                holder.btnPaid.gone()
+                holder.btnCancel.gone()
             }
 
             "5" -> {
@@ -98,6 +105,8 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.colorCancel))
                     text = context.getString(R.string.cancel)
                 }
+                holder.btnPaid.gone()
+                holder.btnCancel.gone()
             }
 
             "6" -> {
@@ -105,6 +114,8 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.purple_700))
                     text = context.getString(R.string.paid)
                 }
+                holder.btnPaid.gone()
+                holder.btnCancel.visible()
             }
 
             "7" -> {
@@ -112,31 +123,26 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.purple_200))
                     text = context.getString(R.string.notcompleted)
                 }
+                holder.btnPaid.gone()
+                holder.btnCancel.gone()
             }
         }
 
-        val orderRate: Int = order?.rate.toString().toDouble().roundToInt() ?: 1
-        when (orderRate) {
-            1 -> binding.btnAddRate.setImageResource(R.drawable.ic_star_1)
-            2 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_2)
-            3 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_3)
-            4 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_4)
-            5 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_5)
-            else -> binding.btnAddRate.setImageResource(R.drawable.ic_group_rate)
-        }
+//        val orderRate: Int = order?.rate.toString().toDouble().roundToInt() ?: 1
+//        when (orderRate) {
+//            1 -> binding.btnAddRate.setImageResource(R.drawable.ic_star_1)
+//            2 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_2)
+//            3 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_3)
+//            4 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_4)
+//            5 -> binding.btnAddRate.setImageResource(R.drawable.ic_stars_5)
+//            else -> binding.btnAddRate.setImageResource(R.drawable.ic_group_rate)
+//        }
         holder.btnAddRate.onDebouncedListener {
             onAddRateClickCallback.invoke(order!!)
         }
 
         holder.txtAllDetails.onDebouncedListener {
             onAllDetailsClickCallback.invoke(order!!)
-        }
-
-        Log.d("order?.status", "order?.status ${order?.status}")
-        if (order?.status == "2") {
-            holder.btnPaid.visible()
-        } else {
-            holder.btnPaid.gone()
         }
 
         holder.btnPaid.onDebouncedListener {

@@ -119,6 +119,32 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/txtDateOfExit"
                 app:layout_constraintTop_toTopOf="@id/txtDateOfExit" />
+            <TextView
+                android:id="@+id/txtTotalPrice"
+                style="@style/TextStyleRegular"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:text="@string/total_price"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/exitDate" />
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300 $"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/txtTotalPrice"
+                app:layout_constraintTop_toTopOf="@id/txtTotalPrice" />
+
 
             <View
                 android:id="@+id/view"
@@ -128,7 +154,7 @@
                 android:layout_marginTop="@dimen/space_4x"
                 android:layout_marginEnd="@dimen/space_3x"
                 android:background="#DAD9D9"
-                app:layout_constraintTop_toBottomOf="@id/txtDateOfExit" />
+                app:layout_constraintTop_toBottomOf="@id/price" />
 
             <TextView
                 android:id="@+id/txtRouteInfo"

@@ -98,7 +98,7 @@ class LoginFragment : BaseFragment() {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.setUserToken(it.data?.token)
-                    // SharedPreference.setStateId(it.data?.user?.desCityId)
+                    SharedPreference.setCityId(it.data?.user?.desCityId)
                     SharedPreference.setNotificationId(it.data?.user?.notificationId)
                     if (rememberMe) SharedPreference.setUserLoggedIn(true)
 
@@ -161,16 +161,16 @@ class LoginFragment : BaseFragment() {
 
     private fun validate(): Boolean {
         var isValid = true
-        email = binding.edtEmailAddress.value
-        password = binding.edtPassword.value
+        // email = binding.edtEmailAddress.value
+       // password = binding.edtPassword.value
 
         // email = "mohamed.driver@gmail.com"
         // password = "123456789"
 
         // email = "mohamed.nasar8710@gmail.com"
-//        email = "mohamed.tourist11@gmail.com"
+       email = "mohamed.tourist11@gmail.com"
 //        email = "nassar@gmail.com"
-//        password = "123456789"
+        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

@@ -87,6 +87,7 @@ class OrderDetailsFragment : BaseFragment() {
         binding.country.text = vm.orderDetails?.countryId.toString()
         binding.entryDate.text = vm.orderDetails?.startDate
         binding.exitDate.text = vm.orderDetails?.endDate
+        binding.price.text = vm.orderDetails?.cost +" $"
     }
 
     private fun initToolbar() {

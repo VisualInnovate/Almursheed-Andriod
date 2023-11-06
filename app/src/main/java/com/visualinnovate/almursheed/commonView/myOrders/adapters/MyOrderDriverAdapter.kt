@@ -3,9 +3,12 @@ package com.visualinnovate.almursheed.commonView.myOrders.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
-import com.visualinnovate.almursheed.databinding.ItemMyOrderTouristBinding
+import com.visualinnovate.almursheed.databinding.ItemMyOrderDriverGuideBinding
 
 class MyOrderDriverAdapter(
     private val onAllDetailsClickCallback: (item: MyOrdersItem) -> Unit = {},
@@ -15,9 +18,9 @@ class MyOrderDriverAdapter(
 
     private var orders: List<MyOrdersItem?>? = ArrayList()
 
-    private lateinit var binding: ItemMyOrderTouristBinding
+    private lateinit var binding: ItemMyOrderDriverGuideBinding
 
-    inner class ViewHolder(itemView: ItemMyOrderTouristBinding) :
+    inner class ViewHolder(itemView: ItemMyOrderDriverGuideBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         val country = itemView.country
         val dateOfEntry = itemView.entryDate
@@ -25,11 +28,12 @@ class MyOrderDriverAdapter(
         val txtAllDetails = itemView.txtAllDetails
         val btnApprove = itemView.btnApprove
         val btnReject = itemView.btnReject
+        val price = itemView.price
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         binding =
-            ItemMyOrderTouristBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemMyOrderDriverGuideBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -43,6 +47,60 @@ class MyOrderDriverAdapter(
         holder.country.text = order?.countryId.toString()
         holder.dateOfEntry.text = order?.startDate
         holder.dateOfExit.text = order?.endDate
+        holder.price.text = order?.cost +" $"
+
+
+        when (order?.status) {
+            "1" -> {
+                binding.btnApprove.visible()
+                binding.btnReject.visible()
+
+            }
+
+            "2" -> {
+                binding.btnApprove.gone()
+                binding.btnReject.visible()
+            }
+
+            "3" -> {
+                binding.btnApprove.gone()
+                binding.btnReject.gone()
+            }
+
+            "4" -> {
+                binding.btnApprove.gone()
+                binding.btnReject.gone()
+            }
+
+            "5" -> {
+                binding.btnApprove.gone()
+                binding.btnReject.gone()
+            }
+
+            "6" -> {
+                binding.btnApprove.gone()
+                binding.btnReject.gone()
+            }
+
+            "7" -> {
+                binding.btnApprove.gone()
+                binding.btnReject.gone()
+            }
+        }
+        when(order?.status){
+            "2" -> {
+                binding.btnApprove.gone()
+            }
+            "6"-> {
+                binding.btnApprove.gone()
+                binding.btnReject.gone()
+            }
+            else ->{
+                binding.btnApprove.visible()
+                binding.btnReject.visible()
+            }
+        }
+
 
         holder.txtAllDetails.onDebouncedListener {
             onAllDetailsClickCallback.invoke(order!!)

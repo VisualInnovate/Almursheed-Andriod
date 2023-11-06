@@ -277,5 +277,7 @@
     <string name="please_choose_nationality">Please choose nationality</string>
     <string name="please_choose_country">Please choose country</string>
     <string name="please_choose_city">Please choose city</string>
+    <string name="total_price">Total Price</string>
+    <string name="please_select_country_and_city">please select country and city</string>
 
 </resources>

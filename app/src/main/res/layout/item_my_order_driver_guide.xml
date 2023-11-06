@@ -16,23 +16,6 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/status"
-            style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_3x"
-            android:background="@color/light_green"
-            android:paddingStart="@dimen/space_4x"
-            android:paddingTop="@dimen/space_1x"
-            android:paddingEnd="@dimen/space_4x"
-            android:paddingBottom="@dimen/space_1x"
-            android:textColor="@color/white"
-            android:textSize="@dimen/space_14x_sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Active" />
-
-        <TextView
             android:id="@+id/txtTripInfo"
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
@@ -44,7 +27,7 @@
             android:textSize="@dimen/space_16x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/status" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txtCountry"
@@ -124,24 +107,32 @@
             app:layout_constraintStart_toEndOf="@id/txtDateOfExit"
             app:layout_constraintTop_toTopOf="@id/txtDateOfExit" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnAddRate"
-            android:layout_width="@dimen/space_30x"
+        <TextView
+            android:id="@+id/txtTotalPrice"
+            style="@style/TextStyleRegular"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/space_3x"
-            android:src="@drawable/ic_group_rate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtDateOfEntry" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
             android:layout_marginStart="@dimen/space_3x"
-            android:layout_marginTop="@dimen/space_4x"
-            android:layout_marginEnd="@dimen/space_3x"
-            android:background="#DAD9D9"
-            app:layout_constraintTop_toBottomOf="@id/txtDateOfExit" />
+            android:layout_marginTop="@dimen/space_3x"
+            android:text="@string/total_price"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exitDate" />
+
+        <TextView
+            android:id="@+id/price"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="300 $"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_14x_sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/txtTotalPrice"
+            app:layout_constraintTop_toTopOf="@id/txtTotalPrice" />
+
 
         <TextView
             android:id="@+id/txtAllDetails"
@@ -157,63 +148,34 @@
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view"
+            app:layout_constraintTop_toBottomOf="@id/price"
             app:drawableEndCompat="@drawable/ic_red_arrow_right" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnPaid"
+            android:id="@+id/btnApprove"
             style="@style/customButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/space_2x"
             android:layout_marginVertical="@dimen/space_3x"
-            android:text="@string/paid"
+            android:text="@string/approve"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btnCancel"
+            app:layout_constraintEnd_toStartOf="@id/btnReject"
             app:layout_constraintTop_toBottomOf="@id/txtAllDetails" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCancel"
+            android:id="@+id/btnReject"
             style="@style/customButtonStyleRoundedBorder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/space_3x"
-            android:text="@string/cancel"
+            android:text="@string/reject"
             android:padding="@dimen/space_2x"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btnPaid"
+            app:layout_constraintStart_toEndOf="@id/btnApprove"
             app:layout_constraintTop_toBottomOf="@id/txtAllDetails"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
-
-        <!--<TextView
-            android:id="@+id/txtRouteInfo"
-            style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_3x"
-            android:layout_marginTop="@dimen/space_3x"
-            android:text="@string/route_info"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/space_16x_sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/days_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:layout_marginBottom="@dimen/space_3x"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtRouteInfo"
-            tools:itemCount="3"
-            tools:listitem="@layout/item_days" />
--->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

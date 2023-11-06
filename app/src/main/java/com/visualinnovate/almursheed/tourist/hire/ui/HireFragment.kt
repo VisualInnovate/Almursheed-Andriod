@@ -117,8 +117,7 @@ class HireFragment : BaseFragment() {
     }
 
     private fun callGetDriverAndGuide() {
-        if (SharedPreference.getUser().desCityId != null || SharedPreference.getUser().destCityId != null || SharedPreference.getCityId() != null) {
-            // Log.d("MyDebugData","HireViewModel : getAllDriversByDistCityId :  " + SharedPreference.getStateId().toString());
+        if (SharedPreference.getCityId() != null) {
             vm.getAllDriversByDistCityId()
             vm.getAllGuidesByDistCityId()
         } else {
@@ -432,6 +431,10 @@ class HireFragment : BaseFragment() {
         if (selectedDriverGuideId == -1) {
             toast("Please choose Driver or Guide")
             isValid = false
+        }
+
+        if (currentLocation == null) {
+            askForLocationPermission()
         }
 
         return isValid

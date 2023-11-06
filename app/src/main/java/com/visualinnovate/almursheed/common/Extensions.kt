@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
+import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.home.MainActivity
 import java.text.SimpleDateFormat
@@ -64,10 +65,10 @@ fun NavController.customNavigate(
         NavOptions.Builder().apply {
             // setPopUpTo(destinationId, inclusive)
             popBackStack(destinationId, inclusive)
-//            setEnterAnim(R.anim.slide_from_out_right_to_center)
-//            setExitAnim(R.anim.slide_from_center_to_out_left)
-//            setPopEnterAnim(R.anim.slide_from_out_left_to_center)
-//            setPopExitAnim(R.anim.slide_from_center_to_out_right)
+            setEnterAnim(R.anim.slide_from_out_right_to_center)
+            setExitAnim(R.anim.slide_from_center_to_out_left)
+            setPopEnterAnim(R.anim.slide_from_out_left_to_center)
+            setPopExitAnim(R.anim.slide_from_center_to_out_right)
         }.build()
     navigate(destinationId, data, navOption)
 }

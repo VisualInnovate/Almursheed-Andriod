@@ -96,25 +96,37 @@ class EditLocationFragment : BaseFragment() {
             currentUser.stateId = cityId?.toInt()
             currentUser.desCityId = cityId?.toInt()
 
-            when (currentUser.type) {
-                "Driver" -> {
-                    // call api update tourist
-                    vm.updateLocationDriver(currentUser)
-                }
+            if (validate()) {
+                when (currentUser.type) {
+                    "Driver" -> {
+                        // call api update tourist
+                        vm.updateLocationDriver(currentUser)
+                    }
 
-                "Guides" -> {
-                    // call api update tourist
-                    vm.updateLocationGuide(currentUser)
-                }
+                    "Guides" -> {
+                        // call api update tourist
+                        vm.updateLocationGuide(currentUser)
+                    }
 
-                else -> {
-                    // call api update tourist
-                    vm.updateLocationTourist(currentUser)
+                    else -> {
+                        // call api update tourist
+                        vm.updateLocationTourist(currentUser)
+                    }
                 }
             }
         }
     }
 
+    private fun validate(): Boolean {
+        var isValid = true
+
+        if (countryId == null || cityId == null) {
+            toast(getString(R.string.please_select_country_and_city))
+            isValid = false
+        }
+
+        return isValid
+    }
     private fun showCountryChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet =
@@ -157,7 +169,8 @@ class EditLocationFragment : BaseFragment() {
         val chooserItemList = ArrayList<ChooserItemModel>()
         cities.forEach {
             val item = ChooserItemModel(
-                name = it.state, id = it.stateId,
+                name = it.state,
+                id = it.stateId,
                 // isSelected = vm.cityName == it.state
             )
             chooserItemList.add(item)
@@ -173,6 +186,7 @@ class EditLocationFragment : BaseFragment() {
                     SharedPreference.setCityId(it.data?.user?.desCityId!!)
                     SharedPreference.setCountryId(it.data.user.countryId)
                     toast(it.data.message.toString())
+                    findNavController().navigateUp()
                 }
 
                 is ResponseHandler.Error -> {
@@ -199,5 +213,4 @@ class EditLocationFragment : BaseFragment() {
         super.onDestroy()
         _binding = null
     }
-
 }

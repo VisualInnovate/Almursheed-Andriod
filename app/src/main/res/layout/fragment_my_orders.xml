@@ -84,6 +84,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filterConstraint"
         tools:itemCount="2"
-        tools:listitem="@layout/item_my_order_tourist" />
+        tools:listitem="@layout/item_my_order_driver_guide" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

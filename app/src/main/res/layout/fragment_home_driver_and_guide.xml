@@ -217,7 +217,7 @@
             android:layout_marginTop="@dimen/space_3x"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_my_order_d_g_home"
+            tools:listitem="@layout/item_my_order_tourist"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
