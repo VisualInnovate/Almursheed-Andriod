@@ -71,7 +71,7 @@
             android:textSize="@dimen/space_13x_sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Choose Driver or Guide" />
+            android:text="@string/choose_driver_or_guide" />
 
 
 

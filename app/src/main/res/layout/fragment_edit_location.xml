@@ -84,7 +84,6 @@
 
     </androidx.cardview.widget.CardView>
 
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSubmit"
         style="@style/customButtonStyle"
@@ -93,6 +92,5 @@
         android:layout_margin="@dimen/space_4x"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

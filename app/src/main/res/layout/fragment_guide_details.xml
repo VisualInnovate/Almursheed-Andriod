@@ -7,315 +7,315 @@
     android:background="@color/bg_edit_text"
     tools:context=".guide.GuideDetailsFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-    <com.visualinnovate.almursheed.common.AppBarView
-        android:id="@+id/appBarGuidesDetails"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_4x"
-        app:cardCornerRadius="@dimen/space_3x"
-        app:cardElevation="@dimen/space_1x"
-        app:layout_constraintTop_toBottomOf="@id/appBarGuidesDetails">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.visualinnovate.almursheed.common.AppBarView
+            android:id="@+id/appBarGuidesDetails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/app_bar_height"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imgGuide"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="@dimen/space_6x"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/CircleImageView"
-                app:srcCompat="@drawable/img_test" />
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            app:cardCornerRadius="@dimen/space_3x"
+            app:cardElevation="@dimen/space_1x"
+            app:layout_constraintTop_toBottomOf="@id/appBarGuidesDetails">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgGuideStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_6x"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@id/imgGuide"
-                app:layout_constraintEnd_toEndOf="@id/imgGuide"
-                app:shapeAppearanceOverlay="@style/CircleImageView"
-                app:srcCompat="@drawable/ic_active_online" />
-
-            <TextView
-                android:id="@+id/guideReview"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="@dimen/space_4x"
-                android:drawableStart="@drawable/ic_stars"
-                android:drawablePadding="@dimen/space_1_5x"
-                android:ellipsize="end"
-                android:gravity="start|center_vertical"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/space_9x_sp"
-                app:layout_constraintBottom_toBottomOf="@id/guideName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideName"
-                app:layout_constraintTop_toTopOf="@id/guideName"
-                tools:text="(1200 review)" />
-
-            <TextView
-                android:id="@+id/guideName"
-                style="@style/TextStyleBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:ellipsize="end"
-                android:gravity="end"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintEnd_toStartOf="@id/guideReview"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgGuide"
-                tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
-
-            <TextView
-                android:id="@+id/txtPrice"
-                style="@style/TextStyleRegular"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_1x"
-                android:layout_marginEnd="@dimen/space_1x"
-                android:gravity="end"
-                android:text="@string/price"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/guidePrice"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/guideName" />
-
-            <TextView
-                android:id="@+id/guidePrice"
-                style="@style/TextStyleBold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_2x"
-                android:layout_marginTop="@dimen/space_1x"
-                android:layout_marginEnd="@dimen/space_4x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:textColor="@color/primary"
-                android:textSize="@dimen/space_12x_sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/txtPrice"
-                app:layout_constraintTop_toBottomOf="@id/guideName"
-                tools:text="$150.00" />
-
-            <TextView
-                android:id="@+id/txtLocationInfo"
-                style="@style/TextStyleRegular"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="start"
-                android:text="@string/location_info"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/txtPrice" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/guideCountry"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:background="@drawable/bg_details_text"
-                android:drawableStart="@drawable/ic_country"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:padding="@dimen/space_2x"
-                android:text="Egypt"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtLocationInfo" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imgGuide"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="@dimen/space_6x"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:srcCompat="@drawable/img_test" />
 
-            <TextView
-                android:id="@+id/guideCity"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:background="@drawable/bg_details_text"
-                android:drawableStart="@drawable/ic_location_primary"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:padding="@dimen/space_2x"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/guideCountry"
-                app:layout_constraintStart_toEndOf="@id/guideCountry"
-                app:layout_constraintTop_toTopOf="@id/guideCountry"
-                tools:text="Cairo" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgGuideStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_6x"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="@id/imgGuide"
+                    app:layout_constraintEnd_toEndOf="@id/imgGuide"
+                    app:shapeAppearanceOverlay="@style/CircleImageView"
+                    app:srcCompat="@drawable/ic_active_online" />
 
-            <TextView
-                android:id="@+id/txtLanguage"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="start"
-                android:text="@string/language_text"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/guideCountry" />
+                <TextView
+                    android:id="@+id/guideReview"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/space_4x"
+                    android:drawableStart="@drawable/ic_stars"
+                    android:drawablePadding="@dimen/space_1_5x"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/space_9x_sp"
+                    app:layout_constraintBottom_toBottomOf="@id/guideName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideName"
+                    app:layout_constraintTop_toTopOf="@id/guideName"
+                    tools:text="(1200 review)" />
 
-            <TextView
-                android:id="@+id/languageEnglish"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:background="@drawable/bg_details_text"
-                android:drawableStart="@drawable/ic_country"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:padding="@dimen/space_2x"
-                android:text="English"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/languageArabic"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+                <TextView
+                    android:id="@+id/guideName"
+                    style="@style/TextStyleBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintEnd_toStartOf="@id/guideReview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imgGuide"
+                    tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
 
-            <TextView
-                android:id="@+id/languageArabic"
-                style="@style/TextStyleRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:background="@drawable/bg_details_text"
-                android:drawableStart="@drawable/ic_country"
-                android:drawablePadding="@dimen/space_2x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:lines="1"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLength="15"
-                android:maxLines="1"
-                android:padding="@dimen/space_2x"
-                android:text="Arabic"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_12x_sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/languageEnglish"
-                app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+                <TextView
+                    android:id="@+id/txtPrice"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_1x"
+                    android:layout_marginEnd="@dimen/space_1x"
+                    android:gravity="end"
+                    android:text="@string/price"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/guidePrice"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guideName" />
 
-            <TextView
-                android:id="@+id/txtDescription"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:gravity="start"
-                android:text="@string/description"
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/languageEnglish" />
+                <TextView
+                    android:id="@+id/guidePrice"
+                    style="@style/TextStyleBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_2x"
+                    android:layout_marginTop="@dimen/space_1x"
+                    android:layout_marginEnd="@dimen/space_4x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/space_12x_sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/txtPrice"
+                    app:layout_constraintTop_toBottomOf="@id/guideName"
+                    tools:text="$150.00" />
 
-            <TextView
-                android:id="@+id/guideDescription"
-                style="@style/TextStyleRegular"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_3x"
-                android:ellipsize="end"
-                android:gravity="start"
-                android:lineSpacingExtra="8sp"
-                android:lines="3"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our ="
-                android:textColor="@color/black"
-                android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintTop_toBottomOf="@id/txtDescription" />
+                <TextView
+                    android:id="@+id/txtLocationInfo"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/location_info"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/txtPrice" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pricesRV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_3x"
-                android:layout_marginHorizontal="@dimen/space_3x"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/guideDescription"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_price" />
+                <TextView
+                    android:id="@+id/guideCountry"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawableStart="@drawable/ic_country"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2x"
+                    android:text="Egypt"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtLocationInfo" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnHire"
-                style="@style/customButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_6x"
-                android:layout_marginBottom="@dimen/space_4x"
-                android:text="@string/hire"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pricesRV" />
+                <TextView
+                    android:id="@+id/guideCity"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawableStart="@drawable/ic_location_primary"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2x"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/guideCountry"
+                    app:layout_constraintStart_toEndOf="@id/guideCountry"
+                    app:layout_constraintTop_toTopOf="@id/guideCountry"
+                    tools:text="Cairo" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/txtLanguage"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/language_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/guideCountry" />
 
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/languageEnglish"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawableStart="@drawable/ic_country"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2x"
+                    android:text="@string/english"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/languageArabic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/languageArabic"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_details_text"
+                    android:drawableStart="@drawable/ic_country"
+                    android:drawablePadding="@dimen/space_2x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lines="1"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLength="15"
+                    android:maxLines="1"
+                    android:padding="@dimen/space_2x"
+                    android:text="@string/arabic"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_12x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/languageEnglish"
+                    app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/languageEnglish" />
+
+                <TextView
+                    android:id="@+id/guideDescription"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:lineSpacingExtra="8sp"
+                    android:lines="3"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our ="
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintTop_toBottomOf="@id/txtDescription" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pricesRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_3x"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/guideDescription"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_price" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnHire"
+                    style="@style/customButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_6x"
+                    android:layout_marginBottom="@dimen/space_4x"
+                    android:text="@string/hire"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pricesRV" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

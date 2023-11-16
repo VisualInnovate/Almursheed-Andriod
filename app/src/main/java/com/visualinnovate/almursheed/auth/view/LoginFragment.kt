@@ -13,6 +13,7 @@ import com.pusher.pushnotifications.PusherCallbackError
 import com.pusher.pushnotifications.auth.AuthData
 import com.pusher.pushnotifications.auth.AuthDataGetter
 import com.pusher.pushnotifications.auth.BeamsTokenProvider
+import com.visualinnovate.almursheed.BuildConfig
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.common.SharedPreference
@@ -131,7 +132,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private val tokenProvider =
-        BeamsTokenProvider("https://mursheed.visualinnovate.net/api/pusher/beams-auth",
+        BeamsTokenProvider("${BuildConfig.BASE_URL}pusher/beams-auth",
             object : AuthDataGetter {
                 override fun getAuthData(): AuthData {
                     return AuthData(
@@ -161,16 +162,16 @@ class LoginFragment : BaseFragment() {
 
     private fun validate(): Boolean {
         var isValid = true
-        // email = binding.edtEmailAddress.value
-       // password = binding.edtPassword.value
+        email = binding.edtEmailAddress.value
+        password = binding.edtPassword.value
 
         // email = "mohamed.driver@gmail.com"
         // password = "123456789"
 
         // email = "mohamed.nasar8710@gmail.com"
-       email = "mohamed.tourist11@gmail.com"
+        // email = "mohamed.tourist11@gmail.com"
 //        email = "nassar@gmail.com"
-        password = "123456789"
+        // password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

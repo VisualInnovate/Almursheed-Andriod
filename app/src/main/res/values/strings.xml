@@ -279,5 +279,20 @@
     <string name="please_choose_city">Please choose city</string>
     <string name="total_price">Total Price</string>
     <string name="please_select_country_and_city">please select country and city</string>
+    <string name="destination_city_is_empty">Destination city is empty</string>
+    <string name="please_go_to_add_city_from_update_profile">Please go to add city from update profile</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="ok">Ok</string>
+    <string name="_0_review">(0 review)</string>
+    <string name="driver_name">Driver Name</string>
+    <string name="_00_00">$00.00</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="choose_a_driver">Choose a Driver</string>
+    <string name="date">Date</string>
+    <string name="egypt">Egypt</string>
+    <string name="cairo">Cairo</string>
+    <string name="choose_driver_or_guide">Choose Driver or Guide</string>
+    <string name="add_rate">Add Rate</string>
 
 </resources>

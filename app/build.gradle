@@ -26,7 +26,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASR_URL", "\"https://mursheed.visualinnovate.net/api/\"")
+            // buildConfigField("String", "BASR_URL", "\"https://mursheed.visualinnovate.net/api/\"")
+            buildConfigField("String", "BASR_URL", "\"https://dev.back.mursheed.com/api/\"")
             buildConfigField("String", "INSTANCE_ID", "\"INSTANCE_ID\"")
         }
         debug {
@@ -34,7 +35,8 @@ android {
             shrinkResources false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"https://mursheed.visualinnovate.net/api/\"")
+            // buildConfigField("String", "BASE_URL", "\"https://mursheed.visualinnovate.net/api/\"")
+            buildConfigField("String", "BASE_URL", "\"https://dev.back.mursheed.com/api/\"")
             buildConfigField("String", "INSTANCE_ID", "\"INSTANCE_ID\"")
         }
     }

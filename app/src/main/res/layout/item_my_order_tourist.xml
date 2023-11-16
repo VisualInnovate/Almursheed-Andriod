@@ -157,7 +157,7 @@
             android:src="@drawable/ic_group_rate"
             style="@style/customButtonStyle"
             android:padding="@dimen/space_2x"
-            android:text="Add Rate"
+            android:text="@string/add_rate"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/price"

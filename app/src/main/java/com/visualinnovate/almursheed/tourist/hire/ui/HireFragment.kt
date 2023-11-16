@@ -122,8 +122,8 @@ class HireFragment : BaseFragment() {
             vm.getAllGuidesByDistCityId()
         } else {
             showAlertDialog(
-                "Destination city is empty",
-                "Please go to add city from update profile",
+                getString(R.string.destination_city_is_empty),
+                getString(R.string.please_go_to_add_city_from_update_profile),
             ) {
                 findNavController().customNavigate(R.id.editLocationFragment)
             }

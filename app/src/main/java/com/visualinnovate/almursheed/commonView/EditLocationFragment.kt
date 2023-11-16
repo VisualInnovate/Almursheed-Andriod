@@ -183,9 +183,9 @@ class EditLocationFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    SharedPreference.setCityId(it.data?.user?.desCityId!!)
-                    SharedPreference.setCountryId(it.data.user.countryId)
-                    toast(it.data.message.toString())
+                    SharedPreference.setCityId(it.data?.user?.destCityId ?: it.data?.user?.desCityId)
+                    SharedPreference.setCountryId(it.data?.user?.countryId)
+                    toast(it.data?.message.toString())
                     findNavController().navigateUp()
                 }
 
