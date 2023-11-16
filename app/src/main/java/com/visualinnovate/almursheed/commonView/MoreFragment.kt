@@ -15,7 +15,7 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.startAuthActivity
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.utils.Constant
 import dagger.hilt.android.AndroidEntryPoint
 

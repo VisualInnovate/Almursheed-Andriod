@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.auth.AuthViewsManager
-import com.visualinnovate.almursheed.home.MainViewsManager
+import com.visualinnovate.almursheed.MainViewsManager
 
 open class BaseFragment : Fragment() {
 

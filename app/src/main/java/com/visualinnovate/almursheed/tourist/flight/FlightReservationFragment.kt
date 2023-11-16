@@ -13,7 +13,7 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentFlightReservationBinding
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.tourist.flight.adapter.FlightAdapter
 import com.visualinnovate.almursheed.home.model.FlightItem
 import com.visualinnovate.almursheed.tourist.flight.viewmodel.FlightViewModel

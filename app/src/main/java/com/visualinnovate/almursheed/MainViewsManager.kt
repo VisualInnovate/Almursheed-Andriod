@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home
+package com.visualinnovate.almursheed
 
 interface MainViewsManager {
     fun showLoading()

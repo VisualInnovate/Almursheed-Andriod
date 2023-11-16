@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.home
+package com.visualinnovate.almursheed
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,8 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -16,10 +18,23 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.GoogleAuthUtil
+import com.google.android.gms.auth.api.proxy.AuthApiStatusCodes
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.auth.model.Car
 import com.visualinnovate.almursheed.auth.model.City
 import com.visualinnovate.almursheed.auth.model.CityItem
@@ -37,11 +52,16 @@ import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.allNationalities
 import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), MainViewsManager,
+class MainActivity :
+    AppCompatActivity(),
+    MainViewsManager,
     NavController.OnDestinationChangedListener {
 
     private lateinit var navController: NavController
@@ -52,6 +72,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager,
     var snackbar: Snackbar? = null
     private lateinit var networkConnectionManager: ConnectivityManager
     private lateinit var networkConnectionCallback: ConnectivityManager.NetworkCallback
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -295,4 +316,7 @@ class MainActivity : AppCompatActivity(), MainViewsManager,
     ) {
         hideLoading()
     }
+
+
+
 }

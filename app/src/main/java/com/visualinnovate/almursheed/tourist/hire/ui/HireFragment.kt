@@ -33,7 +33,7 @@ import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomShe
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.PricesCitesAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.Order

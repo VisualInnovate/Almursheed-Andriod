@@ -28,6 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // buildConfigField("String", "BASR_URL", "\"https://mursheed.visualinnovate.net/api/\"")
             buildConfigField("String", "BASR_URL", "\"https://dev.back.mursheed.com/api/\"")
+            buildConfigField("String", "oAuthServerKey", "\"35663142823-t4j7496jpkn7v2f0b7undua0sjh78ib9.apps.googleusercontent.com\"")
             buildConfigField("String", "INSTANCE_ID", "\"INSTANCE_ID\"")
         }
         debug {
@@ -37,6 +38,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // buildConfigField("String", "BASE_URL", "\"https://mursheed.visualinnovate.net/api/\"")
             buildConfigField("String", "BASE_URL", "\"https://dev.back.mursheed.com/api/\"")
+            buildConfigField("String", "oAuthServerKey", "\"35663142823-t4j7496jpkn7v2f0b7undua0sjh78ib9.apps.googleusercontent.com\"")
             buildConfigField("String", "INSTANCE_ID", "\"INSTANCE_ID\"")
         }
     }
@@ -106,6 +108,7 @@ dependencies {
 
     // Notification Pusher
     implementation 'com.pusher:push-notifications-android:1.9.2'
+    implementation 'com.pusher:pusher-java-client:2.4.4'
 
     // Google play service
     implementation "com.google.android.gms:play-services-location:21.0.1"
@@ -118,6 +121,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation("com.google.firebase:firebase-crashlytics-ktx")
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
     // testing
     testImplementation 'junit:junit:4.13.2'

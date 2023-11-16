@@ -12,7 +12,12 @@
           "package_name": "com.visualinnovate.almursheed"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "35663142823-t4j7496jpkn7v2f0b7undua0sjh78ib9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCZibtFQGk-rC7wRUu4DwJF83Wz8cdnatE"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "35663142823-t4j7496jpkn7v2f0b7undua0sjh78ib9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -19,7 +19,7 @@ import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
 import com.visualinnovate.almursheed.driver.adapter.DriverAdapter
 import com.visualinnovate.almursheed.guide.adapter.GuideAdapter
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.model.BannerModel

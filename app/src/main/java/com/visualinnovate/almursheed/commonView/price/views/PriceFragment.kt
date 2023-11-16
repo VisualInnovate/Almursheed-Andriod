@@ -18,7 +18,7 @@ import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemMo
 import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.commonView.price.viewModels.PriceViewModel
 import com.visualinnovate.almursheed.databinding.FragmentPriceBinding
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint

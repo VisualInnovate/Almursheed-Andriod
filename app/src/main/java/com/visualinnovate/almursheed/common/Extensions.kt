@@ -20,7 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.AuthActivity
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date

@@ -6,17 +6,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.media.RingtoneManager
-import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.pusher.pushnotifications.fcm.MessagingService
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.auth.model.User
-import com.visualinnovate.almursheed.common.SharedPreference
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.utils.Constant.CHANNEL_ID
 import java.util.Random
 

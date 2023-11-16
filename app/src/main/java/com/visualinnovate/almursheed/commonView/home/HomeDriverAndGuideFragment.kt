@@ -12,7 +12,7 @@ import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.myOrders.adapters.MyOrderDriverAdapter
 import com.visualinnovate.almursheed.databinding.FragmentHomeDriverAndGuideBinding
-import com.visualinnovate.almursheed.home.MainActivity
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.home.model.BannerModel
 import kotlinx.coroutines.delay

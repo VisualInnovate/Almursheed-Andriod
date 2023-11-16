@@ -1,12 +1,27 @@
 package com.visualinnovate.almursheed.auth.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.GoogleAuthUtil
+import com.google.android.gms.auth.api.proxy.AuthApiStatusCodes
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.pusher.pushnotifications.BeamsCallback
 import com.pusher.pushnotifications.PushNotifications
 import com.pusher.pushnotifications.PusherCallbackError
@@ -20,12 +35,16 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.isEmptySting
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentLoginBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment() {
@@ -34,11 +53,16 @@ class LoginFragment : BaseFragment() {
 
     private lateinit var email: String
     private lateinit var password: String
-
     private var rememberMe: Boolean = false
-
     private val vm: AuthViewModel by viewModels()
 
+    // social login
+    private var googleSignInClient: GoogleSignInClient? = null
+    private var googleSignInOptions: GoogleSignInOptions? = null
+    private var facebookCallbackManager: CallbackManager? = null
+    private var facebookLoginManager: LoginManager? = null
+    private var providerName = ""
+    private var token = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,7 +94,7 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
-        binding.btnRememberMe.setOnClickListener {
+        binding.btnRememberMe.onDebouncedListener {
             if (!rememberMe) {
                 rememberMe = true
                 binding.imgRememberMe.setImageResource(R.drawable.ic_remember_me_selected)
@@ -80,11 +104,18 @@ class LoginFragment : BaseFragment() {
             }
         }
 
-        binding.txtForgetPassword.setOnClickListener {
+        binding.txtForgetPassword.onDebouncedListener {
             findNavController().customNavigate(R.id.forgetPasswordFragment)
         }
 
-        binding.btnLogin.setOnClickListener {
+        binding.btnFacebook.onDebouncedListener {
+        }
+        binding.btnGmail.onDebouncedListener {
+            //  (requireActivity() as HandleSocialAuth).signWithGmail()
+            initGoogleAuthentication()
+        }
+
+        binding.btnLogin.onDebouncedListener {
             if (validate()) {
                 // call api login
                 vm.login(email, password)
@@ -104,7 +135,6 @@ class LoginFragment : BaseFragment() {
                     if (rememberMe) SharedPreference.setUserLoggedIn(true)
 
                     PushNotifications.clearAllState()
-                    tokenProvider
                     pushNotificationsSetUserId()
 
                     requireActivity().startHomeActivity()
@@ -132,7 +162,8 @@ class LoginFragment : BaseFragment() {
     }
 
     private val tokenProvider =
-        BeamsTokenProvider("${BuildConfig.BASE_URL}pusher/beams-auth",
+        BeamsTokenProvider(
+            "${BuildConfig.BASE_URL}pusher/beams-auth",
             object : AuthDataGetter {
                 override fun getAuthData(): AuthData {
                     return AuthData(
@@ -140,14 +171,16 @@ class LoginFragment : BaseFragment() {
                         // request a Beams Token for a given user
                         headers = hashMapOf(
                             // for example:
-                            "Authorization" to "Bearer ${SharedPreference.getUserToken()!!}"
+                            "Authorization" to "Bearer ${SharedPreference.getUserToken()!!}",
                         ),
                     )
                 }
-            })
+            },
+        )
 
     private fun pushNotificationsSetUserId() {
-        PushNotifications.setUserId(SharedPreference.getNotificationId().toString(),
+        PushNotifications.setUserId(
+            SharedPreference.getNotificationId().toString(),
             tokenProvider,
             object : BeamsCallback<Void, PusherCallbackError> {
                 override fun onFailure(error: PusherCallbackError) {
@@ -157,7 +190,8 @@ class LoginFragment : BaseFragment() {
                 override fun onSuccess(vararg values: Void) {
                     Log.i("BeamsAuth", "Beams login success")
                 }
-            })
+            },
+        )
     }
 
     private fun validate(): Boolean {
@@ -194,4 +228,85 @@ class LoginFragment : BaseFragment() {
         }
         return isValid
     }
+
+    private fun initGoogleAuthentication() {
+        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .requestId()
+            .requestIdToken(BuildConfig.oAuthServerKey)
+            .requestServerAuthCode(BuildConfig.oAuthServerKey)
+            .build()
+        googleSignInClient = googleSignInOptions?.let {
+            GoogleSignIn.getClient(
+                requireActivity(),
+                it,
+            )
+        }
+        val signInIntent: Intent = googleSignInClient!!.signInIntent
+        launchActivityResult(signInIntent)
+    }
+
+    private fun initFacebookAuthentication() {
+        facebookLoginManager = LoginManager.getInstance()
+        facebookCallbackManager = CallbackManager.Factory.create()
+        facebookLoginManager!!.logInWithReadPermissions(
+            this,
+            facebookCallbackManager!!,
+            listOf("public_profile", "email"),
+        )
+        facebookLoginManager!!.registerCallback(
+            facebookCallbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    token = result.accessToken.token
+                    // vm.setSocialProviderAndToken(token, providerName)
+                }
+
+                override fun onCancel() {
+                    // Log.d(ContentValues.TAG, "facebookKKK:onCancel")
+                }
+
+                override fun onError(error: FacebookException) {
+                    // Log.d(ContentValues.TAG, "facebookKKK:onError ${error.message}", error)
+                }
+            },
+        )
+    }
+
+    private fun handleGoogleSignInResult(data: Intent) {
+        val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+        try {
+            val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+            CoroutineScope(Dispatchers.IO).launch {
+                token = GoogleAuthUtil.getToken(
+                    requireActivity(),
+                    account.account,
+                    "oauth2:" + "https://www.googleapis.com/auth/plus.login ",
+                )
+
+                Log.d("MyDebugData", "MainActivity : handleGoogleSignInResult :  " + account.displayName)
+                Log.d("MyDebugData", "MainActivity : handleGoogleSignInResult :  " + account.email)
+                Log.d("MyDebugData", "MainActivity : handleGoogleSignInResult :  " + token)
+
+                //  vm.setSocialProviderAndToken(token, providerName)
+            }
+        } catch (e: ApiException) {
+            println("Facebook Error" + AuthApiStatusCodes.getStatusCodeString(e.statusCode))
+            println("Facebook Error" + e.localizedMessage)
+        }
+    }
+
+    private fun launchActivityResult(intent: Intent) {
+        try {
+            onActivityResultLauncher.launch(intent)
+        } catch (ex: Exception) {
+            Log.d("myDebug", "BaseFragment launchActivityForResult   " + ex.localizedMessage)
+        }
+    }
+
+    private var onActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val data: Intent? = result.data
+            if (data != null) handleGoogleSignInResult(data)
+        }
 }
