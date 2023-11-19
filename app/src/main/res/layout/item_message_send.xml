@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/space_3x"
+    android:layout_marginTop="@dimen/space_1x"
+    android:layout_marginEnd="@dimen/space_3x"
+    android:layout_marginBottom="@dimen/space_2x">
+
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rectangle_corner_green_solid"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="@dimen/space_1x"
+        android:paddingHorizontal="@dimen/space_2x"
+        android:paddingVertical="@dimen/space_2x"
+        android:paddingEnd="@dimen/space_2x"
+        android:text="Hi i'm Mohamed"
+        android:textColor="@color/white"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintBottom_toTopOf="@id/time"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:lineSpacingExtra="@dimen/space_1x"
+        android:paddingHorizontal="@dimen/space_1x"
+        android:paddingVertical="@dimen/space_1x"
+        android:paddingStart="@dimen/space_1x"
+        android:text="12:22 PM"
+        android:textColor="@color/light_grey"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:foregroundGravity="center"
+        android:padding="@dimen/space_2x"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/primary"
+        app:cardCornerRadius="6dp"
+        app:layout_constraintBottom_toTopOf="@id/time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_driver" />
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

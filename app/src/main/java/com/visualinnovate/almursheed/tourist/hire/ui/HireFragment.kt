@@ -7,6 +7,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,10 +90,14 @@ class HireFragment : BaseFragment() {
         selectedDriverGuideId = it.id!!
         binding.chooseDriver.text = it.name
         daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
+        citiesList.clear()
+
         vm.selectedDriverAndGuideCities.forEach {
             val item = ChooserItemModel(name = it.cityName, id = it.cityId.toString())
             citiesList.add(item)
         }
+        if (tripType == 1) binding.city.text = citiesList[0].name
+        inCity = citiesList[0].id
     }
 
     override fun onCreateView(
@@ -233,11 +238,10 @@ class HireFragment : BaseFragment() {
                 longitude = currentLocation?.longitude.toString(),
             )
 
-            if (tripType == 1) {
                 selectedDays.forEach {
                     orderDetailsList.add(OrderDetail(date = it.date ?: "", inCity?.toInt() ?: 0))
                 }
-            }
+
 
             val requestCreateOrder = RequestCreateOrder(
                 user_id = selectedDriverGuideId,
@@ -267,7 +271,6 @@ class HireFragment : BaseFragment() {
         binding.betweenCityCheckBox.setOnCheckedChangeListener { _, isChecked ->
             binding.inCityCheckBox.isChecked = !isChecked
             tripType = 2
-
             daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
         }
 
@@ -396,6 +399,7 @@ class HireFragment : BaseFragment() {
         }
 
         val days = startDate.getDatesBetweenTwoDates(endDate)
+        selectedDays.clear()
         days.forEach {
             val day = DayModel("", it)
             selectedDays.add(day)
