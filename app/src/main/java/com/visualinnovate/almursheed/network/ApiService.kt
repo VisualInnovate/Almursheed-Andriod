@@ -73,6 +73,9 @@ interface ApiService {
         @Query("password_confirmation") passwordConfirmation: String?,
     ): Response<MessageResponse>
 
+    @GET("banners")
+    suspend fun getAllBanners(): Response<BannerResponse>
+
     @GET("guides/latest")
     suspend fun getLatestGuide(
         @Query("state_id") stateId: Int?

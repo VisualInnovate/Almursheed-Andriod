@@ -64,7 +64,7 @@
             android:layout_marginHorizontal="@dimen/space_3x"
             android:gravity="center"
             android:padding="@dimen/space_3x"
-            android:text="@string/close"
+            android:text="@string/completed"
             android:textColor="@color/grey"
             android:textSize="@dimen/space_14x_sp"
             app:layout_constraintBottom_toBottomOf="parent"

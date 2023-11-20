@@ -3,15 +3,15 @@ package com.visualinnovate.almursheed.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.visualinnovate.almursheed.utils.Utils
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.databinding.ItemBannerBinding
-import com.visualinnovate.almursheed.home.model.BannerModel
+import com.visualinnovate.almursheed.home.model.BannersItem
 
 class BannerAdapter(
-    private val btnBannerClickCallBack: (bannerModel: BannerModel) -> Unit
+    private val btnBannerClickCallBack: (bannerModel: BannersItem) -> Unit
 ) : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
-    private var newsList: List<BannerModel> = ArrayList()
+    private var newsList: List<BannersItem> = ArrayList()
 
     private lateinit var binding: ItemBannerBinding
 
@@ -37,15 +37,17 @@ class BannerAdapter(
         bindData(holder, article)
     }
 
-    private fun bindData(holder: BannerViewHolder, banner: BannerModel) {
-        Utils.loadImage(holder.itemView.context, banner.imageBanner, holder.imgBanner)
+    private fun bindData(holder: BannerViewHolder, banner: BannersItem) {
+        Glide.with(holder.itemView.context)
+            .load(banner.pictures?.photos?.get(0)?.originalUrl ?: "")
+            .into(binding.imgBanner)
     }
 
     override fun getItemCount(): Int {
         return newsList.size
     }
 
-    fun submitData(data: List<BannerModel>) {
+    fun submitData(data: List<BannersItem>) {
         newsList = data
         notifyDataSetChanged()
     }

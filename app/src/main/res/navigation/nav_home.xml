@@ -156,5 +156,10 @@
         android:name="com.visualinnovate.almursheed.commonView.EditLocationFragment"
         android:label="fragment_edit_location"
         tools:layout="@layout/fragment_edit_location" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.visualinnovate.almursheed.commonView.notification.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
 
 </navigation>

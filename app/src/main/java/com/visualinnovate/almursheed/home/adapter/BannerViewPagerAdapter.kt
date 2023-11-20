@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.visualinnovate.almursheed.utils.Utils
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.databinding.ItemBannerBinding
-import com.visualinnovate.almursheed.home.model.BannerModel
+import com.visualinnovate.almursheed.home.model.BannersItem
 
 class BannerViewPagerAdapter(
     private var context: Context,
-    private val btnBannerClickCallBack: (bannerModel: BannerModel) -> Unit
+    private val btnBannerClickCallBack: (bannerModel: BannersItem) -> Unit
 ) : PagerAdapter() {
 
     private lateinit var binding: ItemBannerBinding
 
-    private var bannerImages: List<BannerModel> = ArrayList()
+    private var bannerImages: List<BannersItem> = ArrayList()
 
     override fun getCount(): Int {
         return bannerImages.size
@@ -27,8 +27,8 @@ class BannerViewPagerAdapter(
         return view === `object`
     }
 
-    fun submitData(data: List<BannerModel>) {
-        bannerImages = data
+    fun submitData(data: List<BannersItem?>?) {
+        bannerImages = data as List<BannersItem>
         notifyDataSetChanged()
     }
 
@@ -36,7 +36,9 @@ class BannerViewPagerAdapter(
         binding = ItemBannerBinding.inflate(LayoutInflater.from(context), container, false)
 
         // Initialize and set data to your views
-        Utils.loadImage(context, bannerImages[position].imageBanner, binding.imgBanner)
+        Glide.with(context)
+            .load(bannerImages[position].pictures?.photos?.get(0)?.originalUrl ?: "")
+            .into(binding.imgBanner)
 
         binding.root.setOnClickListener {
             btnBannerClickCallBack.invoke(bannerImages[position])
@@ -50,9 +52,5 @@ class BannerViewPagerAdapter(
         val viewPager = container as ViewPager
         val view = `object` as View
         viewPager.removeView(view)
-    }
-
-    init {
-        context = context
     }
 }

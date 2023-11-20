@@ -57,6 +57,16 @@ class OrderDetailsFragment : BaseFragment() {
         subscribeData()
     }
 
+    private fun initToolbar() {
+        binding.appBar.setTitleString(getString(R.string.order_details))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
+            true,
+            { findNavController().navigateUp() },
+            R.drawable.ic_back,
+        )
+    }
+
     private fun initView() {
         if (days.isEmpty()) {
             getDaysList(vm.orderDetails)
@@ -84,20 +94,12 @@ class OrderDetailsFragment : BaseFragment() {
             }
         }
         initRecyclerView(days)
+        binding.touristName.text = vm.orderDetails?.touristName.toString()
+        binding.driverName.text = vm.orderDetails?.vendor.toString()
         binding.country.text = vm.orderDetails?.countryId.toString()
         binding.entryDate.text = vm.orderDetails?.startDate
         binding.exitDate.text = vm.orderDetails?.endDate
         binding.price.text = vm.orderDetails?.cost +" $"
-    }
-
-    private fun initToolbar() {
-        binding.appBar.setTitleString(getString(R.string.order_details))
-        binding.appBar.setTitleCenter(true)
-        binding.appBar.useBackButton(
-            true,
-            { findNavController().navigateUp() },
-            R.drawable.ic_back,
-        )
     }
 
     private fun setBtnListener() {

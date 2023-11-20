@@ -69,7 +69,7 @@ class MyOrdersTouristAdapter(
                     setBackgroundColor(resources.getColor(R.color.colorPending))
                     text = context.getString(R.string.pending)
                 }
-                holder.btnPaid.visible()
+                holder.btnPaid.gone()
                 holder.btnCancel.visible()
             }
 
@@ -116,12 +116,13 @@ class MyOrdersTouristAdapter(
                 }
                 holder.btnPaid.gone()
                 holder.btnCancel.visible()
+                holder.btnAddRate.visible()
             }
 
             "7" -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.purple_200))
-                    text = context.getString(R.string.notcompleted)
+                    text = context.getString(R.string.in_progress)
                 }
                 holder.btnPaid.gone()
                 holder.btnCancel.gone()

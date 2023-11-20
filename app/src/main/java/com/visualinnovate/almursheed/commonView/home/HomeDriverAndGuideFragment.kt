@@ -14,7 +14,7 @@ import com.visualinnovate.almursheed.commonView.myOrders.adapters.MyOrderDriverA
 import com.visualinnovate.almursheed.databinding.FragmentHomeDriverAndGuideBinding
 import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
-import com.visualinnovate.almursheed.home.model.BannerModel
+import com.visualinnovate.almursheed.home.model.BannersItem
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -26,7 +26,7 @@ class HomeDriverAndGuideFragment : Fragment() {
     private lateinit var myOrdersAdapter: MyOrderDriverAdapter
 
     // m.nassar@visualinnovate.com
-    private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
+    private val btnBannerClickCallBack: (banner: BannersItem) -> Unit = { banner ->
         toast("Clicked Item banner $banner")
     }
 
@@ -93,13 +93,13 @@ class HomeDriverAndGuideFragment : Fragment() {
         }
     }
 
-    private fun getBannerList(): ArrayList<BannerModel> {
-        val bannerList = ArrayList<BannerModel>()
+    private fun getBannerList(): ArrayList<BannersItem> {
+        val bannerList = ArrayList<BannersItem>()
 
-        bannerList.add(BannerModel(0, R.drawable.img_banner))
-        bannerList.add(BannerModel(1, R.drawable.img_banner))
-        bannerList.add(BannerModel(2, R.drawable.img_banner))
-        bannerList.add(BannerModel(3, R.drawable.img_banner))
+        /*bannerList.add(BannersItem(0, R.drawable.img_banner))
+        bannerList.add(BannersItem(1, R.drawable.img_banner))
+        bannerList.add(BannersItem(2, R.drawable.img_banner))
+        bannerList.add(BannersItem(3, R.drawable.img_banner))*/
 
         return bannerList
     }

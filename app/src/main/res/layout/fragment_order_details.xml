@@ -43,13 +43,13 @@
                 app:layout_constraintTop_toTopOf="parent"  />
 
             <TextView
-                android:id="@+id/txtCountry"
+                android:id="@+id/txtTouristName"
                 style="@style/TextStyleRegular"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_3x"
                 android:layout_marginTop="@dimen/space_5x"
-                android:text="@string/countryy"
+                android:text="@string/tourist_name"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
@@ -57,11 +57,65 @@
                 app:layout_constraintTop_toBottomOf="@id/txtTripInfo" />
 
             <TextView
+                android:id="@+id/touristName"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Egypt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/txtTouristName"
+                app:layout_constraintTop_toTopOf="@id/txtTouristName" />
+
+            <TextView
+                android:id="@+id/txtDriverName"
+                style="@style/TextStyleRegular"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:text="@string/driver_name"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtTouristName" />
+
+            <TextView
+                android:id="@+id/driverName"
+                style="@style/TextStyleRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Egypt"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/txtDriverName"
+                app:layout_constraintTop_toTopOf="@id/txtDriverName" />
+
+            <TextView
+                android:id="@+id/txtCountry"
+                style="@style/TextStyleRegular"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_3x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:text="@string/countryy"
+                android:visibility="gone"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/space_14x_sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtDriverName" />
+
+            <TextView
                 android:id="@+id/country"
                 style="@style/TextStyleRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Egypt"
+                android:visibility="gone"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
@@ -75,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_3x"
                 android:layout_marginTop="@dimen/space_3x"
-                android:text="@string/date_of_entry"
+                android:text="@string/start_of_trip"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"
@@ -101,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_3x"
                 android:layout_marginTop="@dimen/space_3x"
-                android:text="@string/date_of_exit"
+                android:text="@string/end_of_trip"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/space_14x_sp"
                 android:textStyle="bold"

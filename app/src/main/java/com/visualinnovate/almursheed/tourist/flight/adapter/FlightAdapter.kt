@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemFlightBinding
@@ -47,8 +48,10 @@ class FlightAdapter(
     @SuppressLint("SetTextI18n")
     private fun bindData(holder: FlightViewHolder, flight: FlightItem) {
         // set data
-        // Utils.loadImage(holder.itemView.context, flight.flightImage, holder.imgFlight)
-        Utils.loadImage(holder.itemView.context, R.drawable.ic_egypt_air, holder.imgFlight)
+        Glide.with(holder.itemView.context)
+            .load(R.drawable.ic_egypt_air)
+            .into(holder.imgFlight)
+
         // holder.imgFlight.setImageResource(flight.flightImage)
         holder.flightName.text = flight.name?.localized
         holder.flightDiscount.text = "Discount ${flight.discount}%"

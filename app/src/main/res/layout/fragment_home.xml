@@ -6,12 +6,12 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/page"
         android:fillViewport="true"
         android:fitsSystemWindows="true"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:context=".home.view.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,19 +40,35 @@
                 android:layout_height="@dimen/space_10x"
                 android:layout_marginHorizontal="@dimen/space_4x"
                 android:layout_marginTop="@dimen/space_4x"
-                android:fontFamily="@font/myriad_pro_regular"
-                android:text="@string/search_murcheed_app"
                 android:background="@drawable/rounded_search_view"
                 android:drawablePadding="@dimen/space_2x"
+                android:text="@string/search_murcheed_app"
+                android:fontFamily="@font/myriad_pro_regular"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/space_2x"
                 android:paddingEnd="@dimen/space_2x"
-                android:gravity="center_vertical"
-                app:iconifiedByDefault="false"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/ic_search"
+                app:iconifiedByDefault="false"
                 app:layout_constraintEnd_toStartOf="@id/icNotification"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
+
+            <!--<TextView
+                android:id="@+id/cityName"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_10x"
+                android:layout_marginTop="@dimen/space_4x"
+                android:layout_marginEnd="@dimen/space_4x"
+                android:fontFamily="@font/myriad_pro_regular"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@id/icNotification"
+                app:layout_constraintStart_toEndOf="@id/searchView"
                 app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
-                app:drawableStartCompat="@drawable/ic_search" />
+                tools:text="Cairo" />-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icNotification"
@@ -62,7 +78,6 @@
                 android:layout_marginEnd="@dimen/space_4x"
                 app:layout_constraintBottom_toBottomOf="@id/searchView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/searchView"
                 app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
                 app:srcCompat="@drawable/ic_notification" />
 

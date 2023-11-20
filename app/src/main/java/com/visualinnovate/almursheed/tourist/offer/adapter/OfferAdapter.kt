@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
@@ -61,10 +62,13 @@ class OfferAdapter(
         }
 
         // set data
-        // Utils.loadImage(holder.itemView.context, offer.offerImage, holder.imgOffer)
-        Utils.loadImage(holder.itemView.context, R.drawable.img_test, holder.imgOffer)
+
+        Glide.with(holder.itemView.context)
+            .load(offer.pictures?.photos?.get(0)?.originalUrl)
+            .into(holder.imgOffer)
+
         // holder.imgFlight.setImageResource(flight.flightImage)
-        holder.offerName.text = offer.title?.localized ?: ""
+        holder.offerName.text = offer.title?.gb ?: ""
         holder.offerRating.text = offer.number ?: ""
     }
 

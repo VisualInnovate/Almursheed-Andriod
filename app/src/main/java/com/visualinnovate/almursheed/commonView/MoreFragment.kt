@@ -54,9 +54,11 @@ class MoreFragment : Fragment() {
 
     private fun initView() {
         if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
+            binding.constraintTotalEarning.visible()
             binding.myPrices.visible()
             binding.editLocation.gone()
         } else {
+            binding.constraintTotalEarning.gone()
             binding.myPrices.gone()
             binding.editLocation.visible()
         }
@@ -66,6 +68,11 @@ class MoreFragment : Fragment() {
         binding.editProfile.onDebouncedListener {
             findNavController().customNavigate(R.id.editProfileFragment)
         }
+
+        binding.contactUs.onDebouncedListener {
+            // findNavController().customNavigate(R.id.editProfileFragment)
+        }
+
         binding.logout.onDebouncedListener {
             SharedPreference.saveUser(null)
             SharedPreference.setUserToken(null)

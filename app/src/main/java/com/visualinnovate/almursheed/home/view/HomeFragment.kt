@@ -1,6 +1,8 @@
 package com.visualinnovate.almursheed.home.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +24,7 @@ import com.visualinnovate.almursheed.guide.adapter.GuideAdapter
 import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
-import com.visualinnovate.almursheed.home.model.BannerModel
+import com.visualinnovate.almursheed.home.model.BannersItem
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
@@ -50,7 +52,7 @@ class HomeFragment : BaseFragment() {
     private lateinit var locationAdapter: LocationAdapter
 
     // m.nassar@visualinnovate.com
-    private val btnBannerClickCallBack: (banner: BannerModel) -> Unit = { banner ->
+    private val btnBannerClickCallBack: (banner: BannersItem) -> Unit = { banner ->
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
@@ -122,13 +124,18 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_home_tourist)
+
+        // call all apis of home screen such as latest guide and driver, all banners, all offers
+        callApis()
+
         initView()
         setBtnListener()
         subscribeData()
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun callApis() {
+        vm.getAllBanners()
+
         Log.d("DEBUG ", ".stateId  ${SharedPreference.getUser().stateId}")
         Log.d("DEBUG ", ".desCityId  ${SharedPreference.getUser().desCityId}")
         Log.d("DEBUG ", ".getCityId()  ${SharedPreference.getCityId()}")
@@ -136,8 +143,8 @@ class HomeFragment : BaseFragment() {
             vm.getLatestDriver(SharedPreference.getUser().stateId)
             vm.getLatestGuides(SharedPreference.getUser().stateId)
         } else if (SharedPreference.getUser().desCityId != null) {
-            vm.getLatestDriver(SharedPreference.getUser().stateId)
-            vm.getLatestGuides(SharedPreference.getUser().stateId)
+            vm.getLatestDriver(SharedPreference.getUser().desCityId)
+            vm.getLatestGuides(SharedPreference.getUser().desCityId)
         } else if (SharedPreference.getCityId() != null) {
             vm.getLatestDriver(SharedPreference.getCityId())
             vm.getLatestGuides(SharedPreference.getCityId())
@@ -158,7 +165,40 @@ class HomeFragment : BaseFragment() {
         initLocationRecycler()
     }
 
+    private var bannerList: ArrayList<BannersItem> = ArrayList()
     private fun subscribeData() {
+        // observe in all banner list
+        vm.getAllBannerLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    binding.page.visible()
+                    binding.shimmer.gone()
+                    bannerViewPagerAdapter.submitData(it.data?.banners)
+                    bannerList = it.data?.banners as ArrayList<BannersItem>
+                    startAutoSlider()
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                    Log.d("Error->DriverList", it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
+
         // observe in drivers list
         vm.driverLatestLiveData.observe(viewLifecycleOwner) {
             when (it) {
@@ -308,6 +348,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
+        binding.icNotification.setOnClickListener {
+            findNavController().customNavigate(R.id.notificationFragment)
+        }
         binding.seeAllDivers.setOnClickListener {
             findNavController().customNavigate(R.id.allDriversFragment)
         }
@@ -326,32 +369,36 @@ class HomeFragment : BaseFragment() {
 
     private fun initBannerRecycler() {
         bannerViewPagerAdapter = BannerViewPagerAdapter(requireContext(), btnBannerClickCallBack)
-        bannerViewPagerAdapter.submitData(getBannerList())
+
         binding.rvBanner.offscreenPageLimit = 10
         binding.rvBanner.adapter = bannerViewPagerAdapter
         binding.dotsIndicatorBanner.attachTo(binding.rvBanner)
-
-        startAutoSlider()
-        /*binding.rvBanner.apply {
-            bannerAdapter = BannerAdapter(btnBannerClickCallBack)
-            bannerAdapter.submitData(getBannerList())
-            adapter = bannerAdapter
-        }*/
     }
 
-    private var currentPage = 0
-
     // Start the auto slider
-    private fun startAutoSlider() {
+    /*private fun startAutoSlider() {
         lifecycleScope.launch {
             delay(2000)
-            if (currentPage == getBannerList().size) {
+            if (currentPage == bannerList.size) {
                 currentPage = 0
             }
             binding.rvBanner.setCurrentItem(currentPage++, true)
         }
-    }
+    }*/
 
+    private fun startAutoSlider() {
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+                val nextItem = if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
+                binding.rvBanner.setCurrentItem(nextItem, true)
+                handler.postDelayed(this, 3000) // Delay in milliseconds (adjust as needed)
+            }
+        }
+
+        // Start auto-slider
+        handler.postDelayed(runnable, 3000) // Initial delay before auto-scrolling starts
+    }
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
             driverAdapter =
@@ -393,17 +440,6 @@ class HomeFragment : BaseFragment() {
 
         // Use attachTo() instead of setViewPager2()
         binding.dotsIndicatorBanner.*/
-    }
-
-    private fun getBannerList(): ArrayList<BannerModel> {
-        val bannerList = ArrayList<BannerModel>()
-
-        bannerList.add(BannerModel(0, R.drawable.img_banner))
-        bannerList.add(BannerModel(1, R.drawable.img_banner))
-        bannerList.add(BannerModel(2, R.drawable.img_banner))
-        bannerList.add(BannerModel(3, R.drawable.img_banner))
-
-        return bannerList
     }
 
     override fun onDestroy() {

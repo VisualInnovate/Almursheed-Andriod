@@ -24,6 +24,11 @@ class HomeViewModel @Inject constructor(
     var driversList: List<DriverAndGuideItem?>? = ArrayList()
     var guidesList: List<DriverAndGuideItem?>? = ArrayList()
 
+    private val _getAllBannerMutableData: MutableLiveData<ResponseHandler<BannerResponse?>> =
+        MutableLiveData()
+    val getAllBannerLiveData: LiveData<ResponseHandler<BannerResponse?>> =
+        _getAllBannerMutableData.toSingleEvent()
+
     private val _driverLatestMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
     val driverLatestLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
@@ -79,6 +84,17 @@ class HomeViewModel @Inject constructor(
         MutableLiveData()
     val guideDetailsLiveData: LiveData<ResponseHandler<GuideDetailsResponse?>> =
         _guideDetailsMutable.toSingleEvent()
+
+    fun getAllBanners() {
+        viewModelScope.launch {
+            safeApiCall {
+                // Make your API call here using Retrofit service or similar
+                apiService.getAllBanners()
+            }.collect {
+                _getAllBannerMutableData.value = it
+            }
+        }
+    }
 
     fun getLatestDriver(cityId: Int?) {
         viewModelScope.launch {
@@ -148,6 +164,7 @@ class HomeViewModel @Inject constructor(
         }
         return requestData
     }
+
     fun fetchOfferResponse() {
         viewModelScope.launch {
             safeApiCall {

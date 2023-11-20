@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_edit_text"
     tools:context=".commonView.MoreFragment">
 
@@ -13,182 +13,280 @@
         android:layout_height="@dimen/app_bar_height"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/space_4x"
-        android:padding="@dimen/space_3x"
-        android:background="@drawable/bg_rectangle_corner_white"
-        app:layout_constraintTop_toBottomOf="@id/appBar">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/appBar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
-            android:id="@+id/liveChat"
-            style="@style/TextStyleBold"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/live_chat"
-            android:drawablePadding="@dimen/space_4x"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:drawableStartCompat="@drawable/ic_live_chat" />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/aboutMursheed"
-            style="@style/TextStyleBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:text="@string/about_murcheed"
-            android:drawablePadding="@dimen/space_4x"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/liveChat"
-            app:drawableStartCompat="@drawable/ic_info" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintTotalEarning"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:layout_marginHorizontal="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_white"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/aboutUs"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/about_us"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/aboutMursheed"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <TextView
+                    android:id="@+id/totalEarning"
+                    style="@style/TextStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginBottom="@dimen/space_2x"
+                    android:gravity="center"
+                    android:padding="@dimen/space_4x"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/space_22x_sp"
+                    app:layout_constraintBottom_toTopOf="@id/view"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="12,491.22 $" />
 
-        <TextView
-            android:id="@+id/termsAndConditions"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_2x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/terms_and_conditions"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/aboutUs"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bg_edit_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/totalEarning" />
 
-        <TextView
-            android:id="@+id/privacyPolicy"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_2x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/privacy_policy"
-            android:visibility="gone"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/termsAndConditions"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <TextView
+                    android:id="@+id/clientNumber"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:layout_marginVertical="@dimen/space_1x"
+                    android:gravity="start"
+                    android:padding="@dimen/space_2x"
+                    android:text="244 Client"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/timeCount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view" />
 
-        <TextView
-            android:id="@+id/txtMyAccount"
-            style="@style/TextStyleBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_4x"
-            android:text="@string/my_account"
-            android:drawablePadding="@dimen/space_4x"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/privacyPolicy"
-            app:drawableStartCompat="@drawable/ic_my_account" />
+                <TextView
+                    android:id="@+id/timeCount"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/space_4x"
+                    android:gravity="end"
+                    android:padding="@dimen/space_2x"
+                    android:text="12,491.22 $"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
+                    app:layout_constraintBottom_toBottomOf="@id/clientNumber"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/clientNumber"
+                    app:layout_constraintTop_toTopOf="@id/clientNumber" />
 
-        <TextView
-            android:id="@+id/editProfile"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/edit_profile"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/txtMyAccount"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/myOrders"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/my_orders"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/editProfile"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/space_4x"
+                android:layout_marginVertical="@dimen/space_4x"
+                android:background="@drawable/bg_rectangle_corner_white"
+                android:padding="@dimen/space_3x"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/constraintTotalEarning">
 
-        <TextView
-            android:id="@+id/myPrices"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/my_prices"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/myOrders"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <TextView
+                    android:id="@+id/liveChat"
+                    style="@style/TextStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/space_4x"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/live_chat"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableStartCompat="@drawable/ic_live_chat"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/editLocation"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/edit_location"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/myPrices"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <TextView
+                    android:id="@+id/contactUs"
+                    style="@style/TextStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4x"
+                    android:drawablePadding="@dimen/space_4x"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/contact_us"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableStartCompat="@drawable/ic_contact_us"
+                    app:layout_constraintTop_toBottomOf="@id/liveChat" />
 
-        <TextView
-            android:id="@+id/resetPassword"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/reset_password"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/editLocation"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <TextView
+                    android:id="@+id/aboutMursheed"
+                    style="@style/TextStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4x"
+                    android:drawablePadding="@dimen/space_4x"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/about_murcheed"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableStartCompat="@drawable/ic_info"
+                    app:layout_constraintTop_toBottomOf="@id/contactUs" />
 
-        <TextView
-            android:id="@+id/logout"
-            style="@style/TextStyleRegular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_3x"
-            android:paddingVertical="@dimen/space_2x"
-            android:text="@string/logout"
-            android:textColor="@color/black"
-            android:gravity="start|center_vertical"
-            android:textSize="@dimen/space_16x_sp"
-            app:layout_constraintTop_toBottomOf="@id/resetPassword"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
+                <TextView
+                    android:id="@+id/aboutUs"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/about_us"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/aboutMursheed" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/termsAndConditions"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/terms_and_conditions"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/aboutUs" />
+
+                <TextView
+                    android:id="@+id/privacyPolicy"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/privacy_policy"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    android:visibility="gone"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/termsAndConditions" />
+
+                <TextView
+                    android:id="@+id/txtMyAccount"
+                    style="@style/TextStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4x"
+                    android:drawablePadding="@dimen/space_4x"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/my_account"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableStartCompat="@drawable/ic_my_account"
+                    app:layout_constraintTop_toBottomOf="@id/privacyPolicy" />
+
+                <TextView
+                    android:id="@+id/editProfile"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/edit_profile"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/txtMyAccount" />
+
+                <TextView
+                    android:id="@+id/myOrders"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/my_orders"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/editProfile" />
+
+                <TextView
+                    android:id="@+id/myPrices"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/my_prices"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/myOrders" />
+
+                <TextView
+                    android:id="@+id/editLocation"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/edit_location"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/myPrices" />
+
+                <TextView
+                    android:id="@+id/resetPassword"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/reset_password"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/editLocation" />
+
+                <TextView
+                    android:id="@+id/logout"
+                    style="@style/TextStyleRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_3x"
+                    android:gravity="start|center_vertical"
+                    android:paddingVertical="@dimen/space_2x"
+                    android:text="@string/logout"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableEndCompat="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toBottomOf="@id/resetPassword" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

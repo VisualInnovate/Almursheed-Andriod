@@ -44,12 +44,6 @@ object Utils {
     val carModel = HashMap<String, String>()
     val languages = HashMap<String, Int>()
 
-    fun loadImage(context: Context, urlToImage: Int, imgView: ImageView) {
-        Glide.with(context)
-            .load(urlToImage)
-            .into(imgView)
-    }
-
     fun filterCitiesByCountryId() {
         filteredCities.clear()
         filteredCitiesString.clear()
