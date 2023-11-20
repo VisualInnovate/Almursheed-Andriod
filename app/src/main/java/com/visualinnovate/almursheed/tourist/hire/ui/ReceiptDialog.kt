@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.tourist.hire.ui
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
@@ -24,7 +25,7 @@ import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ReceiptDialog : DialogFragment() {
+class ReceiptDialog(private val onDismissCalBack: () -> Unit) : DialogFragment() {
 
     private var _binding: LayoutReceiptBinding? = null
     private val binding get() = _binding!!
@@ -143,5 +144,10 @@ class ReceiptDialog : DialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissCalBack.invoke()
     }
 }

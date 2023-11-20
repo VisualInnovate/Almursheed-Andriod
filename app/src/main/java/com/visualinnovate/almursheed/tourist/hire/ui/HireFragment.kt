@@ -7,21 +7,20 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.formatDate
 import com.visualinnovate.almursheed.common.getDatesBetweenTwoDates
-import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
@@ -29,21 +28,15 @@ import com.visualinnovate.almursheed.common.showAlertDialog
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.showDialog
 import com.visualinnovate.almursheed.common.toast
-import com.visualinnovate.almursheed.common.visible
-import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
-import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.databinding.FragmentHireBinding
-import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.PricesCitesAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
-import com.visualinnovate.almursheed.home.model.Order
-import com.visualinnovate.almursheed.home.model.OrderDetail
-import com.visualinnovate.almursheed.home.model.RequestCreateOrder
 import com.visualinnovate.almursheed.tourist.hire.viewmodel.HireViewModel
 import com.visualinnovate.almursheed.utils.LocationHelper
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import java.util.Calendar
 import java.util.Date
 
@@ -55,49 +48,23 @@ class HireFragment : BaseFragment() {
 
     private val vm: HireViewModel by activityViewModels()
 
-    private var tripType: Int = 1
-    private var userChoosedType: Int = 1
-    private var selectedDriverGuideId: Int = -1
+    private var tripType: Int = 1 // 1 inCity , 2 BetweenCity
+    private var userType: Int = 1 // 1 driver , 2 guide
+
+    private lateinit var daysAdapter: PricesCitesAdapter
+    private lateinit var permissionHelper: PermissionHelper
+    var daysForAdapter = ArrayList<DayModel>()
     private var startDate: Date = Date()
     private var endDate: Date = Date()
     private var currentLocation: Location? = null
 
-    private var selectedDays = ArrayList<DayModel>()
-    private var orderDetailsList = ArrayList<OrderDetail>()
-
-    private var isForStartDate: Boolean = true
-
-    private lateinit var daysAdapter: PricesCitesAdapter
-
-    private var datePickerDialog: DatePickerDialog? = null
-    private lateinit var permissionHelper: PermissionHelper
-
-    private val selectDaysAndCityCallback: (day: String, cityId: Int) -> Unit = { day, cityId ->
-        // Check if the date already exists in orderDetailsList
-        val existingOrderDetail = orderDetailsList.find { it.date == day }
-
-        if (existingOrderDetail != null) {
-            // If the date already exists, update the city_id
-            existingOrderDetail.city_id += cityId
-        } else {
-            // If the date doesn't exist, add it to the list
-            orderDetailsList.add(OrderDetail(date = day, cityId))
-        }
+    private val selectDaysAndCityCallback: (day: String, cityId: Int, cityName: String?) -> Unit = { day, cityId, cityName ->
+        vm.setSelectedCity(cityName.toString(), cityId.toString())
     }
 
     private val selectDriverGuideClickCalBack: (user: DriverAndGuideItem) -> Unit = {
-        vm.getUserCities(user = it)
-        selectedDriverGuideId = it.id!!
-        binding.chooseDriver.text = it.name
-        daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
-        citiesList.clear()
-
-        vm.selectedDriverAndGuideCities.forEach {
-            val item = ChooserItemModel(name = it.cityName, id = it.cityId.toString())
-            citiesList.add(item)
-        }
-        if (tripType == 1) binding.city.text = citiesList[0].name
-        inCity = citiesList[0].id
+        vm.setSelectedDriverOrGuide(it)
+        binding.nameDriverGuide.text = vm.getSelectedDriverAndGuideName()
     }
 
     override fun onCreateView(
@@ -119,38 +86,16 @@ class HireFragment : BaseFragment() {
         setBtnListener()
         initView()
         subscribeData()
+        handleLoading()
     }
 
-    private fun callGetDriverAndGuide() {
-        if (SharedPreference.getCityId() != null) {
-            vm.getAllDriversByDistCityId()
-            vm.getAllGuidesByDistCityId()
-        } else {
-            showAlertDialog(
-                getString(R.string.destination_city_is_empty),
-                getString(R.string.please_go_to_add_city_from_update_profile),
-            ) {
-                findNavController().customNavigate(R.id.editLocationFragment)
-            }
+    private fun handleLoading() {
+        // show loading to get drivers and guides data
+        lifecycleScope.launchWhenResumed {
+            showMainLoading()
+            delay(2000)
+            hideMainLoading()
         }
-    }
-
-    private fun askForLocationPermission() {
-        permissionHelper
-            .addPermissionsToAsk(Permission.Location)
-            .isRequired(true)
-            .requestPermissions { grantedList ->
-                for (permission in grantedList) {
-                    when (permission) {
-                        Permission.Location -> {
-                            checkGpsIsEnabled()
-                            break
-                        }
-
-                        else -> {}
-                    }
-                }
-            }
     }
 
     private fun initToolbar() {
@@ -163,141 +108,100 @@ class HireFragment : BaseFragment() {
         )
     }
 
-    private var citiesList = ArrayList<ChooserItemModel>()
-    private var inCity: String? = null
-
     private fun initView() {
-        binding.inCityCheckBox.isChecked = true
-        // binding.constraintInCity.visible()
-
-        binding.city.onDebouncedListener {
-            showCityChooser()
-        }
-
-        // init recycler
         initSelectedDaysRecyclerView()
-    }
-
-    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
-
-    private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
-        val chooserItemList = ArrayList<ChooserItemModel>()
-        cities.forEach {
-            val item = ChooserItemModel(name = it.state, id = it.stateId)
-            chooserItemList.add(item)
-        }
-        return chooserItemList
-    }
-
-    private fun showCityChooser() {
-        chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet =
-            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ ->
-                inCity = data.id
-                binding.city.text = data.name
-            })
-        showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
+        handleInCityClick()
     }
 
     private fun setBtnListener() {
+        binding.inCity.onDebouncedListener {
+            handleInCityClick()
+        }
+
+        binding.betweenCity.onDebouncedListener {
+            handleBetweenCityClick()
+        }
         binding.startDate.onDebouncedListener {
-            isForStartDate = true
-            showDatePicker()
+            showStartDatePicker()
         }
 
         binding.endDate.onDebouncedListener {
-            isForStartDate = false
-            showDatePicker()
+            showEndDatePicker()
         }
 
         binding.driver.onDebouncedListener {
-            selectedDriverGuideId = -1
-            binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
-            binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
-            binding.txtDriver.text = getString(R.string.drivers)
-            binding.chooseDriver.hint = getString(R.string.choose_a, getString(R.string.driver))
-            userChoosedType = 1
+            handleChooseDriverUi()
         }
 
         binding.guide.onDebouncedListener {
-            selectedDriverGuideId = -1
-            binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
-            binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
-            binding.txtDriver.text = getString(R.string.guides)
-            binding.chooseDriver.hint = getString(R.string.choose_a, getString(R.string.guide))
-            userChoosedType = 2
+            handleChooseGuideUi()
+        }
+
+        binding.nameDriverGuide.onDebouncedListener {
+            if (userType == 1) {
+                userType = 1
+                showDriversGuidesBottomSheet("Driver", vm.allDrivers)
+            } else {
+                userType = 2
+                showDriversGuidesBottomSheet("Guide", vm.allGuides)
+            }
         }
 
         binding.btnHire.onDebouncedListener {
-            val order = Order(
-                trip_type = tripType,
-                start_date = startDate.formatDate(),
-                end_date = endDate.formatDate(),
-                country_id = SharedPreference.getUser()?.countryId ?: 1,
-                lat = currentLocation?.latitude.toString(),
-                longitude = currentLocation?.longitude.toString(),
-            )
-
-                selectedDays.forEach {
-                    orderDetailsList.add(OrderDetail(date = it.date ?: "", inCity?.toInt() ?: 0))
-                }
-
-
-            val requestCreateOrder = RequestCreateOrder(
-                user_id = selectedDriverGuideId,
-                user_type = userChoosedType, // 1 driver, 2 guide
-                order = order,
-                order_details = orderDetailsList,
-            )
-
             if (validate()) {
                 // call create order api
-                vm.createOrder(requestCreateOrder)
-            }
-        }
-
-        binding.inCityCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                binding.constraintInCity.visible()
-                binding.daysRecyclerView.gone()
-            } else {
-                binding.daysRecyclerView.visible()
-                binding.constraintInCity.gone()
-            }
-            binding.betweenCityCheckBox.isChecked = !isChecked
-            tripType = 1
-        }
-
-        binding.betweenCityCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            binding.inCityCheckBox.isChecked = !isChecked
-            tripType = 2
-            daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
-        }
-
-        binding.chooseDriver.onDebouncedListener {
-            if (userChoosedType == 1) {
-                userChoosedType = 1
-                showDriversGuidesBottomSheet("Driver", vm.allDrivers)
-            } else {
-                userChoosedType = 2
-                showDriversGuidesBottomSheet("Guide", vm.allGuides)
+                vm.createOrder(tripType, currentLocation, startDate.formatDate(), endDate.formatDate(), userType, setupDataForApiCall())
             }
         }
     }
 
+    private fun handleInCityClick() {
+        binding.inCity.setCompoundDrawablesWithIntrinsicBounds(resources.getDrawable(R.drawable.ic_remember_me_selected, null), null, null, null)
+        binding.betweenCity.setCompoundDrawablesWithIntrinsicBounds(resources.getDrawable(R.drawable.ic_remember_me_unselected), null, null, null)
+        tripType = 1
+        updateStartDateAndEndDateTextView()
+    }
+    private fun handleBetweenCityClick() {
+        binding.betweenCity.setCompoundDrawablesWithIntrinsicBounds(resources.getDrawable(R.drawable.ic_remember_me_selected, null), null, null, null)
+        binding.inCity.setCompoundDrawablesWithIntrinsicBounds(resources.getDrawable(R.drawable.ic_remember_me_unselected), null, null, null)
+        tripType = 2
+        updateStartDateAndEndDateTextView()
+    }
+
+    private fun handleChooseDriverUi() {
+        binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
+        binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
+        binding.txtDriver.text = getString(R.string.drivers)
+        binding.nameDriverGuide.text = getString(R.string.choose_a, getString(R.string.driver))
+        userType = 1
+        vm.setSelectedDriverOrGuide(null)
+    }
+    private fun handleChooseGuideUi() {
+        binding.guide.setBackgroundResource(R.drawable.bg_rectangle_corner_green_border)
+        binding.driver.setBackgroundResource(R.drawable.bg_rectangle_corner_grey_border)
+        binding.txtDriver.text = getString(R.string.guides)
+        binding.nameDriverGuide.text = getString(R.string.choose_a, getString(R.string.guide))
+        userType = 2
+        vm.setSelectedDriverOrGuide(null)
+    }
+
     private fun subscribeData() {
+        vm.cites.observe(viewLifecycleOwner) {
+            it?.let {
+                daysAdapter.submitData(daysForAdapter, it)
+            }
+        }
+
         vm.createOrderLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     vm.order = it.data
-                    selectedDays.clear()
                     showReceiptDialog()
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    // showReceiptDialog()
                 }
 
                 is ResponseHandler.Loading -> {
@@ -316,11 +220,13 @@ class HireFragment : BaseFragment() {
     }
 
     private fun showReceiptDialog() {
-        val dialog = ReceiptDialog()
+        val dialog = ReceiptDialog(onDismissCalBack = {
+            findNavController().customNavigate(R.id.myOrdersFragment)
+        })
         val bundle = Bundle()
         bundle.putString("START_DATE", startDate.formatDate())
         bundle.putString("END_DATE", endDate.formatDate())
-        bundle.putInt("NUMBER_OF_DATE", orderDetailsList.size)
+        bundle.putInt("NUMBER_OF_DATE", setupDataForApiCall().size)
 
         // Set the Bundle as arguments for the DialogFragment
         dialog.arguments = bundle
@@ -341,74 +247,85 @@ class HireFragment : BaseFragment() {
         }
     }
 
-    private fun initDriversOrGuidesRecyclerView() {
-//        daysAdapter = DaysAdapter()
-//        binding.daysRecyclerView.apply {
-//            itemAnimator = DefaultItemAnimator()
-//            daysAdapter.setHasStableIds(true)
-//            adapter = daysAdapter
-//        }
-//        daysAdapter.submitData(selectedDays)
-    }
-
-    private fun showDatePicker() {
+    private fun showStartDatePicker() {
         val calendar = Calendar.getInstance()
-        // datePickerDialog.let {
-        // if (datePickerDialog?.isShowing == false) {
-        datePickerDialog = DatePickerDialog(
+        val datePicker = DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
                 calendar.set(year, month, dayOfMonth)
                 val selectedDate = calendar.time
-
-                if (isForStartDate) {
-                    startDate = selectedDate
-                } else {
-                    endDate = selectedDate
-                }
-
-                updateSelectedDatesTextView()
+                startDate = selectedDate
+                updateStartDateAndEndDateTextView()
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH),
         )
 
-        datePickerDialog?.datePicker?.minDate = System.currentTimeMillis()
-        datePickerDialog?.show()
-        // }
-        // }
+        datePicker.datePicker.minDate = System.currentTimeMillis()
+        datePicker.show()
     }
 
-    private fun updateSelectedDatesTextView() {
-        // binding.daysRecyclerView.visible()
-        if (isForStartDate) {
-            binding.startDate.text = startDate.formatDate()
-            binding.dayNumber.text = startDate.formatDate()
+    private fun showEndDatePicker() {
+        val calendar = Calendar.getInstance()
+        val datePicker = DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                calendar.set(year, month, dayOfMonth)
+                val selectedDate = calendar.time
+                endDate = selectedDate
+                updateStartDateAndEndDateTextView()
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH),
+        )
+        datePicker.datePicker.minDate = System.currentTimeMillis()
+        datePicker.show()
+    }
+
+    private fun updateStartDateAndEndDateTextView() {
+        binding.startDate.text = startDate.formatDate()
+        binding.endDate.text = endDate.formatDate()
+        daysForAdapter = if (tripType == 1) {
+            setupDaysModelForInCityCase()
         } else {
-            binding.endDate.text = endDate.formatDate()
-            binding.dayNumber.text = "${startDate.formatDate()}  to  ${endDate.formatDate()}"
+            setupDaysModelForBetweenCityCase()
         }
+        vm.getSelectedDriverAndGuideCities()?.let { daysAdapter.submitData(daysForAdapter, it) }
+    }
 
+    private fun getDatesBetweenStartDateAndEndDate(): ArrayList<String> {
+        return startDate.getDatesBetweenTwoDates(endDate)
+    }
+
+    private fun setupDataForApiCall(): ArrayList<DayModel> {
+        var days = ArrayList<DayModel>()
         if (tripType == 1) {
-            if (isForStartDate) {
-                binding.dayNumber.text = startDate.formatDate()
-            } else {
-                binding.dayNumber.text = "${startDate.formatDate()}  to  ${endDate.formatDate()}"
+            setupDaysModelForBetweenCityCase().forEach {
+                it.cityId = vm.getSelectedCityId()
+                days.add(it)
             }
+        } else {
+            days = daysForAdapter
         }
+        return days
+    }
 
-        val days = startDate.getDatesBetweenTwoDates(endDate)
-        selectedDays.clear()
-        days.forEach {
+    private fun setupDaysModelForBetweenCityCase(): ArrayList<DayModel> {
+        val list = ArrayList<DayModel>()
+        getDatesBetweenStartDateAndEndDate().forEach {
             val day = DayModel("", it)
-            selectedDays.add(day)
+            list.add(day)
         }
-
-        daysAdapter.submitData(selectedDays, vm.selectedDriverAndGuideCities)
-        /*if (selectedDays.isNotEmpty()) {
-            initSelectedDaysRecyclerView()
-        }*/
+        return list
+    }
+    private fun setupDaysModelForInCityCase(): ArrayList<DayModel> {
+        val list = ArrayList<DayModel>()
+        if (getDatesBetweenStartDateAndEndDate().isNotEmpty()) {
+            list.add(DayModel("", getDatesBetweenStartDateAndEndDate().first() + " TO " + getDatesBetweenStartDateAndEndDate().last()))
+        }
+        return list
     }
 
     private fun validate(): Boolean {
@@ -427,13 +344,13 @@ class HireFragment : BaseFragment() {
             binding.endDate.error = null
         }
 
-        if (orderDetailsList.isEmpty()) {
-            toast("Please choose city")
+        if (vm.getSelectedDriverAndGuideName().isNullOrEmpty()) {
+            toast(getString(R.string.please_choose_driver_or_guide))
             isValid = false
         }
 
-        if (selectedDriverGuideId == -1) {
-            toast("Please choose Driver or Guide")
+        if (startDate.after(endDate)) {
+            toast(getString(R.string.start_date_must_be_before_end_date))
             isValid = false
         }
 
@@ -452,6 +369,41 @@ class HireFragment : BaseFragment() {
         }
     }
 
+    private fun callGetDriverAndGuide() {
+        if (checkIfUserHasCityId()) {
+            vm.getAllDriversByDistCityId()
+            vm.getAllGuidesByDistCityId()
+        } else {
+            showAlertDialog(
+                getString(R.string.destination_city_is_empty),
+                getString(R.string.please_go_to_add_city_from_update_profile),
+            ) {
+                findNavController().customNavigate(R.id.editLocationFragment)
+            }
+        }
+    }
+
+    private fun checkIfUserHasCityId(): Boolean {
+        // check if user has location or not
+        return SharedPreference.getCityId() != null
+    }
+    private fun askForLocationPermission() {
+        permissionHelper
+            .addPermissionsToAsk(Permission.Location)
+            .isRequired(true)
+            .requestPermissions { grantedList ->
+                for (permission in grantedList) {
+                    when (permission) {
+                        Permission.Location -> {
+                            checkGpsIsEnabled()
+                            break
+                        }
+
+                        else -> {}
+                    }
+                }
+            }
+    }
     private fun checkGpsIsEnabled() {
         val locationManager =
             requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager

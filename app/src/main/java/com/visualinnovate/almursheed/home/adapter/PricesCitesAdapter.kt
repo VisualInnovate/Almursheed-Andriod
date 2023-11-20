@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.home.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,12 @@ import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.myOrders.models.DayModel
 import com.visualinnovate.almursheed.commonView.price.models.PriceItem
 import com.visualinnovate.almursheed.databinding.ItemDaysBinding
-import com.visualinnovate.almursheed.home.model.PriceServicesItem
 
 class PricesCitesAdapter(
-    private val selectDaysCallback: ((day: String, cityId: Int) -> Unit)? = null,
+    private val selectDaysCallback: ((day: String, cityId: Int, cityName:String?) -> Unit)? = null,
 ) : RecyclerView.Adapter<PricesCitesAdapter.PricesCitesViewHolder>() {
 
-    private var citesList: List<PriceItem> = ArrayList()
+    private var citesList: List<PriceItem?> = ArrayList()
     private var citesListString: ArrayList<String> = ArrayList()
     private var days: List<DayModel> = ArrayList()
     private var cityId: Int? = null
@@ -60,8 +58,6 @@ class PricesCitesAdapter(
 
     override fun onBindViewHolder(holder: PricesCitesViewHolder, position: Int) {
         val day = days[position]
-        // val data = citesList[position]
-        // bind view
         bindData(holder, day)
     }
 
@@ -79,7 +75,7 @@ class PricesCitesAdapter(
         citesList = cities
         citesListString.clear()
         cities.forEach {
-            citesListString.add(it.cityName.toString())
+            citesListString.add(it?.cityName.toString())
         }
         days = daysList
         notifyDataSetChanged()
@@ -94,9 +90,8 @@ class PricesCitesAdapter(
         holder: PricesCitesViewHolder,
         day: DayModel,
     ) {
-        // val cityList = Utils.cities.keys.toList().sorted()
 
-        val arrayAdapter = // android.R.layout.simple_spinner_item
+        val arrayAdapter =
             ArrayAdapter(
                 context,
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
@@ -115,11 +110,9 @@ class PricesCitesAdapter(
                 ) {
                     // Retrieve the selected country name
                     val selectedCityName = citesList[position]
-                    cityId = selectedCityName.cityId
-                    Log.d("Adapter--initCitySpinner2", "selectedCityName $selectedCityName")
-                    Log.d("Adapter--initCitySpinner3", "id ${selectedCityName.id}")
-                    Log.d("Adapter--initCitySpinner2", "cityId $cityId")
-                    selectDaysCallback?.invoke(day.date.toString(), cityId!!)
+                    cityId = selectedCityName?.cityId
+                    day.cityId = cityId
+                    selectDaysCallback?.invoke(day.date.toString(), cityId!! , selectedCityName?.cityName)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
