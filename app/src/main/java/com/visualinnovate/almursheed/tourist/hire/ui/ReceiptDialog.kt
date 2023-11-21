@@ -76,7 +76,7 @@ class ReceiptDialog(private val onDismissCalBack: () -> Unit) : DialogFragment()
         binding.subTotal.text = getString(R.string.dollar, vm.order?.subTotal.toString())
         binding.numOfDay.text =
             "${getString(R.string.total_)} $numOfDays ${getString(R.string.days)}"
-        binding.totalPrice.text = "${getString(R.string.total_equal)} ${vm.order?.cost}"
+        binding.totalPrice.text = "${getString(R.string.total_equal)} ${vm.order?.cost} $"
     }
 
     private fun setBtnListener() {
