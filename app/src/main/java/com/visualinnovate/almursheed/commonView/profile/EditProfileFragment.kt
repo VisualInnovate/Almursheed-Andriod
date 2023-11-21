@@ -20,6 +20,7 @@ import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.FileUtils
 import com.visualinnovate.almursheed.common.permission.Permission
@@ -44,7 +45,7 @@ class EditProfileFragment : BaseFragment() {
 
     private val vm: ProfileViewModel by viewModels()
 
-    private val currentUser: User = SharedPreference.getUser()
+    private lateinit var currentUser: User
 
     private var nationalityName: String = ""
     private var cityId: String? = null
@@ -77,6 +78,9 @@ class EditProfileFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         permissionHelper = PermissionHelper.init(this)
+        currentUser = SharedPreference.getUser()
+        Log.d("MyDebugData", "EditProfileFragment : onViewCreated :  " + currentUser.personalPhoto)
+
         initToolbar()
         initView()
         setBtnListener()
@@ -95,12 +99,15 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun initView() {
-        binding.nationality.text =
-            (currentUser.nationality ?: R.string.choose_nationality).toString()
-        binding.country.text = (currentUser.countryId?.let { vm.getCountryName(it) }
-            ?: R.string.choose_country).toString()
+        if (currentUser.nationality?.isEmptySting() == false) {
+            binding.nationality.text = currentUser.nationality
+        } else {
+            binding.nationality.text = getString(R.string.choose_nationality)
+        }
+
+        binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) } ?: getString(R.string.choose_country) // de msh htshtghl 3lshan l user mbyrg3losh country id homa byrg3o dest_city_id
         binding.city.text =
-            (currentUser.desCityId?.let { vm.getCityName(it) } ?: R.string.choose_city).toString()
+            (currentUser.desCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
 
         imagePath = currentUser.personalPhoto ?: ""
         if (currentUser.type == ROLE_DRIVER || currentUser.type == ROLE_GUIDE) {
@@ -109,7 +116,7 @@ class EditProfileFragment : BaseFragment() {
             binding.btnNext.text = getString(R.string.submit)
         }
         Glide.with(requireContext())
-            .load(currentUser.personalPhoto ?: imagePath)
+            .load(currentUser.personalPhoto)
             .error(R.drawable.ic_launcher_foreground)
             .centerCrop()
             .circleCrop()
@@ -229,7 +236,7 @@ class EditProfileFragment : BaseFragment() {
         Utils.allNationalities.forEach {
             val item = ChooserItemModel(
                 name = it,
-                isSelected = nationalityName == it
+                isSelected = nationalityName == it,
             )
             chooserItemList.add(item)
         }
@@ -242,7 +249,7 @@ class EditProfileFragment : BaseFragment() {
             val item = ChooserItemModel(
                 name = it.country,
                 id = it.country_id,
-                isSelected = countryName == it.country
+                isSelected = countryName == it.country,
             )
             chooserItemList.add(item)
         }
@@ -256,7 +263,7 @@ class EditProfileFragment : BaseFragment() {
             val item = ChooserItemModel(
                 name = it.state,
                 id = it.stateId,
-                isSelected = cityName == it.state
+                isSelected = cityName == it.state,
             )
             chooserItemList.add(item)
         }
@@ -268,6 +275,8 @@ class EditProfileFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
+                    Log.d("MyDebugData", "EditProfileFragment : subscribeData :  " + it.data)
+
                     SharedPreference.saveUser(it.data?.user!!)
                     toast(it.data.message.toString())
                 }
@@ -318,6 +327,7 @@ class EditProfileFragment : BaseFragment() {
                                             .centerCrop()
                                             .circleCrop()
                                             .into(binding.imgUser)
+                                        currentUser.personalPhoto = imagePath
                                     },
                                 )
                         })
@@ -335,6 +345,7 @@ class EditProfileFragment : BaseFragment() {
                                     .centerCrop()
                                     .circleCrop()
                                     .into(binding.imgUser)
+                                currentUser.personalPhoto = imagePath
                             },
                         )
                     }

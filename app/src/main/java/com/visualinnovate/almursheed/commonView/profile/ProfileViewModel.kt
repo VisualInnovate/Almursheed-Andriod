@@ -74,22 +74,22 @@ class ProfileViewModel @Inject constructor(
             MultipartBody.Part.createFormData(
                 "personal_pictures",
                 profilePicFile.name,
-                it
+                it,
             )
         }
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
         val country_id = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            currentUser.countryId.toString()
+            currentUser.countryId.toString(),
         )
         val state_id = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            currentUser.stateId.toString()
+            currentUser.stateId.toString(),
         )
         val gender = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            currentUser.gender.toString()
+            currentUser.gender.toString(),
         )
         val phone =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.phone.toString())
@@ -100,16 +100,16 @@ class ProfileViewModel @Inject constructor(
         val car_brand_name =
             RequestBody.create(
                 "text/plain".toMediaTypeOrNull(),
-                currentUser.carBrandName.toString()
+                currentUser.carBrandName.toString(),
             )
         val car_manufacturing_date =
             RequestBody.create(
                 "text/plain".toMediaTypeOrNull(),
-                currentUser.carManufacturingDate.toString()
+                currentUser.carManufacturingDate.toString(),
             )
         val driver_licence_number = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            currentUser.driverLicenceNumber.toString()
+            currentUser.driverLicenceNumber.toString(),
         )
         val gov_id =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
@@ -153,7 +153,6 @@ class ProfileViewModel @Inject constructor(
         val stateId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
 
-
         val cityId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.desCityId.toString())
 
@@ -170,17 +169,18 @@ class ProfileViewModel @Inject constructor(
             MultipartBody.Part.createFormData(
                 "personal_pictures",
                 profilePicFile.name,
-                it
+                it,
             )
         }
         // val requestBody = createBodyRequestDriverOrGuide(currentUser)
         viewModelScope.launch {
             safeApiCall {
                 apiService.updateTourist(
-                    name, stateId,
+                    name,
+                    stateId,
                     gender,
                     nationalityPart,
-                    // profilePicPart!!
+                    profilePicPart,
                 )
                 // apiService.updateTourist(requestBody)
             }.collect {
@@ -223,7 +223,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 apiService.updateLocationTourist(
-                    stateId
+                    stateId,
                 )
                 // apiService.updateTourist(requestBody)
             }.collect {
@@ -249,11 +249,13 @@ class ProfileViewModel @Inject constructor(
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
         val phone =
             RequestBody.create(
-                "text/plain".toMediaTypeOrNull(), currentUser.phone.toString()
+                "text/plain".toMediaTypeOrNull(),
+                currentUser.phone.toString(),
             )
         val bio =
             RequestBody.create(
-                "text/plain".toMediaTypeOrNull(), currentUser.bio.toString()
+                "text/plain".toMediaTypeOrNull(),
+                currentUser.bio.toString(),
             )
 
         val gender =
@@ -269,7 +271,7 @@ class ProfileViewModel @Inject constructor(
             MultipartBody.Part.createFormData(
                 "personal_pictures", // personal_pictures
                 profilePicFile.name,
-                it
+                it,
             )
         }
         // val requestBody = createBodyRequestDriverOrGuide(currentUser)
@@ -282,7 +284,7 @@ class ProfileViewModel @Inject constructor(
                     gender,
                     phone,
                     bio,
-                    nationalityPart
+                    nationalityPart,
                     // profilePicPart!!
                 )
                 // apiService.updateTourist(requestBody)

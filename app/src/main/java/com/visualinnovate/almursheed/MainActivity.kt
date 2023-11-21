@@ -45,6 +45,7 @@ import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ActivityMainBinding
+import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDES
@@ -76,7 +77,7 @@ class MainActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userRole = SharedPreference.getUserRole()!!
+        userRole = SharedPreference.getUserRole()?:Constant.ROLE_TOURIST
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
