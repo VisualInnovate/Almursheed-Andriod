@@ -44,6 +44,7 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.ActivityMainBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
@@ -85,6 +86,7 @@ class MainActivity :
         navGraph = navController.navInflater.inflate(R.navigation.nav_home)
         navController.addOnDestinationChangedListener(this)
         initConnectivityManager()
+        setupDataForCarModelAndYear()
         /*if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
         } else {
@@ -248,14 +250,20 @@ class MainActivity :
         try {
             val jsonObject = JSONObject(jsonFile)
             val car: Car = Gson().fromJson(jsonObject.toString(), Car::class.java)
+            Utils.allCarBrand.clear()
             car.carList?.map { item ->
                 val carId = item.id
                 val year = item.year
                 val makeAndModel = item.make
+                val model = item.model
                 val makeType = "${item.make} - ${item.model}"
                 Utils.carYears[year] = carId
                 Utils.carBrand[makeAndModel] = carId
                 Utils.carType[makeType] = carId
+
+                Utils.allCarBrand.add(item)
+                val car = ChooserItemModel(carId, year)
+                Utils.allCarModels.add(car)
             }
         } catch (e: JSONException) {
             e.printStackTrace()

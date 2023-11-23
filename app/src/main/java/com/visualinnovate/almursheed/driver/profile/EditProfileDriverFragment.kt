@@ -1,37 +1,33 @@
 package com.visualinnovate.almursheed.driver.profile
 
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.auth.view.UploadImageSheetFragment
-import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
-import com.visualinnovate.almursheed.common.permission.FileUtils
+import com.visualinnovate.almursheed.common.isEmptySting
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.Permission
 import com.visualinnovate.almursheed.common.permission.PermissionHelper
+import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
-import com.visualinnovate.almursheed.common.value
-import com.visualinnovate.almursheed.databinding.FragmentEditProfileDriverBinding
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.profile.ProfileViewModel
+import com.visualinnovate.almursheed.databinding.FragmentEditProfileDriverBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils.carBrand
-import com.visualinnovate.almursheed.utils.Utils.carType
-import com.visualinnovate.almursheed.utils.Utils.carYears
-import com.visualinnovate.almursheed.utils.Utils.languages
+import com.visualinnovate.almursheed.utils.Utils.allCarBrand
+import com.visualinnovate.almursheed.utils.Utils.allLanguages
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,20 +38,16 @@ class EditProfileDriverFragment : BaseFragment() {
 
     private val vm: ProfileViewModel by activityViewModels()
 
-    private lateinit var governmentID: String
-    private lateinit var licenseNumber: String
-    private var carNumber: String? = ""
-    private var carTypeName: String? = ""
-    private var year: String? = ""
-    private var brandId: String? = ""
-    private var languagesIdsList: ArrayList<Int> = ArrayList()
-    private var carImagePath: String = ""
-    private var carImagesList: ArrayList<String> = ArrayList()
-    private var documentImagePath: String = ""
+    private var governmentId: String? = null
+    private var carType: String? = null
+    private var carBrand: String? = null
+    private var carNumber: String? = null
+    private var carManufacture: String? = null
+    private var language: String? = null
+    private var carImages: ArrayList<String> = ArrayList()
 
-    //
-    private val fileUtils by lazy { FileUtils(requireContext()) }
-    private val imageCompressor by lazy { ImageCompressorHelper.with(requireContext()) }
+    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
+
     private lateinit var permissionHelper: PermissionHelper
     private lateinit var currentUser: User
 
@@ -71,29 +63,27 @@ class EditProfileDriverFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         permissionHelper = PermissionHelper.init(this)
+        // currentUser = vm.currentUser
         currentUser = requireArguments().getParcelable("userData")!!
-
-        //
-        initViews()
         initToolbar()
+        initData()
         subscribeActivityResult()
         setBtnListener()
         subscribeData()
     }
 
-    private fun initViews() {
-        // binding.spinnerCarType.spinnerText.setText(getString(R.string.select_car_type))
-        // binding.spinnerCarBrandName.spinnerText.setText(getString(R.string.select_car_brand_name))
-        // binding.spinnerCarManufacturingDate.spinnerText.setText(getString(R.string.select_car_manufacturing_date))
-        // binding.spinnerLanguage.spinnerText.setText(getString(R.string.select_language))
-        initCarTypeSpinner()
-        initYearSpinner()
-        initBrandSpinner()
-        initLanguageSpinner()
+    private fun initData() {
+        binding.edtGovernmentID.setText(currentUser.govId)
+        binding.edtCarNumber.setText(currentUser.carNumber)
+        binding.carType.text = currentUser.carType ?: getString(R.string.choose_car_type)
+        binding.carBrand.text = currentUser.carBrandName ?: getString(R.string.car_brand)
+        binding.carManufacture.text = currentUser.carManufacturingDate ?: getString(R.string.car_model)
+        //  binding.language.text = currentUser.language
+        //  carImages = currentUser.carImages
     }
 
     private fun initToolbar() {
-        binding.appBarDriverRegisterSecond.setTitleString(getString(R.string.driver_register_second))
+        binding.appBarDriverRegisterSecond.setTitleString(getString(R.string.edit_profile))
         binding.appBarDriverRegisterSecond.setTitleCenter(true)
         binding.appBarDriverRegisterSecond.useBackButton(
             true,
@@ -103,24 +93,66 @@ class EditProfileDriverFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
-        binding.btnUploadCarPhoto.setOnClickListener {
+        binding.carManufacture.onDebouncedListener {
+            showCarYearsChooser()
+        }
+
+        binding.language.onDebouncedListener {
+            showLanguagesChooser()
+        }
+
+        binding.carType.onDebouncedListener {
+            showCarTypesChooser()
+        }
+        binding.carBrand.onDebouncedListener {
+            showCarBrandChooser()
+        }
+
+        binding.btnUploadCarPhoto.onDebouncedListener {
             handleProfilePictureChange()
         }
-        binding.btnUploadDocument.setOnClickListener {
+        binding.btnUploadDocument.onDebouncedListener {
             // handleProfilePictureChange()
         }
 
-        binding.btnRegister.setOnClickListener {
-            currentUser.govId = binding.edtGovernmentID.value
-            currentUser.driverLicenceNumber = binding.edtLicenseNumber.value
-            currentUser.carNumber = binding.edtCarNumber.value
-            currentUser.carBrandName = brandId
-            currentUser.carType = carTypeName
-            currentUser.carManufacturingDate = year
-
-            // call api driver create
-            vm.updateDriver(currentUser)
+        binding.btnRegister.onDebouncedListener {
+            if (validate()) {
+                toast("call api")
+            }
         }
+//        binding.btnRegister.setOnClickListener {
+//            currentUser.govId = binding.edtGovernmentID.value
+//            currentUser.driverLicenceNumber = binding.edtLicenseNumber.value
+//            currentUser.carNumber = binding.edtCarNumber.value
+//            currentUser.carBrandName = brandId
+//            currentUser.carType = carTypeName
+//            currentUser.carManufacturingDate = year
+//
+//            // call api driver create
+//            vm.updateDriver(currentUser)
+//        }
+    }
+
+    private fun validate(): Boolean {
+        var isValid = true
+        governmentId = binding.edtGovernmentID.text.toString().trim()
+        carNumber = binding.edtCarNumber.text.toString().trim()
+
+        if (governmentId?.isEmptySting() == true) {
+            isValid = false
+            toast(getString(R.string.enter_your_id))
+        }
+        if (carNumber?.isEmptySting() == true) {
+            isValid = false
+            toast(getString(R.string.enter_car_number))
+        }
+
+        if (carImages.isEmpty()) {
+            isValid = false
+            toast(getString(R.string.must_choose_more_than_1_image))
+        }
+
+        return isValid
     }
 
     private fun subscribeData() {
@@ -136,7 +168,6 @@ class EditProfileDriverFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error -> Register Driver", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -154,220 +185,26 @@ class EditProfileDriverFragment : BaseFragment() {
         }
     }
 
-    private fun initYearSpinner() {
-        val yearsList = carYears.keys.toList().sorted()
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                yearsList,
-            )
-
-        binding.spinnerCarManufacturingDate.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerCarManufacturingDate.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected Car Manufacturing Date
-                    val selectedYear = yearsList[position]
-                    Log.d("readJsonFile", "selectedCountryName $selectedYear")
-
-                    // Retrieve the corresponding country ID from the map
-                    year = carYears[selectedYear]!!
-                    Log.d("readJsonFile", "selectedCountryId $year")
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-
-//        binding.spinnerCarManufacturingDate.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-//            // Retrieve the selected Car Manufacturing Date
-//            val selectedYear = yearsList[position]
-//            Log.d("readJsonFile", "selectedCountryName $selectedYear")
-//
-//            // Retrieve the corresponding country ID from the map
-//            year = carYears[selectedYear]!!
-//            Log.d("readJsonFile", "selectedCountryId $year")
-//        }
-    }
-
-    private fun initCarTypeSpinner() {
-        val carTypeList = carType.keys.toList().sorted()
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                carTypeList,
-            )
-
-        binding.spinnerCarType.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerCarType.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected Car type name
-                    val selectedCarType = carTypeList[position]
-                    Log.d("readJsonFile", "selectedCarType $selectedCarType")
-
-                    // Retrieve the corresponding country ID from the map
-                    carTypeName = carType[selectedCarType]!!
-                    Log.d("readJsonFile", "selectedCountryId $carTypeName")
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-    }
-
-    private fun initBrandSpinner() {
-        val brandNameList = carBrand.keys.toList()
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                brandNameList,
-            )
-
-        binding.spinnerCarBrandName.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerCarBrandName.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected Car brand name
-                    val selectedBrandName = brandNameList[position]
-                    Log.d("readJsonFile", "selectedBrandName $selectedBrandName")
-
-                    // Retrieve the corresponding country ID from the map
-                    brandId = carBrand[selectedBrandName]!!
-                    Log.d("readJsonFile", "brandId $brandId")
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-//        binding.spinnerCarBrandName.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-//            // Retrieve the selected Car brand name
-//            val selectedBrandName = brandNameList[position]
-//            Log.d("readJsonFile", "selectedBrandName $selectedBrandName")
-//
-//            // Retrieve the corresponding country ID from the map
-//            brandId = carBrand[selectedBrandName]!!
-//            Log.d("readJsonFile", "brandId $brandId")
-//        }
-    }
-
-    private fun initLanguageSpinner() {
-        val languagesList = languages.keys.toList().sorted()
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                languagesList,
-            )
-
-        binding.spinnerLanguage.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerLanguage.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected language name
-                    val selectedLanguage = languagesList[position]
-                    Log.d("readJsonFile", "selectedBrandName $selectedLanguage")
-                    val languageId = languages[selectedLanguage]!!
-                    languagesIdsList.add(languageId)
-                    Log.d("readJsonFile", "languageId $languageId")
-                    Log.d("readJsonFile", "languagesIdsList $languagesIdsList")
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-//        binding.spinnerLanguage.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-//            // Retrieve the selected language name
-//            val selectedLanguage = languagesList[position]
-//            Log.d("readJsonFile", "selectedBrandName $selectedLanguage")
-//            val languageId = languages[selectedLanguage]!!
-//            languagesIdsList.add(languageId)
-//            Log.d("readJsonFile", "languageId $languageId")
-//            Log.d("readJsonFile", "languagesIdsList $languagesIdsList")
-//        }
-    }
-
     private fun subscribeActivityResult() {
         activityResultsCallBack.observe(viewLifecycleOwner) {
-            if (it != null) { // from gallery
-                if (it.data != null) {
-                    it.data?.let { uri ->
-                        fileUtils.getFilePath(uri, { error ->
-                            Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
-                        }, { path ->
-                            imageCompressor
-                                .setImagePath(path).compressImage(
-                                    { error ->
-                                        Toast.makeText(
-                                            requireContext(),
-                                            error,
-                                            Toast.LENGTH_SHORT,
-                                        ).show()
-                                    },
-                                    { path ->
-                                        carImagePath = path
-                                        carImagesList.add(carImagePath)
-                                        showProfileImageBottomSheet()
-                                    },
-                                )
-                        })
+            if (it != null) {
+                val data = it
+                if (data.clipData != null) {
+                    val count = data.clipData!!.itemCount
+                    for (i in 0..count - 1) {
+                        carImages.add(data.clipData!!.getItemAt(i).uri.toString())
                     }
-                } else { // from camera
-                    if (fileUtils.checkTmpFileLength()) {
-                        imageCompressor.setImagePath(fileUtils.getRealPathFromURI()).compressImage(
-                            { error ->
-                                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
-                            },
-                            { path ->
-                                carImagePath = path
-                                carImagesList.add(carImagePath)
-                                showProfileImageBottomSheet()
-                            },
-                        )
-                    }
+                    showProfileImageBottomSheet(carImages[0])
+                } else {
+                    toast(getString(R.string.must_choose_more_than_1_image))
                 }
             }
         }
     }
 
-    private fun showProfileImageBottomSheet() {
+    private fun showProfileImageBottomSheet(image: String) {
         val bundle = Bundle()
-        bundle.putString(Constant.UPLOAD_IMAGE_FRAGMENT, carImagePath)
+        bundle.putString(Constant.UPLOAD_IMAGE_FRAGMENT, image)
 
         // Create an instance of the bottom sheet dialog fragment with the data
         val uploadImageSheetFragment = UploadImageSheetFragment.newInstance(bundle)
@@ -388,7 +225,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     for (permission in grantedList) {
                         when (permission) {
                             Permission.Camera, Permission.Storage13 -> {
-                                performCameraAndGalleyAction()
+                                performGalleryAction()
                                 break
                             }
 
@@ -404,7 +241,7 @@ class EditProfileDriverFragment : BaseFragment() {
                     for (permission in grantedList) {
                         when (permission) {
                             Permission.Camera, Permission.Storage -> {
-                                performCameraAndGalleyAction()
+                                performGalleryAction()
                                 break
                             }
 
@@ -415,16 +252,81 @@ class EditProfileDriverFragment : BaseFragment() {
         }
     }
 
-    private fun performCameraAndGalleyAction() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val uri = fileUtils.createTmpFileUri()
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+    private fun performGalleryAction() {
+        val galleryIntent = Intent()
+        galleryIntent.type = "image/*"
+        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        galleryIntent.action = ACTION_GET_CONTENT
         val chooserIntent = Intent(Intent.ACTION_CHOOSER)
-        chooserIntent.putExtra(Intent.EXTRA_INTENT, galleryIntent)
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(cameraIntent))
         chooserIntent.putExtra(Intent.EXTRA_TITLE, "Select from:")
-        launchActivityForResult(chooserIntent)
+        launchActivityForResult(galleryIntent)
+    }
+
+    private fun setupCarYearsList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        resources.getStringArray(R.array.car_years).forEach {
+            val item = ChooserItemModel(name = it, isSelected = it == carManufacture)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+    private fun showCarYearsChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), setupCarYearsList(), { data, _ ->
+            carManufacture = data.name
+            binding.carManufacture.text = carManufacture
+        })
+        showBottomSheet(chooseTextBottomSheet!!, "CarYearsBottomSheet")
+    }
+
+    private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        allLanguages.forEach {
+            val item = ChooserItemModel(name = it.lang, isSelected = it.lang == language)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+    private fun showLanguagesChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.language_text), setupLanguagesList(), { data, _ ->
+            language = data.name
+            binding.language.text = language
+        })
+        showBottomSheet(chooseTextBottomSheet!!, "LanguagesBottomSheet")
+    }
+
+    private fun setupCarTypesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        resources.getStringArray(R.array.car_categories).forEach {
+            val item = ChooserItemModel(name = it, isSelected = carType == it)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+    private fun showCarTypesChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_type), setupCarTypesList(), { data, _ ->
+            carType = data.name
+            binding.carType.text = carType
+        })
+        showBottomSheet(chooseTextBottomSheet!!, "CarTypeBottomSheet")
+    }
+    private fun setupCarBrandList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        allCarBrand.forEach {
+            val item = ChooserItemModel(name = it.make, isSelected = carBrand == it.make)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+    private fun showCarBrandChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_brand), setupCarBrandList(), { data, _ ->
+            carBrand = data.name
+            binding.carBrand.text = carBrand
+        })
+        showBottomSheet(chooseTextBottomSheet!!, "CarBrandBottomSheet")
     }
 
     override fun onDestroy() {

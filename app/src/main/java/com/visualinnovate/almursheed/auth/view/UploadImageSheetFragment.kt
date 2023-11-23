@@ -50,9 +50,9 @@ class UploadImageSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun loadImage(path: String) {
-        val bitmap = BitmapFactory.decodeFile(path)
+     //   val bitmap = BitmapFactory.decodeFile(path)
         Glide.with(requireContext())
-            .load(bitmap)
+            .load(image)
             // .circleCrop()
             .placeholder(R.drawable.img_test)
             .error(R.drawable.img_test)

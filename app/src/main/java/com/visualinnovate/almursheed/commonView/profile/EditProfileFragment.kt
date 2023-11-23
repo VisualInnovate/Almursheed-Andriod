@@ -79,8 +79,6 @@ class EditProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         permissionHelper = PermissionHelper.init(this)
         currentUser = SharedPreference.getUser()
-        Log.d("MyDebugData", "EditProfileFragment : onViewCreated :  " + currentUser.personalPhoto)
-
         initToolbar()
         initView()
         setBtnListener()

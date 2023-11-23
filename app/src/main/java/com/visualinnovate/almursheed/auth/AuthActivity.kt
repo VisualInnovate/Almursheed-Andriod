@@ -27,6 +27,7 @@ import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.ActivityAuthBinding
+import com.visualinnovate.almursheed.utils.Utils.allCarBrand
 import com.visualinnovate.almursheed.utils.Utils.allCarModels
 import com.visualinnovate.almursheed.utils.Utils.allCities
 import com.visualinnovate.almursheed.utils.Utils.allCountries
@@ -110,6 +111,7 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         try {
             val jsonObject = JSONObject(jsonFile)
             val car: Car = Gson().fromJson(jsonObject.toString(), Car::class.java)
+            allCarBrand.clear()
             car.carList?.map { item ->
                 val carId = item.id
                 val year = item.year
@@ -120,6 +122,7 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
                 carBrand[makeAndModel] = carId
                 carType[makeType] = carId
 
+                allCarBrand.add(item)
                 val car = ChooserItemModel(carId, year)
                 allCarModels.add(car)
             }
