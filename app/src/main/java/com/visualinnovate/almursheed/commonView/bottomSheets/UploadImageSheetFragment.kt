@@ -1,39 +1,30 @@
-package com.visualinnovate.almursheed.auth.view
+package com.visualinnovate.almursheed.commonView.bottomSheets
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.adapter.UploadImageAdapter
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.databinding.FragmentUploadImageBinding
 import com.visualinnovate.almursheed.utils.Constant
 
-class UploadImageSheetFragment : BottomSheetDialogFragment() {
+class UploadImageSheetFragment(
+    val onSelectImageBtnClick: () -> Unit
+) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentUploadImageBinding? = null
 
     private val binding get() = _binding!!
 
     private lateinit var uploadImageAdapter: UploadImageAdapter
-    private var images: List<String>? = null
-    private var image: String = ""
-
-    companion object {
-        fun newInstance(bundle: Bundle): UploadImageSheetFragment {
-            val fragment = UploadImageSheetFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
+    private var images: ArrayList<String>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUploadImageBinding.inflate(inflater, container, false)
         return binding.root
@@ -41,22 +32,13 @@ class UploadImageSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog!!.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        setStyle(STYLE_NO_FRAME, 0)
         // offerArgs = arguments?.getParcelable(Constant.OFFER_DETAILS)
         // Log.d("arguments?", "offerArgs $offerArgs")
-        image = requireArguments().getString(Constant.UPLOAD_IMAGE_FRAGMENT) ?: ""
-        loadImage(image)
-        // initRecycler()
+        images = requireArguments().getStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT)
+        initRecycler()
         setBtnListener()
-    }
-
-    private fun loadImage(path: String) {
-     //   val bitmap = BitmapFactory.decodeFile(path)
-        Glide.with(requireContext())
-            .load(image)
-            // .circleCrop()
-            .placeholder(R.drawable.ic_mursheed_logo)
-            .error(R.drawable.ic_mursheed_logo)
-            .into(binding.image)
     }
 
     private fun initRecycler() {
@@ -68,18 +50,20 @@ class UploadImageSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun setBtnListener() {
-        binding.icClose.setOnClickListener {
+        binding.icClose.onDebouncedListener {
+            dismiss()
+        }
+        binding.btnSelectImages.onDebouncedListener {
+            onSelectImageBtnClick.invoke()
+        }
+
+        binding.btnSave.onDebouncedListener {
             dismiss()
         }
     }
 
-    private fun getImagesList(): ArrayList<Int> {
-        val imagesList = ArrayList<Int>()
-
-        imagesList.add(R.drawable.img_test)
-        imagesList.add(R.drawable.img_test)
-
-        return imagesList
+    private fun getImagesList(): List<String> {
+        return images!!
     }
 
     override fun onDestroy() {

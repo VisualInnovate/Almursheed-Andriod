@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_curve_offer_details"
-    tools:context=".auth.view.UploadImageSheetFragment">
+    tools:context=".commonView.bottomSheets.UploadImageSheetFragment">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/icClose"
@@ -18,17 +18,6 @@
         app:shapeAppearanceOverlay="@style/RoundedImageView"
         app:srcCompat="@drawable/ic_close" />
 
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginVertical="@dimen/space_2x"
-        android:padding="@dimen/space_3x"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/icClose"
-        app:srcCompat="@drawable/ic_close" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUploadImage"
@@ -36,11 +25,34 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/space_2x"
         android:orientation="horizontal"
-        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/icClose"
         app:srcCompat="@drawable/img_test"
         tools:listitem="@layout/item_upload_image" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSelectImages"
+        style="@style/customButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/add_images"
+        android:layout_marginTop="@dimen/space_3x"
+        android:layout_marginBottom="@dimen/space_2x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvUploadImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnSave"/>
+
+   <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        style="@style/customButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnSelectImages"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toEndOf="@id/btnSelectImages"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -265,12 +265,26 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnNext"
+            android:id="@+id/btnSubmit"
             style="@style/customButtonStyle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_4x"
-            android:text="@string/next"
+            android:text="@string/submit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_car_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvDriverRegisterFirst" />
+
+  <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_car_info"
+            style="@style/customButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            android:text="@string/other"
+      app:layout_constraintStart_toEndOf="@id/btnSubmit"
+      app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cvDriverRegisterFirst" />
 

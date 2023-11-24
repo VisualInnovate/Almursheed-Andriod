@@ -1,7 +1,6 @@
 package com.visualinnovate.almursheed.commonView.profile
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,6 +10,7 @@ import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.UpdateResponse
 import com.visualinnovate.almursheed.network.ApiService
+import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -19,6 +19,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Part
 import java.io.File
 import javax.inject.Inject
 
@@ -41,6 +42,11 @@ class ProfileViewModel @Inject constructor(
     val updateTouristLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
         _updateTouristMutableData.toSingleEvent()
 
+    private val _personalInformation: MutableLiveData<ResponseHandler<UpdateResponse?>> =
+        MutableLiveData()
+    val personalInformation: LiveData<ResponseHandler<UpdateResponse?>> =
+        _personalInformation.toSingleEvent()
+
     private val _editLocation: MutableLiveData<ResponseHandler<UpdateResponse?>> =
         MutableLiveData()
     val editLocationLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
@@ -51,92 +57,55 @@ class ProfileViewModel @Inject constructor(
     val updateGuideLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
         _updateGuideMutableData.toSingleEvent()
 
-    fun updateDriver(currentUser: User) {
-        /*for (car_photos in carImagesList) {
-            val carImageFile = File(car_photos)
-            val carImageRequestBody =
-                RequestBody.create("image/*".toMediaTypeOrNull(), carImageFile)
-            val carImagePart = MultipartBody.Part.createFormData(
-                "car_photos",
-                carImageFile.name,
-                carImageRequestBody
-            )
-            imagesList.add(carImagePart)
-        }*/
-         */
-
-        val profilePicFile = currentUser.personalPhoto?.let { File(it) }
-        val profilePicRequestBody =
-            profilePicFile?.let { RequestBody.create("image/*".toMediaTypeOrNull(), it) }
-
-        val profilePicPart = profilePicRequestBody?.let {
-            MultipartBody.Part.createFormData(
-                "personal_pictures",
-                profilePicFile.name,
-                it,
-            )
-        }
-        val name =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
-        val countryId = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            currentUser.countryId.toString(),
-        )
-        val stateId = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            currentUser.stateId.toString(),
-        )
-        val gender = RequestBody.create(
-            "text/plain".toMediaTypeOrNull(),
-            currentUser.gender.toString(),
-        )
-        val phone =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.phone.toString())
+    fun updateDriverCarInformation(currentUser: User, carImages: ArrayList<String>) {
         val carNumber =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.carNumber.toString())
+
         val carType =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.carType.toString())
-        val carBrandName =
+
+        val carBrand =
             RequestBody.create(
                 "text/plain".toMediaTypeOrNull(),
                 currentUser.carBrandName.toString(),
             )
-        val carManufacturingDate =
+        val carManufacture =
             RequestBody.create(
                 "text/plain".toMediaTypeOrNull(),
                 currentUser.carManufacturingDate.toString(),
             )
-        val driverLicenceNumber = RequestBody.create(
+        val licenceNumber = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
-            currentUser.driverLicenceNumber.toString(),
+            currentUser.licenceNumber.toString(),
         )
         val govId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
-        /*val languagesList = ArrayList<RequestBody>()
-        for (i in languagesIdsList) {
-            val lang = RequestBody.create("text/plain".toMediaTypeOrNull(), i.toString())
-            languagesList.add(lang)
-        }*/
+
+        val language =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), "English" /*currentUser.language.toString()*/)
+
+        val carPhotos = if (checkCarImages(carImages).isNotEmpty()) {
+            val list = ArrayList<MultipartBody.Part?>()
+            carImages.forEach {
+                list.add(checkImagePath(it,"car_photos"))
+            }
+            list
+        } else {
+            null
+        }
 
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.updateDriver(
-                    name,
-                    countryId,
-                    stateId,
-                    gender,
-                    phone,
-                    // bio,
+                apiService.updateDriverCarInformations(
                     govId,
-                    // languagesList,
-                    // profilePicPart!!,
-                    driverLicenceNumber,
-                    // imagesList,
+                    licenceNumber,
                     carNumber,
                     carType,
-                    carBrandName,
-                    carManufacturingDate,
+                    carBrand,
+                    carManufacture,
+                   // language,
+                    carPhotos,
                 )
             }.collect {
                 _updateDriverMutableData.value = it
@@ -144,27 +113,61 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun checkImagePath(imagePath: String?): MultipartBody.Part? {
-        if (imagePath != null) {
-            val profilePicFile = File(imagePath)
-            val profilePicRequestBody =
-                profilePicFile.asRequestBody("image/*".toMediaTypeOrNull())
+    private fun checkImagePath(imagePath: String? , name:String): MultipartBody.Part? {
+        return if (imagePath != null) {
+            val picFile = File(imagePath)
+            val picRequestBody =
+                picFile.asRequestBody("image/*".toMediaTypeOrNull())
 
-            return profilePicRequestBody.let {
+            picRequestBody.let {
                 MultipartBody.Part.createFormData(
-                    "personal_pictures",
-                    profilePicFile.name,
+                    name,
+                    picFile.name,
                     it,
                 )
             }
-
         } else {
-            return null
+            null
         }
     }
 
-    fun updateTourist(currentUser: User, imagePath: String?) {
-        Log.d("updateTourist", "currentUser: $currentUser")
+    private fun checkCarImages(carImages: ArrayList<String>): ArrayList<String> {
+        val carPhotos = ArrayList<String>()
+        carImages.forEach {
+            carPhotos.add(it)
+        }
+        return carPhotos
+    }
+
+//    fun updateTourist(currentUser: User, imagePath: String?) {
+//        val name =
+//            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
+//
+//        val destCityIdPart =
+//            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.destCityId.toString())
+//
+//        val gender =
+//            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.gender.toString())
+//
+//        val nationalityPart =
+//            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.nationality.toString())
+//
+//        viewModelScope.launch {
+//            safeApiCall {
+//                apiService.updateTourist(
+//                    name,
+//                    destCityIdPart,
+//                    gender,
+//                    nationalityPart,
+//                    checkImagePath(imagePath),
+//                )
+//            }.collect {
+//                _updateTouristMutableData.value = it
+//            }
+//        }
+//    }
+
+    fun updatePersonalInformation(currentUser: User, imagePath: String?) {
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
 
@@ -177,19 +180,57 @@ class ProfileViewModel @Inject constructor(
         val nationalityPart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.nationality.toString())
 
-        // val requestBody = createBodyRequestDriverOrGuide(currentUser)
-        viewModelScope.launch {
-            safeApiCall {
-                apiService.updateTourist(
-                    name,
-                    destCityIdPart,
-                    gender,
-                    nationalityPart,
-                    checkImagePath(imagePath),
-                )
-                // apiService.updateTourist(requestBody)
-            }.collect {
-                _updateTouristMutableData.value = it
+        val phonePart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.phone.toString())
+
+        when (currentUser.type) {
+            Constant.ROLE_DRIVER -> {
+                viewModelScope.launch {
+                    safeApiCall {
+                        apiService.updateDriverPersonalInformation(
+                            name,
+                            destCityIdPart,
+                            gender,
+                            nationalityPart,
+                            phonePart,
+                            checkImagePath(imagePath,"personal_pictures"),
+                        )
+                    }.collect {
+                        _personalInformation.value = it
+                    }
+                }
+            }
+
+            Constant.ROLE_GUIDES -> {
+//                viewModelScope.launch {
+//                    safeApiCall {
+//                        apiService.updateTourist(
+//                            name,
+//                            destCityIdPart,
+//                            gender,
+//                            nationalityPart,
+//                            phonePart,
+//                            checkImagePath(imagePath),
+//                        )
+//                    }.collect {
+//                        _personalInformation.value = it
+//                    }
+//                }
+            }
+            Constant.ROLE_TOURIST -> {
+                viewModelScope.launch {
+                    safeApiCall {
+                        apiService.updateTourist(
+                            name,
+                            destCityIdPart,
+                            gender,
+                            nationalityPart,
+                            checkImagePath(imagePath,"personal_pictures"),
+                        )
+                    }.collect {
+                        _personalInformation.value = it
+                    }
+                }
             }
         }
     }

@@ -410,18 +410,13 @@ class HomeFragment : BaseFragment() {
     }*/
 
     private fun startAutoSlider() {
-        val handler = Handler(Looper.getMainLooper())
-        val runnable = object : Runnable {
-            override fun run() {
-                val nextItem =
-                    if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
-                binding.rvBanner.setCurrentItem(nextItem, true)
-                handler.postDelayed(this, 3000) // Delay in milliseconds (adjust as needed)
-            }
+        lifecycleScope.launch {
+            val nextItem =
+                if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
+            binding.rvBanner.setCurrentItem(nextItem, true)
+            delay(3000)
+            startAutoSlider()
         }
-
-        // Start auto-slider
-        handler.postDelayed(runnable, 3000) // Initial delay before auto-scrolling starts
     }
 
     private fun initDriverRecycler() {

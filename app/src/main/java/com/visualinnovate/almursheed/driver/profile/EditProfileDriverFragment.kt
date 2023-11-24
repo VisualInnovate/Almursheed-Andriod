@@ -1,9 +1,14 @@
 package com.visualinnovate.almursheed.driver.profile
 
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
+import android.database.Cursor
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +16,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.User
-import com.visualinnovate.almursheed.auth.view.UploadImageSheetFragment
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.isEmptySting
@@ -21,6 +25,7 @@ import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.UploadImageSheetFragment
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.profile.ProfileViewModel
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileDriverBinding
@@ -42,11 +47,13 @@ class EditProfileDriverFragment : BaseFragment() {
     private var carType: String? = null
     private var carBrand: String? = null
     private var carNumber: String? = null
+    private var licenceNumber: String? = null
     private var carManufacture: String? = null
     private var language: String? = null
     private var carImages: ArrayList<String> = ArrayList()
 
     private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
+    private var showImageSheetFragment: UploadImageSheetFragment? = null
 
     private lateinit var permissionHelper: PermissionHelper
     private lateinit var currentUser: User
@@ -73,13 +80,22 @@ class EditProfileDriverFragment : BaseFragment() {
     }
 
     private fun initData() {
+        governmentId = currentUser.govId
+        carNumber = currentUser.carNumber
+        carType = currentUser.carType
+        carBrand = currentUser.carBrandName
+        carManufacture = currentUser.carManufacturingDate
+        licenceNumber = currentUser.licenceNumber
+       // language = currentUser.language
+
         binding.edtGovernmentID.setText(currentUser.govId)
         binding.edtCarNumber.setText(currentUser.carNumber)
+        binding.edtLicenseNumber.setText(currentUser.licenceNumber)
         binding.carType.text = currentUser.carType ?: getString(R.string.choose_car_type)
         binding.carBrand.text = currentUser.carBrandName ?: getString(R.string.car_brand)
         binding.carManufacture.text = currentUser.carManufacturingDate ?: getString(R.string.car_model)
+
         //  binding.language.text = currentUser.language
-        //  carImages = currentUser.carImages
     }
 
     private fun initToolbar() {
@@ -109,7 +125,7 @@ class EditProfileDriverFragment : BaseFragment() {
         }
 
         binding.btnUploadCarPhoto.onDebouncedListener {
-            handleProfilePictureChange()
+            handleCarImagesChange()
         }
         binding.btnUploadDocument.onDebouncedListener {
             // handleProfilePictureChange()
@@ -120,23 +136,28 @@ class EditProfileDriverFragment : BaseFragment() {
                 toast("call api")
             }
         }
-//        binding.btnRegister.setOnClickListener {
-//            currentUser.govId = binding.edtGovernmentID.value
-//            currentUser.driverLicenceNumber = binding.edtLicenseNumber.value
-//            currentUser.carNumber = binding.edtCarNumber.value
-//            currentUser.carBrandName = brandId
-//            currentUser.carType = carTypeName
-//            currentUser.carManufacturingDate = year
-//
-//            // call api driver create
-//            vm.updateDriver(currentUser)
-//        }
+        binding.btnRegister.onDebouncedListener {
+            saveData()
+            // call api driver create
+            vm.updateDriverCarInformation(currentUser, carImages)
+        }
+    }
+
+    private fun saveData() {
+        currentUser.govId = governmentId
+        currentUser.licenceNumber = licenceNumber
+        currentUser.carNumber = licenceNumber
+        currentUser.carBrandName = carBrand
+        currentUser.carType = carType
+        currentUser.carManufacturingDate = carManufacture
+        //  currentUser.language = language
     }
 
     private fun validate(): Boolean {
         var isValid = true
         governmentId = binding.edtGovernmentID.text.toString().trim()
         carNumber = binding.edtCarNumber.text.toString().trim()
+        licenceNumber = binding.edtCarNumber.text.toString().trim()
 
         if (governmentId?.isEmptySting() == true) {
             isValid = false
@@ -146,10 +167,9 @@ class EditProfileDriverFragment : BaseFragment() {
             isValid = false
             toast(getString(R.string.enter_car_number))
         }
-
-        if (carImages.isEmpty()) {
+        if (licenceNumber?.isEmptySting() == true) {
             isValid = false
-            toast(getString(R.string.must_choose_more_than_1_image))
+            toast(getString(R.string.enter_licence_number))
         }
 
         return isValid
@@ -191,10 +211,11 @@ class EditProfileDriverFragment : BaseFragment() {
                 val data = it
                 if (data.clipData != null) {
                     val count = data.clipData!!.itemCount
-                    for (i in 0..count - 1) {
-                        carImages.add(data.clipData!!.getItemAt(i).uri.toString())
+                    carImages.clear()
+                    for (i in 0 until count) {
+                        carImages.add(getRealPathFromURI(requireContext(), data.clipData!!.getItemAt(i).uri).toString())
                     }
-                    showProfileImageBottomSheet(carImages[0])
+                    showCarImageBottomSheet()
                 } else {
                     toast(getString(R.string.must_choose_more_than_1_image))
                 }
@@ -202,21 +223,24 @@ class EditProfileDriverFragment : BaseFragment() {
         }
     }
 
-    private fun showProfileImageBottomSheet(image: String) {
-        val bundle = Bundle()
-        bundle.putString(Constant.UPLOAD_IMAGE_FRAGMENT, image)
+    private fun showCarImageBottomSheet() {
+        // currentUser.carImages
+        if (carImages.isNotEmpty()) {
+            showImageSheetFragment?.dismiss()
+            val bundle = Bundle()
+            bundle.putStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT, carImages)
+            showImageSheetFragment = UploadImageSheetFragment(onSelectImageBtnClick = {
+                handleCarImagesChange()
+            })
+            showImageSheetFragment?.arguments = bundle
 
-        // Create an instance of the bottom sheet dialog fragment with the data
-        val uploadImageSheetFragment = UploadImageSheetFragment.newInstance(bundle)
-
-        // Show the bottom sheet dialog fragment
-        uploadImageSheetFragment.show(
-            childFragmentManager,
-            "UploadImageFragment",
-        ) // uploadImageSheetFragment.tag
+            showBottomSheet(showImageSheetFragment!!, "UploadImageBottomSheet")
+        } else {
+            handleCarImagesChange()
+        }
     }
 
-    private fun handleProfilePictureChange() {
+    private fun handleCarImagesChange() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             permissionHelper
                 .addPermissionsToAsk(Permission.Camera, Permission.Storage13)
@@ -332,5 +356,64 @@ class EditProfileDriverFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun getRealPathFromURI(context: Context, uri: Uri): String? {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getRealPathFromUriAboveKitkat(context, uri)
+        } else {
+            getRealPathFromUriBelowKitkat(context, uri)
+        }
+    }
+
+    private fun getRealPathFromUriAboveKitkat(context: Context, uri: Uri): String? {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
+            if (isMediaDocument(uri)) {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":").toTypedArray()
+                val type = split[0]
+                val contentUri: Uri = when (type) {
+                    "image" -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    else -> return null
+                }
+                val selection = MediaStore.Images.Media._ID + "=?"
+                val selectionArgs = arrayOf(split[1])
+                return getDataColumn(context, contentUri, selection, selectionArgs)
+            }
+        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+            return getDataColumn(context, uri, null, null)
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            return uri.path
+        }
+        return null
+    }
+
+    private fun getRealPathFromUriBelowKitkat(context: Context, uri: Uri): String? {
+        return getDataColumn(context, uri, null, null)
+    }
+
+    private fun getDataColumn(
+        context: Context,
+        uri: Uri,
+        selection: String?,
+        selectionArgs: Array<String>?,
+    ): String? {
+        var cursor: Cursor? = null
+        val column = "_data"
+        val projection = arrayOf(column)
+        try {
+            cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                val columnIndex: Int = cursor.getColumnIndexOrThrow(column)
+                return cursor.getString(columnIndex)
+            }
+        } finally {
+            cursor?.close()
+        }
+        return null
+    }
+
+    private fun isMediaDocument(uri: Uri): Boolean {
+        return "com.android.providers.media.documents" == uri.authority
     }
 }

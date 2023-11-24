@@ -90,7 +90,10 @@ class ChooseTextBottomSheet(
                 chooseTextAdapter.setHasStableIds(true)
                 adapter = chooseTextAdapter
             }
-            chooseTextAdapter.submitData(data)
+            data.distinctBy { it.name }.also {
+                chooseTextAdapter.submitData(ArrayList(it))
+            }
+
         }
     }
 

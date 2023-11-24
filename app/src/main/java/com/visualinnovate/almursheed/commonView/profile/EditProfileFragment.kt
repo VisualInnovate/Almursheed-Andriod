@@ -21,6 +21,7 @@ import com.visualinnovate.almursheed.common.ImageCompressorHelper
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.permission.FileUtils
@@ -29,11 +30,13 @@ import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
+import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDES
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -121,9 +124,9 @@ class EditProfileFragment : BaseFragment() {
             (currentUser.destCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
 
         if (currentUser.type == ROLE_DRIVER || currentUser.type == ROLE_GUIDE) {
-            binding.btnNext.text = getString(R.string.next)
+            binding.btnCarInfo.visible()
         } else {
-            binding.btnNext.text = getString(R.string.submit)
+            binding.btnCarInfo.gone()
         }
         Glide.with(requireContext())
             .load(currentUser.personalPhoto)
@@ -154,7 +157,7 @@ class EditProfileFragment : BaseFragment() {
             showCityChooser()
         }
 
-        binding.txtMale.setOnClickListener {
+        binding.txtMale.onDebouncedListener {
             binding.txtMale.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
             binding.txtMale.setTextColor(resources.getColor(R.color.white, resources.newTheme()))
             binding.txtFemale.setBackgroundColor(Color.TRANSPARENT)
@@ -162,7 +165,7 @@ class EditProfileFragment : BaseFragment() {
             gender = "1" // -> Constant
         }
 
-        binding.txtFemale.setOnClickListener {
+        binding.txtFemale.onDebouncedListener {
             binding.txtFemale.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
             binding.txtFemale.setTextColor(resources.getColor(R.color.white, resources.newTheme()))
             binding.txtMale.setBackgroundColor(Color.TRANSPARENT)
@@ -174,20 +177,13 @@ class EditProfileFragment : BaseFragment() {
             handleProfilePictureChange()
         }
 
-        binding.btnNext.onDebouncedListener {
-            if (binding.edtUserName.value.isNotEmpty()) {
-                currentUser.name = binding.edtUserName.value
-            }
-            currentUser.phone = binding.edtPhone.value
-            currentUser.personalPhoto = imagePath
-            currentUser.gender = gender.toString()
-            currentUser.countryId = countryId?.toInt()
-            currentUser.nationality = nationalityName
+        binding.btnSubmit.onDebouncedListener {
+            saveData()
+            vm.updatePersonalInformation(currentUser, imagePath)
+        }
 
-            currentUser.stateId = cityId?.toInt()
-            currentUser.desCityId = cityId?.toInt()
-            currentUser.destCityId = cityId?.toInt()
-
+        binding.btnCarInfo.onDebouncedListener {
+            saveData()
             val bundle = Bundle()
             bundle.putParcelable("userData", currentUser)
             when (currentUser.type) {
@@ -197,17 +193,26 @@ class EditProfileFragment : BaseFragment() {
                         data = bundle,
                     )
                 }
-
-                "Guides" -> {
+                ROLE_GUIDES -> {
                     findNavController().customNavigate(R.id.editProfileGuideFragment, data = bundle)
-                }
-
-                else -> {
-                    // call api update tourist
-                    vm.updateTourist(currentUser, imagePath)
                 }
             }
         }
+    }
+
+    private fun saveData() {
+        if (binding.edtUserName.value.isNotEmpty()) {
+            currentUser.name = binding.edtUserName.value
+        }
+        currentUser.phone = binding.edtPhone.value
+        currentUser.personalPhoto = imagePath
+        currentUser.gender = gender.toString()
+        currentUser.countryId = countryId?.toInt()
+        currentUser.nationality = nationalityName
+
+        currentUser.stateId = cityId?.toInt()
+        currentUser.desCityId = cityId?.toInt()
+        currentUser.destCityId = cityId?.toInt()
     }
 
     private fun showNationalityChooser() {
@@ -217,7 +222,7 @@ class EditProfileFragment : BaseFragment() {
                 binding.nationality.text = data.name
                 nationalityName = data.name.toString()
             })
-        showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
+        showBottomSheet(chooseTextBottomSheet!!, "NationalityBottomSheet")
     }
 
     private fun showCountryChooser() {
@@ -286,7 +291,7 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun subscribeData() {
-        vm.updateTouristLiveData.observe(viewLifecycleOwner) {
+        vm.personalInformation.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user

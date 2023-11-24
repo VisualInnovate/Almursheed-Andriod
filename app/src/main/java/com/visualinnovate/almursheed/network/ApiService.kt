@@ -175,11 +175,34 @@ interface ApiService {
         // @Part("languages[]") languages: List<Int>
         // @Part personal_pictures: MultipartBody.Part,
         @Part("driver_licence_number") driver_licence_number: RequestBody,
-        // @Part car_photos: List<MultipartBody.Part>,
+         @Part car_photos: List<MultipartBody.Part>?,
         @Part("car_number") carNumber: RequestBody,
         @Part("car_type") carType: RequestBody,
         @Part("car_brand_name") car_brand_name: RequestBody,
         @Part("car_manufacturing_date") car_manufacturing_date: RequestBody,
+    ): Response<UpdateResponse>
+
+    @Multipart
+    @POST("drivers/update")
+    suspend fun updateDriverCarInformations(
+        @Part("gov_id") govId: RequestBody,
+        @Part("driver_licence_number") licenceNumber: RequestBody,
+        @Part("car_number") carNumber: RequestBody,
+        @Part("car_type") carType: RequestBody,
+        @Part("car_brand_name") carBrand: RequestBody,
+        @Part("car_manufacturing_date") carManufacture: RequestBody,
+       // @Part("language") language: RequestBody,
+        @Part carImages: ArrayList<MultipartBody.Part?>?,
+        ): Response<UpdateResponse>
+    @Multipart
+    @POST("drivers/update")
+    suspend fun updateDriverPersonalInformation(
+        @Part("name") name: RequestBody,
+        @Part("dest_city_id") destCityId: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("nationality") nationality: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part personal_pictures: MultipartBody.Part?,
     ): Response<UpdateResponse>
 
     @Multipart
@@ -189,8 +212,8 @@ interface ApiService {
         @Part("dest_city_id") destCityId: RequestBody,
         @Part("gender") gender: RequestBody,
         @Part("nationality") nationality: RequestBody, // nationality
+       // @Part("phone") phone: RequestBody, // nationality
         @Part personal_pictures: MultipartBody.Part?,
-        // @Body requestBody: RequestBody,
     ): Response<UpdateResponse>
 
     @POST("drivers/update")
@@ -270,4 +293,6 @@ interface ApiService {
         @Query("service_id") serviceId: String,
         @Query("type") type: String
     ): Response<FavoriteResponse>
+
+
 }

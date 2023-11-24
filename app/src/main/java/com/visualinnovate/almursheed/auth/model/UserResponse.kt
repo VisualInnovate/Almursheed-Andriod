@@ -78,7 +78,7 @@ data class User(
     var carType: String? = null,
 
     @field:SerializedName("driver_licence_number")
-    var driverLicenceNumber: String? = null,
+    var licenceNumber: String? = null,
 
     @field:SerializedName("car_number")
     var carNumber: String? = null,

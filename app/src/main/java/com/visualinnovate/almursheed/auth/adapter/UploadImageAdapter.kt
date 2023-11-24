@@ -8,7 +8,7 @@ import com.visualinnovate.almursheed.databinding.ItemUploadImageBinding
 
 class UploadImageAdapter : RecyclerView.Adapter<UploadImageAdapter.UploadImageViewHolder>() {
 
-    private var imageList: List<Int> = ArrayList()
+    private var imageList: List<String> = ArrayList()
 
     private lateinit var binding: ItemUploadImageBinding
 
@@ -29,7 +29,7 @@ class UploadImageAdapter : RecyclerView.Adapter<UploadImageAdapter.UploadImageVi
         bindData(holder, image)
     }
 
-    private fun bindData(holder: UploadImageViewHolder, image: Int) {
+    private fun bindData(holder: UploadImageViewHolder, image: String) {
         // set data
         Glide.with(holder.itemView.context)
             .load(image)
@@ -40,7 +40,7 @@ class UploadImageAdapter : RecyclerView.Adapter<UploadImageAdapter.UploadImageVi
         return imageList.size
     }
 
-    fun submitData(data: List<Int>) {
+    fun submitData(data: List<String>) {
         imageList = data
         notifyDataSetChanged()
     }

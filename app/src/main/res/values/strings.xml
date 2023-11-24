@@ -308,5 +308,8 @@
     <string name="choose_language">Choose Language</string>
     <string name="car_brand">Car Brand</string>
     <string name="must_choose_more_than_1_image">Must Choose More Than 1 Image</string>
+    <string name="add_images">Add Images</string>
+    <string name="enter_licence_number">Enter Licence Number</string>
+    <string name="other">others</string>
 
 </resources>
