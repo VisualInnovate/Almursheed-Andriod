@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.User
@@ -51,6 +52,7 @@ class EditLocationFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).hideBottomNav()
         initToolbar()
         initView()
         setBtnListener()
@@ -95,6 +97,7 @@ class EditLocationFragment : BaseFragment() {
             currentUser.countryId = countryId?.toInt()
             currentUser.stateId = cityId?.toInt()
             currentUser.desCityId = cityId?.toInt()
+            currentUser.destCityId = cityId?.toInt()
 
             if (validate()) {
                 when (currentUser.type) {
@@ -183,7 +186,7 @@ class EditLocationFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    SharedPreference.setCityId(it.data?.user?.destCityId ?: it.data?.user?.desCityId)
+                    SharedPreference.setCityId(it.data?.user?.destCityId)
                     SharedPreference.setCountryId(it.data?.user?.countryId)
                     toast(it.data?.message.toString())
                     findNavController().navigateUp()

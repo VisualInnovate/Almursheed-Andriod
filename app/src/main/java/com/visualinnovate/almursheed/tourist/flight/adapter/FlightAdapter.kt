@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemFlightBinding
 import com.visualinnovate.almursheed.home.model.FlightItem
 
@@ -14,7 +13,6 @@ class FlightAdapter(
     private val btnBoobNowFlightCallBack: (flight: FlightItem) -> Unit
 ) : RecyclerView.Adapter<FlightAdapter.FlightViewHolder>() {
 
-    //    private var flightList: List<FlightModel> = ArrayList()
     private var flightItemList: List<FlightItem?>? = ArrayList()
 
     private lateinit var binding: ItemFlightBinding
@@ -49,7 +47,9 @@ class FlightAdapter(
     private fun bindData(holder: FlightViewHolder, flight: FlightItem) {
         // set data
         Glide.with(holder.itemView.context)
-            .load(R.drawable.ic_egypt_air)
+            .load(flight.pictures?.photos?.get(0)?.originalUrl)
+            .placeholder(R.drawable.ic_mursheed_logo)
+            .error(R.drawable.ic_mursheed_logo)
             .into(holder.imgFlight)
 
         // holder.imgFlight.setImageResource(flight.flightImage)
@@ -60,11 +60,6 @@ class FlightAdapter(
     override fun getItemCount(): Int {
         return flightItemList?.size ?: 0
     }
-
-//    fun submitData(data: List<FlightModel>) {
-//        flightList = data
-//        notifyDataSetChanged()
-//    }
 
     fun submitData(data: List<FlightItem?>?) {
         flightItemList = data

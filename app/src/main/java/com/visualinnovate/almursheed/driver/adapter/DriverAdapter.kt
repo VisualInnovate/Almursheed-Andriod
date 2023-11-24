@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.driver.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -51,10 +52,11 @@ class DriverAdapter(
     override fun onBindViewHolder(holder: DriverViewHolder, position: Int) {
         val driver = driversList!![position]
         // bind view
-        bindData(holder, position, driver!!)
+        bindData(holder, driver!!)
     }
 
-    private fun bindData(holder: DriverViewHolder, position: Int, driver: DriverAndGuideItem) {
+    @SuppressLint("SetTextI18n")
+    private fun bindData(holder: DriverViewHolder, driver: DriverAndGuideItem) {
         if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
             binding.btnBookNow.gone()
             binding.imgFavorite.gone()

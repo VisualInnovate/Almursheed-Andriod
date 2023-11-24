@@ -188,7 +188,7 @@ interface ApiService {
         @Part("name") name: RequestBody,
         @Part("dest_city_id") destCityId: RequestBody,
         @Part("gender") gender: RequestBody,
-        @Part("nationality") nationality: RequestBody,
+        @Part("nationality") nationality: RequestBody, // nationality
         @Part personal_pictures: MultipartBody.Part?,
         // @Body requestBody: RequestBody,
     ): Response<UpdateResponse>

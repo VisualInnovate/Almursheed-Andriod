@@ -37,6 +37,7 @@ class MoreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_more)
+        (requireActivity() as MainActivity).showBottomNav()
         initToolbar()
         initView()
         setBtnListener()
@@ -45,11 +46,6 @@ class MoreFragment : Fragment() {
     private fun initToolbar() {
         binding.appBar.setTitleString(getString(R.string.more))
         binding.appBar.setTitleCenter(true)
-        binding.appBar.useBackButton(
-            true,
-            { findNavController().navigateUp() },
-            R.drawable.ic_back,
-        )
     }
 
     private fun initView() {

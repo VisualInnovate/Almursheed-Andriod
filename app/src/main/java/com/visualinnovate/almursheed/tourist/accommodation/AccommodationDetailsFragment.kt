@@ -78,22 +78,13 @@ class AccommodationDetailsFragment : BaseFragment() {
     }
 
     private fun initViews(accommodation: AccommodationItem?) {
-        Log.d("initViews", "media ${accommodation?.media}")
         if (accommodation?.media!!.isNotEmpty()){
             Glide.with(requireContext())
                 .load(accommodation.media[0]?.originalUrl ?: R.drawable.img_banner)
-                .placeholder(R.drawable.img_banner)
-                .error(R.drawable.img_banner)
+                .placeholder(R.drawable.ic_mursheed_logo)
+                .error(R.drawable.ic_mursheed_logo)
                 .into(binding.detailsImage)
         }
-
-        /*accommodation.media?.forEach {
-            imagesList.add(it?.originalUrl ?: R.drawable.img_banner)
-            Log.d("forEach", "media@@ $imagesList")
-        }*/
-        // submit data
-        // accommodationImagesAdapter.submitData(imagesList)
-        // Log.d("forEach", "media&& $imagesList")
 
         binding.detailsDescription.text = accommodation.description?.localized
         binding.ownerName.text = accommodation.ownerInfo?.localized
@@ -120,14 +111,12 @@ class AccommodationDetailsFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    Log.d("ResponseHandler.Success", it.data!!.accommodation!!.toString())
-                    initViews(it.data.accommodation!!)
+                    initViews(it.data?.accommodation!!)
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {

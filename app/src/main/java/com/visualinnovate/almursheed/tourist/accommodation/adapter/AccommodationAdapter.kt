@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemAccommodationBinding
 import com.visualinnovate.almursheed.home.model.AccommodationItem
 
@@ -41,26 +40,25 @@ class AccommodationAdapter(
     override fun onBindViewHolder(holder: AccommodationViewHolder, position: Int) {
         val accommodation = accommodationList!![position]!!
         // bind view
-        bindData(holder, position, accommodation)
+        bindData(holder, accommodation)
     }
 
     private fun bindData(
         holder: AccommodationViewHolder,
-        position: Int,
         accommodation: AccommodationItem
     ) {
         // set data
         Glide.with(holder.itemView.context)
-            // .load(accommodation.media?.forEach { it?.originalUrl })
-            .load(R.drawable.img_test)
+            .load(accommodation.pictures?.photos?.get(0)?.originalUrl)
             .into(holder.imgAccommodation)
         holder.accommodationName.text = accommodation.name?.localized ?: ""
         holder.countryAndCity.text = accommodation.address?.localized ?: ""
+
 //        // check favorite
 //        if (!accommodation.isFavorite) { // false -> un favorite
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//            holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)
 //        } else {
-//            holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
+//            holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)
 //        }
     }
 

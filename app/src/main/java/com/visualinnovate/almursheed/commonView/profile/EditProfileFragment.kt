@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.User
@@ -61,7 +62,7 @@ class EditProfileFragment : BaseFragment() {
     private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
     // for image
-    private var imagePath: String = ""
+    private var imagePath: String? = null
     private val fileUtils by lazy { FileUtils(requireContext()) }
     private val imageCompressor by lazy { ImageCompressorHelper.with(requireContext()) }
     private lateinit var permissionHelper: PermissionHelper
@@ -79,6 +80,7 @@ class EditProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         permissionHelper = PermissionHelper.init(this)
         currentUser = SharedPreference.getUser()
+        (requireActivity() as MainActivity).hideBottomNav()
         initToolbar()
         initView()
         setBtnListener()
@@ -103,11 +105,21 @@ class EditProfileFragment : BaseFragment() {
             binding.nationality.text = getString(R.string.choose_nationality)
         }
 
-        binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) } ?: getString(R.string.choose_country) // de msh htshtghl 3lshan l user mbyrg3losh country id homa byrg3o dest_city_id
-        binding.city.text =
-            (currentUser.desCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
+        nationalityName = currentUser.nationality.toString()
 
-        imagePath = currentUser.personalPhoto ?: ""
+        cityId = if (currentUser.destCityId != null) {
+            currentUser.destCityId.toString()
+        } else if (currentUser.desCityId != null) {
+            currentUser.desCityId.toString()
+        } else {
+            currentUser.stateId.toString()
+        }
+
+        binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) }
+            ?: getString(R.string.choose_country) // de msh htshtghl 3lshan l user mbyrg3losh country id homa byrg3o dest_city_id
+        binding.city.text =
+            (currentUser.destCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
+
         if (currentUser.type == ROLE_DRIVER || currentUser.type == ROLE_GUIDE) {
             binding.btnNext.text = getString(R.string.next)
         } else {
@@ -115,10 +127,12 @@ class EditProfileFragment : BaseFragment() {
         }
         Glide.with(requireContext())
             .load(currentUser.personalPhoto)
-            .error(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.ic_mursheed_logo)
+            .error(R.drawable.ic_mursheed_logo)
             .centerCrop()
             .circleCrop()
             .into(binding.imgUser)
+
         binding.edtUserName.setText(currentUser.name)
         binding.edtEmailAddress.setText(currentUser.email)
         binding.edtEmailAddress.isEnabled = false
@@ -147,6 +161,7 @@ class EditProfileFragment : BaseFragment() {
             binding.txtFemale.setTextColor(resources.getColor(R.color.grey, resources.newTheme()))
             gender = "1" // -> Constant
         }
+
         binding.txtFemale.setOnClickListener {
             binding.txtFemale.setBackgroundResource(R.drawable.bg_rectangle_corner_primary)
             binding.txtFemale.setTextColor(resources.getColor(R.color.white, resources.newTheme()))
@@ -167,6 +182,8 @@ class EditProfileFragment : BaseFragment() {
             currentUser.personalPhoto = imagePath
             currentUser.gender = gender.toString()
             currentUser.countryId = countryId?.toInt()
+            currentUser.nationality = nationalityName
+
             currentUser.stateId = cityId?.toInt()
             currentUser.desCityId = cityId?.toInt()
             currentUser.destCityId = cityId?.toInt()
@@ -187,7 +204,7 @@ class EditProfileFragment : BaseFragment() {
 
                 else -> {
                     // call api update tourist
-                    vm.updateTourist(currentUser)
+                    vm.updateTourist(currentUser, imagePath)
                 }
             }
         }

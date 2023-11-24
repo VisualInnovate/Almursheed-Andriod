@@ -54,8 +54,8 @@ class UploadImageSheetFragment : BottomSheetDialogFragment() {
         Glide.with(requireContext())
             .load(image)
             // .circleCrop()
-            .placeholder(R.drawable.img_test)
-            .error(R.drawable.img_test)
+            .placeholder(R.drawable.ic_mursheed_logo)
+            .error(R.drawable.ic_mursheed_logo)
             .into(binding.image)
     }
 

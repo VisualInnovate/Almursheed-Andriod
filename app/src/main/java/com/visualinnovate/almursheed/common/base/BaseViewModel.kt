@@ -9,6 +9,7 @@ import com.visualinnovate.almursheed.home.model.FavoriteResponse
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
+import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,5 +34,25 @@ open class BaseViewModel @Inject constructor(
                 _isFavoriteResponse.value = it
             }
         }
+    }
+
+    fun getCityName(stateId: Int): String {
+        var stateName = ""
+        Utils.allCities.forEach {
+            if (it.stateId == stateId.toString()) {
+                stateName = it.state
+            }
+        }
+        return stateName
+    }
+
+    fun getCountryName(countryId: Int): String {
+        var countryName = ""
+        Utils.allCountries.forEach {
+            if (it.country_id == countryId.toString()) {
+                countryName = it.country
+            }
+        }
+        return countryName
     }
 }

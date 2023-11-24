@@ -30,16 +30,34 @@
                 android:id="@+id/imgHomeLogo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_10x"
+                android:layout_marginTop="@dimen/space_8x"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_home_logo" />
+
+            <TextView
+                android:id="@+id/txtTouristDestination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_2x"
+                android:padding="@dimen/space_2x"
+                android:drawablePadding="@dimen/space_4x"
+                android:text="@string/select_your_destination"
+                android:fontFamily="@font/myriad_pro_bold"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
+                app:drawableEndCompat="@drawable/ic_arrow_down" />
 
             <TextView
                 android:id="@+id/searchView"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/space_10x"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_4x"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginEnd="@dimen/space_2x"
+                android:layout_marginTop="@dimen/space_2x"
                 android:background="@drawable/rounded_search_view"
                 android:drawablePadding="@dimen/space_2x"
                 android:text="@string/search_murcheed_app"
@@ -50,35 +68,30 @@
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_search"
                 app:iconifiedByDefault="false"
-                app:layout_constraintEnd_toStartOf="@id/icNotification"
+                app:layout_constraintEnd_toStartOf="@id/icDestinationLocation"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
-
-            <!--<TextView
-                android:id="@+id/cityName"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/space_10x"
-                android:layout_marginTop="@dimen/space_4x"
-                android:layout_marginEnd="@dimen/space_4x"
-                android:fontFamily="@font/myriad_pro_regular"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@id/icNotification"
-                app:layout_constraintStart_toEndOf="@id/searchView"
-                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
-                tools:text="Cairo" />-->
+                app:layout_constraintTop_toBottomOf="@id/txtTouristDestination" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/icNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_4x"
                 android:layout_marginEnd="@dimen/space_4x"
                 app:layout_constraintBottom_toBottomOf="@id/searchView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
+                app:layout_constraintTop_toTopOf="@id/searchView"
+                app:srcCompat="@drawable/ic_notification" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icDestinationLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/space_2x"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@id/searchView"
+                app:layout_constraintBottom_toBottomOf="@id/searchView"
+                app:layout_constraintEnd_toStartOf="@id/icNotification"
+                app:layout_constraintTop_toTopOf="@id/searchView"
                 app:srcCompat="@drawable/ic_notification" />
 
             <!--        <androidx.recyclerview.widget.RecyclerView-->
@@ -95,9 +108,9 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/rvBanner"
                 android:layout_width="match_parent"
-                android:layout_height="145dp"
+                android:layout_height="140dp"
                 android:layout_marginHorizontal="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_6x"
+                android:layout_marginTop="@dimen/space_5x"
                 app:layout_constraintTop_toBottomOf="@id/searchView" />
 
             <com.tbuonomo.viewpagerdotsindicator.DotsIndicator

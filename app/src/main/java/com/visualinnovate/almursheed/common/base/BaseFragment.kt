@@ -64,10 +64,4 @@ open class BaseFragment : Fragment() {
             .load(urlToImage)
             .into(imgView)
     }
-
-    fun loadImage(context: Context, urlToImage: String, imgView: ImageView) {
-        Glide.with(context)
-            .load(urlToImage)
-            .into(imgView)
-    }
 }

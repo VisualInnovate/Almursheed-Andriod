@@ -50,33 +50,6 @@ data class AttractivesItem(
     val cityId: Int? = null
 )
 
-data class State(
-
-    @field:SerializedName("is_active")
-    val isActive: Int? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
-
-    @field:SerializedName("state_id")
-    val stateId: Int? = null,
-
-    @field:SerializedName("state")
-    val state: String? = null,
-
-    @field:SerializedName("is_default")
-    val isDefault: Int? = null,
-
-    @field:SerializedName("lang")
-    val lang: String? = null,
-
-    @field:SerializedName("sort_order")
-    val sortOrder: Int? = null,
-
-    @field:SerializedName("country_id")
-    val countryId: Int? = null
-)
-
 data class PersonalPicturesItem(
 
     // @field:SerializedName("manipulations")
@@ -158,32 +131,6 @@ data class Language(
     val isDefault: Int? = null
 )
 
-data class Country(
-
-    @field:SerializedName("country")
-    val country: String? = null,
-
-    @field:SerializedName("is_active")
-    val isActive: Int? = null,
-
-    @field:SerializedName("nationality")
-    val nationality: String? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
-
-    @field:SerializedName("is_default")
-    val isDefault: Int? = null,
-
-    @field:SerializedName("lang")
-    val lang: String? = null,
-
-    @field:SerializedName("sort_order")
-    val sortOrder: Int? = null,
-
-    @field:SerializedName("country_id")
-    val countryId: Int? = null
-)
 
 data class Pictures(
 

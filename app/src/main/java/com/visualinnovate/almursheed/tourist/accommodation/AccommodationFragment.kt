@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationBinding
-import com.visualinnovate.almursheed.MainActivity
-import com.visualinnovate.almursheed.tourist.accommodation.adapter.AccommodationAdapter
 import com.visualinnovate.almursheed.home.model.AccommodationItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.tourist.accommodation.adapter.AccommodationAdapter
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,9 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AccommodationFragment : BaseFragment() {
 
     private var _binding: FragmentAccommodationBinding? = null
-
-    // This property is only valid between onCreateView and // onDestroy.
-    private val binding get() = _binding!!
+    private val binding get() = _binding!! // This property is only valid between onCreateView and // onDestroy.
 
     // initialize home view model to call api and make observe
     private val vm: HomeViewModel by viewModels()
@@ -74,7 +72,11 @@ class AccommodationFragment : BaseFragment() {
 
     private fun getAccommodationData() {
         if (filterVm.checkDestinationFromFilter()) {
-            vm.fetchAccommodationsList(filterVm.countryId, filterVm.cityId, filterVm.accommodationCategoryId, filterVm.roomsCountId, filterVm.searchData, filterVm.price)
+            vm.fetchAccommodationsList(
+                filterVm.countryId, filterVm.cityId,
+                filterVm.accommodationCategoryId, filterVm.roomsCountId,
+                filterVm.searchData, filterVm.price
+            )
             filterVm.setFromFilter(false)
         } else {
             vm.fetchAccommodationsList()
@@ -115,13 +117,12 @@ class AccommodationFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    accommodationAdapter.submitData(it.data!!.accommodations)
+                    accommodationAdapter.submitData(it.data!!.accommodationsList)
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -134,9 +135,7 @@ class AccommodationFragment : BaseFragment() {
                     hideMainLoading()
                 }
 
-                else -> {
-                    toast("Else")
-                }
+                else ->{}
             }
         }
     }

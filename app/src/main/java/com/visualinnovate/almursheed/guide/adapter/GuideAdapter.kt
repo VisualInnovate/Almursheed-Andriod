@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.guide.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -52,6 +53,7 @@ class GuideAdapter(
         bindData(holder, guide!!)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindData(holder: GuideViewHolder, guide: DriverAndGuideItem) {
         holder.imgStatus.invisible()
         if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER

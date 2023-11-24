@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="155dp"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/space_2x"
     app:cardCornerRadius="@dimen/space_3x"
@@ -12,6 +12,14 @@
         android:layout_width="155dp"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAccommodation"
+            app:layout_constraintEnd_toEndOf="@+id/imgAccommodation"
+            app:layout_constraintStart_toStartOf="@+id/imgAccommodation"
+            app:layout_constraintTop_toTopOf="@+id/imgAccommodation" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgAccommodation"
             android:layout_width="55dp"
@@ -19,14 +27,15 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/img_test" />
+            app:srcCompat="@drawable/ic_home_logo" />
 
         <TextView
             android:id="@+id/accommodationName"
             style="@style/TextStyleBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_1x"
+            android:layout_marginHorizontal="@dimen/space_1x"
+            android:layout_marginTop="@dimen/space_3x"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
@@ -61,7 +70,7 @@
             android:gravity="start|center_vertical"
             android:maxLines="1"
             android:textColor="@color/black"
-            android:textSize="@dimen/space_9x_sp"
+            android:textSize="@dimen/space_10x_sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgAccommodation"
             app:layout_constraintTop_toBottomOf="@id/accommodationName"
@@ -71,10 +80,10 @@
             android:id="@+id/imgGoogleMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/countryAndCity"
-            app:layout_constraintStart_toStartOf="@id/imgFavorite"
-            app:layout_constraintEnd_toEndOf="@id/imgFavorite"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/imgFavorite"
+            app:layout_constraintStart_toStartOf="@id/imgFavorite"
+            app:layout_constraintTop_toBottomOf="@id/countryAndCity"
             app:srcCompat="@drawable/ic_google_map" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

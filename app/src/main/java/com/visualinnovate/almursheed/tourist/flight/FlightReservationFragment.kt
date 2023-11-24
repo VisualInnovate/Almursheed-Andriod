@@ -31,21 +31,17 @@ class FlightReservationFragment : BaseFragment() {
 
     private val btnBoobNowFlightCallBack: (flight: FlightItem) -> Unit =
         { flight ->
-            Log.d(
-                "Clicked Item flight",
-                "$flight $flight"
-            )
             shareNews(flight.link)
         }
 
 
-    private val btnSortCallBackFunc: () -> Unit = {
+    /*private val btnSortCallBackFunc: () -> Unit = {
         toast("Clicked btnSortCallBackFunc")
     }
 
     private val btnFilterCallBackFunc: () -> Unit = {
         toast("Clicked btnFilterCallBackFunc")
-    }
+    }*/
 
     override fun onStart() {
         super.onStart()
@@ -81,14 +77,14 @@ class FlightReservationFragment : BaseFragment() {
             { findNavController().navigateUp() },
             R.drawable.ic_back
         )
-        binding.appBarFlight.showButtonSortAndFilter(
+        /*binding.appBarFlight.showButtonSortAndFilter(
             getString(R.string.sort),
             getString(R.string.filter),
             R.drawable.ic_sort,
             R.drawable.ic_filter,
             btnSortCallBackFunc,
             btnFilterCallBackFunc
-        )
+        )*/
     }
 
     private fun initFlightRecycler() {

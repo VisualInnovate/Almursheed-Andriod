@@ -28,7 +28,8 @@ data class User(
     @field:SerializedName("gender")
     var gender: String? = null,
 
-    @field:SerializedName("dest_city_id")
+    // @field:SerializedName("dest_city_id")
+    @SerializedName(value = "dest_city_id", alternate = ["dest_city_id "])
     var destCityId: Int? = null,
 
     @field:SerializedName("email")
@@ -64,7 +65,7 @@ data class User(
     @field:SerializedName("des_city_id")
     var desCityId: Int? = null,
 
-    @field:SerializedName("personal_photo")
+    @field:SerializedName("personal_photo") //personal_photo
     var personalPhoto: String? = null,
 
     @field:SerializedName("car_brand_name")

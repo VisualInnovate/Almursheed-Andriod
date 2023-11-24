@@ -7,12 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.visualinnovate.almursheed.auth.model.User
+import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.UpdateResponse
 import com.visualinnovate.almursheed.network.ApiService
-import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -27,7 +26,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val apiService: ApiService,
     application: Application,
-) : BaseApiResponse(application) {
+) : BaseViewModel(apiService, application) {
 
     // var updateDriveItem = UpdateDriveItem()
     private val imagesList = ArrayList<MultipartBody.Part>()
@@ -79,11 +78,11 @@ class ProfileViewModel @Inject constructor(
         }
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
-        val country_id = RequestBody.create(
+        val countryId = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
             currentUser.countryId.toString(),
         )
-        val state_id = RequestBody.create(
+        val stateId = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
             currentUser.stateId.toString(),
         )
@@ -93,25 +92,25 @@ class ProfileViewModel @Inject constructor(
         )
         val phone =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.phone.toString())
-        val car_number =
+        val carNumber =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.carNumber.toString())
-        val car_type =
+        val carType =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.carType.toString())
-        val car_brand_name =
+        val carBrandName =
             RequestBody.create(
                 "text/plain".toMediaTypeOrNull(),
                 currentUser.carBrandName.toString(),
             )
-        val car_manufacturing_date =
+        val carManufacturingDate =
             RequestBody.create(
                 "text/plain".toMediaTypeOrNull(),
                 currentUser.carManufacturingDate.toString(),
             )
-        val driver_licence_number = RequestBody.create(
+        val driverLicenceNumber = RequestBody.create(
             "text/plain".toMediaTypeOrNull(),
             currentUser.driverLicenceNumber.toString(),
         )
-        val gov_id =
+        val govId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
         /*val languagesList = ArrayList<RequestBody>()
         for (i in languagesIdsList) {
@@ -124,20 +123,20 @@ class ProfileViewModel @Inject constructor(
                 // Make your API call here using Retrofit service or similar
                 apiService.updateDriver(
                     name,
-                    country_id,
-                    state_id,
+                    countryId,
+                    stateId,
                     gender,
                     phone,
                     // bio,
-                    gov_id,
+                    govId,
                     // languagesList,
                     // profilePicPart!!,
-                    driver_licence_number,
+                    driverLicenceNumber,
                     // imagesList,
-                    car_number,
-                    car_type,
-                    car_brand_name,
-                    car_manufacturing_date,
+                    carNumber,
+                    carType,
+                    carBrandName,
+                    carManufacturingDate,
                 )
             }.collect {
                 _updateDriverMutableData.value = it
@@ -145,42 +144,48 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun updateTourist(currentUser: User) {
+    private fun checkImagePath(imagePath: String?): MultipartBody.Part? {
+        if (imagePath != null) {
+            val profilePicFile = File(imagePath)
+            val profilePicRequestBody =
+                profilePicFile.asRequestBody("image/*".toMediaTypeOrNull())
+
+            return profilePicRequestBody.let {
+                MultipartBody.Part.createFormData(
+                    "personal_pictures",
+                    profilePicFile.name,
+                    it,
+                )
+            }
+
+        } else {
+            return null
+        }
+    }
+
+    fun updateTourist(currentUser: User, imagePath: String?) {
         Log.d("updateTourist", "currentUser: $currentUser")
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
 
-        val stateId =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
-
-        val cityId =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.desCityId.toString())
+        val destCityIdPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.destCityId.toString())
 
         val gender =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.gender.toString())
+
         val nationalityPart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.nationality.toString())
 
-        val profilePicFile = currentUser.personalPhoto?.let { File(it) }
-        val profilePicRequestBody =
-            profilePicFile?.asRequestBody("image/*".toMediaTypeOrNull())
-
-        val profilePicPart = profilePicRequestBody?.let {
-            MultipartBody.Part.createFormData(
-                "personal_pictures",
-                profilePicFile.name,
-                it,
-            )
-        }
         // val requestBody = createBodyRequestDriverOrGuide(currentUser)
         viewModelScope.launch {
             safeApiCall {
                 apiService.updateTourist(
                     name,
-                    stateId,
+                    destCityIdPart,
                     gender,
                     nationalityPart,
-                    profilePicPart,
+                    checkImagePath(imagePath),
                 )
                 // apiService.updateTourist(requestBody)
             }.collect {
@@ -222,9 +227,7 @@ class ProfileViewModel @Inject constructor(
 
         viewModelScope.launch {
             safeApiCall {
-                apiService.updateLocationTourist(
-                    stateId,
-                )
+                apiService.updateLocationTourist(stateId)
                 // apiService.updateTourist(requestBody)
             }.collect {
                 _editLocation.value = it
@@ -292,25 +295,5 @@ class ProfileViewModel @Inject constructor(
                 _updateGuideMutableData.value = it
             }
         }
-    }
-
-    fun getCityName(stateId: Int): String {
-        var stateName = ""
-        Utils.allCities.forEach {
-            if (it.stateId == stateId.toString()) {
-                stateName = it.state
-            }
-        }
-        return stateName
-    }
-
-    fun getCountryName(countryId: Int): String {
-        var countryName = ""
-        Utils.allCountries.forEach {
-            if (it.country_id == countryId.toString()) {
-                countryName = it.country
-            }
-        }
-        return countryName
     }
 }

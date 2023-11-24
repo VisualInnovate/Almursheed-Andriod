@@ -89,6 +89,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private val btnBoobNowOfferCallBack: (offer: OfferItem) -> Unit = { offer ->
+        showOfferDetailsBottomSheet(offer)
         // val bundle = Bundle()
         // bundle.putString("memberName", chat.memberName)
         // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
@@ -124,6 +125,7 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).changeSelectedBottomNavListener(R.id.action_home_tourist)
+        (requireActivity() as MainActivity).showBottomNav()
 
         // call all apis of home screen such as latest guide and driver, all banners, all offers
         callApis()
@@ -142,10 +144,7 @@ class HomeFragment : BaseFragment() {
         if (SharedPreference.getUser().stateId != null) {
             vm.getLatestDriver(SharedPreference.getUser().stateId)
             vm.getLatestGuides(SharedPreference.getUser().stateId)
-        } else if (SharedPreference.getUser().desCityId != null) {
-            vm.getLatestDriver(SharedPreference.getUser().desCityId)
-            vm.getLatestGuides(SharedPreference.getUser().desCityId)
-        } else if (SharedPreference.getCityId() != null) {
+        }else if (SharedPreference.getCityId() != null) {
             vm.getLatestDriver(SharedPreference.getCityId())
             vm.getLatestGuides(SharedPreference.getCityId())
         } else {
@@ -153,11 +152,27 @@ class HomeFragment : BaseFragment() {
             vm.getLatestGuides(0)
         }
 
+        /*else if (SharedPreference.getUser().desCityId != null) {
+            vm.getLatestDriver(SharedPreference.getUser().desCityId)
+            vm.getLatestGuides(SharedPreference.getUser().desCityId)
+        }*/
+
         vm.fetchOfferResponse()
         vm.fetchAttractivesList()
     }
 
     private fun initView() {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
+            binding.txtTouristDestination.gone()
+        } else {
+            binding.txtTouristDestination.visible()
+            if (SharedPreference.getCityId() != null) {
+                binding.txtTouristDestination.text = vm.getCityName(SharedPreference.getCityId()!!)
+            }  else {
+                binding.txtTouristDestination.text = getString(R.string.select_your_destination)
+            }
+        }
+
         initBannerRecycler()
         initDriverRecycler()
         initGuideRecycler()
@@ -348,18 +363,26 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setBtnListener() {
+        binding.txtTouristDestination.setOnClickListener {
+            findNavController().customNavigate(R.id.editLocationFragment)
+        }
+
         binding.icNotification.setOnClickListener {
             findNavController().customNavigate(R.id.notificationFragment)
         }
+
         binding.seeAllDivers.setOnClickListener {
             findNavController().customNavigate(R.id.allDriversFragment)
         }
+
         binding.seeAllGuides.setOnClickListener {
             findNavController().customNavigate(R.id.allGuidesFragment)
         }
+
         binding.seeAllPopularLocations.setOnClickListener {
             findNavController().customNavigate(R.id.allLocationFragment)
         }
+
         binding.searchView.onDebouncedListener {
             val bundle = Bundle()
             bundle.putString("from", Constant.ALL)
@@ -390,7 +413,8 @@ class HomeFragment : BaseFragment() {
         val handler = Handler(Looper.getMainLooper())
         val runnable = object : Runnable {
             override fun run() {
-                val nextItem = if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
+                val nextItem =
+                    if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
                 binding.rvBanner.setCurrentItem(nextItem, true)
                 handler.postDelayed(this, 3000) // Delay in milliseconds (adjust as needed)
             }
@@ -399,6 +423,7 @@ class HomeFragment : BaseFragment() {
         // Start auto-slider
         handler.postDelayed(runnable, 3000) // Initial delay before auto-scrolling starts
     }
+
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
             driverAdapter =

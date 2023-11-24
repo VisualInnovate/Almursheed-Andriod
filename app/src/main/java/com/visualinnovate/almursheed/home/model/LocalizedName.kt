@@ -20,10 +20,6 @@ data class LocalizedName(
 ) : Parcelable {
     val localized: String
         get() {
-            Log.d(
-                "data class Name",
-                "sharedPreferenceManager ${SharedPreference.getLanguage()}"
-            )
             val languageCode = SharedPreference.getLanguage()
             return if (languageCode == "en") gb ?: "" else sa ?: ""
         }

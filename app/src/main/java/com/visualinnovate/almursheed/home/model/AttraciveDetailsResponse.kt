@@ -41,7 +41,7 @@ data class Attracive(
     val updatedAt: String? = null,
 
     @field:SerializedName("name")
-    val name: Name? = null,
+    val name: LocalizedName? = null,
 
     @field:SerializedName("id")
     val id: Int? = null,
