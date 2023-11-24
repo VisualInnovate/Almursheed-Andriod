@@ -3,6 +3,7 @@ package com.visualinnovate.almursheed.utils
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.auth.model.CarItem
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.CountryItem
 import com.visualinnovate.almursheed.auth.model.LanguageItem
@@ -36,6 +37,7 @@ object Utils {
     val filteredCountries = ArrayList<CountryItem>()
 
     val allCarModels = ArrayList<ChooserItemModel>()
+    val allCarBrand = ArrayList<CarItem>()
 
     val citiesModel = HashMap<CityItem, String>()
     val carYears = HashMap<String, String>()

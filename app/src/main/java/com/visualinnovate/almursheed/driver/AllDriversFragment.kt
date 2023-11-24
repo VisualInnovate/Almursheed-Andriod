@@ -49,7 +49,7 @@ class AllDriversFragment : BaseFragment() {
     private val btnFilterCallBackFunc: () -> Unit = {
         val bundle = Bundle()
         bundle.putString("from", Constant.ROLE_DRIVER)
-        findNavController().customNavigate(R.id.FilterFragment, data = bundle)
+        findNavController().customNavigate(R.id.FilterFragment, true, data = bundle)
     }
 
     override fun onCreateView(

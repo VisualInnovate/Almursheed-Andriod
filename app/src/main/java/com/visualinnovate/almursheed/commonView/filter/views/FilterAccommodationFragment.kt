@@ -137,11 +137,8 @@ class FilterAccommodationFragment : Fragment() {
             vm.accommodationCategoryName = categoryName
             vm.type = "Accommodation"
             vm.setFromFilter(true)
-            if (vm.from == Constant.ACCOMMODATION) {
-                findNavController().navigateUp()
-            } else {
-                findNavController().customNavigate(R.id.accommodationFragment)
-            }
+            findNavController().customNavigate(R.id.accommodationFragment)
+
         }
     }
 

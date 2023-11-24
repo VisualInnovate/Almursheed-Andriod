@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
                     android:background="@drawable/bg_rectangle_corner_blue"
-                    android:hint="@string/select_your_license_number"
+                    android:hint="@string/enter_your_license_number"
                     android:inputType="number"
                     android:padding="@dimen/space_4x"
                     android:textColorHint="@color/grey"
@@ -88,14 +88,19 @@
                     android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/edtLicenseNumber" />
 
-                <include
-                    android:id="@+id/spinnerCarType"
-                    layout="@layout/layout_spinner_bg_green"
+                <TextView
+                    android:id="@+id/carType"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_car_type"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/txtCarType" />
-
+                
                 <TextView
                     android:id="@+id/txtCarBrandName"
                     style="@style/TextStyleBold"
@@ -105,14 +110,20 @@
                     android:text="@string/car_brand_name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCarType" />
+                    app:layout_constraintTop_toBottomOf="@id/carType" />
 
-                <include
-                    android:id="@+id/spinnerCarBrandName"
-                    layout="@layout/layout_spinner_bg_green"
+        
+                <TextView
+                    android:id="@+id/carBrand"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_car_brand"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/txtCarBrandName" />
 
                 <TextView
@@ -124,7 +135,7 @@
                     android:text="@string/car_number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCarBrandName" />
+                    app:layout_constraintTop_toBottomOf="@id/carBrand" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtCarNumber"
@@ -133,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_3x"
                     android:background="@drawable/bg_rectangle_corner_blue"
-                    android:hint="@string/select_number"
+                    android:hint="@string/enter_car_number"
                     android:inputType="number"
                     android:padding="@dimen/space_4x"
                     android:textColorHint="@color/grey"
@@ -150,13 +161,20 @@
                     android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/edtCarNumber" />
 
-                <include
-                    android:id="@+id/spinnerCarManufacturingDate"
-                    layout="@layout/layout_spinner_bg_green"
+           
+                <TextView
+                    android:id="@+id/car_manufacture"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_car_manufacture"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/txtCarManufacturingDate" />
+
 
                 <TextView
                     android:id="@+id/txtCarPhoto"
@@ -167,7 +185,7 @@
                     android:text="@string/car_photo"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerCarManufacturingDate" />
+                    app:layout_constraintTop_toBottomOf="@id/car_manufacture" />
 
                 <TextView
                     android:id="@+id/btnUploadCarPhoto"
@@ -219,13 +237,19 @@
                     android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/btnUploadDocument" />
 
-                <include
-                    android:id="@+id/spinnerLanguage"
-                    layout="@layout/layout_spinner_bg_green"
+                <TextView
+                    android:id="@+id/language"
+                    style="@style/TextStyleRegular"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginTop="@dimen/space_3x"
+                    android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                    android:gravity="center_vertical"
+                    android:text="@string/choose_language"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

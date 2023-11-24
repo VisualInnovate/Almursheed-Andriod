@@ -17,7 +17,6 @@ import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomShe
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
 import com.visualinnovate.almursheed.databinding.FragmentFilterDriverBinding
-import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.filterCitiesByCountryId
 import com.visualinnovate.almursheed.utils.Utils.selectedCountryId
@@ -142,11 +141,7 @@ class FilterDriverFragment : Fragment() {
             vm.cityName = cityName
             vm.type = "Driver"
             vm.setFromFilter(true)
-            if (vm.from == Constant.ROLE_DRIVER) {
-                findNavController().navigateUp()
-            } else {
-                findNavController().customNavigate(R.id.allDriversFragment)
-            }
+            findNavController().customNavigate(R.id.allDriversFragment)
         }
     }
 
@@ -248,5 +243,15 @@ class FilterDriverFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+    fun isFragmentInBackStack(fragmentId: Int): Boolean {
+        val backStackCount = requireActivity().supportFragmentManager.backStackEntryCount
+        for (i in 0 until backStackCount) {
+            val entry = requireActivity().supportFragmentManager.getBackStackEntryAt(i)
+            if (entry.id == fragmentId) {
+                return true
+            }
+        }
+        return false
     }
 }

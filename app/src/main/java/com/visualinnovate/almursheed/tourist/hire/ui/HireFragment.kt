@@ -421,6 +421,7 @@ class HireFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        vm.clearData()
         _binding = null
     }
 }

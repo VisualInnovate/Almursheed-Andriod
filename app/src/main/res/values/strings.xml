@@ -81,11 +81,11 @@
     <string name="choose_destination">Choose Destination <font fgcolor='#FF0000'> *</font></string>
     <string name="choose_city">Choose City</string>
     <string name="license_number">License Number <font fgcolor='#FF0000'> *</font></string>
-    <string name="select_your_license_number">Select Your License Number</string>
+    <string name="enter_your_license_number">Enter Your License Number</string>
     <string name="car_type">Car Type <font fgcolor='#FF0000'> *</font></string>
     <string name="car_brand_name">Car Brand Name <font fgcolor='#FF0000'> *</font></string>
     <string name="car_number">Car Number <font fgcolor='#FF0000'> *</font></string>
-    <string name="select_number">Select Number</string>
+    <string name="enter_car_number">Enter Car Number</string>
     <string name="car_manufacturing_date">Car Manufacturing Date <font fgcolor='#FF0000'> *</font></string>
     <string name="car_photo">Car Photo <font fgcolor='#FF0000'> *</font></string>
     <string name="upload_document">Upload Document <font fgcolor='#FF0000'> *</font></string>
@@ -302,5 +302,11 @@
     <string name="message">Message <font fgcolor='#FF0000'> *</font></string>
     <string name="please_choose_driver_or_guide">Please choose Driver or Guide</string>
     <string name="start_date_must_be_before_end_date">Start Date Must be before End Date</string>
+    <string name="choose_car_brand">Choose Car Brand</string>
+    <string name="choose_car_type">Choose Car Type</string>
+    <string name="choose_car_manufacture">Choose Car Manufactur</string>
+    <string name="choose_language">Choose Language</string>
+    <string name="car_brand">Car Brand</string>
+    <string name="must_choose_more_than_1_image">Must Choose More Than 1 Image</string>
 
 </resources>

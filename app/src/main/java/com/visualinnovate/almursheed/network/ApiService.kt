@@ -7,6 +7,7 @@ import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
 import com.visualinnovate.almursheed.commonView.price.models.PricesResponse
 import com.visualinnovate.almursheed.home.model.*
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -188,7 +189,7 @@ interface ApiService {
         @Part("dest_city_id") destCityId: RequestBody,
         @Part("gender") gender: RequestBody,
         @Part("nationality") nationality: RequestBody,
-        // @Part personal_pictures: MultipartBody.Part,
+        @Part personal_pictures: MultipartBody.Part?,
         // @Body requestBody: RequestBody,
     ): Response<UpdateResponse>
 

@@ -163,7 +163,7 @@ class HireViewModel @Inject constructor(
             trip_type = tripType,
             start_date = startDate,
             end_date = endDate,
-            country_id = SharedPreference.getUser()?.countryId ?: 0,
+            country_id = selectedDriverAndGuide?.countryId?:0,
             lat = currentLocation?.latitude.toString(),
             longitude = currentLocation?.longitude.toString(),
         )
@@ -179,5 +179,12 @@ class HireViewModel @Inject constructor(
             order = order,
             order_details = orderDetailsList,
         )
+    }
+
+    fun clearData() {
+        selectedDriverAndGuide = null
+        selectedCityName = null
+        selectedCityId = null
+        _cites.value = ArrayList()
     }
 }

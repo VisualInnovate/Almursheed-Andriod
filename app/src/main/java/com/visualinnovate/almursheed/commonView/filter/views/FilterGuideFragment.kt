@@ -135,11 +135,7 @@ class FilterGuideFragment : Fragment() {
             }
             vm.type = "Guide"
             vm.setFromFilter(true)
-            if (vm.from == Constant.ROLE_GUIDE) {
-                findNavController().navigateUp()
-            } else {
-                findNavController().customNavigate(R.id.allGuidesFragment)
-            }
+            findNavController().customNavigate(R.id.allGuidesFragment)
         }
     }
 
