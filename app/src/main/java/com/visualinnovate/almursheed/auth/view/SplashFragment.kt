@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
@@ -34,7 +33,7 @@ class SplashFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // load icon next of get started
-         loadGifImage(requireContext(), R.drawable.animation_logo_splash, binding.imgLogoSplash)
+        loadGifImage(requireContext(), R.drawable.animation_logo_splash, binding.imgLogoSplash)
         lifecycleScope.launchWhenResumed {
             delay(1000)
             if (SharedPreference.getUserLoggedIn()) {
@@ -43,9 +42,7 @@ class SplashFragment : BaseFragment() {
                 findNavController().customNavigate(R.id.onBoardingFragment)
             }
         }
-
-      //  binding.waveformView.setAudioData(loadAudioDataFromRaw(R.raw.bell))
-
+        //  binding.waveformView.setAudioData(loadAudioDataFromRaw(R.raw.bell))
     }
 
     fun loadAudioDataFromRaw(resourceId: Int): ShortArray {

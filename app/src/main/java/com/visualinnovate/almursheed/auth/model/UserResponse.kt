@@ -83,8 +83,10 @@ data class User(
     @field:SerializedName("car_number")
     var carNumber: String? = null,
 
-    @field:SerializedName("gov_id")
+    @field:SerializedName("gov_id") //gov_id
     var govId: String? = null,
 
+    @field:SerializedName("car_photo") //gov_id
+    var carPhotos: ArrayList<String>? = null,
 
     ) : Parcelable

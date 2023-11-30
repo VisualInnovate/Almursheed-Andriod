@@ -54,6 +54,7 @@
     <string name="select_car_manufacturing_date">Select Car Manufacturing Date</string>
     <string name="full_name">Full Name <font fgcolor='#FF0000'> *</font></string>
     <string name="enter_your_name">Enter Your Name</string>
+    <string name="enter_your_phone_number">Enter Your Phone Number</string>
     <string name="nationality">Nationality <font fgcolor='#FF0000'> *</font></string>
     <string name="country">Country <font fgcolor='#FF0000'> *</font></string>
     <string name="city">City <font fgcolor='#FF0000'> *</font></string>
@@ -183,7 +184,7 @@
     <string name="password_should_be_more_than_8_characters">Password should be more than 8 characters</string>
     <string name="confirm_password_should_be_more_than_8_characters">Confirm password should be more than 8 characters</string>
     <string name="a_verification_code_has_been_sent_to">A verification code has been sent to</string>
-    <string name="enter_the_code_below">, enter the code below</string>
+    <string name="enter_the_code_below">enter the code below</string>
     <string name="resend_code_in">Resend code in %s</string>
     <string name="verify">Verify</string>
     <string name="please_enter_a_valid_email">Please enter a valid email</string>
@@ -300,6 +301,7 @@
     <string name="subject">Subject <font fgcolor='#FF0000'> *</font></string>
     <string name="contact_type">Contact type <font fgcolor='#FF0000'> *</font></string>
     <string name="message">Message <font fgcolor='#FF0000'> *</font></string>
+    <string name="write_your_reason">Write your reason</string>
     <string name="please_choose_driver_or_guide">Please choose Driver or Guide</string>
     <string name="start_date_must_be_before_end_date">Start Date Must be before End Date</string>
     <string name="choose_car_brand">Choose Car Brand</string>
@@ -311,5 +313,9 @@
     <string name="add_images">Add Images</string>
     <string name="enter_licence_number">Enter Licence Number</string>
     <string name="other">others</string>
+    <string name="type">Type <font fgcolor='#FF0000'> *</font></string>
+    <string name="select_type">Select type</string>
+    <string name="priority">Priority <font fgcolor='#FF0000'> *</font></string>
+    <string name="select_contact_priority">Select contact priority</string>
 
 </resources>

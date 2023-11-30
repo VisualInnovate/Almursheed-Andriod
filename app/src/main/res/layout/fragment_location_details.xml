@@ -21,7 +21,7 @@
         android:scaleType="fitXY"
         app:layout_constraintTop_toBottomOf="@id/appBarLocationDetails"
         app:shapeAppearanceOverlay="@style/RoundedImageView"
-        app:srcCompat="@drawable/img_test" />
+        app:srcCompat="@drawable/ic_mursheed_logo" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgFavorite"

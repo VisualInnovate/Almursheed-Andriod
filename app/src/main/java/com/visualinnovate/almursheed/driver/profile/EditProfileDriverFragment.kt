@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,16 +87,18 @@ class EditProfileDriverFragment : BaseFragment() {
         carBrand = currentUser.carBrandName
         carManufacture = currentUser.carManufacturingDate
         licenceNumber = currentUser.licenceNumber
-       // language = currentUser.language
+        // language = currentUser.language
 
         binding.edtGovernmentID.setText(currentUser.govId)
         binding.edtCarNumber.setText(currentUser.carNumber)
         binding.edtLicenseNumber.setText(currentUser.licenceNumber)
         binding.carType.text = currentUser.carType ?: getString(R.string.choose_car_type)
         binding.carBrand.text = currentUser.carBrandName ?: getString(R.string.car_brand)
-        binding.carManufacture.text = currentUser.carManufacturingDate ?: getString(R.string.car_model)
+        binding.carManufacture.text =
+            currentUser.carManufacturingDate ?: getString(R.string.car_model)
 
         //  binding.language.text = currentUser.language
+        carImages = currentUser.carPhotos ?: ArrayList()
     }
 
     private fun initToolbar() {
@@ -120,6 +123,7 @@ class EditProfileDriverFragment : BaseFragment() {
         binding.carType.onDebouncedListener {
             showCarTypesChooser()
         }
+
         binding.carBrand.onDebouncedListener {
             showCarBrandChooser()
         }
@@ -127,19 +131,17 @@ class EditProfileDriverFragment : BaseFragment() {
         binding.btnUploadCarPhoto.onDebouncedListener {
             handleCarImagesChange()
         }
+
         binding.btnUploadDocument.onDebouncedListener {
             // handleProfilePictureChange()
         }
 
         binding.btnRegister.onDebouncedListener {
             if (validate()) {
-                toast("call api")
+                saveData()
+                // call api driver create
+                vm.updateDriverCarInformation(currentUser, carImages)
             }
-        }
-        binding.btnRegister.onDebouncedListener {
-            saveData()
-            // call api driver create
-            vm.updateDriverCarInformation(currentUser, carImages)
         }
     }
 
@@ -180,8 +182,8 @@ class EditProfileDriverFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    SharedPreference.saveUser(it.data?.user!!)
-                    toast(it.data.message ?: "")
+                    SharedPreference.saveUser(it.data?.user)
+                    toast(it.data?.message ?: "")
                     findNavController().navigateUp()
                 }
 
@@ -213,7 +215,12 @@ class EditProfileDriverFragment : BaseFragment() {
                     val count = data.clipData!!.itemCount
                     carImages.clear()
                     for (i in 0 until count) {
-                        carImages.add(getRealPathFromURI(requireContext(), data.clipData!!.getItemAt(i).uri).toString())
+                        carImages.add(
+                            getRealPathFromURI(
+                                requireContext(),
+                                data.clipData!!.getItemAt(i).uri
+                            ).toString()
+                        )
                     }
                     showCarImageBottomSheet()
                 } else {
@@ -230,6 +237,7 @@ class EditProfileDriverFragment : BaseFragment() {
             val bundle = Bundle()
             bundle.putStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT, carImages)
             showImageSheetFragment = UploadImageSheetFragment(onSelectImageBtnClick = {
+                carImages.clear()
                 handleCarImagesChange()
             })
             showImageSheetFragment?.arguments = bundle
@@ -294,12 +302,14 @@ class EditProfileDriverFragment : BaseFragment() {
         }
         return chooserItemList
     }
+
     private fun showCarYearsChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), setupCarYearsList(), { data, _ ->
-            carManufacture = data.name
-            binding.carManufacture.text = carManufacture
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.car_model), setupCarYearsList(), { data, _ ->
+                carManufacture = data.name
+                binding.carManufacture.text = carManufacture
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CarYearsBottomSheet")
     }
 
@@ -311,12 +321,16 @@ class EditProfileDriverFragment : BaseFragment() {
         }
         return chooserItemList
     }
+
     private fun showLanguagesChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.language_text), setupLanguagesList(), { data, _ ->
-            language = data.name
-            binding.language.text = language
-        })
+        chooseTextBottomSheet = ChooseTextBottomSheet(
+            getString(R.string.language_text),
+            setupLanguagesList(),
+            { data, _ ->
+                language = data.name
+                binding.language.text = language
+            })
         showBottomSheet(chooseTextBottomSheet!!, "LanguagesBottomSheet")
     }
 
@@ -328,14 +342,17 @@ class EditProfileDriverFragment : BaseFragment() {
         }
         return chooserItemList
     }
+
     private fun showCarTypesChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_type), setupCarTypesList(), { data, _ ->
-            carType = data.name
-            binding.carType.text = carType
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.car_type), setupCarTypesList(), { data, _ ->
+                carType = data.name
+                binding.carType.text = carType
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CarTypeBottomSheet")
     }
+
     private fun setupCarBrandList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         allCarBrand.forEach {
@@ -344,12 +361,14 @@ class EditProfileDriverFragment : BaseFragment() {
         }
         return chooserItemList
     }
+
     private fun showCarBrandChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_brand), setupCarBrandList(), { data, _ ->
-            carBrand = data.name
-            binding.carBrand.text = carBrand
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.car_brand), setupCarBrandList(), { data, _ ->
+                carBrand = data.name
+                binding.carBrand.text = carBrand
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CarBrandBottomSheet")
     }
 

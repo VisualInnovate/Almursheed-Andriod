@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.visualinnovate.almursheed.commonView.MoreFragment"
+        android:name="com.visualinnovate.almursheed.commonView.more.MoreFragment"
         android:label="More"
         tools:layout="@layout/fragment_more" />
 
@@ -125,7 +125,7 @@
         tools:layout="@layout/fragment_order_details" />
 
 
- <fragment
+    <fragment
         android:id="@+id/FilterDriversFragment"
         android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterDriverFragment"
         android:label="fragment_filter_driver"
@@ -141,25 +141,33 @@
         android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterGuideFragment"
         tools:layout="@layout/fragment_filter_guide" />
 
-<fragment
+    <fragment
         android:id="@+id/FilterAccommodationFragment"
         android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterAccommodationFragment"
         tools:layout="@layout/fragment_filter_accomodation" />
 
- <fragment
+    <fragment
         android:id="@+id/FilterFragment"
         android:name="com.visualinnovate.almursheed.commonView.filter.views.FilterFragment"
         android:label="fragment_filter_driver"
         tools:layout="@layout/fragment_filter" />
+
     <fragment
         android:id="@+id/editLocationFragment"
         android:name="com.visualinnovate.almursheed.commonView.EditLocationFragment"
         android:label="fragment_edit_location"
         tools:layout="@layout/fragment_edit_location" />
+
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.visualinnovate.almursheed.commonView.notification.NotificationFragment"
-        android:label="fragment_notification"
+        android:label="Notification"
         tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/contactUsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.ContactUsFragment"
+        android:label="Contact us"
+        tools:layout="@layout/fragment_contact_us" />
 
 </navigation>

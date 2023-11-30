@@ -14,15 +14,6 @@ data class AccommodationResponse(
 	val status: Boolean? = null
 )
 
-data class Description(
-
-	@field:SerializedName("gb")
-	val gb: String? = null,
-
-	@field:SerializedName("sa")
-	val sa: String? = null
-)
-
 data class State(
 
 	@field:SerializedName("is_active")

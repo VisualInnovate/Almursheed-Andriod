@@ -60,12 +60,17 @@
                 android:textSize="@dimen/space_14x_sp"
                 app:layout_constraintTop_toBottomOf="@id/edtGovernmentID" />
 
-            <include
-                android:id="@+id/spinnerLanguage"
-                layout="@layout/layout_spinner_bg_green"
+            <TextView
+                android:id="@+id/language"
+                style="@style/TextStyleRegular"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/choose_language"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
                 app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
 
             <TextView
@@ -77,7 +82,7 @@
                 android:text="@string/biography"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_14x_sp"
-                app:layout_constraintTop_toBottomOf="@id/spinnerLanguage" />
+                app:layout_constraintTop_toBottomOf="@id/language" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edtBiography"

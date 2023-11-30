@@ -65,16 +65,6 @@ class HomeViewModel @Inject constructor(
     val accommodationDetailsLiveData: LiveData<ResponseHandler<AccommodationDetailsResponse?>> =
         _accommodationDetailsMutable.toSingleEvent()
 
-    private val _attractivesMutableData: MutableLiveData<ResponseHandler<AttractivesListResponse?>> =
-        MutableLiveData()
-    val attractivesLiveData: LiveData<ResponseHandler<AttractivesListResponse?>> =
-        _attractivesMutableData.toSingleEvent()
-
-    private val _attractivesDetailsMutableData: MutableLiveData<ResponseHandler<AttraciveDetailsResponse?>> =
-        MutableLiveData()
-    val attractivesDetailsLiveData: LiveData<ResponseHandler<AttraciveDetailsResponse?>> =
-        _attractivesDetailsMutableData.toSingleEvent()
-
     private val _driverDetailsMutable: MutableLiveData<ResponseHandler<DriverDetailsResponse?>> =
         MutableLiveData()
     val driverDetailsLiveData: LiveData<ResponseHandler<DriverDetailsResponse?>> =
@@ -212,28 +202,6 @@ class HomeViewModel @Inject constructor(
                 apiService.getAccommodationDetailsById(id)
             }.collect {
                 _accommodationDetailsMutable.value = it
-            }
-        }
-    }
-
-    fun fetchAttractivesList() {
-        viewModelScope.launch {
-            safeApiCall {
-                // Make your API call here using Retrofit service or similar
-                apiService.getAttractives()
-            }.collect {
-                _attractivesMutableData.value = it
-            }
-        }
-    }
-
-    fun getAttractivesDetailsById(locationId: Int?) {
-        viewModelScope.launch {
-            safeApiCall {
-                // Make your API call here using Retrofit service or similar
-                apiService.getAttractiveDetailsById(locationId!!)
-            }.collect {
-                _attractivesDetailsMutableData.value = it
             }
         }
     }

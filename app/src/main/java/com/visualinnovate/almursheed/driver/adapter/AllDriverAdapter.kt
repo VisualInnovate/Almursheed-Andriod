@@ -59,8 +59,10 @@ class AllDriverAdapter(
         }
 
         Glide.with(holder.itemView.context)
-            .load(driver.imageBackground)
+            .load(driver.personalPhoto)
+            .error(R.drawable.ic_mursheed_logo)
             .into(holder.imgDriver)
+
         holder.driverName.text = driver.name ?: ""
         holder.city.text = driver.stateName
         holder.rating.text = (driver.totalRating ?: 0.0).toString()

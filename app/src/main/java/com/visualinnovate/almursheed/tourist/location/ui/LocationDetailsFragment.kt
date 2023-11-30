@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -12,9 +11,9 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentLocationDetailsBinding
-import com.visualinnovate.almursheed.home.model.Attracive
 import com.visualinnovate.almursheed.home.model.AttractiveLocation
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.tourist.location.viewmodel.LocationViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +26,7 @@ class LocationDetailsFragment : BaseFragment() {
     // This property is only valid between onCreateView and // onDestroy.
     private val binding get() = _binding!!
 
-    private val vm: HomeViewModel by viewModels()
+    private val vm: LocationViewModel by viewModels()
 
     private var locationId: Int? = null
 
@@ -60,20 +59,22 @@ class LocationDetailsFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        vm.getAttractivesDetailsById(locationId)
+        vm.getAttractiveDetailsById(locationId)
     }
 
     private fun subscribeData() {
-        vm.attractivesDetailsLiveData.observe(viewLifecycleOwner) {
+        vm.attractiveDetailsLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
                     initView(it.data!!.attractiveLocation)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                     showMainLoading()
@@ -92,11 +93,13 @@ class LocationDetailsFragment : BaseFragment() {
     private fun initView(attractive: AttractiveLocation?) {
         Glide.with(requireContext())
             .load(attractive?.photos?.get(0))
+            .error(R.drawable.ic_mursheed_logo)
             .into(binding.detailsImage)
-        binding.pinDetails.text = attractive?.name
+
+        binding.pinDetails.text = attractive?.name?.localized
         binding.detailsCountry.text = attractive?.country
         binding.detailsCity.text = attractive?.state
-        binding.detailsDescription.text = attractive?.description
+        binding.detailsDescription.text = attractive?.description?.localized
     }
 
     private fun setBtnListener() {

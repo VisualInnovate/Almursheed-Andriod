@@ -11,7 +11,7 @@ import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.visible
-import com.visualinnovate.almursheed.databinding.ItemDriverBinding
+import com.visualinnovate.almursheed.databinding.ItemGuideBinding
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.utils.Constant
 
@@ -22,11 +22,11 @@ class GuideAdapter(
 
     private var guidesList: List<DriverAndGuideItem?>? = ArrayList()
 
-    private lateinit var binding: ItemDriverBinding
+    private lateinit var binding: ItemGuideBinding
 
-    inner class GuideViewHolder(itemView: ItemDriverBinding) :
+    inner class GuideViewHolder(itemView: ItemGuideBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        val imgDriver = itemView.imgDriver
+        val imgGuide = itemView.imgGuide
         val imgFavorite = itemView.imgFavorite
         val imgStatus = itemView.imgStatus
         val username = itemView.username
@@ -36,14 +36,18 @@ class GuideAdapter(
         private val btnBookNow = itemView.btnBookNow
 
         init {
-            btnBookNow.setOnClickListener {
+            itemView.root.setOnClickListener {
                 btnGuideClickCallBack.invoke(guidesList!![adapterPosition]!!)
+            }
+
+            btnBookNow.setOnClickListener {
+                // btnGuideClickCallBack.invoke(guidesList!![adapterPosition]!!)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuideViewHolder {
-        binding = ItemDriverBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ItemGuideBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GuideViewHolder(binding)
     }
 
@@ -65,13 +69,23 @@ class GuideAdapter(
             binding.btnBookNow.visible()
             binding.imgFavorite.visible()
         }
+
         // set data
         Glide.with(holder.itemView.context)
-            .load(guide.imageBackground)
-            .into(holder.imgDriver)
+            .load(guide.personalPhoto)
+            .into(holder.imgGuide)
+
         holder.username.text = guide.name
         holder.city.text = guide.stateName
         holder.rating.text = (guide.totalRating ?: 0.0).toString()
+
+        guide.priceServices?.let {
+            if (it.isNotEmpty()) {
+                holder.price.text = "$" + it[0]?.price.toString()
+            }else{
+                holder.price.text = "$0.0"
+            }
+        }
 
         // check favorite
         if (guide.isFavourite == false) { // false -> un favorite

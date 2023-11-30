@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.driver
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -77,13 +78,11 @@ class DriverDetailsFragment : BaseFragment() {
                     // bind data to the view
                     initViews(it.data!!.driver)
                     pricesAdapter.submitData(it.data.driver!!.priceServices)
-
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -101,6 +100,7 @@ class DriverDetailsFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initViews(driver: DriverAndGuideItem?) {
         Glide.with(requireContext())
             .load(driver?.personalPhoto)
@@ -115,7 +115,9 @@ class DriverDetailsFragment : BaseFragment() {
         binding.driverDescription.text = driver.bio ?: ""
         binding.carName.text = driver.carModel ?: ""
         binding.carType.text = driver.carType ?: ""
-        binding.driverReview.text = "(${driver.count_rate} review)"
+
+        binding.driverReview.text = "(${driver.count_rate ?: 0} review)"
+
         val rateImage = when (driver.totalRating?.toDouble()?.roundToInt() ?: 0) {
             1 -> R.drawable.ic_star_1
             2 -> R.drawable.ic_stars_2
@@ -128,8 +130,13 @@ class DriverDetailsFragment : BaseFragment() {
         binding.driverReview.setCompoundDrawables(null, null, resources.getDrawable(rateImage), null)
         binding.driverReview.text = "(${driver.count_rate} review)"
 
-        // binding.driverPrice.text = "$ ${d?.driverPrice}"
-        // binding.driverCity.text = driverArgs?.driverCity ?: ""
+        driver.priceServices?.let {
+            if (it.isNotEmpty()) {
+                binding.driverPrice.text = "$ ${it[0]?.price.toString()}"
+            }else{
+                binding.driverPrice.text = "$0.0"
+            }
+        }
     }
 
     private fun initPricesRecyclerView() {

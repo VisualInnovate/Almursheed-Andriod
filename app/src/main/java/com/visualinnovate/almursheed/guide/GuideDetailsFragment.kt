@@ -2,7 +2,6 @@ package com.visualinnovate.almursheed.guide
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,7 +77,6 @@ class GuideDetailsFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -106,6 +104,15 @@ class GuideDetailsFragment : BaseFragment() {
         binding.guideCity.text = guide?.country ?: ""
         binding.guideCountry.text = guide?.state ?: ""
         binding.guideDescription.text = guide?.bio ?: ""
+
+        guide?.priceServices?.let {
+            if (it.isNotEmpty()) {
+                binding.guidePrice.text = "$ ${it[0]?.price.toString()}"
+            } else {
+                binding.guidePrice.text = "$0.0"
+            }
+        }
+
         // binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
         binding.guideReview.text = "(${guide?.count_rate ?: 0} review)"
     }

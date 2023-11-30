@@ -40,7 +40,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/CircleImageView"
-                    app:srcCompat="@drawable/img_test" />
+                    tools:srcCompat="@drawable/img_test" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgGuideStatus"

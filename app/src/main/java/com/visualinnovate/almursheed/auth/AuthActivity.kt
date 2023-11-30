@@ -27,6 +27,7 @@ import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.ActivityAuthBinding
+import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.utils.Utils.allCarBrand
 import com.visualinnovate.almursheed.utils.Utils.allCarModels
 import com.visualinnovate.almursheed.utils.Utils.allCities
@@ -58,6 +59,8 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
 
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Utils.appLanguageAndScreenZoom(this, "en")
 
         // Initialize PushNotification
         // PushNotifications.start(applicationContext, "140343aa-f173-4a2d-940a-7724c7c12be1");

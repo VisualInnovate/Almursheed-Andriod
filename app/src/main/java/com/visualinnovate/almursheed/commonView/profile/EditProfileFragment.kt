@@ -110,24 +110,33 @@ class EditProfileFragment : BaseFragment() {
 
         nationalityName = currentUser.nationality.toString()
 
-        cityId = if (currentUser.destCityId != null) {
-            currentUser.destCityId.toString()
+        if (currentUser.destCityId != null) {
+            cityId = currentUser.destCityId.toString()
+            binding.city.text =
+                (currentUser.destCityId?.let { vm.getCityName(it) }
+                    ?: getString(R.string.choose_city))
         } else if (currentUser.desCityId != null) {
-            currentUser.desCityId.toString()
+            cityId = currentUser.desCityId.toString()
+            binding.city.text =
+                (currentUser.desCityId?.let { vm.getCityName(it) }
+                    ?: getString(R.string.choose_city))
         } else {
-            currentUser.stateId.toString()
+            cityId = currentUser.stateId.toString()
+            binding.city.text =
+                (currentUser.stateId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
         }
 
         binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) }
             ?: getString(R.string.choose_country) // de msh htshtghl 3lshan l user mbyrg3losh country id homa byrg3o dest_city_id
-        binding.city.text =
-            (currentUser.destCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
 
-        if (currentUser.type == ROLE_DRIVER || currentUser.type == ROLE_GUIDE) {
+        // binding.city.text = (currentUser.destCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
+
+        if (currentUser.type == ROLE_DRIVER || currentUser.type == ROLE_GUIDE || currentUser.type == ROLE_GUIDES) {
             binding.btnCarInfo.visible()
         } else {
             binding.btnCarInfo.gone()
         }
+
         Glide.with(requireContext())
             .load(currentUser.personalPhoto)
             .placeholder(R.drawable.ic_mursheed_logo)
@@ -139,6 +148,7 @@ class EditProfileFragment : BaseFragment() {
         binding.edtUserName.setText(currentUser.name)
         binding.edtEmailAddress.setText(currentUser.email)
         binding.edtEmailAddress.isEnabled = false
+        binding.edtPhone.setText(currentUser.phone)
 
         allNationality = setupNationalitiesList()
         allCountries = setupCountriesList()
@@ -193,6 +203,7 @@ class EditProfileFragment : BaseFragment() {
                         data = bundle,
                     )
                 }
+
                 ROLE_GUIDES -> {
                     findNavController().customNavigate(R.id.editProfileGuideFragment, data = bundle)
                 }
@@ -201,6 +212,8 @@ class EditProfileFragment : BaseFragment() {
     }
 
     private fun saveData() {
+        currentUser = SharedPreference.getUser()
+
         if (binding.edtUserName.value.isNotEmpty()) {
             currentUser.name = binding.edtUserName.value
         }

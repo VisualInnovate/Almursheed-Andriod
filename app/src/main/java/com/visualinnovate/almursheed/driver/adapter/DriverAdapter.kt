@@ -25,7 +25,8 @@ class DriverAdapter(
 
     inner class DriverViewHolder(itemView: ItemDriverBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        val imgDriver = itemView.imgDriver
+        val imgCarDriver = itemView.imgCarDriver
+        val imgDriver = itemView.imgUser
         val imgFavorite = itemView.imgFavorite
         val imgStatus = itemView.imgStatus
         val username = itemView.username
@@ -38,6 +39,7 @@ class DriverAdapter(
             itemView.root.setOnClickListener {
                 btnDriverClickCallBack.invoke(driversList!![adapterPosition]!!)
             }
+
             btnBookNow.setOnClickListener {
                 // btnDriverClickCallBack.invoke(newsList[adapterPosition])
             }
@@ -65,18 +67,35 @@ class DriverAdapter(
             binding.imgFavorite.visible()
         }
 
+        if (driver.carPhoto!!.isNotEmpty()) {
+            Glide.with(holder.itemView.context)
+                .load(driver.carPhoto[0] ?: R.drawable.ic_mursheed_logo)
+                .error(R.drawable.ic_mursheed_logo)
+                .into(holder.imgCarDriver)
+        }else{
+            Glide.with(holder.itemView.context)
+                .load( R.drawable.ic_mursheed_logo)
+                .error(R.drawable.ic_mursheed_logo)
+                .into(holder.imgCarDriver)
+        }
+
         Glide.with(holder.itemView.context)
-            .load(driver.imageBackground)
+            .load(driver.personalPhoto)
+            .error(R.drawable.ic_mursheed_logo)
             .into(holder.imgDriver)
+
         holder.username.text = driver.name ?: ""
         holder.city.text = driver.stateName
         holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
         driver.priceServices?.let {
             if (it.isNotEmpty()) {
-                holder.price.text = it[0]?.price.toString() + " $"
+                holder.price.text = "$" + it[0]?.price.toString()
+            }else{
+                holder.price.text = "$0.0"
             }
         }
+
         // check status
         /*if (driver.status == 1) { // false -> offline
             holder.imgStatus.setImageResource(R.drawable.ic_active_online)

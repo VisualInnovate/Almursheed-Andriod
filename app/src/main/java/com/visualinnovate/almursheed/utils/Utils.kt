@@ -1,6 +1,9 @@
 package com.visualinnovate.almursheed.utils
 
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
+import android.util.DisplayMetrics
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.auth.model.CarItem
@@ -8,6 +11,8 @@ import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.CountryItem
 import com.visualinnovate.almursheed.auth.model.LanguageItem
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
+import java.lang.Math.ceil
+import java.util.Locale
 
 object Utils {
 
@@ -70,5 +75,31 @@ object Utils {
                 filteredCountriesString.add(item.country)
             }
         }
+    }
+
+    @JvmStatic
+    fun appLanguageAndScreenZoom(context: Context, language: String) {
+        val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+        val snap = 20
+        val exactDpi: Float = (displayMetrics.xdpi + displayMetrics.ydpi) / 2
+        val dpi: Int = displayMetrics.densityDpi
+        val targetDpi = (ceil((exactDpi / snap).toDouble()) * snap).toInt()
+        val resources: Resources = context.resources
+        val config: Configuration = resources.configuration
+
+        if (dpi - exactDpi > snap) {
+            displayMetrics.densityDpi = targetDpi
+            config.densityDpi = targetDpi + 15
+            displayMetrics.setTo(displayMetrics)
+        }
+        val locale = Locale("en")
+        Locale.setDefault(locale)
+        config.setLocale(locale)
+        config.fontScale = 0.91f
+        config.setLocale(locale)
+        resources.updateConfiguration(
+            config,
+            displayMetrics,
+        )
     }
 }

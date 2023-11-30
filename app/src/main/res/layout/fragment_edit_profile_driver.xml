@@ -112,7 +112,6 @@
                     android:textSize="@dimen/space_14x_sp"
                     app:layout_constraintTop_toBottomOf="@id/carType" />
 
-        
                 <TextView
                     android:id="@+id/carBrand"
                     style="@style/TextStyleRegular"

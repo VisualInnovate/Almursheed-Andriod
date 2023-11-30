@@ -41,7 +41,8 @@ data class DriverAndGuideItem(
     @field:SerializedName("car_model")
     val carModel: String? = null,
 
-    @field:SerializedName("car_photo")
+    //@field:SerializedName("car_photo")
+    @field:SerializedName(value = "car_photo", alternate = ["car_photos"]) // guides
     val carPhoto: List<String?>? = null,
 
     @field:SerializedName("bio")

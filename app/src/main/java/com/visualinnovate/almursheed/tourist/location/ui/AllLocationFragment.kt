@@ -15,6 +15,7 @@ import com.visualinnovate.almursheed.databinding.FragmentAllLocationBinding
 import com.visualinnovate.almursheed.tourist.location.adapter.SeeAllLocationAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.tourist.location.viewmodel.LocationViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +28,7 @@ class AllLocationFragment : Fragment() {
     // This property is only valid between onCreateView and // onDestroy.
     private val binding get() = _binding!!
 
-    private val vm: HomeViewModel by viewModels()
+    private val vm: LocationViewModel by viewModels()
     private lateinit var seeAllLocationAdapter: SeeAllLocationAdapter
 
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit =
@@ -68,7 +69,7 @@ class AllLocationFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        vm.fetchAttractivesList()
+        vm.getAllAttractiveLocation()
     }
 
     private fun initToolbar() {
@@ -102,7 +103,7 @@ class AllLocationFragment : Fragment() {
     }
 
     private fun subscribeData() {
-        vm.attractivesLiveData.observe(viewLifecycleOwner) {
+        vm.attractiveLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view

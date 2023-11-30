@@ -43,7 +43,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintTop_toBottomOf="@id/icClose"
         app:shapeAppearanceOverlay="@style/RoundedImageView"
-        app:srcCompat="@drawable/img_test" />
+        app:srcCompat="@drawable/ic_mursheed_logo" />
 
     <TextView
         android:id="@+id/OfferDescription"

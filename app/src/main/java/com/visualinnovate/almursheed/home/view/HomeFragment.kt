@@ -1,8 +1,6 @@
 package com.visualinnovate.almursheed.home.view
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -21,7 +20,6 @@ import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
 import com.visualinnovate.almursheed.driver.adapter.DriverAdapter
 import com.visualinnovate.almursheed.guide.adapter.GuideAdapter
-import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.home.adapter.BannerViewPagerAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 import com.visualinnovate.almursheed.home.model.BannersItem
@@ -29,6 +27,7 @@ import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.tourist.location.adapter.LocationAdapter
+import com.visualinnovate.almursheed.tourist.location.viewmodel.LocationViewModel
 import com.visualinnovate.almursheed.tourist.offer.OfferDetailsFragment
 import com.visualinnovate.almursheed.tourist.offer.adapter.OfferAdapter
 import com.visualinnovate.almursheed.utils.Constant
@@ -44,6 +43,7 @@ class HomeFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val vm: HomeViewModel by viewModels()
+    private val attractiveViewModel: LocationViewModel by viewModels()
 
     private lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
     private lateinit var driverAdapter: DriverAdapter
@@ -59,9 +59,15 @@ class HomeFragment : BaseFragment() {
     }
 
     private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
-        // val bundle = Bundle()
-        // bundle.putParcelable(Constant.DRIVER, driver)
-        // findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
+        val bundle = Bundle()
+        bundle.putInt(Constant.DRIVER_ID, driver.id!!)
+        findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
+    }
+
+    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
+        val bundle = Bundle()
+        bundle.putInt(Constant.GUIDE_ID, guide.id!!)
+        findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
     }
 
     private val onFavoriteLatestDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit =
@@ -73,12 +79,6 @@ class HomeFragment : BaseFragment() {
     private val onFavoriteLatestGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
         vm.selectedUserPosition = guide.id!!
         vm.addAndRemoveFavorite(guide.id.toString(), "1")
-    }
-
-    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
-        // val bundle = Bundle()
-        // bundle.putString("memberName", chat.memberName)
-        // findNavController().navigate(R.id.global_to_MessagesFragment, bundle)
     }
 
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit = { location ->
@@ -144,7 +144,7 @@ class HomeFragment : BaseFragment() {
         if (SharedPreference.getUser().stateId != null) {
             vm.getLatestDriver(SharedPreference.getUser().stateId)
             vm.getLatestGuides(SharedPreference.getUser().stateId)
-        }else if (SharedPreference.getCityId() != null) {
+        } else if (SharedPreference.getCityId() != null) {
             vm.getLatestDriver(SharedPreference.getCityId())
             vm.getLatestGuides(SharedPreference.getCityId())
         } else {
@@ -158,7 +158,7 @@ class HomeFragment : BaseFragment() {
         }*/
 
         vm.fetchOfferResponse()
-        vm.fetchAttractivesList()
+        attractiveViewModel.getAllAttractiveLocation()
     }
 
     private fun initView() {
@@ -168,7 +168,7 @@ class HomeFragment : BaseFragment() {
             binding.txtTouristDestination.visible()
             if (SharedPreference.getCityId() != null) {
                 binding.txtTouristDestination.text = vm.getCityName(SharedPreference.getCityId()!!)
-            }  else {
+            } else {
                 binding.txtTouristDestination.text = getString(R.string.select_your_destination)
             }
         }
@@ -197,7 +197,6 @@ class HomeFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -304,7 +303,7 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-        vm.attractivesLiveData.observe(viewLifecycleOwner) {
+        attractiveViewModel.attractiveLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view

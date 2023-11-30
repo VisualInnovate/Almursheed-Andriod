@@ -19,7 +19,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.http.Part
 import java.io.File
 import javax.inject.Inject
 
@@ -78,16 +77,20 @@ class ProfileViewModel @Inject constructor(
             "text/plain".toMediaTypeOrNull(),
             currentUser.licenceNumber.toString(),
         )
+
         val govId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
 
         val language =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), "English" /*currentUser.language.toString()*/)
+            RequestBody.create(
+                "text/plain".toMediaTypeOrNull(),
+                "English" /*currentUser.language.toString()*/
+            )
 
         val carPhotos = if (checkCarImages(carImages).isNotEmpty()) {
             val list = ArrayList<MultipartBody.Part?>()
             carImages.forEach {
-                list.add(checkImagePath(it,"car_photos"))
+                list.add(checkImagePath(it, "car_photos"))
             }
             list
         } else {
@@ -104,7 +107,7 @@ class ProfileViewModel @Inject constructor(
                     carType,
                     carBrand,
                     carManufacture,
-                   // language,
+                    // language,
                     carPhotos,
                 )
             }.collect {
@@ -113,7 +116,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun checkImagePath(imagePath: String? , name:String): MultipartBody.Part? {
+    private fun checkImagePath(imagePath: String?, name: String): MultipartBody.Part? {
         return if (imagePath != null) {
             val picFile = File(imagePath)
             val picRequestBody =
@@ -168,13 +171,19 @@ class ProfileViewModel @Inject constructor(
 //    }
 
     fun updatePersonalInformation(currentUser: User, imagePath: String?) {
+        val emailPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.email.toString())
+
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
+
+        val countryIdPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.countryId.toString())
 
         val destCityIdPart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.destCityId.toString())
 
-        val gender =
+        val genderPart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.gender.toString())
 
         val nationalityPart =
@@ -183,17 +192,27 @@ class ProfileViewModel @Inject constructor(
         val phonePart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.phone.toString())
 
+        val govIdPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
+
+        val bioPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.bio.toString())
+
+        // val languagePart = RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.languages.toString())
+
         when (currentUser.type) {
             Constant.ROLE_DRIVER -> {
                 viewModelScope.launch {
                     safeApiCall {
                         apiService.updateDriverPersonalInformation(
+                            emailPart,
                             name,
-                            destCityIdPart,
-                            gender,
                             nationalityPart,
+                            // countryIdPart,
+                            destCityIdPart,
+                            genderPart,
                             phonePart,
-                            checkImagePath(imagePath,"personal_pictures"),
+                            checkImagePath(imagePath, "personal_pictures"),
                         )
                     }.collect {
                         _personalInformation.value = it
@@ -202,30 +221,36 @@ class ProfileViewModel @Inject constructor(
             }
 
             Constant.ROLE_GUIDES -> {
-//                viewModelScope.launch {
-//                    safeApiCall {
-//                        apiService.updateTourist(
-//                            name,
-//                            destCityIdPart,
-//                            gender,
-//                            nationalityPart,
-//                            phonePart,
-//                            checkImagePath(imagePath),
-//                        )
-//                    }.collect {
-//                        _personalInformation.value = it
-//                    }
-//                }
+                viewModelScope.launch {
+                    safeApiCall {
+                        apiService.updateGuidePersonalInformation(
+                            name,
+                            nationalityPart,
+                            // countryIdPart,
+                            destCityIdPart,
+                            genderPart,
+                            phonePart,
+                            govIdPart,
+                            bioPart,
+                            checkImagePath(imagePath, "personal_pictures"),
+                            // languagePart
+                        )
+                    }.collect {
+                        _personalInformation.value = it
+                    }
+                }
             }
+
             Constant.ROLE_TOURIST -> {
                 viewModelScope.launch {
                     safeApiCall {
                         apiService.updateTourist(
                             name,
+                            // countryIdPart,
                             destCityIdPart,
-                            gender,
+                            genderPart,
                             nationalityPart,
-                            checkImagePath(imagePath,"personal_pictures"),
+                            checkImagePath(imagePath, "personal_pictures"),
                         )
                     }.collect {
                         _personalInformation.value = it
@@ -286,55 +311,5 @@ class ProfileViewModel @Inject constructor(
         val gson = Gson()
         val jsonData = gson.toJson(requestData)
         return jsonData.toRequestBody("application/json".toMediaTypeOrNull())
-    }
-
-    fun updateGuide(currentUser: User) {
-        val name =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
-        val phone =
-            RequestBody.create(
-                "text/plain".toMediaTypeOrNull(),
-                currentUser.phone.toString(),
-            )
-        val bio =
-            RequestBody.create(
-                "text/plain".toMediaTypeOrNull(),
-                currentUser.bio.toString(),
-            )
-
-        val gender =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.gender.toString())
-        val nationalityPart =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.nationality.toString())
-
-        val profilePicFile = currentUser.personalPhoto?.let { File(it) }
-        val profilePicRequestBody =
-            profilePicFile?.asRequestBody("image/*".toMediaTypeOrNull())
-
-        val profilePicPart = profilePicRequestBody?.let {
-            MultipartBody.Part.createFormData(
-                "personal_pictures", // personal_pictures
-                profilePicFile.name,
-                it,
-            )
-        }
-        // val requestBody = createBodyRequestDriverOrGuide(currentUser)
-        viewModelScope.launch {
-            safeApiCall {
-                apiService.updateGuide(
-                    name,
-                    currentUser.countryId,
-                    currentUser.stateId,
-                    gender,
-                    phone,
-                    bio,
-                    nationalityPart,
-                    // profilePicPart!!
-                )
-                // apiService.updateTourist(requestBody)
-            }.collect {
-                _updateGuideMutableData.value = it
-            }
-        }
     }
 }

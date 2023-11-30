@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Utils.appLanguageAndScreenZoom(this, "en")
+
         navController = findNavController(R.id.nav_host_fragment_content_home)
         navGraph = navController.navInflater.inflate(R.navigation.nav_home)
         navController.addOnDestinationChangedListener(this)

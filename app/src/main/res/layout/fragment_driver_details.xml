@@ -7,7 +7,6 @@
     android:background="@color/bg_edit_text"
     tools:context=".driver.DriverDetailsFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -41,7 +40,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/CircleImageView"
-                    app:srcCompat="@drawable/img_test" />
+                    tools:srcCompat="@drawable/img_test" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgDriverStatus"
@@ -277,7 +276,7 @@
                     android:ellipsize="end"
                     android:gravity="start"
                     android:lineSpacingExtra="8sp"
-                    android:lines="3"
+                    android:lines="31"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our ="
                     android:textColor="@color/black"

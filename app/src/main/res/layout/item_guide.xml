@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
     android:layout_width="210dp"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/space_2x"
     android:layout_marginEnd="@dimen/space_3x"
     app:cardCornerRadius="@dimen/space_4x"
@@ -15,13 +15,31 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgCarDriver"
+            android:id="@+id/imgGuide"
             android:layout_width="210dp"
-            android:layout_height="150dp"
+            android:layout_height="145dp"
             android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@color/primary" />
+            tools:srcCompat="@drawable/img_driver" />
+
+        <TextView
+            android:id="@+id/rating"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/ic_bg_rating"
+            android:drawablePadding="@dimen/space_1_5x"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/space_2x"
+            android:paddingEnd="@dimen/space_2x"
+            android:textColor="@color/white"
+            app:drawableStartCompat="@drawable/ic_star"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="4.0" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgFavorite"
@@ -31,46 +49,14 @@
             android:layout_marginEnd="@dimen/space_2x"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@drawable/ic_un_favorite" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imgUser"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="@dimen/space_2x"
-            android:layout_marginBottom="@dimen/space_6x"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/username"
-            app:layout_constraintStart_toStartOf="parent"
-            app:shapeAppearanceOverlay="@style/CircleImageView"
-            app:srcCompat="@drawable/img_driver" />
-
-        <TextView
-            android:id="@+id/rating"
-            style="@style/TextStyleRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_bg_item_see_all_guide"
-            android:drawablePadding="@dimen/space_1x"
-            android:gravity="start|center_vertical"
-            android:maxLines="1"
-            android:paddingStart="@dimen/space_1_5x"
-            android:textColor="@color/white"
-            android:textSize="@dimen/space_9x_sp"
-            app:drawableStartCompat="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@id/imgUser"
-            app:layout_constraintEnd_toEndOf="@id/imgUser"
-            app:layout_constraintStart_toStartOf="@id/imgUser"
-            tools:text="4.0" />
+            app:srcCompat="@drawable/ic_un_favorite" />
 
         <TextView
             android:id="@+id/username"
             style="@style/TextStyleBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_1x"
-            android:layout_marginTop="@dimen/space_2_5x"
+            android:layout_margin="@dimen/space_2x"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
@@ -78,10 +64,11 @@
             android:maxLength="15"
             android:maxLines="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/space_12x_sp"
+            android:textSize="@dimen/space_13x_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imgStatus"
-            app:layout_constraintStart_toEndOf="@id/imgUser"
-            app:layout_constraintTop_toTopOf="@id/imgUser"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating"
             tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -91,7 +78,6 @@
             android:layout_marginStart="@dimen/space_1x"
             android:layout_marginTop="@dimen/space_1x"
             android:scaleType="fitCenter"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/username"
             app:layout_constraintTop_toBottomOf="@id/rating"
@@ -102,8 +88,7 @@
             style="@style/TextStyleBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_1x"
-            android:layout_marginEnd="@dimen/space_2x"
+            android:layout_marginEnd="@dimen/space_3x"
             android:ellipsize="end"
             android:gravity="end|center_vertical"
             android:maxLines="1"
@@ -120,10 +105,9 @@
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_0_5x"
-            android:layout_marginBottom="@dimen/space_1x"
+            android:layout_marginBottom="@dimen/space_2x"
             android:ellipsize="end"
-            android:gravity="start"
+            android:gravity="start|center_vertical"
             android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/space_12x_sp"
@@ -137,16 +121,16 @@
             android:id="@+id/btnBookNow"
             style="@style/TextStyleBold"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/space_6x"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/space_1x"
             android:background="@drawable/ic_bg_book_now"
             android:text="@string/book_now"
             android:textColor="@color/accent"
             android:textSize="@dimen/space_12x_sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/city" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.cardview.widget.CardView>

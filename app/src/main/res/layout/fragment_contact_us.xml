@@ -21,31 +21,122 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/space_4x"
+            android:layout_marginTop="@dimen/space_3x"
+            android:background="@drawable/bg_rectangle_corner_white"
+            android:paddingHorizontal="@dimen/space_4x"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintTotalEarning"
+            <TextView
+                android:id="@+id/txtSubject"
+                style="@style/TextStyleBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/space_4x"
-                android:paddingHorizontal="@dimen/space_4x"
                 android:layout_marginTop="@dimen/space_3x"
-                android:background="@drawable/bg_rectangle_corner_white"
-                app:layout_constraintTop_toTopOf="parent">
+                android:gravity="start"
+                android:text="@string/subject"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_18x_sp"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/totalEarning"
-                    style="@style/TextStyleBold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_3x"
-                    android:gravity="start"
-                    android:text="@string/subject"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/space_18x_sp"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtSubject"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:hint="@string/enter_your_id"
+                android:padding="@dimen/space_4x"
+                android:textColorHint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/txtSubject" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/txtType"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/type"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/edtSubject" />
+
+            <TextView
+                android:id="@+id/type"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/select_type"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtType" />
+
+            <TextView
+                android:id="@+id/txtPriority"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/priority"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/type" />
+
+            <TextView
+                android:id="@+id/priority"
+                style="@style/TextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_item_spinner_selected_with_ic_down"
+                android:gravity="center_vertical"
+                android:text="@string/select_contact_priority"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/txtPriority" />
+
+            <TextView
+                android:id="@+id/txtMessage"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4x"
+                android:text="@string/message"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_14x_sp"
+                app:layout_constraintTop_toBottomOf="@id/priority" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edtMessage"
+                style="@style/EditTextStyleRegular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_35x"
+                android:layout_marginTop="@dimen/space_3x"
+                android:background="@drawable/bg_rectangle_corner_blue"
+                android:gravity="top"
+                android:hint="@string/write_your_reason"
+                android:inputType="text"
+                android:padding="@dimen/space_5x"
+                android:textColorHint="@color/grey"
+                app:layout_constraintTop_toBottomOf="@id/txtMessage" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSend"
+                style="@style/customButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_6x"
+                android:layout_marginBottom="@dimen/space_5x"
+                android:text="@string/send"
+                app:layout_constraintStart_toStartOf="@id/edtMessage"
+                app:layout_constraintEnd_toEndOf="@id/edtMessage"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtMessage"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

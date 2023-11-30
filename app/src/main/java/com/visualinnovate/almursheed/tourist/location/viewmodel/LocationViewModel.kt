@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
-import com.visualinnovate.almursheed.home.model.AttraciveDetailsResponse
+import com.visualinnovate.almursheed.home.model.AttractiveDetailsResponse
 import com.visualinnovate.almursheed.home.model.AttractivesListResponse
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.utils.ResponseHandler
@@ -17,38 +17,37 @@ import javax.inject.Inject
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     private val apiService: ApiService,
-    private val application: Application,
+    application: Application,
 ) : BaseViewModel(apiService, application) {
 
-
-    private val _attractivesMutableData: MutableLiveData<ResponseHandler<AttractivesListResponse?>> =
+    private val _attractiveMutableData: MutableLiveData<ResponseHandler<AttractivesListResponse?>> =
         MutableLiveData()
-    val attractivesLiveData: LiveData<ResponseHandler<AttractivesListResponse?>> =
-        _attractivesMutableData.toSingleEvent()
+    val attractiveLiveData: LiveData<ResponseHandler<AttractivesListResponse?>> =
+        _attractiveMutableData.toSingleEvent()
 
-    private val _attractivesDetailsMutableData: MutableLiveData<ResponseHandler<AttraciveDetailsResponse?>> =
+    private val _attractiveDetailsMutableData: MutableLiveData<ResponseHandler<AttractiveDetailsResponse?>> =
         MutableLiveData()
-    val attractivesDetailsLiveData: LiveData<ResponseHandler<AttraciveDetailsResponse?>> =
-        _attractivesDetailsMutableData.toSingleEvent()
+    val attractiveDetailsLiveData: LiveData<ResponseHandler<AttractiveDetailsResponse?>> =
+        _attractiveDetailsMutableData.toSingleEvent()
 
-    fun fetchAttractivesList() {
+    fun getAllAttractiveLocation() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractives()
             }.collect {
-                _attractivesMutableData.value = it
+                _attractiveMutableData.value = it
             }
         }
     }
 
-    fun getAttractivesDetailsById(locationId: Int?) {
+    fun getAttractiveDetailsById(locationId: Int?) {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
                 apiService.getAttractiveDetailsById(locationId!!)
             }.collect {
-                _attractivesDetailsMutableData.value = it
+                _attractiveDetailsMutableData.value = it
             }
         }
     }

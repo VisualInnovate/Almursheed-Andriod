@@ -1,29 +1,35 @@
-package com.visualinnovate.almursheed.commonView
+package com.visualinnovate.almursheed.commonView.more
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.pusher.pushnotifications.PushNotifications
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.startAuthActivity
+import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
-import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.utils.Constant
+import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MoreFragment : Fragment() {
+class MoreFragment : BaseFragment() {
 
     private var _binding: FragmentMoreBinding? = null
     private val binding get() = _binding!!
+
+    private val vm: MoreViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +47,7 @@ class MoreFragment : Fragment() {
         initToolbar()
         initView()
         setBtnListener()
+        subscribeData()
     }
 
     private fun initToolbar() {
@@ -53,6 +60,7 @@ class MoreFragment : Fragment() {
             binding.constraintTotalEarning.visible()
             binding.myPrices.visible()
             binding.editLocation.gone()
+            vm.getTotalEarningToDriverAndGuide()
         } else {
             binding.constraintTotalEarning.gone()
             binding.myPrices.gone()
@@ -66,7 +74,7 @@ class MoreFragment : Fragment() {
         }
 
         binding.contactUs.onDebouncedListener {
-            // findNavController().customNavigate(R.id.editProfileFragment)
+            findNavController().customNavigate(R.id.contactUsFragment)
         }
 
         binding.logout.onDebouncedListener {
@@ -93,6 +101,34 @@ class MoreFragment : Fragment() {
 
         binding.editLocation.onDebouncedListener {
             findNavController().customNavigate(R.id.editLocationFragment)
+        }
+    }
+
+    private fun subscribeData() {
+        vm.getTotalEarningLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    binding.totalEarning.text = "${it.data?.sumOrder} $"
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
         }
     }
 

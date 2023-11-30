@@ -1,12 +1,9 @@
 package com.visualinnovate.almursheed.guide.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
@@ -14,10 +11,13 @@ import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
-import com.visualinnovate.almursheed.databinding.FragmentEditProfileGuideBinding
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.profile.ProfileViewModel
+import com.visualinnovate.almursheed.databinding.FragmentEditProfileGuideBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,9 +31,11 @@ class EditProfileGuideFragment : BaseFragment() {
     private val vm: ProfileViewModel by viewModels()
 
     private lateinit var currentUser: User
-    private var govId: Int? = null
-    private var languagesIdsList: ArrayList<Int> = ArrayList()
+
+    private var governmentId: String? = null
+    private var language: String? = null
     private var bio: String? = null
+    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,60 +56,27 @@ class EditProfileGuideFragment : BaseFragment() {
     }
 
     private fun initViews() {
-        initLanguageSpinner()
+        binding.edtBiography.setText(currentUser.bio)
+        binding.edtGovernmentID.setText(currentUser.govId)
     }
 
-    private fun initLanguageSpinner() {
-        val languagesList = Utils.languages.keys.toList().sorted()
-
-        val arrayAdapter = // android.R.layout.simple_spinner_item
-            ArrayAdapter(
-                requireContext(),
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                languagesList,
-            )
-
-        binding.spinnerLanguage.spinner.adapter = arrayAdapter
-        arrayAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
-        binding.spinnerLanguage.spinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long,
-                ) {
-                    // Retrieve the selected language name
-                    val selectedLanguage = languagesList[position]
-                    Log.d("readJsonFile", "selectedBrandName $selectedLanguage")
-                    val languageId = Utils.languages[selectedLanguage]!!
-                    languagesIdsList.add(languageId)
-                    Log.d("readJsonFile", "languageId $languageId")
-                    Log.d("readJsonFile", "languagesIdsList $languagesIdsList")
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Handle when nothing is selected
-                }
-            }
-        /*binding.spinnerLanguage.spinner.setOnItemClickListener { _, _, position, _ -> // parent, view, position, long
-            // Retrieve the selected language name
-            val selectedLanguage = languagesList[position]
-            Log.d("readJsonFile", "selectedBrandName $selectedLanguage")
-            val languageId = languages[selectedLanguage]!!
-            languagesIdsList.add(languageId)
-            Log.d("readJsonFile", "languageId $languageId")
-            Log.d("readJsonFile", "languagesIdsList $languagesIdsList")
-        }*/
-    }
 
     private fun setBtnListener() {
-        binding.btnSubmit.onDebouncedListener {
-            currentUser.bio = binding.edtBiography.value
-            currentUser.govId = binding.edtGovernmentID.value
-            // call api update guide
-            vm.updateGuide(currentUser)
+        binding.language.onDebouncedListener {
+            showLanguagesChooser()
         }
+
+        binding.btnSubmit.onDebouncedListener {
+            saveData()
+            // call api update guide
+            vm.updatePersonalInformation(currentUser, currentUser.personalPhoto)
+        }
+    }
+
+    private fun saveData() {
+        currentUser.bio = binding.edtBiography.value
+        currentUser.govId = binding.edtGovernmentID.value
+        // currentUser.languages?.add(language.toString())
     }
 
     private fun initToolbar() {
@@ -120,8 +89,29 @@ class EditProfileGuideFragment : BaseFragment() {
         )
     }
 
+    private fun showLanguagesChooser() {
+        chooseTextBottomSheet?.dismiss()
+        chooseTextBottomSheet = ChooseTextBottomSheet(
+            getString(R.string.language_text),
+            setupLanguagesList(),
+            { data, _ ->
+                language = data.name
+                binding.language.text = language
+            })
+        showBottomSheet(chooseTextBottomSheet!!, "LanguagesBottomSheet")
+    }
+
+    private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        Utils.allLanguages.forEach {
+            val item = ChooserItemModel(name = it.lang, isSelected = it.lang == language)
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
     private fun subscribeData() {
-        vm.updateGuideLiveData.observe(viewLifecycleOwner) {
+        vm.personalInformation.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
@@ -133,7 +123,6 @@ class EditProfileGuideFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
