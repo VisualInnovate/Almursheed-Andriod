@@ -33,6 +33,7 @@ import com.visualinnovate.almursheed.databinding.FragmentHireBinding
 import com.visualinnovate.almursheed.home.adapter.PricesCitesAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.tourist.hire.viewmodel.HireViewModel
+import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.LocationHelper
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,6 +88,23 @@ class HireFragment : BaseFragment() {
         initView()
         subscribeData()
         handleLoading()
+        handleOpenFromBookNow() }
+
+    private fun handleOpenFromBookNow() {
+        if (arguments != null) {
+            val selectDriverGuide: DriverAndGuideItem? = arguments?.getParcelable("selectedDriverOrGuide")
+            val type: String? = arguments?.getString("type")
+            if (selectDriverGuide != null) {
+                if (type == Constant.ROLE_DRIVER) {
+                    handleChooseDriverUi()
+                } else {
+                    handleChooseGuideUi()
+                }
+
+                vm.setSelectedDriverOrGuide(selectDriverGuide)
+                binding.nameDriverGuide.text = vm.getSelectedDriverAndGuideName()
+            }
+        }
     }
 
     private fun handleLoading() {
@@ -138,12 +156,14 @@ class HireFragment : BaseFragment() {
         }
 
         binding.nameDriverGuide.onDebouncedListener {
-            if (userType == 1) {
-                userType = 1
-                showDriversGuidesBottomSheet("Driver", vm.allDrivers)
-            } else {
-                userType = 2
-                showDriversGuidesBottomSheet("Guide", vm.allGuides)
+            if (vm.allDrivers.isNotEmpty() || vm.allGuides.isNotEmpty()) {
+                if (userType == 1) {
+                    userType = 1
+                    showDriversGuidesBottomSheet("Driver", vm.allDrivers)
+                } else {
+                    userType = 2
+                    showDriversGuidesBottomSheet("Guide", vm.allGuides)
+                }
             }
         }
 

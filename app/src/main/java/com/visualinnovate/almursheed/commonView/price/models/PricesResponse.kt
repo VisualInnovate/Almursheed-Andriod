@@ -1,6 +1,8 @@
 package com.visualinnovate.almursheed.commonView.price.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class PricesResponse(
 
@@ -8,6 +10,7 @@ data class PricesResponse(
     val priceServices: ArrayList<PriceItem?>? = null,
 )
 
+@Parcelize
 data class PriceItem(
 
     @field:SerializedName("user_type")
@@ -33,4 +36,4 @@ data class PriceItem(
 
     @field:SerializedName("city_id")
     val cityId: Int? = null,
-)
+): Parcelable

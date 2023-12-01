@@ -1,7 +1,10 @@
 package com.visualinnovate.almursheed.home.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.visualinnovate.almursheed.auth.model.LanguageItem
 import com.visualinnovate.almursheed.commonView.price.models.PriceItem
+import kotlinx.parcelize.Parcelize
 
 data class DriversAndGuidesListResponse(
 
@@ -15,6 +18,7 @@ data class DriversAndGuidesListResponse(
     var drivers: List<DriverAndGuideItem?>? = null,
 )
 
+@Parcelize
 data class DriverAndGuideItem(
 
     @field:SerializedName("state_name")
@@ -55,7 +59,7 @@ data class DriverAndGuideItem(
     val carDate: String? = null,
 
     @field:SerializedName("lang")
-    val lang: List<Any?>? = null,
+    val lang: List<LanguageItem?>? = null,
 
     @field:SerializedName("car_type")
     val carType: String? = null,
@@ -64,7 +68,7 @@ data class DriverAndGuideItem(
     val personalPhoto: String? = null,
 
     @field:SerializedName("gender")
-    val gender: Any? = null,
+    val gender: String? = null,
 
     @field:SerializedName("admin_rating")
     val adminRating: String? = null,
@@ -73,7 +77,7 @@ data class DriverAndGuideItem(
     val nationality: String? = null,
 
     @field:SerializedName("phone")
-    val phone: Any? = null,
+    val phone: String? = null,
 
     @field:SerializedName("ratings_sum")
     val ratingsSum: Int? = null,
@@ -91,38 +95,11 @@ data class DriverAndGuideItem(
     val email: String? = null,
 
     @field:SerializedName("status")
-    val status: Any? = null,
+    val status: String? = null,
 
     @field:SerializedName("is_favourite")
     var isFavourite: Boolean? = null,
 
     @field:SerializedName(value = "price_services", alternate = ["priceServices"])
     val priceServices: ArrayList<PriceItem?>? = null,
-)
-
-data class PriceServicesItem(
-
-    @field:SerializedName("user_type")
-    val userType: String? = null,
-
-    @field:SerializedName("updated_at")
-    val updatedAt: String? = null,
-
-    @field:SerializedName("user_id")
-    val userId: Int? = null,
-
-    @field:SerializedName("state_name")
-    val stateName: String? = null,
-
-    @field:SerializedName("price")
-    val price: String? = null,
-
-    @field:SerializedName("created_at")
-    val createdAt: String? = null,
-
-    @field:SerializedName("id")
-    val id: Int? = null,
-
-    @field:SerializedName("city_id")
-    val cityId: Int? = null
-)
+): Parcelable

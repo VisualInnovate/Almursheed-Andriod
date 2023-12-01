@@ -17,6 +17,7 @@ import com.visualinnovate.almursheed.utils.Constant
 class DriverAdapter(
     private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit,
     private val onFavoriteClickCallBack: (driver: DriverAndGuideItem) -> Unit,
+    private val onBookNowClickCallBack: (driver: DriverAndGuideItem) -> Unit,
 ) : RecyclerView.Adapter<DriverAdapter.DriverViewHolder>() {
 
     private var driversList: List<DriverAndGuideItem?>? = ArrayList()
@@ -40,8 +41,8 @@ class DriverAdapter(
                 btnDriverClickCallBack.invoke(driversList!![adapterPosition]!!)
             }
 
-            btnBookNow.setOnClickListener {
-                // btnDriverClickCallBack.invoke(newsList[adapterPosition])
+            btnBookNow.onDebouncedListener {
+                onBookNowClickCallBack.invoke(driversList!![adapterPosition]!!)
             }
         }
     }
@@ -113,6 +114,7 @@ class DriverAdapter(
         holder.imgFavorite.onDebouncedListener {
             onFavoriteClickCallBack.invoke(driver)
         }
+
     }
 
     override fun getItemCount(): Int {

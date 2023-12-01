@@ -2,8 +2,6 @@ package com.visualinnovate.almursheed
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.Network
@@ -42,8 +40,10 @@ import org.json.JSONException
 import org.json.JSONObject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(),
-    MainViewsManager, NavController.OnDestinationChangedListener {
+class MainActivity :
+    AppCompatActivity(),
+    MainViewsManager,
+    NavController.OnDestinationChangedListener {
 
     private lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
@@ -54,10 +54,9 @@ class MainActivity : AppCompatActivity(),
     private lateinit var networkConnectionManager: ConnectivityManager
     private lateinit var networkConnectionCallback: ConnectivityManager.NetworkCallback
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userRole = SharedPreference.getUserRole()?:Constant.ROLE_TOURIST
+        userRole = SharedPreference.getUserRole() ?: Constant.ROLE_TOURIST
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -68,6 +67,10 @@ class MainActivity : AppCompatActivity(),
         navController.addOnDestinationChangedListener(this)
         initConnectivityManager()
         setupDataForCarModelAndYear()
+        setupDataForCity()
+        setupDataForLanguage()
+        setupDataForCountryAndNationality()
+
         /*if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
         } else {
@@ -107,15 +110,6 @@ class MainActivity : AppCompatActivity(),
         })
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-        // Force the activity back to portrait mode
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
@@ -138,7 +132,7 @@ class MainActivity : AppCompatActivity(),
 
     override fun changeSelectedBottomNavListener(id: Int) { // resource
         if (this::binding.isInitialized) {
-            binding.bottomNavBar.setItemSelected(id)
+            binding.bottomNavBar.setItemSelected(id, true, false)
         }
     }
 
@@ -216,6 +210,7 @@ class MainActivity : AppCompatActivity(),
 
         try {
             Utils.allCountries.clear()
+            allNationalities.clear()
             val jsonObject = JSONObject(jsonFile)
             val country: Country = Gson().fromJson(jsonObject.toString(), Country::class.java)
             country.countryList?.filter {
@@ -228,6 +223,7 @@ class MainActivity : AppCompatActivity(),
                 Utils.selectedCountryId = Utils.allCountries[0].country_id
             }
         } catch (e: JSONException) {
+            setupDataForCountryAndNationality()
             e.printStackTrace()
         }
     }
@@ -240,6 +236,7 @@ class MainActivity : AppCompatActivity(),
             val jsonObject = JSONObject(jsonFile)
             val car: Car = Gson().fromJson(jsonObject.toString(), Car::class.java)
             Utils.allCarBrand.clear()
+            Utils.allCarModels.clear()
             car.carList?.map { item ->
                 val carId = item.id
                 val year = item.year
@@ -255,6 +252,7 @@ class MainActivity : AppCompatActivity(),
                 Utils.allCarModels.add(car)
             }
         } catch (e: JSONException) {
+            setupDataForCarModelAndYear()
             e.printStackTrace()
         }
     }
@@ -264,6 +262,7 @@ class MainActivity : AppCompatActivity(),
         val jsonFile = readJSONFromRawResource(resources, R.raw.languages)
 
         try {
+            Utils.languages.clear()
             val jsonObject = JSONObject(jsonFile)
             val language: Language = Gson().fromJson(jsonObject.toString(), Language::class.java)
             language.languageList?.map {
@@ -272,6 +271,7 @@ class MainActivity : AppCompatActivity(),
                 Utils.languages[langName] = langId
             }
         } catch (e: JSONException) {
+            setupDataForLanguage()
             e.printStackTrace()
         }
     }
@@ -282,6 +282,7 @@ class MainActivity : AppCompatActivity(),
 
         try {
             Utils.allCities.clear()
+            Utils.citiesModel.clear()
             val jsonObject = JSONObject(jsonFile)
             val city: City = Gson().fromJson(jsonObject.toString(), City::class.java)
             city.states?.map {
@@ -295,6 +296,7 @@ class MainActivity : AppCompatActivity(),
             }
             filterCitiesByCountryId()
         } catch (e: JSONException) {
+            setupDataForCity()
             e.printStackTrace()
         }
     }
@@ -314,6 +316,4 @@ class MainActivity : AppCompatActivity(),
     ) {
         hideLoading()
     }
-
-
 }

@@ -95,7 +95,6 @@ data class User(
     @field:SerializedName("languages")
     var languages: ArrayList<LanguageItem>? = null,
 
-    var languagesString: ArrayList<String> = ArrayList(),
 ) : Parcelable {
     fun getLanguage(): ArrayList<String> {
         val lang: ArrayList<String> = ArrayList()
@@ -103,12 +102,5 @@ data class User(
             lang.add(it.lang)
         }
         return lang
-    }
-    fun setLanguageString(){
-        val lang: ArrayList<String> = ArrayList()
-        this.languages?.forEach {
-            lang.add(it.lang)
-        }
-        this.languagesString = lang
     }
 }

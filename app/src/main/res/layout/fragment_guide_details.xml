@@ -282,7 +282,7 @@
                     android:ellipsize="end"
                     android:gravity="start"
                     android:lineSpacingExtra="8sp"
-                    android:lines="3"
+                    android:maxLines="31"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our ="
                     android:textColor="@color/black"

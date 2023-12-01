@@ -18,7 +18,8 @@ import com.visualinnovate.almursheed.utils.Constant
 class GuideAdapter(
     private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit,
     private val onFavoriteClickCallBack: (guide: DriverAndGuideItem) -> Unit,
-) : RecyclerView.Adapter<GuideAdapter.GuideViewHolder>() {
+    private val onBookNowClickCallBack: (driver: DriverAndGuideItem) -> Unit,
+    ) : RecyclerView.Adapter<GuideAdapter.GuideViewHolder>() {
 
     private var guidesList: List<DriverAndGuideItem?>? = ArrayList()
 
@@ -41,7 +42,7 @@ class GuideAdapter(
             }
 
             btnBookNow.setOnClickListener {
-                // btnGuideClickCallBack.invoke(guidesList!![adapterPosition]!!)
+                onBookNowClickCallBack.invoke(guidesList!![adapterPosition]!!)
             }
         }
     }

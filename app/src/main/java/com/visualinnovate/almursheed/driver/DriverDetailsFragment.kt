@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.databinding.FragmentDriverDetailsBinding
@@ -30,6 +32,7 @@ class DriverDetailsFragment : BaseFragment() {
     private val vm: HomeViewModel by viewModels()
 
     private var driverId: Int? = null
+    private var driver: DriverAndGuideItem? = null
     private lateinit var pricesAdapter: MyPricesAdapter
 
     private val btnBackCallBackFunc: () -> Unit = {
@@ -51,6 +54,18 @@ class DriverDetailsFragment : BaseFragment() {
         initToolbar()
         subscribeData()
         initPricesRecyclerView()
+        setBtnsListeners()
+    }
+
+    private fun setBtnsListeners() {
+        binding.btnHire.onDebouncedListener {
+            driver?.let {
+                val bundle = Bundle()
+                bundle.putParcelable("selectedDriverOrGuide", driver)
+                bundle.putString("type", Constant.ROLE_DRIVER)
+                findNavController().customNavigate(R.id.hireFragment, data =  bundle)
+            }
+        }
     }
 
     override fun onStart() {
@@ -74,7 +89,8 @@ class DriverDetailsFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    initViews(it.data!!.driver)
+                    driver = it.data!!.driver
+                    initViews(driver)
                     pricesAdapter.submitData(it.data.driver!!.priceServices)
                 }
 
@@ -113,7 +129,7 @@ class DriverDetailsFragment : BaseFragment() {
         binding.driverName.text = driver?.name ?: ""
         binding.driverCountry.text = driver?.country ?: ""
         binding.driverCity.text = driver?.state ?: ""
-        binding.driverDescription.text = driver?.bio ?: ""
+        binding.driverDescription.text = driver?.bio?.trim() ?: ""
         binding.carName.text = driver?.carModel ?: ""
         binding.carType.text = driver?.carType ?: ""
 

@@ -75,14 +75,6 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         setupDataForCity()
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-        // Force the activity back to portrait mode
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
-    }
 
     // init (readJsonFile)
     private fun setupDataForCountryAndNationality() {
@@ -103,6 +95,7 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
                 selectedCountryId = allCountries[0].country_id
             }
         } catch (e: JSONException) {
+            setupDataForCountryAndNationality()
             e.printStackTrace()
         }
     }
@@ -130,6 +123,7 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
                 allCarModels.add(car)
             }
         } catch (e: JSONException) {
+            setupDataForCarModelAndYear()
             e.printStackTrace()
         }
     }
@@ -153,6 +147,7 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
                 allLanguages.add(lang)
             }
         } catch (e: JSONException) {
+            setupDataForLanguage()
             e.printStackTrace()
         }
     }
@@ -176,6 +171,7 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
             }
             filterCitiesByCountryId()
         } catch (e: JSONException) {
+            setupDataForCity()
             e.printStackTrace()
         }
     }

@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.databinding.FragmentGuideDetailsBinding
@@ -29,6 +31,7 @@ class GuideDetailsFragment : BaseFragment() {
     private val vm: HomeViewModel by viewModels()
 
     private var guideId: Int? = null
+    private var guide: DriverAndGuideItem? = null
 
     private lateinit var pricesAdapter: MyPricesAdapter
 
@@ -47,8 +50,20 @@ class GuideDetailsFragment : BaseFragment() {
         initToolbar()
         initPricesRecyclerView()
         subscribeData()
+        setBtnsListeners()
     }
 
+
+    private fun setBtnsListeners() {
+        binding.btnHire.onDebouncedListener {
+            guide?.let {
+                val bundle = Bundle()
+                bundle.putParcelable("selectedDriverOrGuide", guide)
+                bundle.putString("type", Constant.ROLE_GUIDES)
+                findNavController().customNavigate(R.id.hireFragment, data =  bundle)
+            }
+        }
+    }
     override fun onStart() {
         super.onStart()
         vm.getGuideDetailsById(guideId)

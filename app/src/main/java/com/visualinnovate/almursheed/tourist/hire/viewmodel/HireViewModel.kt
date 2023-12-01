@@ -49,8 +49,9 @@ class HireViewModel @Inject constructor(
         val cities = ArrayList<PriceItem>()
         if (!user?.priceServices.isNullOrEmpty()) {
             selectedCityName = user!!.priceServices?.get(0)?.cityName
+            selectedCityId = user?.priceServices?.get(0)?.cityId
         }
-        selectedCityId = user?.priceServices?.get(0)?.cityId
+
         user?.priceServices?.forEach {
             cities.add(it!!)
         }

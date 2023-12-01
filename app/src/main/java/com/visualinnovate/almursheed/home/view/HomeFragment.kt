@@ -64,10 +64,11 @@ class HomeFragment : BaseFragment() {
         findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
-    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
+    private val btnBookNowDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
         val bundle = Bundle()
-        bundle.putInt(Constant.GUIDE_ID, guide.id!!)
-        findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
+        bundle.putParcelable("selectedDriverOrGuide", driver)
+        bundle.putString("type", Constant.ROLE_DRIVER)
+        findNavController().customNavigate(R.id.hireFragment, data =  bundle)
     }
 
     private val onFavoriteLatestDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit =
@@ -76,9 +77,24 @@ class HomeFragment : BaseFragment() {
             vm.addAndRemoveFavorite(driver.id.toString(), "0")
         }
 
+    private val btnGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
+        val bundle = Bundle()
+        bundle.putInt(Constant.GUIDE_ID, guide.id!!)
+        findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
+    }
+
+
     private val onFavoriteLatestGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
         vm.selectedUserPosition = guide.id!!
         vm.addAndRemoveFavorite(guide.id.toString(), "1")
+    }
+
+
+    private val btnBookNowGuideClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
+        val bundle = Bundle()
+        bundle.putParcelable("selectedDriverOrGuide", driver)
+        bundle.putString("type", Constant.ROLE_GUIDES)
+        findNavController().customNavigate(R.id.hireFragment, data =  bundle)
     }
 
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit = { location ->
@@ -423,14 +439,14 @@ class HomeFragment : BaseFragment() {
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
             driverAdapter =
-                DriverAdapter(btnDriverClickCallBack, onFavoriteLatestDriverClickCallBack)
+                DriverAdapter(btnDriverClickCallBack, onFavoriteLatestDriverClickCallBack,btnBookNowDriverClickCallBack)
             adapter = driverAdapter
         }
     }
 
     private fun initGuideRecycler() {
         binding.rvGuide.apply {
-            guideAdapter = GuideAdapter(btnGuideClickCallBack, onFavoriteLatestGuideClickCallBack)
+            guideAdapter = GuideAdapter(btnGuideClickCallBack, onFavoriteLatestGuideClickCallBack, btnBookNowGuideClickCallBack)
             adapter = guideAdapter
         }
     }
