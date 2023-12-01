@@ -2,7 +2,6 @@ package com.visualinnovate.almursheed.network
 
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
-import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.commonView.myOrders.models.ChangeStatusResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
@@ -80,7 +79,7 @@ interface ApiService {
 
     @GET("guides/latest")
     suspend fun getLatestGuide(
-        @Query("state_id") stateId: Int?
+        @Query("state_id") stateId: Int?,
     ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/latest") // https://mursheed.visualinnovate.net/api/drivers/latest?stateId=0
@@ -192,8 +191,10 @@ interface ApiService {
         @Part("car_type") carType: RequestBody,
         @Part("car_brand_name") carBrand: RequestBody,
         @Part("car_manufacturing_date") carManufacture: RequestBody,
-        // @Part("language") language: RequestBody,
+        @Part("languages") languages: ArrayList<@JvmSuppressWildcards RequestBody?>?,
         @Part carImages: ArrayList<MultipartBody.Part?>?,
+        @Part documentImages: ArrayList<MultipartBody.Part?>?,
+        @Part("email") email: RequestBody,
     ): Response<UpdateResponse>
 
     @Multipart
@@ -303,13 +304,13 @@ interface ApiService {
         @Path("id") orderId: Int?,
         @Query("status") status: String,
         @Query("id") driverOrGuideId: String,
-        @Query("type") type: String
+        @Query("type") type: String,
     ): Response<ChangeStatusResponse>
 
     @POST("favourite/create")
     suspend fun addAndRemoveFavorite(
         @Query("service_id") serviceId: String,
-        @Query("type") type: String
+        @Query("type") type: String,
     ): Response<FavoriteResponse>
 
     @GET("order/profite")
@@ -322,5 +323,4 @@ interface ApiService {
         @Query("priority") priority: String?,
         @Query("message") message: String?,
     ): Response<ContactUsResponse>
-
 }

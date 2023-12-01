@@ -26,6 +26,7 @@ import com.visualinnovate.almursheed.common.permission.PermissionHelper
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheetMultipleSelection
 import com.visualinnovate.almursheed.commonView.bottomSheets.UploadImageSheetFragment
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.profile.ProfileViewModel
@@ -50,14 +51,18 @@ class EditProfileDriverFragment : BaseFragment() {
     private var carNumber: String? = null
     private var licenceNumber: String? = null
     private var carManufacture: String? = null
-    private var language: String? = null
+    private var languages: ArrayList<String> = ArrayList()
     private var carImages: ArrayList<String> = ArrayList()
+    private var documentsImages: ArrayList<String> = ArrayList()
 
     private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
+    private var chooseTextBottomSheetMultipleSelection: ChooseTextBottomSheetMultipleSelection? = null
     private var showImageSheetFragment: UploadImageSheetFragment? = null
 
     private lateinit var permissionHelper: PermissionHelper
     private lateinit var currentUser: User
+
+    private var openChooserType = 1 // 1 for choose carPhoto , 2 for choose document
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,9 +101,14 @@ class EditProfileDriverFragment : BaseFragment() {
         binding.carBrand.text = currentUser.carBrandName ?: getString(R.string.car_brand)
         binding.carManufacture.text =
             currentUser.carManufacturingDate ?: getString(R.string.car_model)
+        currentUser.carPhotos?.let {
+            binding.btnUploadCarPhoto.text = it.toString()
+        }
 
-        //  binding.language.text = currentUser.language
+        binding.language.text = currentUser.getLanguage().joinToString(" , ")
         carImages = currentUser.carPhotos ?: ArrayList()
+        documentsImages = currentUser.documentsImages ?: ArrayList()
+        languages = currentUser.getLanguage()
     }
 
     private fun initToolbar() {
@@ -129,18 +139,20 @@ class EditProfileDriverFragment : BaseFragment() {
         }
 
         binding.btnUploadCarPhoto.onDebouncedListener {
+            openChooserType = 1
             handleCarImagesChange()
         }
 
         binding.btnUploadDocument.onDebouncedListener {
-            // handleProfilePictureChange()
+            openChooserType = 2
+            handleCarImagesChange()
         }
 
         binding.btnRegister.onDebouncedListener {
             if (validate()) {
                 saveData()
                 // call api driver create
-                vm.updateDriverCarInformation(currentUser, carImages)
+                vm.updateDriverCarInformation(currentUser, carImages, documentsImages, languages)
             }
         }
     }
@@ -152,7 +164,7 @@ class EditProfileDriverFragment : BaseFragment() {
         currentUser.carBrandName = carBrand
         currentUser.carType = carType
         currentUser.carManufacturingDate = carManufacture
-        //  currentUser.language = language
+        //  currentUser.languages = language
     }
 
     private fun validate(): Boolean {
@@ -172,6 +184,20 @@ class EditProfileDriverFragment : BaseFragment() {
         if (licenceNumber?.isEmptySting() == true) {
             isValid = false
             toast(getString(R.string.enter_licence_number))
+        }
+
+        if (carType == null) {
+            isValid = false
+            toast(getString(R.string.enter_car_type))
+        }
+
+        if (carBrand == null) {
+            isValid = false
+            toast(getString(R.string.enter_car_brand))
+        }
+        if (carManufacture == null) {
+            isValid = false
+            toast(getString(R.string.enter_car_manufacture))
         }
 
         return isValid
@@ -213,16 +239,29 @@ class EditProfileDriverFragment : BaseFragment() {
                 val data = it
                 if (data.clipData != null) {
                     val count = data.clipData!!.itemCount
-                    carImages.clear()
-                    for (i in 0 until count) {
-                        carImages.add(
-                            getRealPathFromURI(
-                                requireContext(),
-                                data.clipData!!.getItemAt(i).uri
-                            ).toString()
-                        )
+                    if (openChooserType == 1) {
+                        carImages.clear()
+                        for (i in 0 until count) {
+                            carImages.add(
+                                getRealPathFromURI(
+                                    requireContext(),
+                                    data.clipData!!.getItemAt(i).uri,
+                                ).toString(),
+                            )
+                        }
+                        showCarImageBottomSheet(carImages)
+                    } else {
+                        documentsImages.clear()
+                        for (i in 0 until count) {
+                            documentsImages.add(
+                                getRealPathFromURI(
+                                    requireContext(),
+                                    data.clipData!!.getItemAt(i).uri,
+                                ).toString(),
+                            )
+                        }
+                        showCarImageBottomSheet(documentsImages)
                     }
-                    showCarImageBottomSheet()
                 } else {
                     toast(getString(R.string.must_choose_more_than_1_image))
                 }
@@ -230,14 +269,18 @@ class EditProfileDriverFragment : BaseFragment() {
         }
     }
 
-    private fun showCarImageBottomSheet() {
+    private fun showCarImageBottomSheet(images: ArrayList<String>) {
         // currentUser.carImages
-        if (carImages.isNotEmpty()) {
+        if (images.isNotEmpty()) {
             showImageSheetFragment?.dismiss()
             val bundle = Bundle()
-            bundle.putStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT, carImages)
+            bundle.putStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT, images)
             showImageSheetFragment = UploadImageSheetFragment(onSelectImageBtnClick = {
-                carImages.clear()
+                if (openChooserType == 1) {
+                    carImages.clear()
+                } else {
+                    documentsImages.clear()
+                }
                 handleCarImagesChange()
             })
             showImageSheetFragment?.arguments = bundle
@@ -313,27 +356,6 @@ class EditProfileDriverFragment : BaseFragment() {
         showBottomSheet(chooseTextBottomSheet!!, "CarYearsBottomSheet")
     }
 
-    private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
-        val chooserItemList = ArrayList<ChooserItemModel>()
-        allLanguages.forEach {
-            val item = ChooserItemModel(name = it.lang, isSelected = it.lang == language)
-            chooserItemList.add(item)
-        }
-        return chooserItemList
-    }
-
-    private fun showLanguagesChooser() {
-        chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(
-            getString(R.string.language_text),
-            setupLanguagesList(),
-            { data, _ ->
-                language = data.name
-                binding.language.text = language
-            })
-        showBottomSheet(chooseTextBottomSheet!!, "LanguagesBottomSheet")
-    }
-
     private fun setupCarTypesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         resources.getStringArray(R.array.car_categories).forEach {
@@ -370,6 +392,30 @@ class EditProfileDriverFragment : BaseFragment() {
                 binding.carBrand.text = carBrand
             })
         showBottomSheet(chooseTextBottomSheet!!, "CarBrandBottomSheet")
+    }
+
+    private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
+        val chooserItemList = ArrayList<ChooserItemModel>()
+        allLanguages.forEach {
+            val item = ChooserItemModel(name = it.lang, isSelected = languages.contains(it.lang))
+            chooserItemList.add(item)
+        }
+        return chooserItemList
+    }
+
+    private fun showLanguagesChooser() {
+        chooseTextBottomSheetMultipleSelection?.dismiss()
+        chooseTextBottomSheetMultipleSelection = ChooseTextBottomSheetMultipleSelection(
+            getString(R.string.language_text),
+            setupLanguagesList(),
+        ) { selectedLanguages ->
+            languages.clear()
+            selectedLanguages.forEach {
+                languages.add(it.name!!)
+            }
+            binding.language.text = languages.joinToString(" , ")
+        }
+        showBottomSheet(chooseTextBottomSheetMultipleSelection!!, "LanguagesBottomSheet")
     }
 
     override fun onDestroy() {

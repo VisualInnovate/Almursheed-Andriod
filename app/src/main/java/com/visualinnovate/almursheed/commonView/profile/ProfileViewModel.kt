@@ -56,7 +56,12 @@ class ProfileViewModel @Inject constructor(
     val updateGuideLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
         _updateGuideMutableData.toSingleEvent()
 
-    fun updateDriverCarInformation(currentUser: User, carImages: ArrayList<String>) {
+    fun updateDriverCarInformation(
+        currentUser: User,
+        carImages: ArrayList<String>,
+        documentsImages: ArrayList<String>,
+        selectedLanguage: ArrayList<String>,
+    ) {
         val carNumber =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.carNumber.toString())
 
@@ -81,16 +86,28 @@ class ProfileViewModel @Inject constructor(
         val govId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
 
-        val language =
-            RequestBody.create(
-                "text/plain".toMediaTypeOrNull(),
-                "English" /*currentUser.language.toString()*/
-            )
+        val email =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.email.toString())
 
         val carPhotos = if (checkCarImages(carImages).isNotEmpty()) {
             val list = ArrayList<MultipartBody.Part?>()
             carImages.forEach {
                 list.add(checkImagePath(it, "car_photos"))
+            }
+            list
+        } else {
+            null
+        }
+
+        var languages: ArrayList<RequestBody?>? = ArrayList()
+        selectedLanguage.forEach {
+            languages?.add(RequestBody.create("text/plain".toMediaTypeOrNull(), it))
+        }
+
+        val documentsPhotos = if (checkCarImages(documentsImages).isNotEmpty()) {
+            val list = ArrayList<MultipartBody.Part?>()
+            carImages.forEach {
+                list.add(checkImagePath(it, "document"))
             }
             list
         } else {
@@ -107,8 +124,10 @@ class ProfileViewModel @Inject constructor(
                     carType,
                     carBrand,
                     carManufacture,
-                    // language,
+                    languages,
                     carPhotos,
+                    documentsPhotos,
+                    email,
                 )
             }.collect {
                 _updateDriverMutableData.value = it

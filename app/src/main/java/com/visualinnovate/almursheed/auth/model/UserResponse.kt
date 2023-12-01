@@ -65,7 +65,7 @@ data class User(
     @field:SerializedName("des_city_id")
     var desCityId: Int? = null,
 
-    @field:SerializedName("personal_photo") //personal_photo
+    @field:SerializedName("personal_photo") // personal_photo
     var personalPhoto: String? = null,
 
     @field:SerializedName("car_brand_name")
@@ -83,10 +83,32 @@ data class User(
     @field:SerializedName("car_number")
     var carNumber: String? = null,
 
-    @field:SerializedName("gov_id") //gov_id
+    @field:SerializedName("gov_id") // gov_id
     var govId: String? = null,
 
-    @field:SerializedName("car_photo") //gov_id
+    @field:SerializedName("car_photo")
     var carPhotos: ArrayList<String>? = null,
 
-    ) : Parcelable
+    // @field:SerializedName("document")
+    var documentsImages: ArrayList<String>? = null,
+
+    @field:SerializedName("languages")
+    var languages: ArrayList<LanguageItem>? = null,
+
+    var languagesString: ArrayList<String> = ArrayList(),
+) : Parcelable {
+    fun getLanguage(): ArrayList<String> {
+        val lang: ArrayList<String> = ArrayList()
+        this.languages?.forEach {
+            lang.add(it.lang)
+        }
+        return lang
+    }
+    fun setLanguageString(){
+        val lang: ArrayList<String> = ArrayList()
+        this.languages?.forEach {
+            lang.add(it.lang)
+        }
+        this.languagesString = lang
+    }
+}

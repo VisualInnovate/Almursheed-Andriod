@@ -2,7 +2,6 @@ package com.visualinnovate.almursheed.driver
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ class DriverDetailsFragment : BaseFragment() {
 
     private var driverId: Int? = null
     private lateinit var pricesAdapter: MyPricesAdapter
-
 
     private val btnBackCallBackFunc: () -> Unit = {
         findNavController().navigateUp()
@@ -106,19 +104,22 @@ class DriverDetailsFragment : BaseFragment() {
             .load(driver?.personalPhoto)
             .into(binding.imgDriver)
 
-        Glide.with(requireContext())
-            .load(driver?.carPhoto!![0])
-            .into(binding.imgCar)
-        binding.driverName.text = driver.name ?: ""
-        binding.driverCountry.text = driver.country ?: ""
-        binding.driverCity.text = driver.state ?: ""
-        binding.driverDescription.text = driver.bio ?: ""
-        binding.carName.text = driver.carModel ?: ""
-        binding.carType.text = driver.carType ?: ""
+        if (driver?.carPhoto?.isNotEmpty() == true) {
+            Glide.with(requireContext())
+                .load(driver?.carPhoto?.get(0) ?: "")
+                .into(binding.imgCar)
+        }
 
-        binding.driverReview.text = "(${driver.count_rate ?: 0} review)"
+        binding.driverName.text = driver?.name ?: ""
+        binding.driverCountry.text = driver?.country ?: ""
+        binding.driverCity.text = driver?.state ?: ""
+        binding.driverDescription.text = driver?.bio ?: ""
+        binding.carName.text = driver?.carModel ?: ""
+        binding.carType.text = driver?.carType ?: ""
 
-        val rateImage = when (driver.totalRating?.toDouble()?.roundToInt() ?: 0) {
+        binding.driverReview.text = "(${driver?.count_rate ?: 0} review)"
+
+        val rateImage = when (driver?.totalRating?.toDouble()?.roundToInt() ?: 0) {
             1 -> R.drawable.ic_star_1
             2 -> R.drawable.ic_stars_2
             3 -> R.drawable.ic_stars_3
@@ -128,12 +129,12 @@ class DriverDetailsFragment : BaseFragment() {
         }
 
         binding.driverReview.setCompoundDrawables(null, null, resources.getDrawable(rateImage), null)
-        binding.driverReview.text = "(${driver.count_rate} review)"
+        binding.driverReview.text = "(${driver?.count_rate} review)"
 
-        driver.priceServices?.let {
+        driver?.priceServices?.let {
             if (it.isNotEmpty()) {
-                binding.driverPrice.text = "$ ${it[0]?.price.toString()}"
-            }else{
+                binding.driverPrice.text = "$ ${it[0]?.price}"
+            } else {
                 binding.driverPrice.text = "$0.0"
             }
         }

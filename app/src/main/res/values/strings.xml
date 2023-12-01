@@ -317,5 +317,8 @@
     <string name="select_type">Select type</string>
     <string name="priority">Priority <font fgcolor='#FF0000'> *</font></string>
     <string name="select_contact_priority">Select contact priority</string>
+    <string name="enter_car_type">Choose Car Type</string>
+    <string name="enter_car_brand">Choose Car Brand</string>
+    <string name="enter_car_manufacture">Choose Car Manufacure</string>
 
 </resources>

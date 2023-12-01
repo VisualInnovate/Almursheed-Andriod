@@ -109,14 +109,14 @@ class HomeFragment : BaseFragment() {
         // Show the bottom sheet dialog fragment
         offerDetailsSheetFragment.show(
             childFragmentManager,
-            "OfferDetailsFragment"
+            "OfferDetailsFragment",
         ) // offerDetailsSheetFragment.tag
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -410,11 +410,13 @@ class HomeFragment : BaseFragment() {
 
     private fun startAutoSlider() {
         lifecycleScope.launch {
-            val nextItem =
-                if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
-            binding.rvBanner.setCurrentItem(nextItem, true)
-            delay(3000)
-            startAutoSlider()
+            if (_binding != null) {
+                val nextItem =
+                    if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
+                binding.rvBanner.setCurrentItem(nextItem, true)
+                delay(3000)
+                startAutoSlider()
+            }
         }
     }
 
