@@ -17,4 +17,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/animation_logo_splash" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/topGifSplash"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/top_gif_splash" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bottomGifSplash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/bottom_gif_splash" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

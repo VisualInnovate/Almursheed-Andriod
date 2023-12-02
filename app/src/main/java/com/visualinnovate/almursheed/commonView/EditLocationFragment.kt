@@ -41,6 +41,7 @@ class EditLocationFragment : BaseFragment() {
     private var allCountries = ArrayList<ChooserItemModel>()
     private var citiesList = ArrayList<ChooserItemModel>()
     private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

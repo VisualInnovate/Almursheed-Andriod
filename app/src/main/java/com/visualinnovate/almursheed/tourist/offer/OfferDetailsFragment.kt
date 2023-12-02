@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.tourist.offer
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -46,9 +47,11 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // get argument
         offerId = requireArguments().getInt(Constant.OFFER_ID)
         Log.d("arguments?", "offerArgs $offerId")
+
         // fun clicked
         setBtnListener()
         subscribeData()
@@ -59,13 +62,17 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
         vm.getOfferDetailsById(offerId ?: 0)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView(offer: Offer?) {
         binding.txtBoatTour.text = offer?.title?.localized
-        binding.price.text = "${offer?.price?.toString()} $"
+
         binding.realPrice.invisible()
         Glide.with(requireContext())
             .load(offer?.media?.get(0)?.originalUrl)
             .into(binding.imgOffer)
+
+        binding.OfferDescription.text = offer?.title?.localized
+        binding.price.text = "${offer?.price?.toString()} $"
     }
 
     private fun setBtnListener() {
@@ -81,15 +88,12 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    Log.d("Success11", "${it.data!!.offer}")
-                    initView(it.data.offer)
-                    // driverAdapter.submitData(it.data.drivers)
+                    initView(it.data?.offer)
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -98,7 +102,6 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
 
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
-
                 }
 
                 else -> {}

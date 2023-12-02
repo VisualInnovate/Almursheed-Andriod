@@ -120,6 +120,7 @@ class GuideDetailsFragment : BaseFragment() {
         binding.guideCountry.text = guide?.state ?: ""
         binding.guideDescription.text = guide?.bio ?: ""
 
+
         guide?.priceServices?.let {
             if (it.isNotEmpty()) {
                 binding.guidePrice.text = "$ ${it[0]?.price.toString()}"

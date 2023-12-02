@@ -17,7 +17,7 @@
         android:layout_margin="@dimen/space_4x">
         
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image"
+            android:id="@+id/imgUser"
             android:layout_width="45dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_person"
@@ -26,7 +26,7 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/userName"
             style="@style/TextStyleBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -36,24 +36,24 @@
             android:textSize="@dimen/space_16x_sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/image"
-            app:layout_constraintTop_toTopOf="@id/image" />
+            app:layout_constraintStart_toEndOf="@id/imgUser"
+            app:layout_constraintTop_toTopOf="@id/imgUser" />
 
         <TextView
-            android:id="@+id/txtCountry"
+            android:id="@+id/content"
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_3x"
             android:layout_marginTop="@dimen/space_2x"
-            android:text="Accept you car order. 4h"
+            tools:text="Accept you car order. 4h"
             android:textColor="@color/grey"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/image"
-            app:layout_constraintBottom_toBottomOf="@id/image"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            app:layout_constraintStart_toEndOf="@id/imgUser"
+            app:layout_constraintBottom_toBottomOf="@id/imgUser"
+            app:layout_constraintTop_toBottomOf="@id/userName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

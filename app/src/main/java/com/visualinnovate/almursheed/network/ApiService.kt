@@ -5,6 +5,7 @@ import com.visualinnovate.almursheed.auth.model.UserResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.ChangeStatusResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
+import com.visualinnovate.almursheed.commonView.notification.model.NotificationResponse
 import com.visualinnovate.almursheed.commonView.price.models.PricesResponse
 import com.visualinnovate.almursheed.home.model.*
 import okhttp3.MultipartBody
@@ -323,4 +324,10 @@ interface ApiService {
         @Query("priority") priority: String?,
         @Query("message") message: String?,
     ): Response<ContactUsResponse>
+
+    @GET("GetUnreadNotifications")
+    suspend fun getUnreadNotifications(): Response<NotificationResponse>
+
+    @GET("Notifications/markAsRead")
+    suspend fun getMarkAsReadNotifications(): Response<NotificationResponse>
 }

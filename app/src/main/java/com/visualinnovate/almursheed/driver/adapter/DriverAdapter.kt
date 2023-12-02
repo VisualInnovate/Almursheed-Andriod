@@ -73,9 +73,9 @@ class DriverAdapter(
                 .load(driver.carPhoto[0] ?: R.drawable.ic_mursheed_logo)
                 .error(R.drawable.ic_mursheed_logo)
                 .into(holder.imgCarDriver)
-        }else{
+        } else {
             Glide.with(holder.itemView.context)
-                .load( R.drawable.ic_mursheed_logo)
+                .load(R.drawable.ic_mursheed_logo)
                 .error(R.drawable.ic_mursheed_logo)
                 .into(holder.imgCarDriver)
         }
@@ -92,7 +92,7 @@ class DriverAdapter(
         driver.priceServices?.let {
             if (it.isNotEmpty()) {
                 holder.price.text = "$" + it[0]?.price.toString()
-            }else{
+            } else {
                 holder.price.text = "$0.0"
             }
         }
