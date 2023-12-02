@@ -113,13 +113,17 @@ class EditProfileFragment : BaseFragment() {
         if (currentUser.destCityId != null) {
             cityId = currentUser.destCityId.toString()
             binding.city.text =
-                (currentUser.destCityId?.let { vm.getCityName(it) }
-                    ?: getString(R.string.choose_city))
+                (
+                    currentUser.destCityId?.let { vm.getCityName(it) }
+                        ?: getString(R.string.choose_city)
+                    )
         } else if (currentUser.desCityId != null) {
             cityId = currentUser.desCityId.toString()
             binding.city.text =
-                (currentUser.desCityId?.let { vm.getCityName(it) }
-                    ?: getString(R.string.choose_city))
+                (
+                    currentUser.desCityId?.let { vm.getCityName(it) }
+                        ?: getString(R.string.choose_city)
+                    )
         } else {
             cityId = currentUser.stateId.toString()
             binding.city.text =
@@ -189,7 +193,9 @@ class EditProfileFragment : BaseFragment() {
 
         binding.btnSubmit.onDebouncedListener {
             saveData()
-            vm.updatePersonalInformation(currentUser, imagePath)
+            if (validate()) {
+                vm.updatePersonalInformation(currentUser, imagePath)
+            }
         }
 
         binding.btnCarInfo.onDebouncedListener {
@@ -226,6 +232,33 @@ class EditProfileFragment : BaseFragment() {
         currentUser.stateId = cityId?.toInt()
         currentUser.desCityId = cityId?.toInt()
         currentUser.destCityId = cityId?.toInt()
+    }
+
+    private fun validate(): Boolean {
+        var isValid = true
+        if (binding.nationality.text.toString().trim().isEmptySting()) {
+            isValid = false
+            toast(getString(R.string.choose_nationality))
+        }
+        if (binding.city.text.toString().trim().isEmptySting()) {
+            isValid = false
+            toast(getString(R.string.choose_city))
+        }
+        if (binding.country.text.toString().trim().isEmptySting()) {
+            isValid = false
+            toast(getString(R.string.choose_country))
+        }
+
+        if (currentUser.phone?.isEmptySting() == true) {
+            isValid = false
+            toast(getString(R.string.enter_your_phone_number))
+        }
+
+        if (currentUser.name?.isEmptySting() == true) {
+            isValid = false
+            toast(getString(R.string.enter_your_name))
+        }
+        return isValid
     }
 
     private fun showNationalityChooser() {
@@ -308,8 +341,6 @@ class EditProfileFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
-                    Log.d("MyDebugData", "EditProfileFragment : subscribeData :  " + it.data)
-
                     SharedPreference.saveUser(it.data?.user!!)
                     toast(it.data.message.toString())
                 }
@@ -317,7 +348,6 @@ class EditProfileFragment : BaseFragment() {
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("ResponseHandler.Error", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -346,7 +376,6 @@ class EditProfileFragment : BaseFragment() {
                             imageCompressor
                                 .setImagePath(path).compressImage(
                                     { error ->
-                                        Log.d("activityResultsCallBack", "error $error")
                                         Toast.makeText(
                                             requireContext(),
                                             error,

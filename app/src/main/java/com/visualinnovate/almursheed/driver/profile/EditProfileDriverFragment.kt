@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -164,7 +163,6 @@ class EditProfileDriverFragment : BaseFragment() {
         currentUser.carBrandName = carBrand
         currentUser.carType = carType
         currentUser.carManufacturingDate = carManufacture
-        //  currentUser.languages = language
     }
 
     private fun validate(): Boolean {
@@ -199,6 +197,16 @@ class EditProfileDriverFragment : BaseFragment() {
             isValid = false
             toast(getString(R.string.enter_car_manufacture))
         }
+
+//        if (carImages.isEmpty() || currentUser.carPhotos.isNullOrEmpty()) {
+//            isValid = false
+//            toast(getString(R.string.choose_car_images))
+//        }
+//
+//        if (documentsImages.isEmpty() || currentUser.documentsImages.isNullOrEmpty()) {
+//            isValid = false
+//            toast(getString(R.string.choose_car_images))
+//        }
 
         return isValid
     }
