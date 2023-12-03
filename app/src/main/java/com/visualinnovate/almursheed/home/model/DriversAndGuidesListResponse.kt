@@ -33,7 +33,7 @@ data class DriverAndGuideItem(
     @field:SerializedName("state_id")
     val stateId: Int? = null,
 
-    @field:SerializedName("image_background")
+    @field:SerializedName("image_background") // image_background
     val imageBackground: String? = null,
 
     @field:SerializedName("country_id")
@@ -64,7 +64,7 @@ data class DriverAndGuideItem(
     @field:SerializedName("car_type")
     val carType: String? = null,
 
-    @field:SerializedName("personal_photo")
+    @field:SerializedName("personal_photo") // personal_photo
     val personalPhoto: String? = null,
 
     @field:SerializedName("gender")

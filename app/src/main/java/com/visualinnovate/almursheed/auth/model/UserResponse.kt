@@ -59,8 +59,11 @@ data class User(
     @field:SerializedName("bio")
     var bio: String? = null,
 
-    @field:SerializedName("country_id") // country_id
+    @field:SerializedName("country_id") // dest_country_id
     var countryId: Int? = null,
+
+    @field:SerializedName("dest_country_id") // dest_country_id
+    var destCountryId: Int? = null,
 
     @field:SerializedName("des_city_id")
     var desCityId: Int? = null,

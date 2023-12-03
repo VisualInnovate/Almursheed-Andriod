@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.commonView.more
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -104,12 +105,20 @@ class MoreFragment : BaseFragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun subscribeData() {
         vm.getTotalEarningLiveData.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    binding.totalEarning.text = "${it.data?.sumOrder} $"
+                    if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
+                    ) {
+                        binding.totalEarning.text = "${it.data?.profits?.guidesProfits} $"
+                        binding.total.text = "${it.data?.profits?.guidesProfits} $"
+                    } else if (SharedPreference.getUserRole() == Constant.ROLE_DRIVER) {
+                        binding.totalEarning.text = "${it.data?.profits?.driversProfits} $"
+                        binding.total.text = "${it.data?.profits?.driversProfits} $"
+                    }
                 }
 
                 is ResponseHandler.Error -> {

@@ -76,11 +76,14 @@ class EditLocationFragment : BaseFragment() {
 
         if (SharedPreference.getCityId() != null) {
             binding.city.text = cityName ?: vm.getCityName(SharedPreference.getCityId()!!)
-        } else if (SharedPreference.getCountryId() != null) {
-            binding.country.text = countryName ?: vm.getCountryName(SharedPreference.getCityId()!!)
+        } else {
+            binding.city.text = getString(R.string.choose_city)
+        }
+
+        if (SharedPreference.getCountryId() != null) {
+            binding.country.text = countryName ?: vm.getCountryName(SharedPreference.getCountryId()!!)
         } else {
             binding.country.text = getString(R.string.choose_country)
-            binding.city.text = getString(R.string.choose_city)
         }
 
         allCountries = setupCountriesList()
@@ -96,6 +99,7 @@ class EditLocationFragment : BaseFragment() {
 
         binding.btnSubmit.onDebouncedListener {
             currentUser.countryId = countryId?.toInt()
+            currentUser.destCountryId = countryId?.toInt()
             currentUser.stateId = cityId?.toInt()
             currentUser.desCityId = cityId?.toInt()
             currentUser.destCityId = cityId?.toInt()
@@ -188,7 +192,7 @@ class EditLocationFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // save user
                     SharedPreference.setCityId(it.data?.user?.destCityId)
-                    SharedPreference.setCountryId(it.data?.user?.countryId)
+                    SharedPreference.setCountryId(it.data?.user?.destCountryId)
                     toast(it.data?.message.toString())
                     findNavController().navigateUp()
                 }

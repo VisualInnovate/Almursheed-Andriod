@@ -68,9 +68,9 @@ class DriverAdapter(
             binding.imgFavorite.visible()
         }
 
-        if (driver.carPhoto?.isNotEmpty() == true) {
+        if (driver.imageBackground?.isNotEmpty() == true) {
             Glide.with(holder.itemView.context)
-                .load(driver.carPhoto[0] ?: R.drawable.ic_mursheed_logo)
+                .load(driver.imageBackground)
                 .error(R.drawable.ic_mursheed_logo)
                 .into(holder.imgCarDriver)
         } else {

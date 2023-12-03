@@ -307,12 +307,15 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun updateLocationTourist(currentUser: User) {
-        val stateId =
+        val stateIdPart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.stateId.toString())
+
+        val destCountryIdPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.destCountryId.toString())
 
         viewModelScope.launch {
             safeApiCall {
-                apiService.updateLocationTourist(stateId)
+                apiService.updateLocationTourist(destCountryIdPart, stateIdPart)
                 // apiService.updateTourist(requestBody)
             }.collect {
                 _editLocation.value = it

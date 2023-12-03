@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.TotalEarningResponse
@@ -28,7 +29,7 @@ class MoreViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getTotalEarningOfDriverAndGuide()
+                apiService.getTotalEarningOfDriverAndGuide(SharedPreference.getUser().countryId)
             }.collect {
                 _getTotalEarningMutableData.value = it
             }

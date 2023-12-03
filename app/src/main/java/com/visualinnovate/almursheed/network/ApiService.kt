@@ -225,8 +225,8 @@ interface ApiService {
     @Multipart
     @POST("tourists/update")
     suspend fun updateLocationTourist(
+        @Part("dest_country_id") destCountryId: RequestBody,
         @Part("dest_city_id") stateId: RequestBody,
-        @Part("languages[0]") languages: Int = 8,
     ): Response<UpdateResponse>
 
     @Multipart
@@ -314,8 +314,10 @@ interface ApiService {
         @Query("type") type: String,
     ): Response<FavoriteResponse>
 
-    @GET("order/profite")
-    suspend fun getTotalEarningOfDriverAndGuide(): Response<TotalEarningResponse>
+    @POST("reports/allProfits")
+    suspend fun getTotalEarningOfDriverAndGuide(
+        @Query("country_id") countryId: Int?
+    ): Response<TotalEarningResponse>
 
     @POST("tickets/store")
     suspend fun sendToContactUs(
@@ -330,4 +332,7 @@ interface ApiService {
 
     @GET("Notifications/markAsRead")
     suspend fun getMarkAsReadNotifications(): Response<NotificationResponse>
+
+    @GET("api/pages")
+    suspend fun getAboutUsPage(): Response<NotificationResponse>
 }
