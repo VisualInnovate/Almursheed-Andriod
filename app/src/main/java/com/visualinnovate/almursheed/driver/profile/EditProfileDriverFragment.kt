@@ -172,40 +172,41 @@ class EditProfileDriverFragment : BaseFragment() {
         licenceNumber = binding.edtCarNumber.text.toString().trim()
 
         if (governmentId?.isEmptySting() == true) {
-            isValid = false
             toast(getString(R.string.enter_your_id))
+            return false
         }
         if (carNumber?.isEmptySting() == true) {
-            isValid = false
             toast(getString(R.string.enter_car_number))
+            return false
         }
         if (licenceNumber?.isEmptySting() == true) {
-            isValid = false
             toast(getString(R.string.enter_licence_number))
+            return false
         }
 
         if (carType == null) {
-            isValid = false
             toast(getString(R.string.enter_car_type))
+            return false
         }
 
         if (carBrand == null) {
-            isValid = false
             toast(getString(R.string.enter_car_brand))
+            return false
         }
         if (carManufacture == null) {
-            isValid = false
             toast(getString(R.string.enter_car_manufacture))
+            return false
         }
 
 //        if (carImages.isEmpty() || currentUser.carPhotos.isNullOrEmpty()) {
-//            isValid = false
-//            toast(getString(R.string.choose_car_images))
+        //            toast(getString(R.string.choose_car_images))
+//                        return false
 //        }
 //
 //        if (documentsImages.isEmpty() || currentUser.documentsImages.isNullOrEmpty()) {
-//            isValid = false
+//
 //            toast(getString(R.string.choose_car_images))
+        // return false
 //        }
 
         return isValid

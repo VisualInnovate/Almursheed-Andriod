@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.common.base
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
+import com.visualinnovate.almursheed.utils.Utils.allCountries
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,7 +50,7 @@ open class BaseViewModel @Inject constructor(
 
     fun getCountryName(countryId: Int): String {
         var countryName = ""
-        Utils.allCountries.forEach {
+        for (it in allCountries) {
             if (it.country_id == countryId.toString()) {
                 countryName = it.country
             }
