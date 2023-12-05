@@ -39,32 +39,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_2x"
-                android:padding="@dimen/space_2x"
                 android:drawablePadding="@dimen/space_4x"
-                android:text="@string/select_your_destination"
                 android:fontFamily="@font/myriad_pro_bold"
                 android:gravity="center"
-                android:textSize="16sp"
+                android:padding="@dimen/space_2x"
+                android:text="@string/select_your_destination"
                 android:textColor="@color/white"
+                android:textSize="16sp"
+                app:drawableEndCompat="@drawable/ic_arrow_down"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo"
-                app:drawableEndCompat="@drawable/ic_arrow_down" />
+                app:layout_constraintTop_toBottomOf="@id/imgHomeLogo" />
 
             <TextView
                 android:id="@+id/searchView"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/space_10x"
                 android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginEnd="@dimen/space_2x"
                 android:layout_marginTop="@dimen/space_2x"
+                android:layout_marginEnd="@dimen/space_2x"
                 android:background="@drawable/rounded_search_view"
                 android:drawablePadding="@dimen/space_2x"
-                android:text="@string/search_murcheed_app"
                 android:fontFamily="@font/myriad_pro_regular"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/space_2x"
                 android:paddingEnd="@dimen/space_2x"
+                android:text="@string/search_murcheed_app"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/ic_search"
                 app:iconifiedByDefault="false"
@@ -88,9 +88,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/space_2x"
                 android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@id/searchView"
                 app:layout_constraintBottom_toBottomOf="@id/searchView"
                 app:layout_constraintEnd_toStartOf="@id/icNotification"
+                app:layout_constraintStart_toEndOf="@id/searchView"
                 app:layout_constraintTop_toTopOf="@id/searchView"
                 app:srcCompat="@drawable/ic_notification" />
 
@@ -156,12 +156,31 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/txtBestDrivers" />
 
+            <TextView
+                android:id="@+id/emptyDrivers"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:layout_marginHorizontal="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_2x"
+                android:gravity="center"
+                android:padding="@dimen/space_8x"
+                android:text="@string/no_drivers_in_this_country"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_20x_sp"
+                android:visibility="visible"
+                app:drawableTopCompat="@drawable/ic_person"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seeAllDivers" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvDriver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_4x"
                 android:orientation="horizontal"
+                android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/seeAllDivers"
                 tools:itemCount="3"
@@ -173,12 +192,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_2x"
+                android:layout_marginTop="@dimen/space_4x"
                 android:text="@string/best_guides"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_18x_sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvDriver" />
+                app:layout_constraintTop_toBottomOf="@id/emptyDrivers" />
 
             <TextView
                 android:id="@+id/seeAllGuides"
@@ -206,17 +225,33 @@
                 tools:listitem="@layout/item_driver" />
 
             <TextView
+                android:id="@+id/emptyGuides"
+                style="@style/TextStyleBold"
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:layout_marginStart="@dimen/space_4x"
+                android:layout_marginTop="@dimen/space_1x"
+                android:gravity="center"
+                android:padding="@dimen/space_8x"
+                android:text="@string/no_guides_in_this_country"
+                android:textColor="@color/black"
+                android:textSize="@dimen/space_20x_sp"
+                app:drawableTopCompat="@drawable/ic_person"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/seeAllGuides" />
+
+            <TextView
                 android:id="@+id/txtOffers"
                 style="@style/TextStyleBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_4x"
-                android:layout_marginTop="@dimen/space_1x"
+                android:layout_marginTop="@dimen/space_4x"
                 android:text="@string/offers"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_18x_sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rvGuide" />
+                app:layout_constraintTop_toBottomOf="@id/emptyGuides" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvOffer"

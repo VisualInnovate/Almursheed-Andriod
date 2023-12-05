@@ -14,6 +14,7 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.visible
@@ -51,6 +52,8 @@ class HomeFragment : BaseFragment() {
     private lateinit var offerAdapter: OfferAdapter
     private lateinit var locationAdapter: LocationAdapter
 
+    private var bannerList: ArrayList<BannersItem> = ArrayList()
+
     // m.nassar@visualinnovate.com
     private val btnBannerClickCallBack: (banner: BannersItem) -> Unit = { banner ->
         // val bundle = Bundle()
@@ -68,7 +71,7 @@ class HomeFragment : BaseFragment() {
         val bundle = Bundle()
         bundle.putParcelable("selectedDriverOrGuide", driver)
         bundle.putString("type", Constant.ROLE_DRIVER)
-        findNavController().customNavigate(R.id.hireFragment, data =  bundle)
+        findNavController().customNavigate(R.id.hireFragment, data = bundle)
     }
 
     private val onFavoriteLatestDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit =
@@ -83,7 +86,6 @@ class HomeFragment : BaseFragment() {
         findNavController().customNavigate(R.id.guideDetailsFragment, false, bundle)
     }
 
-
     private val onFavoriteLatestGuideClickCallBack: (guide: DriverAndGuideItem) -> Unit = { guide ->
         vm.selectedUserPosition = guide.id!!
         vm.addAndRemoveFavorite(guide.id.toString(), "1")
@@ -94,7 +96,7 @@ class HomeFragment : BaseFragment() {
         val bundle = Bundle()
         bundle.putParcelable("selectedDriverOrGuide", driver)
         bundle.putString("type", Constant.ROLE_GUIDES)
-        findNavController().customNavigate(R.id.hireFragment, data =  bundle)
+        findNavController().customNavigate(R.id.hireFragment, data = bundle)
     }
 
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit = { location ->
@@ -157,12 +159,12 @@ class HomeFragment : BaseFragment() {
         Log.d("DEBUG ", ".stateId  ${SharedPreference.getUser().stateId}")
         Log.d("DEBUG ", ".desCityId  ${SharedPreference.getUser().desCityId}")
         Log.d("DEBUG ", ".getCityId()  ${SharedPreference.getCityId()}")
-        if (SharedPreference.getUser().stateId != null) {
-            vm.getLatestDriver(SharedPreference.getUser().stateId)
-            vm.getLatestGuides(SharedPreference.getUser().stateId)
-        } else if (SharedPreference.getCityId() != null) {
+        if (SharedPreference.getCityId() != null) {
             vm.getLatestDriver(SharedPreference.getCityId())
             vm.getLatestGuides(SharedPreference.getCityId())
+        } else if (SharedPreference.getUser().stateId != null) {
+            vm.getLatestDriver(SharedPreference.getUser().stateId)
+            vm.getLatestGuides(SharedPreference.getUser().stateId)
         } else {
             vm.getLatestDriver(0)
             vm.getLatestGuides(0)
@@ -196,7 +198,6 @@ class HomeFragment : BaseFragment() {
         initLocationRecycler()
     }
 
-    private var bannerList: ArrayList<BannersItem> = ArrayList()
     private fun subscribeData() {
         // observe in all banner list
         vm.getAllBannerLiveData.observe(viewLifecycleOwner) {
@@ -236,14 +237,21 @@ class HomeFragment : BaseFragment() {
                     // bind data to the view
                     binding.page.visible()
                     binding.shimmer.gone()
-                    driverAdapter.submitData(it.data?.drivers)
-                    vm.latestGuidesList = it.data?.drivers
+
+                    if (it.data?.drivers?.isEmpty() == true) {
+                        binding.emptyDrivers.visibility = View.VISIBLE
+                        binding.rvDriver.visibility = View.INVISIBLE
+                    } else {
+                        binding.rvDriver.visible()
+                        binding.emptyDrivers.invisible()
+                        driverAdapter.submitData(it.data?.drivers)
+                        vm.latestGuidesList = it.data?.drivers
+                    }
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->DriverList", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -259,6 +267,7 @@ class HomeFragment : BaseFragment() {
                 else -> {}
             }
         }
+
         // observe in guides list
         vm.guideLatestLiveData.observe(viewLifecycleOwner) {
             when (it) {
@@ -266,15 +275,21 @@ class HomeFragment : BaseFragment() {
                     // bind data to the view
                     binding.page.visible()
                     binding.shimmer.gone()
-                    Log.d("Success22", "${it.data!!.drivers}")
-                    guideAdapter.submitData(it.data.drivers)
-                    vm.latestDriversList = it.data.drivers
+
+                    if (it.data?.drivers?.isEmpty() == true) {
+                        binding.rvGuide.invisible()
+                        binding.emptyGuides.visible()
+                    } else {
+                        binding.rvGuide.visible()
+                        binding.emptyGuides.invisible()
+                        guideAdapter.submitData(it.data?.drivers)
+                        vm.latestDriversList = it.data?.drivers
+                    }
                 }
 
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
-                    Log.d("Error->Guides", it.message)
                 }
 
                 is ResponseHandler.Loading -> {
@@ -439,14 +454,22 @@ class HomeFragment : BaseFragment() {
     private fun initDriverRecycler() {
         binding.rvDriver.apply {
             driverAdapter =
-                DriverAdapter(btnDriverClickCallBack, onFavoriteLatestDriverClickCallBack,btnBookNowDriverClickCallBack)
+                DriverAdapter(
+                    btnDriverClickCallBack,
+                    onFavoriteLatestDriverClickCallBack,
+                    btnBookNowDriverClickCallBack
+                )
             adapter = driverAdapter
         }
     }
 
     private fun initGuideRecycler() {
         binding.rvGuide.apply {
-            guideAdapter = GuideAdapter(btnGuideClickCallBack, onFavoriteLatestGuideClickCallBack, btnBookNowGuideClickCallBack)
+            guideAdapter = GuideAdapter(
+                btnGuideClickCallBack,
+                onFavoriteLatestGuideClickCallBack,
+                btnBookNowGuideClickCallBack
+            )
             adapter = guideAdapter
         }
     }

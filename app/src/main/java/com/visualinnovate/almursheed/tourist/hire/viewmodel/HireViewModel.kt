@@ -101,7 +101,7 @@ class HireViewModel @Inject constructor(
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
-                        allDrivers = (it.data?.drivers as ArrayList<DriverAndGuideItem>?)!!
+                        allDrivers = (it.data?.drivers as ArrayList<DriverAndGuideItem>)
                     }
 
                     else -> {}

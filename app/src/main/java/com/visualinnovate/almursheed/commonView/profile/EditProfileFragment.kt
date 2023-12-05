@@ -343,6 +343,7 @@ class EditProfileFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // save user
                     SharedPreference.saveUser(it.data?.user!!)
+                    SharedPreference.setCityId(it.data.user.destCityId)
                     toast(it.data.message.toString())
                 }
 
