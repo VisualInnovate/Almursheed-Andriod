@@ -92,17 +92,34 @@ data class User(
     @field:SerializedName("car_photo")
     var carPhotos: ArrayList<String>? = null,
 
-    // @field:SerializedName("document")
-    var documentsImages: ArrayList<String>? = null,
+    @field:SerializedName("document")
+    var documentsImages: String? = null,
 
     @field:SerializedName("languages")
-    var languages: ArrayList<LanguageItem>? = null,
+    var languages: ArrayList<LanguageResponse>? = null,
 
 ) : Parcelable {
+    fun getLanguageIds(): ArrayList<String> {
+        val lang: ArrayList<String> = ArrayList()
+        this.languages?.forEach {
+            lang.add(it.language?.id.toString())
+        }
+        return lang
+    }
     fun getLanguage(): ArrayList<String> {
         val lang: ArrayList<String> = ArrayList()
         this.languages?.forEach {
-            lang.add(it.lang)
+            lang.add(it.language?.lang.toString())
+        }
+        return lang
+    }
+    fun getCarPhotosString(): String? {
+        return this.carPhotos?.joinToString(" , ")
+    }
+    fun getCarImages(): ArrayList<String> {
+        val lang: ArrayList<String> = ArrayList()
+        this.carPhotos?.forEach {
+            lang.add(it)
         }
         return lang
     }

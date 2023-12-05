@@ -28,18 +28,12 @@ class ProfileViewModel @Inject constructor(
     application: Application,
 ) : BaseViewModel(apiService, application) {
 
-    // var updateDriveItem = UpdateDriveItem()
-    private val imagesList = ArrayList<MultipartBody.Part>()
 
     private val _updateDriverMutableData: MutableLiveData<ResponseHandler<UpdateResponse?>> =
         MutableLiveData()
     val updateDriverLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
         _updateDriverMutableData.toSingleEvent()
 
-    private val _updateTouristMutableData: MutableLiveData<ResponseHandler<UpdateResponse?>> =
-        MutableLiveData()
-    val updateTouristLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
-        _updateTouristMutableData.toSingleEvent()
 
     private val _personalInformation: MutableLiveData<ResponseHandler<UpdateResponse?>> =
         MutableLiveData()
@@ -50,11 +44,6 @@ class ProfileViewModel @Inject constructor(
         MutableLiveData()
     val editLocationLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
         _editLocation.toSingleEvent()
-
-    private val _updateGuideMutableData: MutableLiveData<ResponseHandler<UpdateResponse?>> =
-        MutableLiveData()
-    val updateGuideLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
-        _updateGuideMutableData.toSingleEvent()
 
     fun updateDriverCarInformation(
         currentUser: User,
@@ -92,21 +81,21 @@ class ProfileViewModel @Inject constructor(
         val carPhotos = if (checkCarImages(carImages).isNotEmpty()) {
             val list = ArrayList<MultipartBody.Part?>()
             carImages.forEach {
-                list.add(checkImagePath(it, "car_photos"))
+                list.add(checkImagePath(it, "car_photos[]"))
             }
             list
         } else {
             null
         }
 
-        var languages: ArrayList<RequestBody?>? = ArrayList()
+        val languages: ArrayList<RequestBody?>? = ArrayList()
         selectedLanguage.forEach {
             languages?.add(RequestBody.create("text/plain".toMediaTypeOrNull(), it))
         }
 
-        val documentsPhotos = if (checkCarImages(documentsImages).isNotEmpty()) {
+        val documentsPhoto = if (checkCarImages(documentsImages).isNotEmpty()) {
             val list = ArrayList<MultipartBody.Part?>()
-            carImages.forEach {
+            documentsImages.forEach {
                 list.add(checkImagePath(it, "document"))
             }
             list
@@ -124,9 +113,9 @@ class ProfileViewModel @Inject constructor(
                     carType,
                     carBrand,
                     carManufacture,
-                  //  languages,
+                    languages,
                     carPhotos,
-                    documentsPhotos,
+                    documentsPhoto?.get(0),
 
                 )
             }.collect {

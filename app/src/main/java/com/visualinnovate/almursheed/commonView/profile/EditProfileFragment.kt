@@ -109,6 +109,7 @@ class EditProfileFragment : BaseFragment() {
         }
 
         nationalityName = currentUser.nationality.toString()
+        countryId = currentUser.countryId.toString()
 
         if (currentUser.destCityId != null) {
             cityId = currentUser.destCityId.toString()
@@ -131,7 +132,7 @@ class EditProfileFragment : BaseFragment() {
         }
 
         binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) }
-            ?: getString(R.string.choose_country) // de msh htshtghl 3lshan l user mbyrg3losh country id homa byrg3o dest_city_id
+            ?: getString(R.string.choose_country)
 
         // binding.city.text = (currentUser.destCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
 

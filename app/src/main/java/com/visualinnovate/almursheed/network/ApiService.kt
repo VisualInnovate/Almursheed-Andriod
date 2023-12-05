@@ -192,9 +192,9 @@ interface ApiService {
         @Part("car_type") carType: RequestBody,
         @Part("car_brand_name") carBrand: RequestBody,
         @Part("car_manufacturing_date") carManufacture: RequestBody,
-     //   @Part("languages") languages: ArrayList<@JvmSuppressWildcards RequestBody?>?,
+        @Part("languages[]") languages: ArrayList<@JvmSuppressWildcards RequestBody?>?,
         @Part carImages: ArrayList<MultipartBody.Part?>?,
-        @Part documentImages: ArrayList<MultipartBody.Part?>?,
+        @Part documentImages: MultipartBody.Part?,
       //  @Part("email") email: RequestBody,
     ): Response<UpdateResponse>
 

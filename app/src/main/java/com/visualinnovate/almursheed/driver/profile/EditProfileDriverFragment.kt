@@ -51,6 +51,7 @@ class EditProfileDriverFragment : BaseFragment() {
     private var licenceNumber: String? = null
     private var carManufacture: String? = null
     private var languages: ArrayList<String> = ArrayList()
+    private var languagesIds: ArrayList<String> = ArrayList()
     private var carImages: ArrayList<String> = ArrayList()
     private var documentsImages: ArrayList<String> = ArrayList()
 
@@ -91,8 +92,8 @@ class EditProfileDriverFragment : BaseFragment() {
         carBrand = currentUser.carBrandName
         carManufacture = currentUser.carManufacturingDate
         licenceNumber = currentUser.licenceNumber
-        // language = currentUser.language
 
+        currentUser
         binding.edtGovernmentID.setText(currentUser.govId)
         binding.edtCarNumber.setText(currentUser.carNumber)
         binding.edtLicenseNumber.setText(currentUser.licenceNumber)
@@ -100,14 +101,17 @@ class EditProfileDriverFragment : BaseFragment() {
         binding.carBrand.text = currentUser.carBrandName ?: getString(R.string.car_brand)
         binding.carManufacture.text =
             currentUser.carManufacturingDate ?: getString(R.string.car_model)
+
         currentUser.carPhotos?.let {
-            binding.btnUploadCarPhoto.text = it.toString()
+            binding.btnUploadCarPhoto.text = currentUser.getCarPhotosString()
+        }
+        currentUser.documentsImages?.let {
+            binding.btnUploadDocument.text = it
         }
 
         binding.language.text = currentUser.getLanguage().joinToString(" , ")
-        carImages = currentUser.carPhotos ?: ArrayList()
-        documentsImages = currentUser.documentsImages ?: ArrayList()
         languages = currentUser.getLanguage()
+        languagesIds = currentUser.getLanguageIds()
     }
 
     private fun initToolbar() {
@@ -151,7 +155,7 @@ class EditProfileDriverFragment : BaseFragment() {
             if (validate()) {
                 saveData()
                 // call api driver create
-                vm.updateDriverCarInformation(currentUser, carImages, documentsImages, languages)
+                vm.updateDriverCarInformation(currentUser, carImages, documentsImages, languagesIds)
             }
         }
     }
@@ -166,7 +170,7 @@ class EditProfileDriverFragment : BaseFragment() {
     }
 
     private fun validate(): Boolean {
-        var isValid = true
+        val isValid = true
         governmentId = binding.edtGovernmentID.text.toString().trim()
         carNumber = binding.edtCarNumber.text.toString().trim()
         licenceNumber = binding.edtCarNumber.text.toString().trim()
@@ -198,16 +202,15 @@ class EditProfileDriverFragment : BaseFragment() {
             return false
         }
 
-//        if (carImages.isEmpty() || currentUser.carPhotos.isNullOrEmpty()) {
-        //            toast(getString(R.string.choose_car_images))
-//                        return false
-//        }
-//
-//        if (documentsImages.isEmpty() || currentUser.documentsImages.isNullOrEmpty()) {
-//
-//            toast(getString(R.string.choose_car_images))
-        // return false
-//        }
+        if (carImages.isEmpty() && currentUser.carPhotos.isNullOrEmpty()) {
+            toast(getString(R.string.choose_car_images))
+            return false
+        }
+
+        if (documentsImages.isEmpty() && currentUser.documentsImages.isNullOrEmpty()) {
+            toast(getString(R.string.choose_document_images))
+            return false
+        }
 
         return isValid
     }
@@ -280,24 +283,30 @@ class EditProfileDriverFragment : BaseFragment() {
 
     private fun showCarImageBottomSheet(images: ArrayList<String>) {
         // currentUser.carImages
-        if (images.isNotEmpty()) {
-            showImageSheetFragment?.dismiss()
-            val bundle = Bundle()
-            bundle.putStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT, images)
-            showImageSheetFragment = UploadImageSheetFragment(onSelectImageBtnClick = {
-                if (openChooserType == 1) {
-                    carImages.clear()
-                } else {
-                    documentsImages.clear()
-                }
-                handleCarImagesChange()
-            })
-            showImageSheetFragment?.arguments = bundle
-
-            showBottomSheet(showImageSheetFragment!!, "UploadImageBottomSheet")
-        } else {
+        // if (currentUser.carPhotos?.isNotEmpty() == true) {
+        showImageSheetFragment?.dismiss()
+        val bundle = Bundle()
+        bundle.putStringArrayList(Constant.UPLOAD_IMAGE_FRAGMENT, images)
+        showImageSheetFragment = UploadImageSheetFragment(onSelectImageBtnClick = {
+            if (openChooserType == 1) {
+                carImages.clear()
+            } else {
+                documentsImages.clear()
+            }
             handleCarImagesChange()
-        }
+        }, onDismissCallBack = {
+            if (openChooserType == 1) {
+                binding.btnUploadCarPhoto.text = carImages.joinToString(" , ")
+            } else {
+                binding.btnUploadDocument.text = documentsImages.joinToString(" , ") }
+        })
+        showImageSheetFragment?.arguments = bundle
+
+        showBottomSheet(showImageSheetFragment!!, "UploadImageBottomSheet")
+        //   }
+//        else {
+//            handleCarImagesChange()
+//        }
     }
 
     private fun handleCarImagesChange() {
@@ -406,7 +415,7 @@ class EditProfileDriverFragment : BaseFragment() {
     private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         allLanguages.forEach {
-            val item = ChooserItemModel(name = it.lang, isSelected = languages.contains(it.lang))
+            val item = ChooserItemModel(id = it.id.toString(), name = it.lang, isSelected = languages.contains(it.lang))
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -419,8 +428,10 @@ class EditProfileDriverFragment : BaseFragment() {
             setupLanguagesList(),
         ) { selectedLanguages ->
             languages.clear()
+            languagesIds.clear()
             selectedLanguages.forEach {
                 languages.add(it.name!!)
+                languagesIds.add((it.id.toString()))
             }
             binding.language.text = languages.joinToString(" , ")
         }

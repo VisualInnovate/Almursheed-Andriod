@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.commonView.bottomSheets
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,8 @@ import com.visualinnovate.almursheed.databinding.FragmentUploadImageBinding
 import com.visualinnovate.almursheed.utils.Constant
 
 class UploadImageSheetFragment(
-    val onSelectImageBtnClick: () -> Unit
+    val onSelectImageBtnClick: () -> Unit,
+    val onDismissCallBack: () -> Unit
 ) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentUploadImageBinding? = null
@@ -66,6 +68,10 @@ class UploadImageSheetFragment(
         return images!!
     }
 
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissCallBack.invoke()
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

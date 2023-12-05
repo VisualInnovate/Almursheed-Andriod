@@ -12,7 +12,9 @@ data class Language(
 
 @Parcelize
 data class LanguageItem(
+    @SerializedName("id")
     val id: Int = -1,
+    @SerializedName("lang")
     var lang: String = "",
     val isoCode: String = "",
     val isDefault: Int = -1,
