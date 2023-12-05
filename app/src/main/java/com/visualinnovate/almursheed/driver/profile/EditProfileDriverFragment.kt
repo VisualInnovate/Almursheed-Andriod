@@ -93,7 +93,6 @@ class EditProfileDriverFragment : BaseFragment() {
         carManufacture = currentUser.carManufacturingDate
         licenceNumber = currentUser.licenceNumber
 
-        currentUser
         binding.edtGovernmentID.setText(currentUser.govId)
         binding.edtCarNumber.setText(currentUser.carNumber)
         binding.edtLicenseNumber.setText(currentUser.licenceNumber)
@@ -216,7 +215,7 @@ class EditProfileDriverFragment : BaseFragment() {
     }
 
     private fun subscribeData() {
-        vm.updateDriverLiveData.observe(viewLifecycleOwner) {
+        vm.personalInformation.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view

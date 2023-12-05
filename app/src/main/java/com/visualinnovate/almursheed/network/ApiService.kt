@@ -199,17 +199,14 @@ interface ApiService {
     ): Response<UpdateResponse>
 
     @Multipart
-    @POST("tourists/update")
-    suspend fun updateTourist(
-        @Part("name") name: RequestBody,
-        // @Part("country_id") countryId: RequestBody,
-        @Part("dest_city_id") destCityId: RequestBody,
-        @Part("gender") gender: RequestBody,
-        @Part("nationality") nationality: RequestBody, // nationality
-        // @Part("phone") phone: RequestBody, // nationality
-        @Part personal_pictures: MultipartBody.Part?,
-        @Part("languages[0]") languages: Int = 8,
+    @POST("guides/update")
+    suspend fun updateGuideInformations(
+        @Part("gov_id") govId: RequestBody,
+        @Part("bio") bio: RequestBody,
+        @Part("languages[]") languages: ArrayList<@JvmSuppressWildcards RequestBody?>?,
     ): Response<UpdateResponse>
+
+
 
     @POST("drivers/update")
     suspend fun updateLocationDriver(
@@ -232,7 +229,6 @@ interface ApiService {
     @Multipart
     @POST("drivers/update")
     suspend fun updateDriverPersonalInformation(
-        @Part("email") email: RequestBody,
         @Part("name") name: RequestBody,
         @Part("nationality") nationality: RequestBody?,
         @Part("country_id") countryId: RequestBody,
@@ -240,7 +236,18 @@ interface ApiService {
         @Part("gender") gender: RequestBody,
         @Part("phone") phone: RequestBody,
         @Part personal_pictures: MultipartBody.Part?,
-        @Part("languages[0]") languages: Int = 8,
+    ): Response<UpdateResponse>
+
+    @Multipart
+    @POST("tourists/update")
+    suspend fun updateTourist(
+        @Part("name") name: RequestBody,
+        @Part("country_id") countryId: RequestBody,
+        @Part("dest_city_id") destCityId: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("nationality") nationality: RequestBody, // nationality
+        @Part("phone") phone: RequestBody, // nationality
+        @Part personal_pictures: MultipartBody.Part?,
     ): Response<UpdateResponse>
 
     @Multipart

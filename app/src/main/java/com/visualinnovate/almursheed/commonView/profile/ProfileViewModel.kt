@@ -28,13 +28,6 @@ class ProfileViewModel @Inject constructor(
     application: Application,
 ) : BaseViewModel(apiService, application) {
 
-
-    private val _updateDriverMutableData: MutableLiveData<ResponseHandler<UpdateResponse?>> =
-        MutableLiveData()
-    val updateDriverLiveData: LiveData<ResponseHandler<UpdateResponse?>> =
-        _updateDriverMutableData.toSingleEvent()
-
-
     private val _personalInformation: MutableLiveData<ResponseHandler<UpdateResponse?>> =
         MutableLiveData()
     val personalInformation: LiveData<ResponseHandler<UpdateResponse?>> =
@@ -74,9 +67,6 @@ class ProfileViewModel @Inject constructor(
 
         val govId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
-
-        val email =
-            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.email.toString())
 
         val carPhotos = if (checkCarImages(carImages).isNotEmpty()) {
             val list = ArrayList<MultipartBody.Part?>()
@@ -119,7 +109,36 @@ class ProfileViewModel @Inject constructor(
 
                 )
             }.collect {
-                _updateDriverMutableData.value = it
+                _personalInformation.value = it
+            }
+        }
+    }
+
+    fun updateGuideInformation(
+        currentUser: User,
+        selectedLanguage: ArrayList<String>,
+    ) {
+        val govId =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
+
+        val bio =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.bio.toString())
+
+        val languages: ArrayList<RequestBody?>? = ArrayList()
+        selectedLanguage.forEach {
+            languages?.add(RequestBody.create("text/plain".toMediaTypeOrNull(), it))
+        }
+
+        viewModelScope.launch {
+            safeApiCall {
+                // Make your API call here using Retrofit service or similar
+                apiService.updateGuideInformations(
+                    govId,
+                    bio,
+                    languages,
+                )
+            }.collect {
+                _personalInformation.value = it
             }
         }
     }
@@ -213,7 +232,6 @@ class ProfileViewModel @Inject constructor(
                 viewModelScope.launch {
                     safeApiCall {
                         apiService.updateDriverPersonalInformation(
-                            emailPart,
                             name,
                             nationalityPart,
                             countryIdPart,
@@ -254,10 +272,11 @@ class ProfileViewModel @Inject constructor(
                     safeApiCall {
                         apiService.updateTourist(
                             name,
-                            // countryIdPart,
+                            countryIdPart,
                             destCityIdPart,
                             genderPart,
                             nationalityPart,
+                            phonePart,
                             checkImagePath(imagePath, "personal_pictures"),
                         )
                     }.collect {

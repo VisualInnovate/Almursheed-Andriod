@@ -10,11 +10,12 @@ import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.User
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.showBottomSheet
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
-import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
+import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheetMultipleSelection
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.commonView.profile.ProfileViewModel
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileGuideBinding
@@ -33,14 +34,15 @@ class EditProfileGuideFragment : BaseFragment() {
     private lateinit var currentUser: User
 
     private var governmentId: String? = null
-    private var language: String? = null
     private var bio: String? = null
-    private var chooseTextBottomSheet: ChooseTextBottomSheet? = null
 
+    private var chooseTextBottomSheetMultipleSelection: ChooseTextBottomSheetMultipleSelection? = null
+    private var languages: ArrayList<String> = ArrayList()
+    private var languagesIds: ArrayList<String> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentEditProfileGuideBinding.inflate(inflater, container, false)
         return binding.root
@@ -58,8 +60,13 @@ class EditProfileGuideFragment : BaseFragment() {
     private fun initViews() {
         binding.edtBiography.setText(currentUser.bio)
         binding.edtGovernmentID.setText(currentUser.govId)
-    }
 
+        if (currentUser.getLanguage().isNotEmpty())
+        binding.language.text = currentUser.getLanguage().joinToString(" , ")
+
+        languages = currentUser.getLanguage()
+        languagesIds = currentUser.getLanguageIds()
+    }
 
     private fun setBtnListener() {
         binding.language.onDebouncedListener {
@@ -67,16 +74,34 @@ class EditProfileGuideFragment : BaseFragment() {
         }
 
         binding.btnSubmit.onDebouncedListener {
-            saveData()
+            if (validate()) {
+                saveData()
+            }
             // call api update guide
-            vm.updatePersonalInformation(currentUser, currentUser.personalPhoto)
+            vm.updateGuideInformation(currentUser, languagesIds)
         }
+    }
+
+    private fun validate(): Boolean {
+        val isValid = true
+        governmentId = binding.edtGovernmentID.text.toString().trim()
+        bio = binding.edtBiography.text.toString().trim()
+
+        if (governmentId?.isEmptySting() == true) {
+            toast(getString(R.string.enter_your_id))
+            return false
+        }
+        if (bio?.isEmptySting() == true) {
+            toast(getString(R.string.enter_your_biography))
+            return false
+        }
+
+        return isValid
     }
 
     private fun saveData() {
         currentUser.bio = binding.edtBiography.value
         currentUser.govId = binding.edtGovernmentID.value
-        // currentUser.languages?.add(language.toString())
     }
 
     private fun initToolbar() {
@@ -85,26 +110,31 @@ class EditProfileGuideFragment : BaseFragment() {
         binding.appBarEditProfileGuide.useBackButton(
             true,
             { findNavController().navigateUp() },
-            R.drawable.ic_back
+            R.drawable.ic_back,
         )
     }
 
     private fun showLanguagesChooser() {
-        chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(
+        chooseTextBottomSheetMultipleSelection?.dismiss()
+        chooseTextBottomSheetMultipleSelection = ChooseTextBottomSheetMultipleSelection(
             getString(R.string.language_text),
             setupLanguagesList(),
-            { data, _ ->
-                language = data.name
-                binding.language.text = language
-            })
-        showBottomSheet(chooseTextBottomSheet!!, "LanguagesBottomSheet")
+        ) { selectedLanguages ->
+            languages.clear()
+            languagesIds.clear()
+            selectedLanguages.forEach {
+                languages.add(it.name!!)
+                languagesIds.add((it.id.toString()))
+            }
+            binding.language.text = languages.joinToString(" , ")
+        }
+        showBottomSheet(chooseTextBottomSheetMultipleSelection!!, "LanguagesBottomSheet")
     }
 
     private fun setupLanguagesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         Utils.allLanguages.forEach {
-            val item = ChooserItemModel(name = it.lang, isSelected = it.lang == language)
+            val item = ChooserItemModel(id = it.id.toString(), name = it.lang, isSelected = languages.contains(it.lang))
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -144,5 +174,4 @@ class EditProfileGuideFragment : BaseFragment() {
         super.onDestroy()
         _binding = null
     }
-
 }
