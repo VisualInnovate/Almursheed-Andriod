@@ -97,7 +97,7 @@ class HireViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDriversByDistCityId(SharedPreference.getCityId()!!)
+                apiService.getAllDriversByDistCityId(SharedPreference.getCityId() ?: 0)
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
@@ -114,12 +114,12 @@ class HireViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllGuidesByDistCityId(SharedPreference.getCityId()!!.toInt())
+                apiService.getAllGuidesByDistCityId(SharedPreference.getCityId() ?: 0)
             }.collect {
                 // _allGuideMutableData.value = it
                 when (it) {
                     is ResponseHandler.Success -> {
-                        allGuides = (it.data?.drivers as ArrayList<DriverAndGuideItem>?)!!
+                        allGuides = (it.data?.drivers as ArrayList<DriverAndGuideItem>)
                     }
 
                     else -> {}
