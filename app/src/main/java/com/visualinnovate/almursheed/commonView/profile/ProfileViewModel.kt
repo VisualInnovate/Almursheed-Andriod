@@ -118,6 +118,9 @@ class ProfileViewModel @Inject constructor(
         currentUser: User,
         selectedLanguage: ArrayList<String>,
     ) {
+        val emailPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.email.toString())
+
         val govId =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.govId.toString())
 
@@ -132,8 +135,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.updateGuideInformations(
-                    govId,
+                apiService.updateGuideInformation(
+                    emailPart,
+                    // govId,
                     bio,
                     languages,
                 )
@@ -204,6 +208,9 @@ class ProfileViewModel @Inject constructor(
         val name =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.name.toString())
 
+        val distCountryIdPart =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.destCountryId.toString())
+
         val countryIdPart =
             RequestBody.create("text/plain".toMediaTypeOrNull(), currentUser.countryId.toString())
 
@@ -246,18 +253,19 @@ class ProfileViewModel @Inject constructor(
                 }
             }
 
-            Constant.ROLE_GUIDES -> {
+            Constant.ROLE_GUIDES,  Constant.ROLE_GUIDE -> {
                 viewModelScope.launch {
                     safeApiCall {
                         apiService.updateGuidePersonalInformation(
+                            emailPart,
                             name,
                             nationalityPart,
-                            // countryIdPart,
+                            countryIdPart,
                             destCityIdPart,
                             genderPart,
                             phonePart,
-                            govIdPart,
-                            bioPart,
+                            // govIdPart,
+                            // bioPart,
                             checkImagePath(imagePath, "personal_pictures"),
                             // languagePart
                         )
@@ -272,7 +280,7 @@ class ProfileViewModel @Inject constructor(
                     safeApiCall {
                         apiService.updateTourist(
                             name,
-                            countryIdPart,
+                            distCountryIdPart,
                             destCityIdPart,
                             genderPart,
                             nationalityPart,

@@ -200,13 +200,12 @@ interface ApiService {
 
     @Multipart
     @POST("guides/update")
-    suspend fun updateGuideInformations(
-        @Part("gov_id") govId: RequestBody,
+    suspend fun updateGuideInformation(
+        @Part("email") email: RequestBody,
+        // @Part("gov_id") govId: RequestBody,
         @Part("bio") bio: RequestBody,
         @Part("languages[]") languages: ArrayList<@JvmSuppressWildcards RequestBody?>?,
     ): Response<UpdateResponse>
-
-
 
     @POST("drivers/update")
     suspend fun updateLocationDriver(
@@ -242,7 +241,7 @@ interface ApiService {
     @POST("tourists/update")
     suspend fun updateTourist(
         @Part("name") name: RequestBody,
-        @Part("country_id") countryId: RequestBody,
+        @Part("dest_country_id") countryId: RequestBody,
         @Part("dest_city_id") destCityId: RequestBody,
         @Part("gender") gender: RequestBody,
         @Part("nationality") nationality: RequestBody, // nationality
@@ -253,16 +252,17 @@ interface ApiService {
     @Multipart
     @POST("guides/update")
     suspend fun updateGuidePersonalInformation(
+        @Part("email") email: RequestBody,
         @Part("name") name: RequestBody,
         @Part("nationality") nationality: RequestBody,
-        // @Part("country_id") countryId: RequestBody,
+        @Part("country_id") countryId: RequestBody,
         @Part("state_id") destCityId: RequestBody,
         @Part("gender") gender: RequestBody,
         @Part("phone") phone: RequestBody,
-        @Part("gov_id") gov_id: RequestBody,
-        @Part("bio") bio: RequestBody,
+        // @Part("gov_id") gov_id: RequestBody,
+        // @Part("bio") bio: RequestBody,
         @Part personal_pictures: MultipartBody.Part?,
-        @Part("languages[0]") languages: Int = 8,
+        // @Part("languages[0]") languages: Int = 8,
         // @Body requestBody: RequestBody,
     ): Response<UpdateResponse>
 

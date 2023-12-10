@@ -10,11 +10,12 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAccommodationDetailsBinding
-import com.visualinnovate.almursheed.tourist.accommodation.adapter.AccommodationImagesAdapter
 import com.visualinnovate.almursheed.home.model.AccommodationItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.tourist.accommodation.adapter.AccommodationImagesAdapter
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +56,6 @@ class AccommodationDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accommodationId = requireArguments().getInt(Constant.ACCOMMODATION_ID)
-        Log.d("onViewCreated", "accommodationId $accommodationId")
         initToolbar()
         initAccommodationImagesRecycler()
         setBtnListener()
@@ -78,7 +78,7 @@ class AccommodationDetailsFragment : BaseFragment() {
     }
 
     private fun initViews(accommodation: AccommodationItem?) {
-        if (accommodation?.media!!.isNotEmpty()){
+        if (accommodation?.media!!.isNotEmpty()) {
             Glide.with(requireContext())
                 .load(accommodation.media[0]?.originalUrl ?: R.drawable.img_banner)
                 .placeholder(R.drawable.ic_mursheed_logo)
@@ -86,8 +86,16 @@ class AccommodationDetailsFragment : BaseFragment() {
                 .into(binding.detailsImage)
         }
 
+        if (accommodation.infoStatus == 1) {
+            binding.ownerName.text = accommodation.ownerInfo?.localized
+            // binding.ownerPhone.text = accommodation.ownerPhone?.localized
+        } else {
+            binding.txtOwnerInfo.gone()
+            binding.ownerName.gone()
+            binding.ownerPhone.gone()
+        }
+
         binding.detailsDescription.text = accommodation.description?.localized
-        binding.ownerName.text = accommodation.ownerInfo?.localized
         binding.detailsCountry.text = accommodation.country?.country
         binding.detailsCity.text = accommodation.state?.state
     }

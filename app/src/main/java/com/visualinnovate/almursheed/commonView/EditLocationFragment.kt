@@ -99,7 +99,7 @@ class EditLocationFragment : BaseFragment() {
 
         binding.btnSubmit.onDebouncedListener {
             currentUser.countryId = countryId?.toInt()
-            currentUser.destCountryId = countryId?.toInt()
+            currentUser.destCountryId = countryId?.toInt().toString()
             currentUser.stateId = cityId?.toInt()
             currentUser.desCityId = cityId?.toInt()
             currentUser.destCityId = cityId?.toInt()
@@ -192,7 +192,7 @@ class EditLocationFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // save user
                     SharedPreference.setCityId(it.data?.user?.destCityId)
-                    SharedPreference.setCountryId(it.data?.user?.destCountryId)
+                    SharedPreference.setCountryId(it.data?.user?.destCountryId?.toInt())
                     toast(it.data?.message.toString())
                     findNavController().navigateUp()
                 }

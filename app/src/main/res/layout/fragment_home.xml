@@ -169,7 +169,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_20x_sp"
                 android:visibility="invisible"
-                app:drawableTopCompat="@drawable/ic_person"
+                app:drawableTopCompat="@drawable/ic_empty_drivers"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/seeAllDivers" />
@@ -237,7 +237,7 @@
                 android:text="@string/no_guides_in_this_country"
                 android:textColor="@color/black"
                 android:textSize="@dimen/space_20x_sp"
-                app:drawableTopCompat="@drawable/ic_person"
+                app:drawableTopCompat="@drawable/ic_empty_guides"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/seeAllGuides" />
 

@@ -39,6 +39,7 @@ class EditProfileGuideFragment : BaseFragment() {
     private var chooseTextBottomSheetMultipleSelection: ChooseTextBottomSheetMultipleSelection? = null
     private var languages: ArrayList<String> = ArrayList()
     private var languagesIds: ArrayList<String> = ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

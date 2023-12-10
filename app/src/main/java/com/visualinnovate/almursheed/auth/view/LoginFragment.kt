@@ -40,6 +40,7 @@ import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.databinding.FragmentLoginBinding
+import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -130,7 +131,16 @@ class LoginFragment : BaseFragment() {
                     // save user
                     SharedPreference.saveUser(it.data?.user)
                     SharedPreference.setUserToken(it.data?.token)
-                    SharedPreference.setCityId(it.data?.user?.desCityId)
+                    // SharedPreference.setCityId(it.data?.user?.desCityId)
+
+                    if (Constant.ROLE_TOURIST == it.data?.user?.type) {
+                        SharedPreference.setCityId(it.data.user?.desCityId ?: it.data.user?.destCityId)
+                        SharedPreference.setCountryId(it.data.user?.destCountryId?.toInt())
+                    } else {
+                        SharedPreference.setCityId(it.data?.user?.stateId)
+                        SharedPreference.setCountryId(it.data?.user?.countryId)
+                    }
+
                     SharedPreference.setNotificationId(it.data?.user?.notificationId)
                     if (rememberMe) SharedPreference.setUserLoggedIn(true)
 
@@ -203,11 +213,11 @@ class LoginFragment : BaseFragment() {
         // password = "123456789"
 
         // email = "mohamed.nasar8710@gmail.com"
-        email = "driver400@gmail.com"
+        // email = "driver400@gmail.com"
         // email = "mohamed.tourist1@gmail.com"
         // email = "guide100@gmail.com"
         // email = "nassar@gmail.com"
-        password = "123456789"
+        // password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

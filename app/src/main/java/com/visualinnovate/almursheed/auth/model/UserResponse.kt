@@ -63,7 +63,7 @@ data class User(
     var countryId: Int? = null,
 
     @field:SerializedName("dest_country_id") // dest_country_id
-    var destCountryId: Int? = null,
+    var destCountryId: String? = null,
 
     @field:SerializedName("des_city_id")
     var desCityId: Int? = null,

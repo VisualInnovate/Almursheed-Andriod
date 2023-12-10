@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +33,7 @@ import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
 import com.visualinnovate.almursheed.databinding.FragmentEditProfileBinding
+import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.Constant.ROLE_DRIVER
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDE
 import com.visualinnovate.almursheed.utils.Constant.ROLE_GUIDES
@@ -115,24 +115,34 @@ class EditProfileFragment : BaseFragment() {
             cityId = currentUser.destCityId.toString()
             binding.city.text =
                 (
-                    currentUser.destCityId?.let { vm.getCityName(it) }
-                        ?: getString(R.string.choose_city)
-                    )
+                        currentUser.destCityId?.let { vm.getCityName(it) }
+                            ?: getString(R.string.choose_city)
+                        )
         } else if (currentUser.desCityId != null) {
             cityId = currentUser.desCityId.toString()
             binding.city.text =
                 (
-                    currentUser.desCityId?.let { vm.getCityName(it) }
-                        ?: getString(R.string.choose_city)
-                    )
+                        currentUser.desCityId?.let { vm.getCityName(it) }
+                            ?: getString(R.string.choose_city)
+                        )
         } else {
             cityId = currentUser.stateId.toString()
             binding.city.text =
                 (currentUser.stateId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
         }
 
-        binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) }
-            ?: getString(R.string.choose_country)
+        if (currentUser.destCountryId != null) {
+            countryId = currentUser.destCountryId.toString()
+            binding.country.text =
+                (
+                        currentUser.destCountryId?.let { vm.getCountryName(it.toInt()) }
+                            ?: getString(R.string.choose_country)
+                        )
+        } else {
+            countryId = currentUser.countryId.toString()
+            binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) }
+                ?: getString(R.string.choose_country)
+        }
 
         // binding.city.text = (currentUser.destCityId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
 
@@ -227,7 +237,8 @@ class EditProfileFragment : BaseFragment() {
         currentUser.phone = binding.edtPhone.value
         currentUser.personalPhoto = imagePath
         currentUser.gender = gender.toString()
-        currentUser.countryId = countryId?.toInt()
+        currentUser.countryId = countryId?.toInt() ?: 0
+        currentUser.destCountryId = countryId?.toInt()?.toString() ?: ""
         currentUser.nationality = nationalityName
 
         currentUser.stateId = cityId?.toInt()
@@ -343,7 +354,14 @@ class EditProfileFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     // save user
                     SharedPreference.saveUser(it.data?.user!!)
-                    SharedPreference.setCityId(it.data.user.destCityId)
+                    // SharedPreference.setCityId(it.data.user.destCityId)
+                    if (Constant.ROLE_TOURIST == it.data.user.type) {
+                        SharedPreference.setCityId(it.data.user.desCityId ?: it.data.user.destCityId)
+                        SharedPreference.setCountryId(it.data.user.destCountryId?.toInt())
+                    } else {
+                        SharedPreference.setCityId(it.data.user.stateId)
+                        SharedPreference.setCountryId(it.data.user.countryId)
+                    }
                     toast(it.data.message.toString())
                 }
 
