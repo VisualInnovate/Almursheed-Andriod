@@ -80,12 +80,12 @@ interface ApiService {
 
     @GET("guides/latest")
     suspend fun getLatestGuide(
-        @Query("state_id") stateId: Int?,
+        @Query("country_id") stateId: Int?,
     ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/latest") // https://mursheed.visualinnovate.net/api/drivers/latest?stateId=0
     suspend fun getLatestDriver(
-        @Query("state_id") stateId: Int?,
+        @Query("country_id") stateId: Int?,
     ): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/all")

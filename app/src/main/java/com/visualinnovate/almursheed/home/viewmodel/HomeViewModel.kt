@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.home.model.*
@@ -90,7 +91,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestDriver(cityId!!)
+                apiService.getLatestDriver(SharedPreference.getCountryId())
             }.collect {
                 _driverLatestMutableData.value = it
             }
@@ -101,7 +102,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestGuide(cityId!!)
+                apiService.getLatestGuide(SharedPreference.getCountryId())
             }.collect {
                 _guideLatestMutableData.value = it
             }

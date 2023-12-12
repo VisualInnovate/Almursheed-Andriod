@@ -109,17 +109,18 @@ class LoginFragment : BaseFragment() {
             findNavController().customNavigate(R.id.forgetPasswordFragment)
         }
 
-        binding.btnFacebook.onDebouncedListener {
-        }
+        binding.btnFacebook.onDebouncedListener {}
         binding.btnGmail.onDebouncedListener {
             //  (requireActivity() as HandleSocialAuth).signWithGmail()
             initGoogleAuthentication()
         }
 
-        binding.btnLogin.onDebouncedListener {
+        binding.btnLogin.setOnClickListener {
             if (validate()) {
                 // call api login
                 vm.login(email, password)
+            } else {
+                binding.btnLogin.handleBtnAnimation()
             }
         }
     }
@@ -146,7 +147,7 @@ class LoginFragment : BaseFragment() {
 
                     PushNotifications.clearAllState()
                     pushNotificationsSetUserId()
-
+                    binding.btnLogin.handleBtnAnimation()
                     requireActivity().startHomeActivity()
                 }
 
@@ -164,6 +165,7 @@ class LoginFragment : BaseFragment() {
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
                     hideAuthLoading()
+                    binding.btnLogin.handleBtnAnimation()
                 }
 
                 else -> {}
@@ -214,14 +216,14 @@ class LoginFragment : BaseFragment() {
 
         // email = "mohamed.nasar8710@gmail.com"
         // email = "driver400@gmail.com"
-        // email = "mohamed.tourist1@gmail.com"
+        //  email = "mohamed.tourist1@gmail.com"
         // email = "guide100@gmail.com"
         // email = "nassar@gmail.com"
-        // password = "123456789"
+        //  password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)
-            isValid = false
+            return false
         } else if (!validEmail(email)) {
             binding.edtEmailAddress.error = getString(R.string.please_enter_a_valid_email)
             isValid = true
@@ -230,11 +232,11 @@ class LoginFragment : BaseFragment() {
         }
         if (password.isEmpty()) {
             binding.edtPassword.error = getString(R.string.required)
-            isValid = false
+            return false
         } else if (password.length < 8) {
             binding.edtPassword.error =
                 getString(R.string.password_should_be_more_than_8_characters)
-            isValid = false
+            return false
         } else {
             binding.edtPassword.error = null
         }
@@ -298,7 +300,7 @@ class LoginFragment : BaseFragment() {
 
                 Log.d(
                     "MyDebugData",
-                    "MainActivity : handleGoogleSignInResult :  " + account.displayName
+                    "MainActivity : handleGoogleSignInResult :  " + account.displayName,
                 )
                 Log.d("MyDebugData", "MainActivity : handleGoogleSignInResult :  " + account.email)
                 Log.d("MyDebugData", "MainActivity : handleGoogleSignInResult :  " + token)

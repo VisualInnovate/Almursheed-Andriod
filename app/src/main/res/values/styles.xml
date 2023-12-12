@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="customButtonViewStyle">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="textColor">@color/white</item>
+        <item name="textAllCaps">false</item>
+        <item name="fontFamily">@font/myriad_pro_bold</item>
+        <item name="android:layout_marginHorizontal">@dimen/space_3x</item>
+        <item name="textSize">@dimen/space_20x_sp</item>
+        <item name="background">@drawable/btn_selector</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>

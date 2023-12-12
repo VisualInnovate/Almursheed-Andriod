@@ -3,6 +3,7 @@ package com.visualinnovate.almursheed.tourist.location.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.databinding.ItemSeeAllLocationBinding
 import com.visualinnovate.almursheed.home.model.AttractivesItem
 
@@ -44,9 +45,9 @@ class SeeAllLocationAdapter(
 
     private fun bindData(holder: SeeAllLocationViewHolder, location: AttractivesItem) {
         // set data
-//        Glide.with(holder.itemView.context)
-//            .load(location.media?.get(0)?.originalUrl)
-//            .into(holder.imglocation)
+        Glide.with(holder.itemView.context)
+            .load(location.media?.get(0)?.originalUrl)
+            .into(holder.imglocation)
         holder.locationName.text = location.name?.localized
         holder.countryAndCity.text = location.country?.country
         /*// check favorite

@@ -7,9 +7,11 @@
     android:background="@drawable/bg_auth"
     tools:context=".auth.view.LoginFragment">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
 
         <com.visualinnovate.almursheed.common.AppBarView
             android:id="@+id/appBarLogin"
@@ -217,16 +219,23 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.visualinnovate.almursheed.common.CustomButton
             android:id="@+id/btnLogin"
-            style="@style/customButtonStyle"
+            style="@style/customButtonViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_12x"
             android:layout_marginBottom="@dimen/space_4x"
-            android:text="@string/login"
+            app:text="@string/login"
+            app:centerDrawable="@drawable/bg_minus_curved_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linSocial" />
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
