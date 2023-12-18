@@ -86,7 +86,7 @@
 
     <style name="RoundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/space_3x</item>
+        <item name="cornerSize">@dimen/space_2x</item>
     </style>
 
     <style name="CircleImageView" parent="">

@@ -2,25 +2,24 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/space_4x"
     android:layout_marginStart="@dimen/space_4x"
-    android:layout_marginEnd="@dimen/space_1x"
+    android:layout_marginTop="@dimen/space_4x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="155dp"
-        android:layout_height="140dp"
-        >
+        android:layout_width="160dp"
+        android:layout_height="140dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgLocation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:src="@drawable/img_driver"/>
+            android:src="@drawable/img_driver" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgFavorite"
             android:layout_width="wrap_content"
@@ -35,21 +34,21 @@
             style="@style/TextStyleBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/space_1x"
             android:layout_marginStart="@dimen/space_2x"
             android:layout_marginEnd="@dimen/space_1x"
-            android:layout_marginVertical="@dimen/space_1x"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
-            android:maxLines="1"
-            android:maxLength="15"
             android:marqueeRepeatLimit="marquee_forever"
+            android:maxLength="15"
+            android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintEnd_toStartOf="@id/imgGoogleMap"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/countryAndCity"
+            app:layout_constraintEnd_toStartOf="@id/imgGoogleMap"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
 
         <TextView
@@ -57,29 +56,29 @@
             style="@style/TextStyleRegular"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="start|center_vertical"
+            android:layout_marginVertical="@dimen/space_2x"
             android:layout_marginStart="@dimen/space_2x"
             android:layout_marginEnd="@dimen/space_1x"
-            android:layout_marginVertical="@dimen/space_2x"
             android:ellipsize="end"
+            android:gravity="start|center_vertical"
             android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/space_11x_sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgGoogleMap"
             app:layout_constraintEnd_toEndOf="@id/locationName"
+            app:layout_constraintEnd_toStartOf="@id/imgGoogleMap"
+            app:layout_constraintStart_toStartOf="parent"
             tools:text="Cairo" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgGoogleMap"
             android:layout_width="@dimen/space_7x"
             android:layout_height="@dimen/space_8x"
-            android:padding="@dimen/space_2x"
             android:layout_marginEnd="@dimen/space_1x"
-            app:layout_constraintTop_toTopOf="@id/locationName"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/space_2x"
             app:layout_constraintBottom_toBottomOf="@id/countryAndCity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/locationName"
             app:srcCompat="@drawable/ic_google_map" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

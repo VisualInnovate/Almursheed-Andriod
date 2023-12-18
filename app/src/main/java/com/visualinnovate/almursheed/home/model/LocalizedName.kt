@@ -16,7 +16,17 @@ data class LocalizedName(
     val gb: String? = null,
 
     @field:SerializedName("sa")
-    val sa: String? = null
+    val sa: String? = null,
+
+    @field:SerializedName("ru")
+    val ru: String? = null,
+
+    @field:SerializedName("ge")
+    val ge: String? = null,
+
+    @field:SerializedName("tr")
+    val tr: String? = null
+
 ) : Parcelable {
     val localized: String
         get() {

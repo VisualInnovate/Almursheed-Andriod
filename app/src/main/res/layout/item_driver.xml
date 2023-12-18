@@ -67,10 +67,11 @@
         <TextView
             android:id="@+id/username"
             style="@style/TextStyleBold"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/space_1x"
-            android:layout_marginTop="@dimen/space_2_5x"
+            android:layout_marginStart="@dimen/space_1x"
+            android:layout_marginEnd="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_1x"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:lines="1"
@@ -78,8 +79,8 @@
             android:maxLength="15"
             android:maxLines="1"
             android:textColor="@color/white"
-            android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintEnd_toStartOf="@id/imgStatus"
+            android:textSize="@dimen/space_13x_sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgUser"
             app:layout_constraintTop_toTopOf="@id/imgUser"
             tools:text="Ahmed khaled SSSSSSSSSSSSSSSSSSS" />
@@ -97,7 +98,7 @@
             app:layout_constraintTop_toBottomOf="@id/rating"
             app:srcCompat="@drawable/ic_active_online" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/price"
             style="@style/TextStyleBold"
             android:layout_width="0dp"
@@ -105,6 +106,7 @@
             android:layout_marginStart="@dimen/space_1x"
             android:layout_marginEnd="@dimen/space_2x"
             android:ellipsize="end"
+            android:visibility="gone"
             android:gravity="end|center_vertical"
             android:maxLines="1"
             android:textColor="@color/white"
@@ -113,7 +115,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgStatus"
             app:layout_constraintTop_toTopOf="@id/username"
-            tools:text="$00.00" />
+            tools:text="$00.00" />-->
 
         <TextView
             android:id="@+id/city"
@@ -127,8 +129,7 @@
             android:maxLines="1"
             android:textColor="@color/white"
             android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintBottom_toTopOf="@id/btnBookNow"
-            app:layout_constraintEnd_toEndOf="@id/price"
+            app:layout_constraintEnd_toEndOf="@id/username"
             app:layout_constraintStart_toStartOf="@id/username"
             app:layout_constraintTop_toBottomOf="@id/username"
             tools:text="Cairo" />

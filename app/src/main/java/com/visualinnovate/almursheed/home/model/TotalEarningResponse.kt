@@ -14,11 +14,11 @@ data class TotalEarningResponse(
 data class Profits(
 
 	@field:SerializedName("all_profits")
-	val allProfits: Int? = null,
+	val allProfits: Double? = null,
 
 	@field:SerializedName("guides_profits")
-	val guidesProfits: Int? = null,
+	val guidesProfits: Double? = null,
 
 	@field:SerializedName("drivers_profits")
-	val driversProfits: Int? = null
+	val driversProfits: Double? = null
 )

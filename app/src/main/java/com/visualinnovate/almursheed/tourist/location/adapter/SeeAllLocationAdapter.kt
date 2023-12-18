@@ -4,8 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.common.SharedPreference
+import com.visualinnovate.almursheed.common.gone
+import com.visualinnovate.almursheed.common.visible
 import com.visualinnovate.almursheed.databinding.ItemSeeAllLocationBinding
 import com.visualinnovate.almursheed.home.model.AttractivesItem
+import com.visualinnovate.almursheed.utils.Constant
 
 class SeeAllLocationAdapter(
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit
@@ -45,12 +49,22 @@ class SeeAllLocationAdapter(
 
     private fun bindData(holder: SeeAllLocationViewHolder, location: AttractivesItem) {
         // set data
+
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER
+            || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
+        ) {
+            binding.imgFavorite.gone()
+        } else {
+            binding.imgFavorite.visible()
+        }
+
         Glide.with(holder.itemView.context)
             .load(location.media?.get(0)?.originalUrl)
             .into(holder.imglocation)
         holder.locationName.text = location.name?.localized
         holder.countryAndCity.text = location.country?.country
-        /*// check favorite
+
+    /*// check favorite
         if (!location.locationFavorite) { // false -> un favorite
             holder.imgFavorite.setImageResource(R.drawable.ic_unfavorite)
         } else {

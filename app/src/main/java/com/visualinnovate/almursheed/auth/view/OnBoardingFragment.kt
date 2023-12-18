@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.databinding.FragmentOnBoardingBinding
 
 class OnBoardingFragment : BaseFragment() {
@@ -33,7 +34,7 @@ class OnBoardingFragment : BaseFragment() {
 
     private fun setBtnListener() {
         binding.btnGetStarted.setOnClickListener {
-            findNavController().navigate(R.id.action_onBoarding_to_registerType)
+            findNavController().customNavigate(R.id.action_onBoarding_to_registerType)
         }
     }
 }

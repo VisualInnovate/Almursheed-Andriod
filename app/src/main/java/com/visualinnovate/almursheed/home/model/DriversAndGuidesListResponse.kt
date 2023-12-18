@@ -58,8 +58,8 @@ data class DriverAndGuideItem(
     @field:SerializedName("car_date")
     val carDate: String? = null,
 
-    @field:SerializedName("lang")
-    val lang: List<LanguageItem?>? = null,
+    @field:SerializedName("languages")
+    val languages: List<LanguageItem?>? = null,
 
     @field:SerializedName("car_type")
     val carType: String? = null,
@@ -102,4 +102,12 @@ data class DriverAndGuideItem(
 
     @field:SerializedName(value = "price_services", alternate = ["priceServices"])
     val priceServices: ArrayList<PriceItem?>? = null,
-): Parcelable
+): Parcelable {
+    fun getLanguage(): ArrayList<String> {
+        val lang: ArrayList<String> = ArrayList()
+        this.languages?.forEach {
+            lang.add(it?.lang.toString())
+        }
+        return lang
+    }
+}

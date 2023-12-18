@@ -5,14 +5,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginVertical="@dimen/space_2x"
-    android:layout_marginStart="@dimen/space_1_5x"
-    android:layout_marginEnd="@dimen/space_2x"
+    android:layout_marginStart="@dimen/space_2x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/imgLocation"
-        android:layout_width="170dp"
+        android:layout_width="180dp"
         android:layout_height="160dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -50,21 +49,21 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:paddingStart="@dimen/space_2x"
+            android:text="0.0"
             android:textColor="@color/white"
             android:textSize="@dimen/space_9x_sp"
+            app:drawableStartCompat="@drawable/ic_star"
             app:layout_constraintBottom_toBottomOf="@id/imgGuide"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="4.0"
-            app:drawableStartCompat="@drawable/ic_star" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/guideName"
             style="@style/TextStyleBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_2x"
             android:layout_marginHorizontal="@dimen/space_3x"
+            android:layout_marginTop="@dimen/space_2x"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -72,9 +71,9 @@
             android:maxLines="1"
             android:textColor="@color/black"
             android:textSize="@dimen/space_12x_sp"
-            app:layout_constraintTop_toBottomOf="@id/rating"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rating"
             tools:text="Ahmed khaled " />
 
         <TextView
@@ -82,20 +81,20 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_2x"
             android:layout_marginStart="@dimen/space_2x"
+            android:layout_marginTop="@dimen/space_2x"
             android:drawablePadding="@dimen/space_1x"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:gravity="center_vertical"
             android:maxLength="10"
+            android:maxLines="1"
+            android:textColor="@color/black"
             android:textSize="@dimen/space_10x_sp"
-            app:layout_constraintTop_toBottomOf="@id/guideName"
-            app:layout_constraintStart_toStartOf="parent"
+            app:drawableStartCompat="@drawable/ic_location_primary"
             app:layout_constraintEnd_toStartOf="@id/price"
-            tools:text="Cairo"
-            app:drawableStartCompat="@drawable/ic_location_primary" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideName"
+            tools:text="Cairo" />
 
         <TextView
             android:id="@+id/price"
@@ -104,16 +103,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_1_5x"
             android:layout_marginEnd="@dimen/space_3x"
-            app:drawableStartCompat="@drawable/ic_money_dollar_coin"
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
             android:maxLines="1"
+            android:textColor="@color/black"
             android:textSize="@dimen/space_10x_sp"
-            app:layout_constraintTop_toBottomOf="@id/guideName"
-            app:layout_constraintStart_toEndOf="@id/city"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_money_dollar_coin"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="$00.00" />
+            app:layout_constraintStart_toEndOf="@id/city"
+            app:layout_constraintTop_toBottomOf="@id/guideName"
+            tools:text="$00.00" />
 
         <TextView
             android:id="@+id/language"
@@ -123,15 +123,15 @@
             android:layout_marginHorizontal="@dimen/space_3x"
             android:drawablePadding="@dimen/space_1x"
             android:gravity="center_vertical"
-            android:textColor="@color/black"
             android:maxLines="1"
+            android:textColor="@color/black"
             android:textSize="@dimen/space_11x_sp"
-            app:layout_constraintTop_toBottomOf="@id/city"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:drawableStartCompat="@drawable/ic_country"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="English, Arabic"
-            app:drawableStartCompat="@drawable/ic_country" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/city"
+            tools:text="English, Arabic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

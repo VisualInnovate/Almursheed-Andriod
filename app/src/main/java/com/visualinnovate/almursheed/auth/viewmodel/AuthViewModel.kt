@@ -24,7 +24,7 @@ class AuthViewModel @Inject constructor(
     private val _loginMutableData: MutableLiveData<ResponseHandler<UserResponse?>> =
         MutableLiveData()
     val loginLiveData: LiveData<ResponseHandler<UserResponse?>> =
-        _loginMutableData
+        _loginMutableData.toSingleEvent()
 
     private val _forgetPasswordMutableData: MutableLiveData<ResponseHandler<MessageResponse?>> =
         MutableLiveData()

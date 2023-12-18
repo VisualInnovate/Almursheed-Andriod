@@ -106,6 +106,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toStartOf="@id/driverPrice"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/driverName" />
@@ -121,12 +122,12 @@
                     android:ellipsize="end"
                     android:gravity="start"
                     android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
                     android:maxLength="15"
                     android:maxLines="1"
                     android:text="@string/_00_00"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/space_12x_sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/txtPrice"
                     app:layout_constraintTop_toBottomOf="@id/driverName" />
@@ -157,8 +158,6 @@
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
                     android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:maxLength="15"
                     android:maxLines="1"
                     android:padding="@dimen/space_2x"
                     android:text="@string/nationality"
@@ -179,10 +178,6 @@
                     android:drawablePadding="@dimen/space_2x"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:maxLength="15"
-                    android:maxLines="1"
                     android:padding="@dimen/space_2x"
                     android:text="@string/countryy"
                     android:textColor="@color/black"
@@ -218,8 +213,6 @@
                     android:drawablePadding="@dimen/space_2x"
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
-                    android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
                     android:padding="@dimen/space_2x"
                     android:text="@string/english"
                     android:textColor="@color/black"
@@ -242,12 +235,12 @@
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
                     android:lines="1"
-                    android:marqueeRepeatLimit="marquee_forever"
                     android:padding="@dimen/space_2x"
                     android:text="@string/arabic"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_12x_sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:drawableStartCompat="@drawable/ic_country"
                     app:layout_constraintStart_toEndOf="@id/languageEnglish"
                     app:layout_constraintTop_toBottomOf="@id/txtLanguage" />
@@ -276,12 +269,11 @@
                     android:ellipsize="end"
                     android:gravity="start"
                     android:lineSpacingExtra="8sp"
-                    android:maxLines="31"
                     android:marqueeRepeatLimit="marquee_forever"
-                    android:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our ="
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_14x_sp"
-                    app:layout_constraintTop_toBottomOf="@id/txtDescription" />
+                    app:layout_constraintTop_toBottomOf="@id/txtDescription"
+                    tools:text="Our hotel consist on 15 floor and 300 bedrooms , offers stunning views from every angle. Spanning across 1 kilo from city center cairo, our =" />
 
                 <TextView
                     android:id="@+id/txtCarInfo"
@@ -339,15 +331,14 @@
                                 android:ellipsize="end"
                                 android:gravity="start|center_vertical"
                                 android:lines="1"
-                                android:marqueeRepeatLimit="marquee_forever"
-                                android:text="Accent 2022"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/space_10x_sp"
                                 app:drawableStartCompat="@drawable/ic_car_trunk"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toStartOf="@id/view"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/imgCar" />
+                                app:layout_constraintTop_toBottomOf="@id/imgCar"
+                                tools:text="Accent 2022" />
 
                             <View
                                 android:id="@+id/view"
@@ -368,16 +359,14 @@
                                 android:drawablePadding="@dimen/space_1_5x"
                                 android:ellipsize="end"
                                 android:gravity="start|center_vertical"
-                                android:lines="1"
-                                android:marqueeRepeatLimit="marquee_forever"
-                                android:text="SUV"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/space_10x_sp"
                                 app:drawableStartCompat="@drawable/ic_car_trunk"
                                 app:layout_constraintBottom_toBottomOf="@id/carName"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/view"
-                                app:layout_constraintTop_toTopOf="@id/carName" />
+                                app:layout_constraintTop_toTopOf="@id/carName"
+                                tools:text="SUV" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -392,6 +381,7 @@
                     android:layout_marginHorizontal="@dimen/space_3x"
                     android:layout_marginTop="@dimen/space_3x"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/cvCarInfo"
                     tools:itemCount="4"

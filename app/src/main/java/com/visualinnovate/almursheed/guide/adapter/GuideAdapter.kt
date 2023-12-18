@@ -61,6 +61,7 @@ class GuideAdapter(
     @SuppressLint("SetTextI18n")
     private fun bindData(holder: GuideViewHolder, guide: DriverAndGuideItem) {
         holder.imgStatus.invisible()
+
         if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER
             || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
         ) {

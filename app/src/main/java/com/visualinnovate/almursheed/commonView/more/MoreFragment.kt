@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.pusher.pushnotifications.PushNotifications
@@ -97,7 +96,7 @@ class MoreFragment : BaseFragment() {
         }
 
         binding.aboutUs.onDebouncedListener {
-            // findNavController().customNavigate(R.id.priceFragment)
+            findNavController().customNavigate(R.id.aboutUsFragment)
         }
 
         binding.editLocation.onDebouncedListener {

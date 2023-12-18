@@ -18,6 +18,20 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/title"
+            style="@style/TextStyleBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_4x"
+            android:gravity="center|center_vertical"
+            android:lineSpacingExtra="@dimen/space_2x"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_16x_sp"
+            app:layout_constraintTop_toBottomOf="@id/appBar"
+            tools:text="title title title " />
+
+        <TextView
             android:id="@+id/content"
             style="@style/TextStyleRegular"
             android:layout_width="match_parent"
@@ -28,7 +42,9 @@
             android:textColor="@color/black"
             android:textSize="@dimen/space_15x_sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
             tools:text="content content content content content content " />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

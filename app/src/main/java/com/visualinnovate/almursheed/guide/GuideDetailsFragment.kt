@@ -120,6 +120,13 @@ class GuideDetailsFragment : BaseFragment() {
         binding.guideCountry.text = guide?.state ?: ""
         binding.guideDescription.text = guide?.bio ?: ""
 
+        guide?.languages.let {
+            if (it?.isNotEmpty() == true) {
+                binding.languageEnglish.text = guide?.getLanguage()?.joinToString(" , ")
+            } else {
+                binding.languageEnglish.text = getString(R.string.no_languages)
+            }
+        }
 
         guide?.priceServices?.let {
             if (it.isNotEmpty()) {

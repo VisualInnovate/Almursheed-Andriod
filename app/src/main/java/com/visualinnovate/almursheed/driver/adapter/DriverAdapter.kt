@@ -31,7 +31,7 @@ class DriverAdapter(
         val imgFavorite = itemView.imgFavorite
         val imgStatus = itemView.imgStatus
         val username = itemView.username
-        val price = itemView.price
+        // val price = itemView.price
         val city = itemView.city
         val rating = itemView.rating
         private val btnBookNow = itemView.btnBookNow
@@ -89,13 +89,13 @@ class DriverAdapter(
         holder.city.text = driver.stateName
         holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
-        driver.priceServices?.let {
+        /*driver.priceServices?.let {
             if (it.isNotEmpty()) {
                 holder.price.text = "$" + it[0]?.price.toString()
             } else {
                 holder.price.text = "$0.0"
             }
-        }
+        }*/
 
         // check status
         /*if (driver.status == 1) { // false -> offline

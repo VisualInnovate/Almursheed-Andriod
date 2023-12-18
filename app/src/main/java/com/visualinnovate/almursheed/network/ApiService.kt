@@ -2,6 +2,7 @@ package com.visualinnovate.almursheed.network
 
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
+import com.visualinnovate.almursheed.commonView.more.aboutUs.model.AboutUsResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.ChangeStatusResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
 import com.visualinnovate.almursheed.commonView.myOrders.models.RateResponse
@@ -340,6 +341,6 @@ interface ApiService {
     @GET("Notifications/markAsRead")
     suspend fun getMarkAsReadNotifications(): Response<NotificationResponse>
 
-    @GET("api/pages")
-    suspend fun getAboutUsPage(): Response<NotificationResponse>
+    @GET("pages")
+    suspend fun getAboutUsPage(): Response<AboutUsResponse>
 }

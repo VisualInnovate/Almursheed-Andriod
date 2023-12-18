@@ -31,8 +31,11 @@ data class AttractiveLocation(
 	@field:SerializedName("state")
 	val state: String? = null,
 
+	@field:SerializedName("location")
+	val location: String? = null,
+
 	@field:SerializedName("photos")
-	val photos: List<String?>? = null,
+	val photos: ArrayList<String?>? = null,
 
 	@field:SerializedName("country_id")
 	val countryId: Int? = null,
@@ -41,7 +44,7 @@ data class AttractiveLocation(
 	val url: Any? = null,
 
 	@field:SerializedName("long")
-	val jsonMemberLong: String? = null,
+	val long: String? = null,
 
 	@field:SerializedName("lat")
 	val lat: String? = null,

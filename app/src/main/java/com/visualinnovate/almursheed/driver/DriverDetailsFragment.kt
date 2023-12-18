@@ -122,7 +122,7 @@ class DriverDetailsFragment : BaseFragment() {
 
         if (driver?.carPhoto?.isNotEmpty() == true) {
             Glide.with(requireContext())
-                .load(driver?.carPhoto?.get(0) ?: "")
+                .load(driver.carPhoto.get(0) ?: "")
                 .into(binding.imgCar)
         }
 
@@ -146,6 +146,14 @@ class DriverDetailsFragment : BaseFragment() {
 
         binding.driverReview.setCompoundDrawables(null, null, resources.getDrawable(rateImage), null)
         binding.driverReview.text = "(${driver?.count_rate} review)"
+
+        driver?.languages.let {
+            if (it?.isNotEmpty() == true) {
+                binding.languageEnglish.text = driver?.getLanguage()?.joinToString(" , ")
+            } else {
+                binding.languageEnglish.text = getString(R.string.no_languages)
+            }
+        }
 
         driver?.priceServices?.let {
             if (it.isNotEmpty()) {

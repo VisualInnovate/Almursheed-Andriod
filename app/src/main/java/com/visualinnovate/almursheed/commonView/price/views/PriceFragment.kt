@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -18,7 +19,6 @@ import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemMo
 import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.commonView.price.viewModels.PriceViewModel
 import com.visualinnovate.almursheed.databinding.FragmentPriceBinding
-import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,7 +78,11 @@ class PriceFragment : BaseFragment() {
         Utils.filterCitiesByCountryId()
         val chooserItemList = ArrayList<ChooserItemModel>()
         cities.forEach {
-            val item = ChooserItemModel(name = it.state, id = it.stateId, isSelected = vm.cityName == it.state)
+            val item = ChooserItemModel(
+                name = it.state,
+                id = it.stateId,
+                isSelected = vm.cityName == it.state
+            )
             chooserItemList.add(item)
         }
         return chooserItemList
@@ -119,11 +123,18 @@ class PriceFragment : BaseFragment() {
     private fun validate(): Boolean {
         var isValid = true
         price = binding.price.text.toString().trim()
+
         if (price.isNotEmpty()) {
             binding.price.error = null
         } else {
             binding.price.error = getString(R.string.required)
             isValid = false
+        }
+        if (cityId == null) {
+            binding.city.error = getString(R.string.required)
+            isValid = false
+        } else {
+            binding.city.error = null
         }
 
         /*for ((index, value) in myPricesAdapter.getPricesList().withIndex()) {

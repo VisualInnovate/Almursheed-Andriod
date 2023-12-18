@@ -47,24 +47,6 @@ data class State(
 	val longitude: String? = null
 )
 
-data class Address(
-
-	@field:SerializedName("gb")
-	val gb: String? = null,
-
-	@field:SerializedName("sa")
-	val sa: String? = null
-)
-
-data class OwnerInfo(
-
-	@field:SerializedName("gb")
-	val gb: String? = null,
-
-	@field:SerializedName("sa")
-	val sa: String? = null
-)
-
 data class AccommodationItem(
 
 	@field:SerializedName("country")
@@ -88,17 +70,11 @@ data class AccommodationItem(
 	@field:SerializedName("description")
 	val description: LocalizedName? = null,
 
-	@field:SerializedName("created_at")
-	val createdAt: String? = null,
-
 	@field:SerializedName("media")
-	val media: List<MediaItem?>? = null,
+	val media: ArrayList<MediaItem?>? = null,
 
 	@field:SerializedName("pictures")
 	val pictures: Pictures? = null,
-
-	@field:SerializedName("updated_at")
-	val updatedAt: String? = null,
 
 	@field:SerializedName("name")
 	val name: LocalizedName? = null,

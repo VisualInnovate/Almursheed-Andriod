@@ -168,6 +168,7 @@
     <string name="our_drivers">Our Drivers</string>
     <string name="price">Price</string>
     <string name="location_info">Location Info</string>
+    <string name="location_address">Location Address</string>
     <string name="description">Description</string>
     <string name="details">Details</string>
     <string name="available">Available</string>
@@ -324,5 +325,8 @@
     <string name="no_drivers_in_this_country">No drivers in this country.</string>
     <string name="no_guides_in_this_country">No guides in this country.</string>
     <string name="choose_document_images">Select Documents Images</string>
+    <string name="no_languages">No languages</string>
+    <string name="text_copied_to_clipboard">Text copied to clipboard</string>
+    <string name="maps_not_installed">Maps not installed</string>
 
 </resources>

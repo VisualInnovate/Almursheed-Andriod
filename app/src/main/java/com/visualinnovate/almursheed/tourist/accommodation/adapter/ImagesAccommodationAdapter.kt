@@ -4,25 +4,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.databinding.ItemAccommodationImageBinding
+import com.visualinnovate.almursheed.home.model.MediaItem
 
-class AccommodationImagesAdapter(
-    private val btnAccommodationClickCallBack: (image: String) -> Unit
-) : RecyclerView.Adapter<AccommodationImagesAdapter.AccommodationImagesViewHolder>() {
+class ImagesAccommodationAdapter(
+    private val btnImageItemClickCallBack: (image: MediaItem) -> Unit
+) : RecyclerView.Adapter<ImagesAccommodationAdapter.AccommodationImagesViewHolder>() {
 
-    private var imagesList: List<String> = ArrayList()
+    private var imagesList: ArrayList<MediaItem?>? = ArrayList()
+    private var imagesStringList: ArrayList<String?>? = ArrayList()
 
     private lateinit var binding: ItemAccommodationImageBinding
 
     inner class AccommodationImagesViewHolder(itemView: ItemAccommodationImageBinding) :
         RecyclerView.ViewHolder(itemView.root) {
-        val imgAccommodation = itemView.imgAccommodation
-
-        init {
-            itemView.root.setOnClickListener {
-                btnAccommodationClickCallBack.invoke(imagesList[adapterPosition])
-            }
-        }
+        val image = itemView.image
     }
 
     override fun onCreateViewHolder(
@@ -39,27 +36,37 @@ class AccommodationImagesAdapter(
     }
 
     override fun onBindViewHolder(holder: AccommodationImagesViewHolder, position: Int) {
-        val image = imagesList[position]
+        val image = imagesList?.get(position)
         // bind view
         bindData(holder, image)
     }
 
     private fun bindData(
         holder: AccommodationImagesViewHolder,
-        image: String
+        image: MediaItem?
     ) {
         // set data
         Glide.with(holder.itemView.context)
-            .load(image)
-            .into(holder.imgAccommodation)
+            .load(image?.originalUrl)
+            .error(R.drawable.ic_mursheed_logo)
+            .into(holder.image)
+
+        holder.image.setOnClickListener {
+            btnImageItemClickCallBack.invoke(image ?: MediaItem())
+        }
     }
 
     override fun getItemCount(): Int {
-        return imagesList.size
+        return imagesList?.size ?: 0
     }
 
-    fun submitData(data: ArrayList<String>) {
+    fun submitData(data: ArrayList<MediaItem?>?) {
         imagesList = data
+        notifyDataSetChanged()
+    }
+
+    fun submitStringData(data: ArrayList<String?>?) {
+        imagesStringList = data
         notifyDataSetChanged()
     }
 }

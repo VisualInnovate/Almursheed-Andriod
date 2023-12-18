@@ -66,16 +66,25 @@ class AllGuideAdapter(
         Glide.with(holder.itemView.context)
             .load(guide.imageBackground)
             .into(holder.imgGuide)
+
         holder.guideName.text = guide.name
         holder.city.text = guide.stateName
-        // holder.language.text = guide.language
         holder.rating.text = (guide.totalRating ?: 0.0).toString()
+
+        guide.languages.let {
+            if (it?.isNotEmpty() == true) {
+                holder.language.text = guide.getLanguage().joinToString(" , ")
+            } else {
+                holder.language.text = holder.itemView.context.getString(R.string.no_languages)
+            }
+        }
 
         guide.priceServices?.let {
             if (it.isNotEmpty()) {
                 holder.price.text = it[0]?.price.toString() +" $"
             }
         }
+
         // check favorite
         if (guide.isFavourite == false) { // false -> un favorite
             holder.imgFavorite.setImageResource(R.drawable.ic_un_favorite)

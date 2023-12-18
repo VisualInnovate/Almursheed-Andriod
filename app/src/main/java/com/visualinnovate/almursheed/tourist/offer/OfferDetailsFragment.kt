@@ -2,7 +2,6 @@ package com.visualinnovate.almursheed.tourist.offer
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +49,6 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
 
         // get argument
         offerId = requireArguments().getInt(Constant.OFFER_ID)
-        Log.d("arguments?", "offerArgs $offerId")
 
         // fun clicked
         setBtnListener()
@@ -64,14 +62,14 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun initView(offer: Offer?) {
-        binding.txtBoatTour.text = offer?.title?.localized
+        binding.txtBoatTour.text = offer?.title ?: ""
 
         binding.realPrice.invisible()
         Glide.with(requireContext())
             .load(offer?.media?.get(0)?.originalUrl)
             .into(binding.imgOffer)
 
-        binding.OfferDescription.text = offer?.title?.localized
+        binding.OfferDescription.text = offer?.title ?: ""
         binding.price.text = "${offer?.price?.toString()} $"
     }
 

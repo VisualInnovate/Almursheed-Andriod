@@ -63,7 +63,7 @@ class HomeFragment : BaseFragment() {
 
     private val btnDriverClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
         val bundle = Bundle()
-        bundle.putInt(Constant.DRIVER_ID, driver.id!!)
+        bundle.putInt(Constant.DRIVER_ID, driver.id ?: 0)
         findNavController().customNavigate(R.id.driverDetailsFragment, false, bundle)
     }
 
@@ -90,7 +90,6 @@ class HomeFragment : BaseFragment() {
         vm.selectedUserPosition = guide.id!!
         vm.addAndRemoveFavorite(guide.id.toString(), "1")
     }
-
 
     private val btnBookNowGuideClickCallBack: (driver: DriverAndGuideItem) -> Unit = { driver ->
         val bundle = Bundle()
@@ -445,7 +444,7 @@ class HomeFragment : BaseFragment() {
                 val nextItem =
                     if (binding.rvBanner.currentItem == bannerList.size - 1) 0 else binding.rvBanner.currentItem + 1
                 binding.rvBanner.setCurrentItem(nextItem, true)
-                delay(3000)
+                delay(2000)
                 startAutoSlider()
             }
         }

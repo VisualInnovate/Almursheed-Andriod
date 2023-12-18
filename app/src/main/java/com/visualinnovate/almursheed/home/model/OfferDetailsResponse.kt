@@ -35,7 +35,7 @@ data class Offer(
     val media: List<MediaItem?>? = null,
 
     @field:SerializedName("title")
-    val title: LocalizedName? = null,
+    val title: String? = null,
 
     @field:SerializedName("pictures")
     val pictures: Pictures? = null,

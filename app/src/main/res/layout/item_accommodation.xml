@@ -2,14 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="160dp"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/space_2x"
+    android:layout_marginTop="@dimen/space_3x"
+    android:layout_marginStart="@dimen/space_2x"
     app:cardCornerRadius="@dimen/space_3x"
     app:cardElevation="@dimen/space_1x">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="155dp"
+        android:layout_width="175dp"
         android:layout_height="wrap_content">
 
         <ProgressBar
@@ -80,9 +81,10 @@
             android:id="@+id/imgGoogleMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/space_2x"
+            android:layout_marginVertical="@dimen/space_1x"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/imgFavorite"
-            app:layout_constraintStart_toStartOf="@id/imgFavorite"
             app:layout_constraintTop_toBottomOf="@id/countryAndCity"
             app:srcCompat="@drawable/ic_google_map" />
 

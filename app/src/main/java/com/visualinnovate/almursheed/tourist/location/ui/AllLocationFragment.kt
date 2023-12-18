@@ -9,31 +9,29 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentAllLocationBinding
-import com.visualinnovate.almursheed.tourist.location.adapter.SeeAllLocationAdapter
 import com.visualinnovate.almursheed.home.model.AttractivesItem
-import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
+import com.visualinnovate.almursheed.tourist.location.adapter.SeeAllLocationAdapter
 import com.visualinnovate.almursheed.tourist.location.viewmodel.LocationViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AllLocationFragment : Fragment() {
+class AllLocationFragment : BaseFragment() {
 
     private var _binding: FragmentAllLocationBinding? = null
-
-    // This property is only valid between onCreateView and // onDestroy.
     private val binding get() = _binding!!
 
     private val vm: LocationViewModel by viewModels()
+
     private lateinit var seeAllLocationAdapter: SeeAllLocationAdapter
 
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit =
         { location ->
-            Log.d("btnLocationClickCallBack", "Clicked Item location $location")
             val bundle = Bundle()
             bundle.putInt(Constant.LOCATION_DETAILS, location.id!!)
             findNavController().customNavigate(R.id.locationDetailsFragment, false, bundle)
@@ -107,18 +105,25 @@ class AllLocationFragment : Fragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    seeAllLocationAdapter.submitData(it.data!!.attractives)
+                    seeAllLocationAdapter.submitData(it.data?.attractives)
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
+                    showMainLoading()
                 }
-                else -> {
-                    toast("Else")
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
                 }
+
+                else -> {}
             }
         }
     }

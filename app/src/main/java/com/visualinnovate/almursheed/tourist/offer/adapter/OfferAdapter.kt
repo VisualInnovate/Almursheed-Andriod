@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.visible
-import com.visualinnovate.almursheed.utils.Utils
 import com.visualinnovate.almursheed.databinding.ItemOfferBinding
 import com.visualinnovate.almursheed.home.model.OfferItem
 import com.visualinnovate.almursheed.utils.Constant
@@ -68,7 +66,7 @@ class OfferAdapter(
             .into(holder.imgOffer)
 
         // holder.imgFlight.setImageResource(flight.flightImage)
-        holder.offerName.text = offer.title?.gb ?: ""
+        holder.offerName.text = offer.title ?: ""
         holder.offerRating.text = offer.number ?: ""
     }
 

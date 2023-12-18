@@ -170,4 +170,10 @@
         android:label="Contact us"
         tools:layout="@layout/fragment_contact_us" />
 
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.more.aboutUs.AboutUsFragment"
+        android:label="About Us"
+        tools:layout="@layout/fragment_about_us" />
+
 </navigation>

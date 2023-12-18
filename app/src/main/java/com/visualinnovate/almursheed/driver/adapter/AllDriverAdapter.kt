@@ -1,5 +1,6 @@
 package com.visualinnovate.almursheed.driver.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ class AllDriverAdapter(
         val price = itemView.price
         val city = itemView.city
         val rating = itemView.rating
+        val language = itemView.language
 
         init {
             itemView.root.setOnClickListener {
@@ -49,6 +51,7 @@ class AllDriverAdapter(
         bindData(holder, position, driver!!)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun bindData(holder: AllDriverViewHolder, position: Int, driver: DriverAndGuideItem) {
         if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER
             || SharedPreference.getUserRole() == Constant.ROLE_GUIDES
@@ -67,9 +70,17 @@ class AllDriverAdapter(
         holder.city.text = driver.stateName
         holder.rating.text = (driver.totalRating ?: 0.0).toString()
 
+        driver.languages.let {
+            if (it?.isNotEmpty() == true) {
+                holder.language.text = driver.getLanguage().joinToString(" , ")
+            } else {
+                holder.language.text = holder.itemView.context.getString(R.string.no_languages)
+            }
+        }
+
         driver.priceServices?.let {
             if (it.isNotEmpty()) {
-                holder.price.text = it[0]?.price.toString() +" $"
+                holder.price.text = it[0]?.price.toString() + " $"
             }
         }
         // check favorite
