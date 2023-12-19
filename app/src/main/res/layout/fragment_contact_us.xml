@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_edit_text"
-    tools:context=".commonView.ContactUsFragment">
+    tools:context=".commonView.more.ContactUsFragment">
 
     <com.visualinnovate.almursheed.common.AppBarView
         android:id="@+id/appBar"

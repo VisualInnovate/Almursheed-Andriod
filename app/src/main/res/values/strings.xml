@@ -328,5 +328,12 @@
     <string name="no_languages">No languages</string>
     <string name="text_copied_to_clipboard">Text copied to clipboard</string>
     <string name="maps_not_installed">Maps not installed</string>
+    <string name="ticket_info">Ticket Info</string>
+    <string name="ticket_id">Ticket Id</string>
+    <string name="typee">Type</string>
+    <string name="priorityy">Priority</string>
+    <string name="subjectt">Subject</string>
+    <string name="add_ticket">Add Ticket</string>
+    <string name="my_tickets">My Tickets</string>
 
 </resources>

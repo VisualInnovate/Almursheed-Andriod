@@ -166,9 +166,14 @@
 
     <fragment
         android:id="@+id/contactUsFragment"
-        android:name="com.visualinnovate.almursheed.commonView.ContactUsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.more.ContactUsFragment"
         android:label="Contact us"
         tools:layout="@layout/fragment_contact_us" />
+    <fragment
+        android:id="@+id/myTicketsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.more.MyTicketsFragment"
+        android:label="Contact us"
+        tools:layout="@layout/fragment_my_tickets" />
 
     <fragment
         android:id="@+id/aboutUsFragment"

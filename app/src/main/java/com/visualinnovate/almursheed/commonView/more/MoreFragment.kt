@@ -74,7 +74,7 @@ class MoreFragment : BaseFragment() {
         }
 
         binding.contactUs.onDebouncedListener {
-            findNavController().customNavigate(R.id.contactUsFragment)
+            findNavController().customNavigate(R.id.myTicketsFragment)
         }
 
         binding.logout.onDebouncedListener {

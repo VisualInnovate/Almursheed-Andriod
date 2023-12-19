@@ -196,7 +196,7 @@ interface ApiService {
         @Part("languages[]") languages: ArrayList<@JvmSuppressWildcards RequestBody?>?,
         @Part carImages: ArrayList<MultipartBody.Part?>?,
         @Part documentImages: MultipartBody.Part?,
-      //  @Part("email") email: RequestBody,
+        //  @Part("email") email: RequestBody,
     ): Response<UpdateResponse>
 
     @Multipart
@@ -324,7 +324,12 @@ interface ApiService {
 
     @POST("reports/allProfits")
     suspend fun getTotalEarningOfDriverAndGuide(
-        @Query("country_id") countryId: Int?
+        @Query("country_id") countryId: Int?,
+    ): Response<TotalEarningResponse>
+
+    @POST("/api/tickets/userTickets/{user_id}")
+    suspend fun getMyTickets(
+        @Path("user_id") userId: Int?,
     ): Response<TotalEarningResponse>
 
     @POST("tickets/store")
