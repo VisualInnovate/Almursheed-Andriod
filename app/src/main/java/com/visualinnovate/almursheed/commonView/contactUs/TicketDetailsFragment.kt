@@ -16,7 +16,6 @@ import com.visualinnovate.almursheed.commonView.contactUs.adapter.TicketConversa
 import com.visualinnovate.almursheed.databinding.FragmentTicketDetailsBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
 
-
 class TicketDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentTicketDetailsBinding? = null
@@ -27,7 +26,6 @@ class TicketDetailsFragment : BaseFragment() {
     private var ticketId :Int? = null
 
     private lateinit var ticketConversationAdapter: TicketConversationAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +44,7 @@ class TicketDetailsFragment : BaseFragment() {
         // call get ticket details by ticket id
         vm.getTicketDetailsById(ticketId)
 
+        initRecyclerView()
         initToolbar()
         subscribeData()
     }
