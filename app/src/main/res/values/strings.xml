@@ -335,5 +335,9 @@
     <string name="subjectt">Subject</string>
     <string name="add_ticket">Add Ticket</string>
     <string name="my_tickets">My Tickets</string>
+    <string name="ticket_details">Ticket Details</string>
+    <string name="replay">Replay</string>
+    <string name="technical_support_issues">Technical Support Issues</string>
+    <string name="normal_message">Message</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.commonView.more
+package com.visualinnovate.almursheed.commonView.contactUs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,61 +9,81 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
-import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.toast
-import com.visualinnovate.almursheed.commonView.more.adapter.MyTicketsAdapter
-import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
-import com.visualinnovate.almursheed.databinding.FragmentMyTicketsBinding
+import com.visualinnovate.almursheed.commonView.contactUs.model.TicketItem
+import com.visualinnovate.almursheed.commonView.contactUs.viewmodel.ContactUsViewModel
+import com.visualinnovate.almursheed.commonView.contactUs.adapter.TicketConversationAdapter
+import com.visualinnovate.almursheed.databinding.FragmentTicketDetailsBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class MyTicketsFragment : BaseFragment() {
-    private var _binding: FragmentMyTicketsBinding? = null
+
+class TicketDetailsFragment : BaseFragment() {
+
+    private var _binding: FragmentTicketDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val vm: MyTicketsViewModel by viewModels()
-    private lateinit var myTicketsAdapter: MyTicketsAdapter
+    private val vm: ContactUsViewModel by viewModels()
 
-    private val onAllDetailsClickCallback: (item: MyOrdersItem) -> Unit = {
-        // findNavController().customNavigate(R.id.orderDetailsFragment)
-    }
+    private var ticketId :Int? = null
+
+    private lateinit var ticketConversationAdapter: TicketConversationAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentMyTicketsBinding.inflate(inflater, container, false)
+        _binding = FragmentTicketDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        ticketId = requireArguments().getInt("TICKET_ID")
+
+        // call get ticket details by ticket id
+        vm.getTicketDetailsById(ticketId)
+
         initToolbar()
-        initRecyclerView()
         subscribeData()
-        vm.getMyTickets()
+    }
+
+    private fun initView(ticket: TicketItem?) {
+        binding.ticketId.text = ticket?.id.toString()
+        binding.type.text = ticket?.type
+        binding.priority.text = ticket?.priority
+        binding.subject.text = getString(R.string.technical_support_issues)
+
+        // submit data conversation in recycler
+        ticketConversationAdapter.submitData(ticket?.conversation)
+    }
+
+    private fun initRecyclerView() {
+        ticketConversationAdapter = TicketConversationAdapter()
+        binding.rvTicketConversation.apply {
+            itemAnimator = DefaultItemAnimator()
+            ticketConversationAdapter.setHasStableIds(true)
+            adapter = ticketConversationAdapter
+        }
     }
 
     private fun initToolbar() {
-        binding.appBar.setTitleString(getString(R.string.my_tickets))
+        binding.appBar.setTitleString(getString(R.string.ticket_details))
         binding.appBar.setTitleCenter(true)
         binding.appBar.useBackButton(
             true,
             { findNavController().navigateUp() },
             R.drawable.ic_back,
         )
-        binding.appBar.showButtonOneWithoutImage(getString(R.string.add_ticket)) {
-            findNavController().customNavigate(R.id.contactUsFragment)
-        }
     }
 
     private fun subscribeData() {
-        vm.tickets.observe(viewLifecycleOwner) {
+        vm.getTicketDetails.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
-                    // val data = it.data?.myOrders
+                    initView(it.data?.ticket)
                 }
 
                 is ResponseHandler.Error -> {
@@ -83,15 +103,6 @@ class MyTicketsFragment : BaseFragment() {
 
                 else -> {}
             }
-        }
-    }
-
-    private fun initRecyclerView() {
-        myTicketsAdapter = MyTicketsAdapter(onAllDetailsClickCallback)
-        binding.ordersRv.apply {
-            itemAnimator = DefaultItemAnimator()
-            myTicketsAdapter.setHasStableIds(true)
-            adapter = myTicketsAdapter
         }
     }
 

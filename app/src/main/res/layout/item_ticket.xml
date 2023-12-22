@@ -51,13 +51,13 @@
             style="@style/TextStyleRegular"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginStart="@dimen/space_3x"
             android:layout_marginTop="@dimen/space_5x"
             android:text="@string/countryy"
             android:textColor="@color/grey"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtTripInfo" />
 
@@ -67,10 +67,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Egypt"
-            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/txtCountry"
             app:layout_constraintTop_toTopOf="@id/txtCountry" />
 
@@ -93,12 +93,12 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10-09-2022"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/txtDateOfEntry"
-            app:layout_constraintTop_toTopOf="@id/txtDateOfEntry" />
+            app:layout_constraintTop_toTopOf="@id/txtDateOfEntry"
+            tools:text="10-09-2022" />
 
         <TextView
             android:id="@+id/txtDateOfExit"
@@ -119,12 +119,12 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11-09-2022"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/txtDateOfExit"
-            app:layout_constraintTop_toTopOf="@id/txtDateOfExit" />
+            app:layout_constraintTop_toTopOf="@id/txtDateOfExit"
+            tools:text="11-09-2022" />
 
         <TextView
             android:id="@+id/txtTotalPrice"
@@ -145,14 +145,14 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300 $"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/txtTotalPrice"
-            app:layout_constraintTop_toTopOf="@id/txtTotalPrice" />
+            app:layout_constraintTop_toTopOf="@id/txtTotalPrice"
+            tools:text="300 $" />
 
-<TextView
+        <TextView
             android:id="@+id/txtSubject"
             style="@style/TextStyleRegular"
             android:layout_width="120dp"
@@ -171,12 +171,12 @@
             style="@style/TextStyleRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="300 $"
             android:textColor="@color/black"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/txtTotalPrice"
-            app:layout_constraintTop_toTopOf="@id/txtSubject" />
+            app:layout_constraintTop_toTopOf="@id/txtSubject"
+            tools:text="300 $" />
 
         <View
             android:id="@+id/view"
@@ -195,16 +195,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_3x"
             android:layout_marginTop="@dimen/space_1x"
+            android:drawablePadding="@dimen/space_2x"
             android:paddingVertical="@dimen/space_2x"
             android:text="@string/all_details"
-            android:drawablePadding="@dimen/space_2x"
             android:textColor="@color/accent"
             android:textSize="@dimen/space_14x_sp"
             android:textStyle="bold"
+            app:drawableEndCompat="@drawable/ic_red_arrow_right"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view"
-            app:drawableEndCompat="@drawable/ic_red_arrow_right" />
-
+            app:layout_constraintTop_toBottomOf="@id/view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

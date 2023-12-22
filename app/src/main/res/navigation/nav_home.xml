@@ -166,13 +166,14 @@
 
     <fragment
         android:id="@+id/contactUsFragment"
-        android:name="com.visualinnovate.almursheed.commonView.more.ContactUsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.contactUs.ContactUsFragment"
         android:label="Contact us"
         tools:layout="@layout/fragment_contact_us" />
+
     <fragment
         android:id="@+id/myTicketsFragment"
-        android:name="com.visualinnovate.almursheed.commonView.more.MyTicketsFragment"
-        android:label="Contact us"
+        android:name="com.visualinnovate.almursheed.commonView.contactUs.MyTicketsFragment"
+        android:label="My Tickets"
         tools:layout="@layout/fragment_my_tickets" />
 
     <fragment
@@ -180,5 +181,11 @@
         android:name="com.visualinnovate.almursheed.commonView.more.aboutUs.AboutUsFragment"
         android:label="About Us"
         tools:layout="@layout/fragment_about_us" />
+
+    <fragment
+        android:id="@+id/ticketDetailsFragment"
+        android:name="com.visualinnovate.almursheed.commonView.contactUs.TicketDetailsFragment"
+        android:label="Ticket Details"
+        tools:layout="@layout/fragment_ticket_details" />
 
 </navigation>

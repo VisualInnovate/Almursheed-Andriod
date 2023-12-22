@@ -1,18 +1,18 @@
-package com.visualinnovate.almursheed.commonView.more.adapter
+package com.visualinnovate.almursheed.commonView.contactUs.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
-import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersItem
+import com.visualinnovate.almursheed.commonView.contactUs.model.TicketItem
 import com.visualinnovate.almursheed.databinding.ItemTicketBinding
 
 class MyTicketsAdapter(
-    private val onAllDetailsClickCallback: (item: MyOrdersItem) -> Unit = {},
+    private val onAllDetailsClickCallback: (item: TicketItem) -> Unit = {},
 ) : RecyclerView.Adapter<MyTicketsAdapter.ViewHolder>() {
 
-    private var orders: List<MyOrdersItem?>? = ArrayList()
+    private var ticketList: List<TicketItem?>? = ArrayList()
 
     private lateinit var binding: ItemTicketBinding
 
@@ -20,9 +20,9 @@ class MyTicketsAdapter(
         RecyclerView.ViewHolder(itemView.root) {
         val status = itemView.status
         val txtAllDetails = itemView.txtAllDetails
+        val ticketId = itemView.ticketId
         val priority = itemView.priority
         val subject = itemView.subject
-        val ticketId = itemView.ticketId
         val type = itemView.type
     }
 
@@ -33,61 +33,62 @@ class MyTicketsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val order = orders!![position]!!
+        val ticket = ticketList!![position]!!
         // bind view
-        bindData(holder, order)
+        bindData(holder, ticket)
     }
 
-    private fun bindData(holder: ViewHolder, order: MyOrdersItem?) {
-//        holder.country.text = order?.countryId.toString()
-//        holder.dateOfEntry.text = order?.startDate
-//        holder.dateOfExit.text = order?.endDate
-//        holder.price.text = order?.cost + " $"
+    private fun bindData(holder: ViewHolder, ticket: TicketItem?) {
 
-        when (order?.status) {
-            "1" -> {
+        holder.ticketId.text = ticket?.id.toString()
+        holder.type.text = ticket?.type
+        holder.priority.text = ticket?.priority
+        holder.subject.text = holder.itemView.context.getString(R.string.technical_support_issues)
+
+        when (ticket?.status) {
+            1 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorPending))
                     text = context.getString(R.string.pending)
                 }
             }
 
-            "2" -> {
+            2 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorApproved))
                     text = context.getString(R.string.approved)
                 }
             }
 
-            "3" -> {
+            3 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorReject))
                     text = context.getString(R.string.reject)
                 }
             }
 
-            "4" -> {
+            4 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorExpire))
                     text = context.getString(R.string.expired)
                 }
             }
 
-            "5" -> {
+            5 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.colorCancel))
                     text = context.getString(R.string.cancel)
                 }
             }
 
-            "6" -> {
+            6 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.purple_700))
                     text = context.getString(R.string.paid)
                 }
             }
 
-            "7" -> {
+            7 -> {
                 holder.status.apply {
                     setBackgroundColor(resources.getColor(R.color.purple_200))
                     text = context.getString(R.string.in_progress)
@@ -96,16 +97,16 @@ class MyTicketsAdapter(
         }
 
         holder.txtAllDetails.onDebouncedListener {
-            onAllDetailsClickCallback.invoke(order!!)
+            onAllDetailsClickCallback.invoke(ticket!!)
         }
     }
 
     override fun getItemCount(): Int {
-        return orders?.size ?: 0
+        return ticketList?.size ?: 0
     }
 
-    fun submitData(data: ArrayList<MyOrdersItem?>?) {
-        orders = data
+    fun submitData(data: List<TicketItem?>?) {
+        ticketList = data
         notifyDataSetChanged()
     }
 }

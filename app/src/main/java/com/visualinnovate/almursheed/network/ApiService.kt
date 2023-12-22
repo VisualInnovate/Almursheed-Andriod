@@ -2,6 +2,8 @@ package com.visualinnovate.almursheed.network
 
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
+import com.visualinnovate.almursheed.commonView.contactUs.model.MyTicketResponse
+import com.visualinnovate.almursheed.commonView.contactUs.model.TicketDetailsResponse
 import com.visualinnovate.almursheed.commonView.more.aboutUs.model.AboutUsResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.ChangeStatusResponse
 import com.visualinnovate.almursheed.commonView.myOrders.models.MyOrdersModel
@@ -327,10 +329,13 @@ interface ApiService {
         @Query("country_id") countryId: Int?,
     ): Response<TotalEarningResponse>
 
-    @POST("/api/tickets/userTickets/{user_id}")
-    suspend fun getMyTickets(
-        @Path("user_id") userId: Int?,
-    ): Response<TotalEarningResponse>
+    @GET("api/tickets/userTickets")
+    suspend fun getMyTickets(): Response<MyTicketResponse>
+
+    @GET("api/tickets/show/31")
+    suspend fun getTicketDetailsById(
+         @Path("id") ticketId: Int?,
+    ): Response<TicketDetailsResponse>
 
     @POST("tickets/store")
     suspend fun sendToContactUs(

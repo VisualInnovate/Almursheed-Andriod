@@ -1,4 +1,4 @@
-package com.visualinnovate.almursheed.commonView.more
+package com.visualinnovate.almursheed.commonView.contactUs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
 import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemModel
-import com.visualinnovate.almursheed.commonView.contactUs.ContactUsViewModel
+import com.visualinnovate.almursheed.commonView.contactUs.viewmodel.ContactUsViewModel
 import com.visualinnovate.almursheed.databinding.FragmentContactUsBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint

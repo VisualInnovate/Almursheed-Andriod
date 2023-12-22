@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/space_3x"
+    android:layout_marginTop="@dimen/space_1x"
+    android:layout_marginEnd="@dimen/space_3x"
+    android:layout_marginBottom="@dimen/space_1x">
+
+    <!--       <View
+               android:id="@+id/view"
+               android:layout_width="@dimen/space_1x"
+               android:layout_height="0dp"
+               android:layout_marginStart="@dimen/space_1x"
+               android:background="@color/primary"
+               app:layout_constraintBottom_toBottomOf="@id/day_number"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent" />-->
+
+    <TextView
+        android:id="@+id/txtMessage"
+        style="@style/TextStyleRegular"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_1x"
+        android:gravity="start"
+        android:text="@string/message"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/message"
+        style="@style/TextStyleRegular"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_3x"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_14x_sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txtMessage"
+        app:layout_constraintTop_toTopOf="@id/txtMessage"
+        tools:text="Lorem ipsum is placeholder text
+commonly used in the graphic,
+print, and publishing industries." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
