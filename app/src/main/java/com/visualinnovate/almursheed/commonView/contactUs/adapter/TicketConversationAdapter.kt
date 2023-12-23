@@ -48,7 +48,6 @@ class TicketConversationAdapter :
         }
 
         holder.message.text = ticket?.content.toString()
-
     }
 
     override fun getItemCount(): Int {

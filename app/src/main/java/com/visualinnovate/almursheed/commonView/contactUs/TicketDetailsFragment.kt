@@ -9,13 +9,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
+import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.toast
+import com.visualinnovate.almursheed.common.value
+import com.visualinnovate.almursheed.commonView.contactUs.adapter.TicketConversationAdapter
 import com.visualinnovate.almursheed.commonView.contactUs.model.TicketItem
 import com.visualinnovate.almursheed.commonView.contactUs.viewmodel.ContactUsViewModel
-import com.visualinnovate.almursheed.commonView.contactUs.adapter.TicketConversationAdapter
 import com.visualinnovate.almursheed.databinding.FragmentTicketDetailsBinding
 import com.visualinnovate.almursheed.utils.ResponseHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TicketDetailsFragment : BaseFragment() {
 
     private var _binding: FragmentTicketDetailsBinding? = null
@@ -23,7 +27,8 @@ class TicketDetailsFragment : BaseFragment() {
 
     private val vm: ContactUsViewModel by viewModels()
 
-    private var ticketId :Int? = null
+    private var ticketId: Int? = null
+    private lateinit var replay: String
 
     private lateinit var ticketConversationAdapter: TicketConversationAdapter
 
@@ -44,9 +49,20 @@ class TicketDetailsFragment : BaseFragment() {
         // call get ticket details by ticket id
         vm.getTicketDetailsById(ticketId)
 
-        initRecyclerView()
         initToolbar()
+        initRecyclerView()
+        setBtnListener()
         subscribeData()
+    }
+
+    private fun initToolbar() {
+        binding.appBar.setTitleString(getString(R.string.ticket_details))
+        binding.appBar.setTitleCenter(true)
+        binding.appBar.useBackButton(
+            true,
+            { findNavController().navigateUp() },
+            R.drawable.ic_back,
+        )
     }
 
     private fun initView(ticket: TicketItem?) {
@@ -68,21 +84,48 @@ class TicketDetailsFragment : BaseFragment() {
         }
     }
 
-    private fun initToolbar() {
-        binding.appBar.setTitleString(getString(R.string.ticket_details))
-        binding.appBar.setTitleCenter(true)
-        binding.appBar.useBackButton(
-            true,
-            { findNavController().navigateUp() },
-            R.drawable.ic_back,
-        )
+    private fun setBtnListener() {
+        binding.btnSend.setOnClickListener {
+            replay = binding.edtReplay.value
+            if (replay.isEmptySting()) {
+                binding.edtReplay.error = getString(R.string.required)
+            } else {
+                vm.addReplay(ticketId!!, replay)
+            }
+        }
     }
+
 
     private fun subscribeData() {
         vm.getTicketDetails.observe(viewLifecycleOwner) {
             when (it) {
                 is ResponseHandler.Success -> {
                     initView(it.data?.ticket)
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    toast(it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
+
+        vm.addReplay.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    vm.getTicketDetailsById(ticketId)
                 }
 
                 is ResponseHandler.Error -> {

@@ -187,5 +187,10 @@
         android:name="com.visualinnovate.almursheed.commonView.contactUs.TicketDetailsFragment"
         android:label="Ticket Details"
         tools:layout="@layout/fragment_ticket_details" />
+    <fragment
+        android:id="@+id/termsAndConditionFragment"
+        android:name="com.visualinnovate.almursheed.commonView.more.termsAndCondition.TermsAndConditionFragment"
+        android:label="Terms And Condition"
+        tools:layout="@layout/fragment_terms_and_condition" />
 
 </navigation>

@@ -39,7 +39,7 @@ abstract class BaseApiResponse(application: Application) : AndroidViewModel(appl
                     emit(ResponseHandler.Error(errorMessage))
                 }
             } catch (e: Exception) {
-                Log.d("MyDebugData","BaseApiResponse : safeApiCall :  " + e.localizedMessage   );
+                Log.d("MyDebugData","BaseApiResponse : safeApiCall :  " + e.localizedMessage)
                 emit(ResponseHandler.StopLoading)
                 emit(ResponseHandler.Error("something went wrong"))
             }

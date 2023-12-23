@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.commonView.contactUs.model.TicketItem
 import com.visualinnovate.almursheed.databinding.ItemTicketBinding
@@ -93,6 +94,10 @@ class MyTicketsAdapter(
                     setBackgroundColor(resources.getColor(R.color.purple_200))
                     text = context.getString(R.string.in_progress)
                 }
+            }
+
+            else -> {
+                holder.status.invisible()
             }
         }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
+import com.visualinnovate.almursheed.commonView.contactUs.model.ConversationItem
 import com.visualinnovate.almursheed.commonView.contactUs.model.MyTicketResponse
 import com.visualinnovate.almursheed.commonView.contactUs.model.TicketDetailsResponse
 import com.visualinnovate.almursheed.home.model.ContactUsResponse
@@ -37,6 +38,10 @@ class ContactUsViewModel @Inject constructor(
     val getTicketDetails: LiveData<ResponseHandler<TicketDetailsResponse?>> =
         _getTicketDetails.toSingleEvent()
 
+    private val _addReplay: MutableLiveData<ResponseHandler<ConversationItem?>> =
+        MutableLiveData()
+    val addReplay: LiveData<ResponseHandler<ConversationItem?>> =
+        _addReplay.toSingleEvent()
 
     fun sendToContactUs(subject: String?, type: String?, priority: String?, message: String?) {
         viewModelScope.launch {
@@ -66,6 +71,17 @@ class ContactUsViewModel @Inject constructor(
                 apiService.getTicketDetailsById(ticketId) // SharedPreference.getUser().id
             }.collect {
                 _getTicketDetails.value = it
+            }
+        }
+    }
+
+    fun addReplay(ticketId: Int, replay: String) {
+        viewModelScope.launch {
+            safeApiCall {
+                // Make your API call here using Retrofit service or similar
+                apiService.addReplay(ticketId, replay) // SharedPreference.getUser().id
+            }.collect {
+                _addReplay.value = it
             }
         }
     }

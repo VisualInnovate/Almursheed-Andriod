@@ -29,7 +29,7 @@ class MyTicketsFragment : BaseFragment() {
     private val onAllDetailsClickCallback: (ticket: TicketItem) -> Unit = { ticket ->
         val bundle = Bundle()
         bundle.putInt("TICKET_ID", ticket.id ?: 0)
-        findNavController().customNavigate(R.id.ticketDetailsFragment)
+        findNavController().customNavigate(R.id.ticketDetailsFragment, data = bundle)
     }
 
     override fun onCreateView(
