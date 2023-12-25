@@ -218,10 +218,10 @@ class LoginFragment : BaseFragment() {
 
         // email = "mohamed.nasar8710@gmail.com"
         // email = "driver400@gmail.com"
-        // email = "mohamed.tourist1@gmail.com"
+        email = "mohamed.tourist1@gmail.com"
         // email = "guide100@gmail.com"
         // email = "nassar@gmail.com"
-        // password = "123456789"
+        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

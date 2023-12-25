@@ -83,7 +83,7 @@ class AppBarView @JvmOverloads constructor(
         @DrawableRes icon: Int,
         action: (() -> Unit)?
     ) {
-        binding.constraintBtnSort.visibility = View.VISIBLE
+        binding.constraintBtnSort.visibility = View.GONE // VISIBLE
         binding.btnSort.setImageResource(icon)
         binding.txtSort.text = text
         binding.constraintBtnSort.setOnClickListener {

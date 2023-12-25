@@ -16,22 +16,38 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_mursheed_logo" />
 
+    <TextView
+        android:id="@+id/language"
+        style="@style/TextStyleBold"
+        android:layout_width="@dimen/space_28x"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/space_5x"
+        android:background="@drawable/bg_item_white_spinner_selected_with_ic_down"
+        android:gravity="center_vertical"
+        android:text="@string/language_text"
+        android:paddingHorizontal="@dimen/space_3x"
+        android:textColor="@color/black"
+        android:textSize="@dimen/space_14x_sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgLanguage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_5x"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_language" />
 
     <TextView
         android:id="@+id/txtWelcome"
+        style="@style/TextStyleBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_5x"
         android:lineSpacingExtra="10sp"
-        style="@style/TextStyleBold"
         android:text="@string/welcome_to_mursheed"
         android:textColor="@color/white"
         android:textSize="@dimen/space_34x_sp"
@@ -40,10 +56,10 @@
 
     <TextView
         android:id="@+id/txt1"
+        style="@style/TextStyleRegular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_5x"
-        style="@style/TextStyleRegular"
         android:lineSpacingExtra="5sp"
         android:text="@string/get_the_best_deals_on_mursheed_app_we_are_excited_to_have_you_on_board_as_a_tourist_tour_guide_or_car_driver"
         android:textColor="@color/white"
@@ -56,14 +72,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_4x"
         android:background="@drawable/btn_on_boarding"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/btnLogin">
 
         <TextView
             android:id="@+id/txtGetStarted"
+            style="@style/TextStyleBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_5x"
-            style="@style/TextStyleBold"
             android:gravity="start"
             android:text="@string/get_started"
             android:textAllCaps="false"
@@ -76,6 +92,44 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icNextOnBoarding"
+            android:layout_width="@dimen/space_13x"
+            android:layout_height="@dimen/space_12x"
+            android:layout_marginHorizontal="@dimen/space_2x"
+            android:layout_marginVertical="@dimen/space_1x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_next_animation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_4x"
+        android:background="@drawable/btn_on_boarding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <TextView
+            style="@style/TextStyleBold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_5x"
+            android:gravity="start"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/space_19x_sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icNextLogin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icNextLogin"
             android:layout_width="@dimen/space_13x"
             android:layout_height="@dimen/space_12x"
             android:layout_marginHorizontal="@dimen/space_2x"

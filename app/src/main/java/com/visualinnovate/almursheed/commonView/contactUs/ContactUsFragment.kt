@@ -75,7 +75,7 @@ class ContactUsFragment : BaseFragment() {
         binding.btnSend.onDebouncedListener {
             subject = binding.edtSubject.value
             message = binding.edtMessage.value
-            vm.sendToContactUs(subject, type, priority, message)
+            vm.sendToContactUs(subject, type?.lowercase(), priority?.lowercase(), message)
         }
     }
 
@@ -92,7 +92,7 @@ class ContactUsFragment : BaseFragment() {
     }
 
     private fun setupTypesList(): ArrayList<ChooserItemModel> {
-        val allTypes = arrayOf("Sales", "Issue","Inquires")
+        val allTypes = arrayOf("Sales", "Issue", "inquire") // Inquires
         val chooserItemList = ArrayList<ChooserItemModel>()
         allTypes.forEach {
             val item = ChooserItemModel(name = it, isSelected = it == type)
@@ -101,21 +101,25 @@ class ContactUsFragment : BaseFragment() {
         return chooserItemList
     }
 
-
     private fun showPrioritiesChooser() {
         chooseTextBottomSheet?.dismiss()
         chooseTextBottomSheet = ChooseTextBottomSheet(
             getString(R.string.priority),
             setupPrioritiesList(),
             { data, _ ->
-                priority = data.name
+                if (data.name == "Medium") {
+                    priority = "mid"
+                } else {
+                    priority = data.name
+                }
+
                 binding.priority.text = priority
             })
         showBottomSheet(chooseTextBottomSheet!!, "PrioritiesBottomSheet")
     }
 
     private fun setupPrioritiesList(): ArrayList<ChooserItemModel> {
-        val allPriorities = arrayOf("High", "Medium","Low")
+        val allPriorities = arrayOf("High", "Medium", "Low")
         val chooserItemList = ArrayList<ChooserItemModel>()
         allPriorities.forEach {
             val item = ChooserItemModel(name = it, isSelected = it == priority)

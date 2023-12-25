@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -63,7 +64,7 @@ class DriverDetailsFragment : BaseFragment() {
                 val bundle = Bundle()
                 bundle.putParcelable("selectedDriverOrGuide", driver)
                 bundle.putString("type", Constant.ROLE_DRIVER)
-                findNavController().customNavigate(R.id.hireFragment, data =  bundle)
+                findNavController().customNavigate(R.id.hireFragment, data = bundle)
             }
         }
     }
@@ -133,19 +134,21 @@ class DriverDetailsFragment : BaseFragment() {
         binding.carName.text = driver?.carModel ?: ""
         binding.carType.text = driver?.carType ?: ""
 
-        binding.driverReview.text = "(${driver?.count_rate ?: 0} review)"
-
         val rateImage = when (driver?.totalRating?.toDouble()?.roundToInt() ?: 0) {
             1 -> R.drawable.ic_star_1
             2 -> R.drawable.ic_stars_2
             3 -> R.drawable.ic_stars_3
             4 -> R.drawable.ic_stars_4
             5 -> R.drawable.ic_stars_5
+            0 -> R.drawable.ic_group_rate
             else -> R.drawable.ic_group_rate
         }
 
-        binding.driverReview.setCompoundDrawables(null, null, resources.getDrawable(rateImage), null)
-        binding.driverReview.text = "(${driver?.count_rate} review)"
+        val drawable = ContextCompat.getDrawable(requireActivity(), rateImage)
+        binding.driverReview.setCompoundDrawables(
+            null, null, drawable, null
+        )
+        binding.driverReview.text = "(${driver?.count_rate} ${getString(R.string.review)})"
 
         driver?.languages.let {
             if (it?.isNotEmpty() == true) {
@@ -172,6 +175,7 @@ class DriverDetailsFragment : BaseFragment() {
             adapter = pricesAdapter
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

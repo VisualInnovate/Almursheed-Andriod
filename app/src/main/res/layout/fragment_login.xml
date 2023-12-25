@@ -47,11 +47,11 @@
                     style="@style/EditTextStyleRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/space_4x"
                     android:layout_marginTop="@dimen/space_3x"
-                    android:inputType="textEmailAddress"
                     android:background="@drawable/bg_rectangle_corner_blue"
                     android:hint="@string/enter_your_email"
+                    android:inputType="textEmailAddress"
+                    android:padding="@dimen/space_4x"
                     android:paddingStart="@dimen/space_5x"
                     android:textColorHint="@color/grey"
                     app:layout_constraintTop_toBottomOf="@id/txtEmailAddress" />
@@ -112,9 +112,9 @@
                         android:layout_gravity="start"
                         android:padding="@dimen/space_2x"
                         android:src="@drawable/ic_remember_me_unselected"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/txtRememberMe"
@@ -126,9 +126,9 @@
                         android:text="@string/remember_me"
                         android:textColor="@color/black"
                         android:textSize="@dimen/space_14x_sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imgRememberMe"
                         app:layout_constraintStart_toEndOf="@id/imgRememberMe"
-                        app:layout_constraintTop_toTopOf="@id/imgRememberMe"
-                        app:layout_constraintBottom_toBottomOf="@id/imgRememberMe"/>
+                        app:layout_constraintTop_toTopOf="@id/imgRememberMe" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -226,16 +226,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_12x"
             android:layout_marginBottom="@dimen/space_4x"
-            app:text="@string/login"
             app:centerDrawable="@drawable/bg_minus_curved_green"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linSocial" />
-
-
-
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linSocial"
+            app:text="@string/login" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

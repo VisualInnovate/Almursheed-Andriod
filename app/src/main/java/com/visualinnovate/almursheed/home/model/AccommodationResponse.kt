@@ -52,9 +52,6 @@ data class AccommodationItem(
 	@field:SerializedName("country")
 	val country: Country? = null,
 
-	@field:SerializedName("rooms")
-	val rooms: Int? = null,
-
 	@field:SerializedName("address")
 	val address: LocalizedName? = null,
 
@@ -78,6 +75,12 @@ data class AccommodationItem(
 
 	@field:SerializedName("name")
 	val name: LocalizedName? = null,
+
+	@field:SerializedName("room_type")
+	val roomType: LocalizedName? = null,
+
+	@field:SerializedName("rooms")
+	val rooms: Int? = null,
 
 	@field:SerializedName("id")
 	val id: Int? = null,

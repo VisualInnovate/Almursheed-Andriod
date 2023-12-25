@@ -82,7 +82,8 @@ data class DriverAndGuideItem(
     @field:SerializedName("ratings_sum")
     val ratingsSum: Int? = null,
 
-    @field:SerializedName("total_rating")
+    // @field:SerializedName("total_rating")
+    @field:SerializedName(value = "total_rating", alternate = ["total_rate"])
     val totalRating: String? = null,
 
     @field:SerializedName("ratings_count")

@@ -95,7 +95,6 @@
             android:ellipsize="end"
             android:gravity="start|center"
             android:lines="2"
-            android:marqueeRepeatLimit="marquee_forever"
             android:padding="@dimen/space_2x"
             tools:text="Ramsis hilton"
             android:textColor="@color/black"
@@ -117,7 +116,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:lines="2"
-            android:marqueeRepeatLimit="marquee_forever"
             android:padding="@dimen/space_2x"
             tools:text="Egypt"
             android:textColor="@color/black"
@@ -140,7 +138,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:lines="2"
-            android:marqueeRepeatLimit="marquee_forever"
             android:padding="@dimen/space_2x"
             tools:text="Cairo"
             android:textColor="@color/black"
@@ -151,6 +148,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/detailsCountry"
             app:layout_constraintTop_toTopOf="@id/pinDetails" />
+
+        <TextView
+            android:id="@+id/txtRoomType"
+            style="@style/TextStyleRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3x"
+            android:gravity="start"
+            android:text="@string/room_type"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_18x_sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/detailsImage"
+            app:layout_constraintTop_toBottomOf="@id/pinDetails" />
+
+        <TextView
+            android:id="@+id/roomType"
+            style="@style/TextStyleRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2x"
+            android:background="@drawable/bg_details_text"
+            android:drawablePadding="@dimen/space_2x"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:paddingHorizontal="@dimen/space_3x"
+            android:paddingVertical="@dimen/space_2x"
+            tools:text="Cairo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/space_12x_sp"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_location_primary"
+            app:layout_constraintStart_toStartOf="@id/txtRoomType"
+            app:layout_constraintTop_toBottomOf="@id/txtRoomType" />
 
         <TextView
             android:id="@+id/txtDetailsDescription"
@@ -165,7 +199,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/detailsImage"
             app:layout_constraintStart_toStartOf="@id/detailsImage"
-            app:layout_constraintTop_toBottomOf="@id/pinDetails" />
+            app:layout_constraintTop_toBottomOf="@id/roomType" />
 
         <TextView
             android:id="@+id/detailsDescription"

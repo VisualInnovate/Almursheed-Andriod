@@ -104,6 +104,13 @@ class AccommodationDetailsFragment : BaseFragment() {
                 imagesAccommodationAdapter.submitData(accommodationItem?.media)
             }
 
+            if (accommodationItem?.roomType != null) {
+                binding.roomType.text = accommodationItem?.roomType?.localized
+            } else {
+                binding.txtRoomType.gone()
+                binding.roomType.gone()
+            }
+
             if (accommodationItem?.infoStatus == 1) {
                 binding.ownerName.text = accommodationItem?.ownerInfo?.localized
                 // binding.ownerPhone.text = accommodation.ownerPhone?.localized
