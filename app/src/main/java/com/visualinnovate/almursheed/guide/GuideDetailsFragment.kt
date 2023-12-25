@@ -87,8 +87,9 @@ class GuideDetailsFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    initViews(it.data?.guide)
-                    pricesAdapter.submitData(it.data?.guide?.priceServices)
+                    guide = it.data!!.guide
+                    initViews(it.data.guide)
+                    pricesAdapter.submitData(it.data.guide!!.priceServices)
                 }
 
                 is ResponseHandler.Error -> {
