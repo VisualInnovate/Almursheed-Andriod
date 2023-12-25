@@ -128,7 +128,8 @@ class FilterDriverFragment : Fragment() {
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar) {} })
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
 
         binding.btnSearch.onDebouncedListener {
             vm.carCategory = carCategory
@@ -147,52 +148,59 @@ class FilterDriverFragment : Fragment() {
 
     private fun showCountryChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, _ ->
-            selectedCountryId = data.id ?: "-1"
-            citiesList = setupCitiesList(Utils.filteredCities)
-            countryId = data.id
-            countryName = data.name
-            binding.country.text = countryName
-            cityName = null
-            binding.city.text = getString(R.string.all)
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.countryy), allCountries, { data, _ ->
+                selectedCountryId = data.id ?: "-1"
+                citiesList = setupCitiesList(Utils.filteredCities)
+                countryId = data.id
+                countryName = data.name
+                binding.country.text = countryName
+                cityName = null
+                binding.city.text = getString(R.string.all)
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CountryBottomSheet")
     }
 
     private fun showCityChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, position ->
-            cityId = data.id
-            cityName = data.name
-            binding.city.text = cityName
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.cityy), citiesList, { data, _ -> // position
+                cityId = data.id
+                cityName = data.name
+                binding.city.text = cityName
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CityBottomSheet")
     }
 
     private fun showCarCategoryChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_category), carCategories, { data, position ->
-            carCategory = data.name
-            binding.carCategory.text = carCategory
-        })
+        chooseTextBottomSheet = ChooseTextBottomSheet(
+            getString(R.string.car_category),
+            carCategories,
+            { data, _ -> // position
+                carCategory = data.name
+                binding.carCategory.text = carCategory
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CarCategoryBottomSheet")
     }
 
     private fun showCarModelChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.car_model), allCarYears, { data, _ ->
-            carModel = data.name
-            binding.carModel.text = carModel
-        })
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.car_model), allCarYears, { data, _ ->
+                carModel = data.name
+                binding.carModel.text = carModel
+            })
         showBottomSheet(chooseTextBottomSheet!!, "CarModelBottomSheet")
     }
 
     private fun showRateChooser() {
         chooseTextBottomSheet?.dismiss()
-        chooseTextBottomSheet = ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, _ ->
-            binding.rate.setImageResource(data.name!!.toInt())
-            rate = (ratingList.indexOf(data) + 1).toString()
-        }, "image")
+        chooseTextBottomSheet =
+            ChooseTextBottomSheet(getString(R.string.rating), ratingList, { data, _ ->
+                binding.rate.setImageResource(data.name!!.toInt())
+                rate = (ratingList.indexOf(data) + 1).toString()
+            }, "image")
         showBottomSheet(chooseTextBottomSheet!!, "RatingBottomSheet")
     }
 
@@ -204,6 +212,7 @@ class FilterDriverFragment : Fragment() {
         }
         return chooserItemList
     }
+
     private fun setupCarModelsList(list: Array<String>): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         list.forEach {
@@ -216,20 +225,30 @@ class FilterDriverFragment : Fragment() {
     private fun setupCountriesList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         Utils.allCountries.forEach {
-            val item = ChooserItemModel(name = it.country, id = it.country_id, isSelected = vm.countryName == it.country)
+            val item = ChooserItemModel(
+                name = it.country,
+                id = it.country_id,
+                isSelected = vm.countryName == it.country
+            )
             chooserItemList.add(item)
         }
         return chooserItemList
     }
+
     private fun setupCitiesList(cities: ArrayList<CityItem>): ArrayList<ChooserItemModel> {
         filterCitiesByCountryId()
         val chooserItemList = ArrayList<ChooserItemModel>()
         cities.forEach {
-            val item = ChooserItemModel(name = it.state, id = it.stateId, isSelected = vm.cityName == it.state)
+            val item = ChooserItemModel(
+                name = it.state,
+                id = it.stateId,
+                isSelected = vm.cityName == it.state
+            )
             chooserItemList.add(item)
         }
         return chooserItemList
     }
+
     private fun setupRateList(): ArrayList<ChooserItemModel> {
         val chooserItemList = ArrayList<ChooserItemModel>()
         chooserItemList.add(ChooserItemModel(name = "" + R.drawable.ic_star_1))
@@ -244,6 +263,7 @@ class FilterDriverFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
     fun isFragmentInBackStack(fragmentId: Int): Boolean {
         val backStackCount = requireActivity().supportFragmentManager.backStackEntryCount
         for (i in 0 until backStackCount) {

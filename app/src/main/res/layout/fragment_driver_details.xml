@@ -61,13 +61,14 @@
                     android:layout_marginEnd="@dimen/space_4x"
                     android:drawablePadding="@dimen/space_1_5x"
                     android:gravity="center_vertical"
-                    tools:text="@string/_0_review"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/space_9x_sp"
+                    app:drawableStartCompat="@drawable/ic_group_rate"
                     app:layout_constraintBottom_toBottomOf="@id/driverName"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/driverName"
-                    app:layout_constraintTop_toTopOf="@id/driverName" />
+                    app:layout_constraintTop_toTopOf="@id/driverName"
+                    tools:text="@string/_0_review" />
 
                 <TextView
                     android:id="@+id/driverName"
@@ -154,13 +155,13 @@
                     android:lines="1"
                     android:maxLines="1"
                     android:padding="@dimen/space_2x"
-                    android:text="@string/nationality"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_12x_sp"
                     android:textStyle="bold"
                     app:drawableStartCompat="@drawable/ic_country"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txtLocationInfo" />
+                    app:layout_constraintTop_toBottomOf="@id/txtLocationInfo"
+                    tools:text="@string/nationality" />
 
                 <TextView
                     android:id="@+id/driverCity"
@@ -173,7 +174,7 @@
                     android:ellipsize="end"
                     android:gravity="start|center_vertical"
                     android:padding="@dimen/space_2x"
-                    android:text="@string/countryy"
+                    tools:text="@string/countryy"
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_12x_sp"
                     android:textStyle="bold"

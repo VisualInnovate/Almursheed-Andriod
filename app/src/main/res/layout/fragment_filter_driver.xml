@@ -171,7 +171,6 @@
             android:scaleType="fitStart"
             app:layout_constraintTop_toBottomOf="@id/txtRating" />
 
-
         <androidx.appcompat.widget.AppCompatSeekBar
             android:id="@+id/price"
             android:layout_width="match_parent"

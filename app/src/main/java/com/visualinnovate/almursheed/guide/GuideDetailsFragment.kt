@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -21,6 +22,7 @@ import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class GuideDetailsFragment : BaseFragment() {
@@ -47,26 +49,26 @@ class GuideDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         guideId = requireArguments().getInt(Constant.GUIDE_ID)
+
+        // call api to get guide details by id
+        vm.getGuideDetailsById(guideId)
+
         initToolbar()
         initPricesRecyclerView()
         subscribeData()
-        setBtnsListeners()
+        setBtnListeners()
     }
 
 
-    private fun setBtnsListeners() {
+    private fun setBtnListeners() {
         binding.btnHire.onDebouncedListener {
             guide?.let {
                 val bundle = Bundle()
                 bundle.putParcelable("selectedDriverOrGuide", guide)
                 bundle.putString("type", Constant.ROLE_GUIDES)
-                findNavController().customNavigate(R.id.hireFragment, data =  bundle)
+                findNavController().customNavigate(R.id.hireFragment, data = bundle)
             }
         }
-    }
-    override fun onStart() {
-        super.onStart()
-        vm.getGuideDetailsById(guideId)
     }
 
     private fun initToolbar() {
@@ -85,8 +87,8 @@ class GuideDetailsFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // bind data to the view
-                    initViews(it.data!!.guide)
-                    pricesAdapter.submitData(it.data.guide!!.priceServices)
+                    initViews(it.data?.guide)
+                    pricesAdapter.submitData(it.data?.guide?.priceServices)
                 }
 
                 is ResponseHandler.Error -> {
@@ -113,6 +115,7 @@ class GuideDetailsFragment : BaseFragment() {
     private fun initViews(guide: DriverAndGuideItem?) {
         Glide.with(requireContext())
             .load(guide?.personalPhoto)
+            .error(R.drawable.ic_person)
             .into(binding.imgGuide)
 
         binding.guideName.text = guide?.name ?: ""
@@ -137,7 +140,21 @@ class GuideDetailsFragment : BaseFragment() {
         }
 
         // binding.guidePrice.text = "$ ${guideArgument.guidePrice}"
-        binding.guideReview.text = "(${guide?.count_rate ?: 0} review)"
+
+        val rateImage = when (guide?.totalRating?.toDouble()?.roundToInt() ?: 0) {
+            1 -> R.drawable.ic_star_1
+            2 -> R.drawable.ic_stars_2
+            3 -> R.drawable.ic_stars_3
+            4 -> R.drawable.ic_stars_4
+            5 -> R.drawable.ic_stars_5
+            0 -> R.drawable.ic_group_rate
+            else -> R.drawable.ic_group_rate
+        }
+
+        binding.guideReview.setCompoundDrawablesWithIntrinsicBounds(
+            ContextCompat.getDrawable(requireContext(), rateImage), null, null, null
+        )
+        binding.guideReview.text = "(${guide?.count_rate} ${getString(R.string.review)})"
     }
 
     private fun initPricesRecyclerView() {

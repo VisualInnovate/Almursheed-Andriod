@@ -52,13 +52,17 @@ class DriverDetailsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         driverId = requireArguments().getInt(Constant.DRIVER_ID)
+
+        // call api to get driver details by id
+        vm.getDriverDetailsById(driverId)
+
         initToolbar()
         subscribeData()
         initPricesRecyclerView()
-        setBtnsListeners()
+        setBtnListeners()
     }
 
-    private fun setBtnsListeners() {
+    private fun setBtnListeners() {
         binding.btnHire.onDebouncedListener {
             driver?.let {
                 val bundle = Bundle()
@@ -67,11 +71,6 @@ class DriverDetailsFragment : BaseFragment() {
                 findNavController().customNavigate(R.id.hireFragment, data = bundle)
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        vm.getDriverDetailsById(driverId)
     }
 
     private fun initToolbar() {
@@ -119,11 +118,12 @@ class DriverDetailsFragment : BaseFragment() {
     private fun initViews(driver: DriverAndGuideItem?) {
         Glide.with(requireContext())
             .load(driver?.personalPhoto)
+            .error(R.drawable.ic_person)
             .into(binding.imgDriver)
 
         if (driver?.carPhoto?.isNotEmpty() == true) {
             Glide.with(requireContext())
-                .load(driver.carPhoto.get(0) ?: "")
+                .load(driver.carPhoto[0] ?: "")
                 .into(binding.imgCar)
         }
 
@@ -144,9 +144,8 @@ class DriverDetailsFragment : BaseFragment() {
             else -> R.drawable.ic_group_rate
         }
 
-        val drawable = ContextCompat.getDrawable(requireActivity(), rateImage)
-        binding.driverReview.setCompoundDrawables(
-            null, null, drawable, null
+        binding.driverReview.setCompoundDrawablesWithIntrinsicBounds(
+            ContextCompat.getDrawable(requireContext(), rateImage), null, null, null
         )
         binding.driverReview.text = "(${driver?.count_rate} ${getString(R.string.review)})"
 
@@ -162,7 +161,7 @@ class DriverDetailsFragment : BaseFragment() {
             if (it.isNotEmpty()) {
                 binding.driverPrice.text = "$ ${it[0]?.price}"
             } else {
-                binding.driverPrice.text = "$0.0"
+                binding.driverPrice.text = "$ 0.0"
             }
         }
     }
