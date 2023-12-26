@@ -59,12 +59,11 @@ class PusherProvider(private val apiKey: String, private val cluster: String) : 
         }
     }
 
-    override fun removeEventListener(channelName: String, eventName: String, listener: RealTimeEventListener) {
+    override fun removeEventListener(channelName: String, eventName: String) {
         // Implement removing the listener
         pusher.unsubscribe(channelName)
         subscribedChannels.remove(channelName)
     }
-
     private fun isSubscribed(channelName: String): Boolean {
         return channelName in subscribedChannels
     }

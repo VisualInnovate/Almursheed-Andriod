@@ -2,6 +2,7 @@ package com.visualinnovate.almursheed.common
 
 import android.app.Activity
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils

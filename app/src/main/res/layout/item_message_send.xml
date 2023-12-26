@@ -38,6 +38,7 @@
         android:text="12:22 PM"
         android:textColor="@color/light_grey"
         android:textSize="@dimen/space_14x_sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

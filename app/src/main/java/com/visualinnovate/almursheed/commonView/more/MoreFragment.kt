@@ -22,8 +22,6 @@ import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-
 
 @AndroidEntryPoint
 class MoreFragment : BaseFragment() {
@@ -107,6 +105,10 @@ class MoreFragment : BaseFragment() {
 
         binding.termsAndConditions.onDebouncedListener {
             findNavController().customNavigate(R.id.termsAndConditionFragment)
+        }
+
+        binding.liveChat.onDebouncedListener {
+            findNavController().customNavigate(R.id.chatFragment)
         }
     }
 

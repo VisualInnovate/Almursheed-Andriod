@@ -2,6 +2,7 @@ package com.visualinnovate.almursheed.network
 
 import com.visualinnovate.almursheed.auth.model.MessageResponse
 import com.visualinnovate.almursheed.auth.model.UserResponse
+import com.visualinnovate.almursheed.commonView.chat.model.ChatResponse
 import com.visualinnovate.almursheed.commonView.contactUs.model.ConversationItem
 import com.visualinnovate.almursheed.commonView.contactUs.model.MyTicketResponse
 import com.visualinnovate.almursheed.commonView.contactUs.model.TicketDetailsResponse
@@ -335,13 +336,13 @@ interface ApiService {
 
     @GET("tickets/show/{id}")
     suspend fun getTicketDetailsById(
-         @Path("id") ticketId: Int?,
+        @Path("id") ticketId: Int?,
     ): Response<TicketDetailsResponse>
 
     @POST("tickets/addReplay/{id}")
     suspend fun addReplay(
-         @Path("id") ticketId: Int,
-         @Query("replay") replay: String,
+        @Path("id") ticketId: Int,
+        @Query("replay") replay: String,
     ): Response<ConversationItem>
 
     @POST("tickets/store")
@@ -360,4 +361,20 @@ interface ApiService {
 
     @GET("pages")
     suspend fun getAboutUsPage(): Response<AboutUsResponse>
+
+    @POST("chat/Conversation/messages")
+    suspend fun createConversation(
+        @Query("content") message: String,
+    ): Response<ChatResponse>
+
+    @POST("chat/messages")
+    suspend fun sendMessage(
+        @Query("content") message: String,
+        @Query("conversation_id") conversationId: Int?,
+    ): Response<ChatResponse>
+
+    @GET("chat/oneConversation/{id}")
+    suspend fun getMessages(
+        @Path("id") conversationId: Int?,
+    ): Response<ChatResponse>
 }

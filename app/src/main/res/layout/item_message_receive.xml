@@ -37,6 +37,7 @@
         android:paddingVertical="@dimen/space_1x"
         android:paddingEnd="@dimen/space_2x"
         android:text="12:22 PM"
+        android:visibility="gone"
         android:textColor="@color/light_grey"
         android:textSize="@dimen/space_14x_sp"
         app:layout_constraintBottom_toBottomOf="parent"

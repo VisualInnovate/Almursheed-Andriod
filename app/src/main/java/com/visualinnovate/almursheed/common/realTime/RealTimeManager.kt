@@ -1,6 +1,5 @@
 package com.visualinnovate.almursheed.common.realTime
 
-import android.util.Log
 import java.util.concurrent.CopyOnWriteArrayList
 
 class RealTimeManager(private val provider: RealTimeProviderInteractor) {
@@ -23,11 +22,8 @@ class RealTimeManager(private val provider: RealTimeProviderInteractor) {
         provider.addEventListener(channelName, eventName, listener)
     }
 
-    fun removeEventListener(channelName: String, eventName: String, listener: RealTimeEventListener) {
-        val channelListeners = eventListeners[channelName]
-        val listeners = channelListeners?.get(eventName)
-        listeners?.remove(listener)
-        provider.removeEventListener(channelName, eventName, listener)
+    fun removeEventListener(channelName: String, eventName: String) {
+        provider.removeEventListener(channelName, eventName)
     }
 
 }

@@ -29,7 +29,8 @@ android {
             // buildConfigField("String", "BASR_URL", "\"https://mursheed.visualinnovate.net/api/\"")
             buildConfigField("String", "BASR_URL", "\"https://dev.back.mursheed.com/api/\"")
             buildConfigField("String", "oAuthServerKey", "\"35663142823-t4j7496jpkn7v2f0b7undua0sjh78ib9.apps.googleusercontent.com\"")
-            buildConfigField("String", "INSTANCE_ID", "\"INSTANCE_ID\"")
+            buildConfigField("String", "PUSHER_INSTANCE_ID", "\"23e1efc9-6ebe-40fa-bd88-f77e525d4308\"")
+            buildConfigField("String", "PUSHER_APP_KEY", "\"da17743bc3150f478753\"")
         }
         debug {
             minifyEnabled false
@@ -39,7 +40,8 @@ android {
             // buildConfigField("String", "BASE_URL", "\"https://mursheed.visualinnovate.net/api/\"")
             buildConfigField("String", "BASE_URL", "\"https://dev.back.mursheed.com/api/\"")
             buildConfigField("String", "oAuthServerKey", "\"35663142823-t4j7496jpkn7v2f0b7undua0sjh78ib9.apps.googleusercontent.com\"")
-            buildConfigField("String", "INSTANCE_ID", "\"INSTANCE_ID\"")
+            buildConfigField("String", "PUSHER_INSTANCE_ID", "\"23e1efc9-6ebe-40fa-bd88-f77e525d4308\"")
+            buildConfigField("String", "PUSHER_APP_KEY", "\"da17743bc3150f478753\"")
         }
     }
     compileOptions {

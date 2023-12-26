@@ -193,4 +193,10 @@
         android:label="Terms And Condition"
         tools:layout="@layout/fragment_terms_and_condition" />
 
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.visualinnovate.almursheed.commonView.chat.views.ChatFragment"
+        android:label="Chat Fragment"
+        tools:layout="@layout/fragment_chat" />
+
 </navigation>

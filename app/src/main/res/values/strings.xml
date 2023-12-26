@@ -346,5 +346,7 @@
     <string name="normal_message">Message</string>
     <string name="write_your_subject">Write your subject</string>
     <string name="room_type">Room type</string>
+    <string name="type_message">Type Message</string>
+    <string name="admin">Admin</string>
 
 </resources>

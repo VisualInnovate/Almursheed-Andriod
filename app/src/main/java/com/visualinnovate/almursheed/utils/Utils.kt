@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.util.DisplayMetrics
-import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.visualinnovate.almursheed.auth.model.CarItem
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.model.CountryItem
@@ -50,6 +48,8 @@ object Utils {
     val carType = HashMap<String, String>()
     val carModel = HashMap<String, String>()
     val languages = HashMap<String, Int>()
+
+    var conversationId: Int? = null
 
     fun filterCitiesByCountryId() {
         filteredCities.clear()
