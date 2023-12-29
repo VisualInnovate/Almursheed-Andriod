@@ -64,6 +64,7 @@ class LoginFragment : BaseFragment() {
     private var facebookLoginManager: LoginManager? = null
     private var providerName = ""
     private var token = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -141,7 +142,7 @@ class LoginFragment : BaseFragment() {
                         SharedPreference.setCountryId(it.data.user?.destCountryId?.toInt())
                     } else {
                         SharedPreference.setCityId(it.data?.user?.stateId)
-                        SharedPreference.setCountryId(it.data?.user?.countryId)
+                        SharedPreference.setCountryId(it.data?.user?.countryId?.toInt())
                     }
 
                     SharedPreference.setNotificationId(it.data?.user?.notificationId)

@@ -155,31 +155,18 @@ class HomeFragment : BaseFragment() {
     private fun callApis() {
         vm.getAllBanners()
 
-        Log.d("DEBUG ", ".stateId  ${SharedPreference.getUser().stateId}")
-        Log.d("DEBUG ", ".desCityId  ${SharedPreference.getUser().desCityId}")
-        Log.d("DEBUG ", ".getCityId()  ${SharedPreference.getCityId()}")
-        if (SharedPreference.getCityId() != null) {
-            vm.getLatestDriver(SharedPreference.getCityId())
-            vm.getLatestGuides(SharedPreference.getCityId())
-        } else if (SharedPreference.getUser().stateId != null) {
-            vm.getLatestDriver(SharedPreference.getUser().stateId)
-            vm.getLatestGuides(SharedPreference.getUser().stateId)
-        } else {
-            vm.getLatestDriver(0)
-            vm.getLatestGuides(0)
-        }
-
-        /*else if (SharedPreference.getUser().desCityId != null) {
-            vm.getLatestDriver(SharedPreference.getUser().desCityId)
-            vm.getLatestGuides(SharedPreference.getUser().desCityId)
-        }*/
+        vm.getLatestDriver()
+        vm.getLatestGuides()
 
         vm.fetchOfferResponse()
         attractiveViewModel.getAllAttractiveLocation()
     }
 
     private fun initView() {
-        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE ||
+            SharedPreference.getUserRole() == Constant.ROLE_DRIVER ||
+            SharedPreference.getUserRole() == Constant.ROLE_GUIDES
+        ) {
             binding.txtTouristDestination.gone()
         } else {
             binding.txtTouristDestination.visible()

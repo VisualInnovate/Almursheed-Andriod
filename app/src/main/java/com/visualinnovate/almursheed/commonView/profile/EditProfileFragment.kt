@@ -138,6 +138,13 @@ class EditProfileFragment : BaseFragment() {
                         currentUser.destCountryId?.let { vm.getCountryName(it.toInt()) }
                             ?: getString(R.string.choose_country)
                         )
+        } else if (SharedPreference.getCountryId() != null) {
+            countryId = SharedPreference.getCountryId().toString()
+            binding.country.text =
+                (
+                        SharedPreference.getCountryId()?.let { vm.getCountryName(it) }
+                            ?: getString(R.string.choose_country)
+                        )
         } else {
             countryId = currentUser.countryId.toString()
             binding.country.text = currentUser.countryId?.let { vm.getCountryName(it) }
@@ -203,8 +210,8 @@ class EditProfileFragment : BaseFragment() {
         }
 
         binding.btnSubmit.onDebouncedListener {
-            saveData()
             if (validate()) {
+                saveData()
                 vm.updatePersonalInformation(currentUser, imagePath)
             }
         }
@@ -237,8 +244,10 @@ class EditProfileFragment : BaseFragment() {
         currentUser.phone = binding.edtPhone.value
         currentUser.personalPhoto = imagePath
         currentUser.gender = gender.toString()
-        currentUser.countryId = countryId?.toInt() ?: 0
-        currentUser.destCountryId = countryId?.toInt()?.toString() ?: ""
+        if (countryId?.isEmptySting() == false){
+            currentUser.countryId = countryId?.toInt() ?: 0
+            currentUser.destCountryId = countryId?.toInt()?.toString() ?: ""
+        }
         currentUser.nationality = nationalityName
 
         currentUser.stateId = cityId?.toInt()
@@ -256,7 +265,15 @@ class EditProfileFragment : BaseFragment() {
             isValid = false
             toast(getString(R.string.choose_city))
         }
+        if (binding.city.text.toString().trim()  == getString(R.string.choose_city)) {
+            isValid = false
+            toast(getString(R.string.choose_city))
+        }
         if (binding.country.text.toString().trim().isEmptySting()) {
+            isValid = false
+            toast(getString(R.string.choose_country))
+        }
+        if (binding.country.text.toString().trim() == getString(R.string.choose_country)) {
             isValid = false
             toast(getString(R.string.choose_country))
         }
@@ -356,7 +373,9 @@ class EditProfileFragment : BaseFragment() {
                     SharedPreference.saveUser(it.data?.user!!)
                     // SharedPreference.setCityId(it.data.user.destCityId)
                     if (Constant.ROLE_TOURIST == it.data.user.type) {
-                        SharedPreference.setCityId(it.data.user.desCityId ?: it.data.user.destCityId)
+                        SharedPreference.setCityId(
+                            it.data.user.desCityId ?: it.data.user.destCityId
+                        )
                         SharedPreference.setCountryId(it.data.user.destCountryId?.toInt())
                     } else {
                         SharedPreference.setCityId(it.data.user.stateId)

@@ -131,6 +131,20 @@
                     app:layout_constraintTop_toBottomOf="@id/liveChat" />
 
                 <TextView
+                    android:id="@+id/language"
+                    style="@style/TextStyleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4x"
+                    android:drawablePadding="@dimen/space_4x"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/language_text"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/space_16x_sp"
+                    app:drawableStartCompat="@drawable/ic_worldwide_language"
+                    app:layout_constraintTop_toBottomOf="@id/contactUs" />
+
+                <TextView
                     android:id="@+id/aboutMursheed"
                     style="@style/TextStyleBold"
                     android:layout_width="match_parent"
@@ -142,7 +156,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/space_16x_sp"
                     app:drawableStartCompat="@drawable/ic_info"
-                    app:layout_constraintTop_toBottomOf="@id/contactUs" />
+                    app:layout_constraintTop_toBottomOf="@id/language" />
 
                 <TextView
                     android:id="@+id/aboutUs"
@@ -267,6 +281,7 @@
                     android:paddingVertical="@dimen/space_2x"
                     android:text="@string/reset_password"
                     android:textColor="@color/black"
+                    android:visibility="gone"
                     android:textSize="@dimen/space_16x_sp"
                     app:drawableEndCompat="@drawable/ic_arrow_right"
                     app:layout_constraintTop_toBottomOf="@id/editLocation" />

@@ -1,6 +1,7 @@
 package com.visualinnovate.almursheed.commonView
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -191,6 +192,7 @@ class EditLocationFragment : BaseFragment() {
             when (it) {
                 is ResponseHandler.Success -> {
                     // save user
+                    Log.d("DEBUG ", "it.data?.user?  ${it.data?.user}")
                     SharedPreference.setCityId(it.data?.user?.destCityId)
                     SharedPreference.setCountryId(it.data?.user?.destCountryId?.toInt())
                     toast(it.data?.message.toString())

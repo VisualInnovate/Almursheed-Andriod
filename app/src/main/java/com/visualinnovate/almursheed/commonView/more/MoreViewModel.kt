@@ -29,7 +29,7 @@ class MoreViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getTotalEarningOfDriverAndGuide(SharedPreference.getUser().countryId)
+                apiService.getTotalEarningOfDriverAndGuide(SharedPreference.getUser().countryId?.toInt())
             }.collect {
                 _getTotalEarningMutableData.value = it
             }

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.hideKeyboard
@@ -22,6 +23,7 @@ class ChatFragment : BaseFragment() {
 
     private var _binding: FragmentChatBinding? = null
     private val binding get() = _binding!!
+
     private val vm: ChatViewModel by viewModels()
 
     private var message: String? = null
@@ -39,6 +41,8 @@ class ChatFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).hideBottomNav()
+
         initRecyclerView()
         subscribeData()
         setBtnListener()
@@ -53,11 +57,13 @@ class ChatFragment : BaseFragment() {
             R.drawable.ic_back,
         )
     }
+
     private fun subscribeData() {
         vm.messages.observe(viewLifecycleOwner) {
             chatAdapter.submitList(it!!)
             binding.edtSendMessage.setText("")
         }
+
         vm.loading.observe(viewLifecycleOwner) {
             if (it) {
                 showMainLoading()

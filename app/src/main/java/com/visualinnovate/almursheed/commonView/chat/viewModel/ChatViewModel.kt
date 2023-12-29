@@ -25,23 +25,19 @@ class ChatViewModel @Inject constructor(
     private val appContext: Application,
 ) : BaseViewModel(apiService, appContext) {
 
-    private val _messages: MutableLiveData<ArrayList<Message>?> =
-        MutableLiveData()
-    val messages: LiveData<ArrayList<Message>?> =
-        _messages.toSingleEvent()
+    private val _messages: MutableLiveData<ArrayList<Message>?> = MutableLiveData()
+    val messages: LiveData<ArrayList<Message>?> = _messages.toSingleEvent()
 
     private val realTimeManager by lazy {
         (appContext as MyApplication).realTimeManager
     }
-    private val PUSHER_CHANNEL_NAME = "replay_1"
-    private val PUSHER_EVENT_NAME = "App\\Events\\ReplayCreated"
+    private val PUSHER_CHANNEL_NAME = "Replay" // replay_1
+    private val PUSHER_EVENT_NAME = "SendReplay"
 
     private val messagesArray = ArrayList<Message>()
 
-    private val _loading: MutableLiveData<Boolean> =
-        MutableLiveData()
-    val loading: LiveData<Boolean> =
-        _loading.toSingleEvent()
+    private val _loading: MutableLiveData<Boolean> = MutableLiveData()
+    val loading: LiveData<Boolean> = _loading.toSingleEvent()
 
     init {
         if (conversationId != null) {
@@ -49,6 +45,7 @@ class ChatViewModel @Inject constructor(
             initializePusherForReplyMessages()
         }
     }
+
     fun sendMessage(message: String) {
         if (conversationId != null) {
             sendMessages(message)
@@ -78,11 +75,12 @@ class ChatViewModel @Inject constructor(
             }
         }
     }
+
     private fun getMessages() {
         _loading.value = true
         viewModelScope.launch {
             safeApiCall {
-                apiService.getMessages(conversationId)
+                apiService.getMessages() // conversationId
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
@@ -126,14 +124,14 @@ class ChatViewModel @Inject constructor(
         realTimeManager.connect()
         // update request realtime
         realTimeManager.addEventListener(
-            PUSHER_CHANNEL_NAME + conversationId,
+            PUSHER_CHANNEL_NAME, // + conversationId
             PUSHER_EVENT_NAME,
             object : RealTimeEventListener {
                 override fun onEvent(eventData: String) {
                     try {
-//                            val temp: ArrayList<RequestModel> = ArrayList()
+//                      val temp: ArrayList<RequestModel> = ArrayList()
                         val gson = Gson()
-                        Log.d("MyDebugData", "initializePusherForReplyMessages : onEvent :  " + eventData)
+                        Log.d("MyDebugData", "initializePusherForReplyMessages : onEvent :  $eventData")
 
 //                            val newRequest = gson.fromJson(eventData, RequestModel::class.java)
 //                            temp.add(newRequest)

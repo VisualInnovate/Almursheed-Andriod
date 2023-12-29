@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
@@ -48,6 +49,8 @@ class GuideDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).hideBottomNav()
+
         guideId = requireArguments().getInt(Constant.GUIDE_ID)
 
         // call api to get guide details by id
@@ -136,7 +139,7 @@ class GuideDetailsFragment : BaseFragment() {
             if (it.isNotEmpty()) {
                 binding.guidePrice.text = "$ ${it[0]?.price.toString()}"
             } else {
-                binding.guidePrice.text = "$0.0"
+                binding.guidePrice.text = "$ 0.0"
             }
         }
 
@@ -155,7 +158,7 @@ class GuideDetailsFragment : BaseFragment() {
         binding.guideReview.setCompoundDrawablesWithIntrinsicBounds(
             ContextCompat.getDrawable(requireContext(), rateImage), null, null, null
         )
-        binding.guideReview.text = "(${guide?.count_rate} ${getString(R.string.review)})"
+        // binding.guideReview.text = "(${guide?.count_rate} ${getString(R.string.review)})"
     }
 
     private fun initPricesRecyclerView() {

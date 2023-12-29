@@ -16,6 +16,7 @@ class MyApplication : Application() {
     val realTimeManager: RealTimeManager by lazy {
         RealTimeManager(PusherProvider(BuildConfig.PUSHER_APP_KEY, "eu"))
     }
+
     override fun onCreate() {
         super.onCreate()
 

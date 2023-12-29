@@ -63,7 +63,7 @@ class AccommodationAdapter(
             .into(holder.imgAccommodation)
 
         holder.accommodationName.text = accommodation.name?.localized ?: ""
-        holder.countryAndCity.text = accommodation.address?.localized ?: ""
+        holder.countryAndCity.text = accommodation.country?.country ?: ""
 
         // check favorite
         /*if (!accommodation.isFavorite) { // false -> un favorite

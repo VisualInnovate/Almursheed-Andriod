@@ -95,7 +95,6 @@ class TicketDetailsFragment : BaseFragment() {
         }
     }
 
-
     private fun subscribeData() {
         vm.getTicketDetails.observe(viewLifecycleOwner) {
             when (it) {

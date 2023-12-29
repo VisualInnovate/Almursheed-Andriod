@@ -41,8 +41,7 @@ import org.json.JSONObject
 
 @AndroidEntryPoint
 class MainActivity :
-    AppCompatActivity(),
-    MainViewsManager,
+    AppCompatActivity(), MainViewsManager,
     NavController.OnDestinationChangedListener {
 
     private lateinit var navController: NavController

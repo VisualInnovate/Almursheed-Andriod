@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.commonView.filter.viewModel.FilterViewModel
@@ -45,6 +46,8 @@ class FilterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).hideBottomNav()
+
         from = requireArguments().getString("from")!!
         initToolbar()
         initData()

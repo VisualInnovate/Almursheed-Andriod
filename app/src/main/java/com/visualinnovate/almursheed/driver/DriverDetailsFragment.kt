@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
@@ -51,6 +52,8 @@ class DriverDetailsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).hideBottomNav()
+
         driverId = requireArguments().getInt(Constant.DRIVER_ID)
 
         // call api to get driver details by id
@@ -147,7 +150,7 @@ class DriverDetailsFragment : BaseFragment() {
         binding.driverReview.setCompoundDrawablesWithIntrinsicBounds(
             ContextCompat.getDrawable(requireContext(), rateImage), null, null, null
         )
-        binding.driverReview.text = "(${driver?.count_rate} ${getString(R.string.review)})"
+        // binding.driverReview.text = "(${driver?.count_rate} ${getString(R.string.review)})"
 
         driver?.languages.let {
             if (it?.isNotEmpty() == true) {

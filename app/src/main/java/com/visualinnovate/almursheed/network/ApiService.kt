@@ -83,15 +83,11 @@ interface ApiService {
     @GET("banners")
     suspend fun getAllBanners(): Response<BannerResponse>
 
-    @GET("guides/latest")
-    suspend fun getLatestGuide(
-        @Query("country_id") stateId: Int?,
-    ): Response<DriversAndGuidesListResponse>
+    @POST("drivers/get-driver-by-country") // https://mursheed.visualinnovate.net/api/drivers/latest?stateId=0
+    suspend fun getLatestDriver(): Response<DriversAndGuidesListResponse>
 
-    @GET("drivers/latest") // https://mursheed.visualinnovate.net/api/drivers/latest?stateId=0
-    suspend fun getLatestDriver(
-        @Query("country_id") stateId: Int?,
-    ): Response<DriversAndGuidesListResponse>
+    @POST("guides/get-guide-by-country")
+    suspend fun getLatestGuide(): Response<DriversAndGuidesListResponse>
 
     @GET("drivers/all")
     suspend fun getAllDrivers(
@@ -373,8 +369,8 @@ interface ApiService {
         @Query("conversation_id") conversationId: Int?,
     ): Response<ChatResponse>
 
-    @GET("chat/oneConversation/{id}")
+    @GET("chat/oneConversation") // /{id}
     suspend fun getMessages(
-        @Path("id") conversationId: Int?,
+        // @Path("id") conversationId: Int?,
     ): Response<ChatResponse>
 }

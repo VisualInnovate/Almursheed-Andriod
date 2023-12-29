@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.toSingleEvent
-import com.visualinnovate.almursheed.home.model.*
+import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
+import com.visualinnovate.almursheed.home.model.DriverDetailsResponse
+import com.visualinnovate.almursheed.home.model.DriversAndGuidesListResponse
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,18 +33,19 @@ class DriverViewModel @Inject constructor(
 
     private val _driverMutableData: MutableLiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
         MutableLiveData()
-    val driverLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> = _driverMutableData.toSingleEvent()
+    val driverLiveData: LiveData<ResponseHandler<DriversAndGuidesListResponse?>> =
+        _driverMutableData.toSingleEvent()
 
     private val _driverDetailsMutable: MutableLiveData<ResponseHandler<DriverDetailsResponse?>> =
         MutableLiveData()
     val driverDetailsLiveData: LiveData<ResponseHandler<DriverDetailsResponse?>> =
         _driverDetailsMutable.toSingleEvent()
 
-    fun getLatestDriver(cityId: Int?) {
+    fun getLatestDriver() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestDriver(cityId!!)
+                apiService.getLatestDriver()
             }.collect {
                 _driverLatestMutableData.value = it
             }
@@ -61,7 +64,15 @@ class DriverViewModel @Inject constructor(
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getAllDrivers(country, city, carCategory, carModel, searchData, price, rate)
+                apiService.getAllDrivers(
+                    country,
+                    city,
+                    carCategory,
+                    carModel,
+                    searchData,
+                    price,
+                    rate
+                )
             }.collect {
                 _driverMutableData.value = it
             }

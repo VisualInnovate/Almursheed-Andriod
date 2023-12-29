@@ -87,22 +87,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getLatestDriver(cityId: Int?) {
+    fun getLatestDriver() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestDriver(SharedPreference.getCountryId())
+                apiService.getLatestDriver()
             }.collect {
                 _driverLatestMutableData.value = it
             }
         }
     }
 
-    fun getLatestGuides(cityId: Int?) {
+    fun getLatestGuides() {
         viewModelScope.launch {
             safeApiCall {
                 // Make your API call here using Retrofit service or similar
-                apiService.getLatestGuide(SharedPreference.getCountryId())
+                apiService.getLatestGuide()
             }.collect {
                 _guideLatestMutableData.value = it
             }
