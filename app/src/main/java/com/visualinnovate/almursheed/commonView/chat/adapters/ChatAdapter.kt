@@ -51,7 +51,7 @@ class ChatAdapter() :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (messages[position].type == "messages" ||messages[position].type == "message" ) {
+        return if (messages[position].type == "messages" || messages[position].type == "message" ) {
             VIEW_TYPE_SENT
         } else {
             VIEW_TYPE_RECEIVED

@@ -1,8 +1,6 @@
 package com.visualinnovate.almursheed.commonView.chat.viewModel
 
 import android.app.Application
-import android.os.Parcelable
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,16 +10,13 @@ import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.realTime.RealTimeEventListener
 import com.visualinnovate.almursheed.common.toSingleEvent
-import com.visualinnovate.almursheed.commonView.chat.model.ChatResponse
 import com.visualinnovate.almursheed.commonView.chat.model.Message
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.conversationId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -74,7 +69,7 @@ class ChatViewModel @Inject constructor(
                             _messages.value = messagesArray
                             _loading.value = false
                         } else {
-                            sendMessage(message)
+                            sendMessages(message,false)
                             getMessages()
                         }
                     }
@@ -114,7 +109,7 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    private fun sendMessages(message: String) {
+    private fun sendMessages(message: String , showMessage: Boolean = true) {
         _loading.value = true
         viewModelScope.launch {
             safeApiCall {
@@ -122,8 +117,10 @@ class ChatViewModel @Inject constructor(
             }.collect {
                 when (it) {
                     is ResponseHandler.Success -> {
-                        messagesArray.add(it.data?.message!!)
-                        _messages.value = messagesArray
+                        if (showMessage) {
+                            messagesArray.add(it.data?.message!!)
+                            _messages.value = messagesArray
+                        }
                         _loading.value = false
                     }
 

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -62,7 +61,7 @@ class ChatFragment : BaseFragment() {
     private fun subscribeData() {
         vm.messages.observe(viewLifecycleOwner) {
             chatAdapter.submitList(it!!)
-            binding.rvChat.smoothScrollToPosition(it.size - 1)
+           binding.rvChat.smoothScrollToPosition(it.size - 1)
             binding.edtSendMessage.setText("")
         }
 
@@ -78,7 +77,7 @@ class ChatFragment : BaseFragment() {
     private fun initRecyclerView() {
         chatAdapter = ChatAdapter()
         binding.rvChat.apply {
-            chatAdapter.setHasStableIds(true)
+           //chatAdapter.setHasStableIds(true)
             adapter = chatAdapter
         }
     }
