@@ -2,20 +2,23 @@ package com.visualinnovate.almursheed.auth.view
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.pusher.pushnotifications.PushNotifications
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.auth.viewmodel.VerificationViewModel
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
+import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentVerifyAccountBinding
 import com.visualinnovate.almursheed.utils.Constant
@@ -111,7 +114,15 @@ class VerifyAccountFragment : BaseFragment() {
                     bundle.putString(Constant.EMAIL, email)
                     bundle.putString(Constant.OTP, otpCode)
                     if (type == "0") {
-                        findNavController().customNavigate(R.id.loginFragment)
+                        requireActivity().startHomeActivity()
+
+                        /*if (SharedPreference.getUser().isVerified == true) {
+                            // findNavController().customNavigate(R.id.loginFragment)
+                            requireActivity().startHomeActivity()
+                        } else {
+                            // isVerified = false
+                        }*/
+
                     } else {
                         findNavController().customNavigate(R.id.newPasswordFragment, false, bundle)
                     }
@@ -141,18 +152,22 @@ class VerifyAccountFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     toast(it.data?.message.toString())
                 }
+
                 is ResponseHandler.Error -> {
                     // show error message
                     toast(it.message)
                 }
+
                 is ResponseHandler.Loading -> {
                     // show a progress bar
                     showAuthLoading()
                 }
+
                 is ResponseHandler.StopLoading -> {
                     // show a progress bar
                     hideAuthLoading()
                 }
+
                 else -> {}
             }
         }

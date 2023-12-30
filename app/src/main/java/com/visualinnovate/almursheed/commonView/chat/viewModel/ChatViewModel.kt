@@ -1,22 +1,27 @@
 package com.visualinnovate.almursheed.commonView.chat.viewModel
 
 import android.app.Application
+import android.os.Parcelable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.visualinnovate.almursheed.MyApplication
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseViewModel
 import com.visualinnovate.almursheed.common.realTime.RealTimeEventListener
 import com.visualinnovate.almursheed.common.toSingleEvent
+import com.visualinnovate.almursheed.commonView.chat.model.ChatResponse
 import com.visualinnovate.almursheed.commonView.chat.model.Message
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import com.visualinnovate.almursheed.utils.Utils.conversationId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import kotlinx.parcelize.Parcelize
+import org.json.JSONObject
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,8 +36,8 @@ class ChatViewModel @Inject constructor(
     private val realTimeManager by lazy {
         (appContext as MyApplication).realTimeManager
     }
-    private val PUSHER_CHANNEL_NAME = "Replay" // replay_1
-    private val PUSHER_EVENT_NAME = "SendReplay"
+    private val PUSHER_CHANNEL_NAME = "Message" // replay_1
+    private val PUSHER_EVENT_NAME = "SendMessage/"
 
     private val messagesArray = ArrayList<Message>()
 
@@ -40,9 +45,9 @@ class ChatViewModel @Inject constructor(
     val loading: LiveData<Boolean> = _loading.toSingleEvent()
 
     init {
+        initializePusherForReplyMessages()
         if (conversationId != null) {
             getMessages()
-            initializePusherForReplyMessages()
         }
     }
 
@@ -53,6 +58,7 @@ class ChatViewModel @Inject constructor(
             createConversation(message)
         }
     }
+
     private fun createConversation(message: String) {
         _loading.value = true
         viewModelScope.launch {
@@ -62,14 +68,21 @@ class ChatViewModel @Inject constructor(
                 when (it) {
                     is ResponseHandler.Success -> {
                         conversationId = it.data?.conversationId
-                        messagesArray.clear()
-                        it.data?.conversation?.let { it1 -> messagesArray.addAll(it1) }
-                        _messages.value = messagesArray
-                        _loading.value = false
+                        if (it.data?.errorMessage.isNullOrEmpty()) {
+                            messagesArray.clear()
+                            it.data?.conversation?.let { it1 -> messagesArray.addAll(it1) }
+                            _messages.value = messagesArray
+                            _loading.value = false
+                        } else {
+                            sendMessage(message)
+                            getMessages()
+                        }
                     }
+
                     is ResponseHandler.Error -> {
                         _loading.value = false
                     }
+
                     else -> {}
                 }
             }
@@ -90,10 +103,12 @@ class ChatViewModel @Inject constructor(
                         _messages.value = messagesArray
                         _loading.value = false
                     }
+
                     is ResponseHandler.Error -> {
                         _loading.value = false
                     }
-                    else -> { }
+
+                    else -> {}
                 }
             }
         }
@@ -111,9 +126,11 @@ class ChatViewModel @Inject constructor(
                         _messages.value = messagesArray
                         _loading.value = false
                     }
+
                     is ResponseHandler.Error -> {
                         _loading.value = false
                     }
+
                     else -> {}
                 }
             }
@@ -125,23 +142,21 @@ class ChatViewModel @Inject constructor(
         // update request realtime
         realTimeManager.addEventListener(
             PUSHER_CHANNEL_NAME, // + conversationId
-            PUSHER_EVENT_NAME,
+            PUSHER_EVENT_NAME + SharedPreference.getUser().notificationId,
             object : RealTimeEventListener {
                 override fun onEvent(eventData: String) {
                     try {
-//                      val temp: ArrayList<RequestModel> = ArrayList()
                         val gson = Gson()
-                        Log.d("MyDebugData", "initializePusherForReplyMessages : onEvent :  $eventData")
+                        val jsonObject = JSONObject(eventData)
+                        val messageObject = jsonObject
+                            .optJSONObject("jsonData")
+                            ?.optJSONObject("message")
 
-//                            val newRequest = gson.fromJson(eventData, RequestModel::class.java)
-//                            temp.add(newRequest)
-//                            if (temp.isNotEmpty()) {
-//                                if (temp[0].deleted_at == null) {
-//                                    getStudents(temp)
-//                                }
-//                            }
+                        val newMessage = gson.fromJson(messageObject.toString(), Message::class.java)
+                        messagesArray.add(newMessage)
+                        _messages.postValue(messagesArray)
                     } catch (ex: Exception) {
-                        println(ex.localizedMessage)
+                        println("MyDebugData Exception ${ex.localizedMessage}")
                     }
                 }
             },
@@ -151,9 +166,10 @@ class ChatViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         realTimeManager.removeEventListener(
-            PUSHER_CHANNEL_NAME + conversationId,
-            PUSHER_EVENT_NAME,
+            PUSHER_CHANNEL_NAME,
+            PUSHER_EVENT_NAME + SharedPreference.getUser().notificationId,
         )
         realTimeManager.disconnect()
     }
 }
+

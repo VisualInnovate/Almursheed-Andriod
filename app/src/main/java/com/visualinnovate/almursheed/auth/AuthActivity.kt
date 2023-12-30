@@ -2,19 +2,24 @@ package com.visualinnovate.almursheed.auth
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.pusher.pushnotifications.BeamsCallback
 import com.pusher.pushnotifications.PushNotifications
+import com.pusher.pushnotifications.PusherCallbackError
+import com.pusher.pushnotifications.auth.AuthData
+import com.pusher.pushnotifications.auth.AuthDataGetter
+import com.pusher.pushnotifications.auth.BeamsTokenProvider
+import com.visualinnovate.almursheed.BuildConfig
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.Car
 import com.visualinnovate.almursheed.auth.model.City
@@ -74,7 +79,6 @@ class AuthActivity : AppCompatActivity(), AuthViewsManager {
         setupDataForLanguage()
         setupDataForCity()
     }
-
 
     // init (readJsonFile)
     private fun setupDataForCountryAndNationality() {

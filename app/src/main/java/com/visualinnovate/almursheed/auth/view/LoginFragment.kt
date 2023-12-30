@@ -29,7 +29,9 @@ import com.pusher.pushnotifications.auth.AuthData
 import com.pusher.pushnotifications.auth.AuthDataGetter
 import com.pusher.pushnotifications.auth.BeamsTokenProvider
 import com.visualinnovate.almursheed.BuildConfig
+import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -148,8 +150,6 @@ class LoginFragment : BaseFragment() {
                     SharedPreference.setNotificationId(it.data?.user?.notificationId)
                     if (rememberMe) SharedPreference.setUserLoggedIn(true)
 
-                    PushNotifications.clearAllState()
-                    pushNotificationsSetUserId()
                     binding.btnLogin.handleBtnAnimation()
                     requireActivity().startHomeActivity()
                 }
@@ -176,38 +176,7 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-    private val tokenProvider =
-        BeamsTokenProvider(
-            "${BuildConfig.BASE_URL}pusher/beams-auth",
-            object : AuthDataGetter {
-                override fun getAuthData(): AuthData {
-                    return AuthData(
-                        // Headers and URL query params your auth endpoint needs to
-                        // request a Beams Token for a given user
-                        headers = hashMapOf(
-                            // for example:
-                            "Authorization" to "Bearer ${SharedPreference.getUserToken()!!}",
-                        ),
-                    )
-                }
-            },
-        )
 
-    private fun pushNotificationsSetUserId() {
-        PushNotifications.setUserId(
-            SharedPreference.getNotificationId().toString(),
-            tokenProvider,
-            object : BeamsCallback<Void, PusherCallbackError> {
-                override fun onFailure(error: PusherCallbackError) {
-                    Log.e("BeamsAuth", "Could not login to Beams: ${error.message}")
-                }
-
-                override fun onSuccess(vararg values: Void) {
-                    Log.i("BeamsAuth", "Beams login success")
-                }
-            },
-        )
-    }
 
     private fun validate(): Boolean {
         var isValid = true
@@ -219,8 +188,10 @@ class LoginFragment : BaseFragment() {
 
         // email = "mohamed.nasar8710@gmail.com"
         // email = "driver400@gmail.com"
-        email = "mohamed.tourist1@gmail.com"
+        // email = "mohamed.tourist1@gmail.com"
+        // email = "mohamed200@gmail.com"
         // email = "guide100@gmail.com"
+        email = "vazohu@tutuapp.bid" // guide
         // email = "nassar@gmail.com"
         password = "123456789"
 

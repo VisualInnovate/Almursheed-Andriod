@@ -15,6 +15,9 @@ data class ChatResponse(
 
     @field:SerializedName("status")
     val status: Boolean? = null,
+
+    @field:SerializedName("error")
+    val errorMessage: String? = null,
 )
 
 data class Message(

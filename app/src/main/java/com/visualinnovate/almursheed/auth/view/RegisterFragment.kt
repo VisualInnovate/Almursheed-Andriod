@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.pusher.pushnotifications.PushNotifications
 import com.visualinnovate.almursheed.R
+import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.auth.model.CityItem
 import com.visualinnovate.almursheed.auth.viewmodel.RegisterViewModel
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
 import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.isEmptySting
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.showBottomSheet
+import com.visualinnovate.almursheed.common.startHomeActivity
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.value
 import com.visualinnovate.almursheed.commonView.bottomSheets.ChooseTextBottomSheet
@@ -80,6 +84,23 @@ class RegisterFragment : BaseFragment() {
                 is ResponseHandler.Success -> {
                     hideAuthLoading()
 
+                    // save user
+                    SharedPreference.saveUser(it.data?.user)
+                    SharedPreference.setUserToken(it.data?.token)
+                    // SharedPreference.setCityId(it.data?.user?.desCityId)
+
+                    if (Constant.ROLE_TOURIST == it.data?.user?.type) {
+                        SharedPreference.setCityId(
+                            it.data.user?.desCityId ?: it.data.user?.destCityId
+                        )
+                        SharedPreference.setCountryId(it.data.user?.destCountryId?.toInt())
+                    } else {
+                        SharedPreference.setCityId(it.data?.user?.stateId)
+                        SharedPreference.setCountryId(it.data?.user?.countryId?.toInt())
+                    }
+
+                    SharedPreference.setNotificationId(it.data?.user?.notificationId)
+
                     val bundle = Bundle()
                     bundle.putString(Constant.EMAIL, email)
                     bundle.putString(Constant.TYPE_OTP, "0")
@@ -101,9 +122,7 @@ class RegisterFragment : BaseFragment() {
                     hideAuthLoading()
                 }
 
-                else -> {
-                    toast("Else")
-                }
+                else -> { }
             }
         }
     }
@@ -431,8 +450,3 @@ class RegisterFragment : BaseFragment() {
         }
     }*/
 }
-
-/*
-
-
- */

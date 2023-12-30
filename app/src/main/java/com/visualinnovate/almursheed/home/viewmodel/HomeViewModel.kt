@@ -76,6 +76,7 @@ class HomeViewModel @Inject constructor(
     val guideDetailsLiveData: LiveData<ResponseHandler<GuideDetailsResponse?>> =
         _guideDetailsMutable.toSingleEvent()
 
+
     fun getAllBanners() {
         viewModelScope.launch {
             safeApiCall {

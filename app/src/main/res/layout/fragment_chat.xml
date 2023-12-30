@@ -58,7 +58,6 @@
                 app:layout_constraintStart_toEndOf="@id/image_user"
                 app:layout_constraintTop_toTopOf="@id/image_user" />
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_chat"
                 android:layout_width="match_parent"
@@ -69,7 +68,7 @@
                 app:layout_constraintBottom_toTopOf="@id/ViewSend"
                 app:layout_constraintTop_toBottomOf="@id/image_user"
                 tools:itemCount="4"
-                tools:listitem="@layout/item_message_send" />
+                tools:listitem="@layout/item_message_receive" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ViewSend"
@@ -80,7 +79,6 @@
                 android:background="@drawable/bg_rectangle_white"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-
                 <EditText
                     android:id="@+id/edt_sendMessage"
                     android:layout_width="0dp"
@@ -88,7 +86,7 @@
                     android:background="@null"
                     android:backgroundTint="@null"
                     android:hint="@string/type_message"
-                    android:paddingStart="@dimen/space_4x"
+                    android:paddingHorizontal="@dimen/space_4x"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_send"
@@ -107,7 +105,7 @@
                     android:id="@+id/btn_send"
                     android:layout_width="50dp"
                     android:layout_height="0dp"
-                    android:padding="@dimen/space_3x"
+                    android:padding="@dimen/space_3_4x"
                     android:src="@drawable/ic_send_message"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

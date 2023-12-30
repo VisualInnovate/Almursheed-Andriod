@@ -18,6 +18,7 @@ import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.common.visible
+import com.visualinnovate.almursheed.commonView.notification.viewmodel.NotificationViewModel
 import com.visualinnovate.almursheed.databinding.FragmentHomeBinding
 import com.visualinnovate.almursheed.driver.adapter.DriverAdapter
 import com.visualinnovate.almursheed.guide.adapter.GuideAdapter
@@ -44,6 +45,7 @@ class HomeFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val vm: HomeViewModel by viewModels()
+    private val notificationViewModel: NotificationViewModel by viewModels()
     private val attractiveViewModel: LocationViewModel by viewModels()
 
     private lateinit var bannerViewPagerAdapter: BannerViewPagerAdapter
@@ -99,7 +101,6 @@ class HomeFragment : BaseFragment() {
     }
 
     private val btnLocationClickCallBack: (location: AttractivesItem) -> Unit = { location ->
-        Log.d("btnLocationClickCallBack", "Clicked Item location $location")
         val bundle = Bundle()
         bundle.putInt(Constant.LOCATION_DETAILS, location.id!!)
         findNavController().customNavigate(R.id.locationDetailsFragment, false, bundle)
@@ -153,6 +154,8 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun callApis() {
+        notificationViewModel.getUnreadNotificationsResponse()
+
         vm.getAllBanners()
 
         vm.getLatestDriver()
@@ -185,6 +188,37 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun subscribeData() {
+        // observe in getUnreadNotification in Notification
+        notificationViewModel.getUnreadNotificationLiveData.observe(viewLifecycleOwner) {
+            when (it) {
+                is ResponseHandler.Success -> {
+                    // bind data to the view
+                    if (it.data?.status == true) {
+                        binding.imgNotificationStatus.visible()
+                    } else {
+                        binding.imgNotificationStatus.gone()
+                    }
+                }
+
+                is ResponseHandler.Error -> {
+                    // show error message
+                    // toast(it.message)
+                }
+
+                is ResponseHandler.Loading -> {
+                    // show a progress bar
+                    showMainLoading()
+                }
+
+                is ResponseHandler.StopLoading -> {
+                    // show a progress bar
+                    hideMainLoading()
+                }
+
+                else -> {}
+            }
+        }
+
         // observe in all banner list
         vm.getAllBannerLiveData.observe(viewLifecycleOwner) {
             when (it) {

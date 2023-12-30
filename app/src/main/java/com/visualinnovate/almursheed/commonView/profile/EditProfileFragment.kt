@@ -278,12 +278,12 @@ class EditProfileFragment : BaseFragment() {
             toast(getString(R.string.choose_country))
         }
 
-        if (currentUser.phone?.isEmptySting() == true) {
+        if (binding.edtPhone.value.isEmptySting()) {
             isValid = false
             toast(getString(R.string.enter_your_phone_number))
         }
 
-        if (currentUser.name?.isEmptySting() == true) {
+        if (binding.edtUserName.value.isEmptySting()) {
             isValid = false
             toast(getString(R.string.enter_your_name))
         }

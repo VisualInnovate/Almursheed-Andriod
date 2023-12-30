@@ -7,7 +7,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.visualinnovate.almursheed.common.toSingleEvent
 import com.visualinnovate.almursheed.commonView.notification.model.NotificationResponse
-import com.visualinnovate.almursheed.home.model.FlightResponse
 import com.visualinnovate.almursheed.network.ApiService
 import com.visualinnovate.almursheed.network.BaseApiResponse
 import com.visualinnovate.almursheed.utils.ResponseHandler

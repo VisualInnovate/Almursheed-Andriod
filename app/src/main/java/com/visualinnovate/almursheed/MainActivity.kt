@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -17,6 +18,12 @@ import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.pusher.pushnotifications.BeamsCallback
+import com.pusher.pushnotifications.PushNotifications
+import com.pusher.pushnotifications.PusherCallbackError
+import com.pusher.pushnotifications.auth.AuthData
+import com.pusher.pushnotifications.auth.AuthDataGetter
+import com.pusher.pushnotifications.auth.BeamsTokenProvider
 import com.visualinnovate.almursheed.auth.model.Car
 import com.visualinnovate.almursheed.auth.model.City
 import com.visualinnovate.almursheed.auth.model.CityItem
@@ -70,6 +77,8 @@ class MainActivity :
         setupDataForLanguage()
         setupDataForCountryAndNationality()
 
+        pushNotificationsSetUserId()
+
         /*if (userRole == ROLE_GUIDE || userRole == ROLE_DRIVER) {
             setupDriverOrGuideViews()
         } else {
@@ -111,6 +120,44 @@ class MainActivity :
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    private val tokenProvider =
+        BeamsTokenProvider(
+            "${BuildConfig.BASE_URL}pusher/beams-auth",
+            object : AuthDataGetter {
+                override fun getAuthData(): AuthData {
+                    return AuthData(
+                        // Headers and URL query params your auth endpoint needs to
+                        // request a Beams Token for a given user
+                        headers = hashMapOf(
+                            // for example:
+                            "Authorization" to "Bearer ${SharedPreference.getUserToken()!!}",
+                        ),
+                    )
+                }
+            },
+        )
+
+    private fun pushNotificationsSetUserId() {
+        try {
+            PushNotifications.clearAllState()
+            PushNotifications.setUserId(
+                SharedPreference.getNotificationId().toString(),
+                tokenProvider,
+                object : BeamsCallback<Void, PusherCallbackError> {
+                    override fun onFailure(error: PusherCallbackError) {
+                        Log.e("BeamsAuth", "Could not login to Beams: ${error.message}")
+                    }
+
+                    override fun onSuccess(vararg values: Void) {
+                        Log.i("BeamsAuth", "Beams login success")
+                    }
+                },
+            )
+        } catch (error: Exception) {
+            Log.i("Exception", "${error.localizedMessage}")
+        }
     }
 
     override fun showLoading() {
