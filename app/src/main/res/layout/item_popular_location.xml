@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/space_4x"
+    android:layout_marginStart="@dimen/space_4x"
+    android:layout_marginBottom="@dimen/space_2x"
     app:cardCornerRadius="@dimen/space_4x"
     app:cardElevation="@dimen/space_1x">
 
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/space_1_5x"
-            android:layout_marginHorizontal="@dimen/space_1_5x"
+            android:layout_marginHorizontal="@dimen/space_2x"
             android:gravity="start"
             android:ellipsize="end"
             android:maxLines="1"
@@ -53,10 +54,9 @@
             style="@style/TextStyleRegular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/space_1_5x"
-            android:layout_marginStart="@dimen/space_1_5x"
-            android:layout_marginEnd="@dimen/space_3x"
-            android:drawableStart="@drawable/ic_location"
+            android:layout_marginTop="@dimen/space_1_5x"
+            android:layout_marginBottom="@dimen/space_2x"
+            android:layout_marginHorizontal="@dimen/space_2x"
             android:drawablePadding="@dimen/space_1_5x"
             android:ellipsize="end"
             android:maxLines="1"
@@ -64,7 +64,8 @@
             android:textColor="@color/grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/popularLocationName"
-            tools:text="Paris" />
+            tools:text="Paris"
+            app:drawableStartCompat="@drawable/ic_location" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
