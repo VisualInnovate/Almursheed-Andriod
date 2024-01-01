@@ -55,7 +55,7 @@ class ChatViewModel @Inject constructor(
     }
 
     private fun createConversation(message: String) {
-        _loading.value = true
+        // _loading.value = true
         viewModelScope.launch {
             safeApiCall {
                 apiService.createConversation(message)
@@ -110,7 +110,7 @@ class ChatViewModel @Inject constructor(
     }
 
     private fun sendMessages(message: String , showMessage: Boolean = true) {
-        _loading.value = true
+        // _loading.value = true
         viewModelScope.launch {
             safeApiCall {
                 apiService.sendMessage(message, conversationId)

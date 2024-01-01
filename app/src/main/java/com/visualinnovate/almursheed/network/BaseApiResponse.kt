@@ -3,6 +3,7 @@ package com.visualinnovate.almursheed.network
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.utils.ResponseHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.flowOn
 import org.json.JSONObject
 import retrofit2.Response
 
-abstract class BaseApiResponse(application: Application) : AndroidViewModel(application) {
+abstract class BaseApiResponse(private val application: Application) :
+    AndroidViewModel(application) {
 
     private var errorMessage = ""
 
@@ -27,21 +29,51 @@ abstract class BaseApiResponse(application: Application) : AndroidViewModel(appl
                     emit(ResponseHandler.Success(response.body()))
                 } else {
                     when {
-                        code / 100 == 4 -> parseError(response.errorBody()!!.string())
-                        code / 100 == 5 -> {
-                            errorMessage = "something went wrong"
+                        code == 400 -> {
+                            errorMessage =
+                                application.getString(R.string.no_price_for_this_country_please_contact_administrator)
                         }
+
+                        code == 401 -> {
+                            errorMessage =
+                                application.getString(R.string.email_or_password_is_not_correct)
+                        }
+
+                        code == 402 -> {
+                            errorMessage =
+                                application.getString(R.string.email_must_be_verified_first)
+                        }
+
+                        code == 422 -> {
+                            errorMessage =
+                                application.getString(R.string.validation_error_email_and_password_are_required)
+                        }
+
+                        code == 404 -> {
+                            errorMessage = application.getString(R.string.driver_or_guide_not_found)
+                        }
+
+                        code == 409 -> {
+                            errorMessage =
+                                application.getString(R.string.there_is_no_price_for_this_city)
+                        }
+
+                        code == 500 -> {
+                            errorMessage =
+                                application.getString(R.string.server_error_or_other_error_ask_user_to_try_again_later)
+                        }
+
                         else -> {
-                            errorMessage = "something went wrong"
+                            errorMessage = application.getString(R.string.something_went_wrong)
                         }
                     }
                     emit(ResponseHandler.StopLoading)
                     emit(ResponseHandler.Error(errorMessage))
                 }
             } catch (e: Exception) {
-                Log.d("MyDebugData","BaseApiResponse : safeApiCall :  " + e.localizedMessage)
+                Log.d("MyDebugData", "BaseApiResponse : safeApiCall :  " + e.localizedMessage)
                 emit(ResponseHandler.StopLoading)
-                emit(ResponseHandler.Error("something went wrong"))
+                emit(ResponseHandler.Error(application.getString(R.string.something_went_wrong)))
             }
         }.flowOn(Dispatchers.IO)
 

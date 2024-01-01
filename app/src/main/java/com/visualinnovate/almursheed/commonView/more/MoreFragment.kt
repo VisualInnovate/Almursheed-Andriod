@@ -25,6 +25,7 @@ import com.visualinnovate.almursheed.commonView.bottomSheets.model.ChooserItemMo
 import com.visualinnovate.almursheed.databinding.FragmentMoreBinding
 import com.visualinnovate.almursheed.utils.Constant
 import com.visualinnovate.almursheed.utils.ResponseHandler
+import com.visualinnovate.almursheed.utils.Utils.conversationId
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -95,6 +96,7 @@ class MoreFragment : BaseFragment() {
             SharedPreference.setUserLoggedIn(false)
             SharedPreference.setCityId(null)
             SharedPreference.setCountryId(null)
+            conversationId = null
 
             try {
                 PushNotifications.stop()

@@ -348,5 +348,13 @@
     <string name="room_type">Room type</string>
     <string name="type_message">Type Message</string>
     <string name="admin">Admin</string>
+    <string name="something_went_wrong">something went wrong</string>
+    <string name="no_price_for_this_country_please_contact_administrator">No price for this country please contact administrator</string>
+    <string name="email_or_password_is_not_correct">email or password is not correct</string>
+    <string name="email_must_be_verified_first">email must be verified first</string>
+    <string name="validation_error_email_and_password_are_required">validation error (email and password are required)</string>
+    <string name="driver_or_guide_not_found">driver or guide not found</string>
+    <string name="there_is_no_price_for_this_city">there is no price for this city</string>
+    <string name="server_error_or_other_error_ask_user_to_try_again_later">server error or other error (ask user to try again later)</string>
 
 </resources>

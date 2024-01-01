@@ -139,8 +139,22 @@ class HireViewModel @Inject constructor(
         }
     }
 
-    fun createOrder(tripType: Int, currentLocation: Location?, startDate: String, endDate: String, userType: Int, selectedDays: ArrayList<DayModel>) {
-        val order = prepareOrderForApiCall(tripType, currentLocation, startDate, endDate, userType, selectedDays)
+    fun createOrder(
+        tripType: Int,
+        currentLocation: Location?,
+        startDate: String,
+        endDate: String,
+        userType: Int,
+        selectedDays: ArrayList<DayModel>
+    ) {
+        val order = prepareOrderForApiCall(
+            tripType,
+            currentLocation,
+            startDate,
+            endDate,
+            userType,
+            selectedDays
+        )
 
         viewModelScope.launch {
             safeApiCall {
@@ -164,7 +178,7 @@ class HireViewModel @Inject constructor(
             trip_type = tripType,
             start_date = startDate,
             end_date = endDate,
-            country_id = selectedDriverAndGuide?.countryId?:0,
+            country_id = selectedDriverAndGuide?.countryId ?: 0,
             lat = currentLocation?.latitude.toString(),
             longitude = currentLocation?.longitude.toString(),
         )

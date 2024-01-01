@@ -111,7 +111,14 @@ class EditProfileFragment : BaseFragment() {
         nationalityName = currentUser.nationality.toString()
         countryId = currentUser.countryId.toString()
 
-        if (currentUser.destCityId != null) {
+        if (SharedPreference.getCityId() != null) {
+            cityId = SharedPreference.getCityId().toString()
+            binding.city.text =
+                (
+                        SharedPreference.getCityId().toString().let { vm.getCityName(it.toInt()) }
+                            ?: getString(R.string.choose_city)
+                        )
+        } else if (currentUser.destCityId != null) {
             cityId = currentUser.destCityId.toString()
             binding.city.text =
                 (
@@ -131,18 +138,18 @@ class EditProfileFragment : BaseFragment() {
                 (currentUser.stateId?.let { vm.getCityName(it) } ?: getString(R.string.choose_city))
         }
 
-        if (currentUser.destCountryId != null) {
-            countryId = currentUser.destCountryId.toString()
-            binding.country.text =
-                (
-                        currentUser.destCountryId?.let { vm.getCountryName(it.toInt()) }
-                            ?: getString(R.string.choose_country)
-                        )
-        } else if (SharedPreference.getCountryId() != null) {
+        if (SharedPreference.getCountryId() != null) {
             countryId = SharedPreference.getCountryId().toString()
             binding.country.text =
                 (
                         SharedPreference.getCountryId()?.let { vm.getCountryName(it) }
+                            ?: getString(R.string.choose_country)
+                        )
+        } else if (currentUser.destCountryId != null) {
+            countryId = currentUser.destCountryId.toString()
+            binding.country.text =
+                (
+                        currentUser.destCountryId?.let { vm.getCountryName(it.toInt()) }
                             ?: getString(R.string.choose_country)
                         )
         } else {
@@ -244,7 +251,7 @@ class EditProfileFragment : BaseFragment() {
         currentUser.phone = binding.edtPhone.value
         currentUser.personalPhoto = imagePath
         currentUser.gender = gender.toString()
-        if (countryId?.isEmptySting() == false){
+        if (countryId?.isEmptySting() == false) {
             currentUser.countryId = countryId?.toInt() ?: 0
             currentUser.destCountryId = countryId?.toInt()?.toString() ?: ""
         }
@@ -265,7 +272,7 @@ class EditProfileFragment : BaseFragment() {
             isValid = false
             toast(getString(R.string.choose_city))
         }
-        if (binding.city.text.toString().trim()  == getString(R.string.choose_city)) {
+        if (binding.city.text.toString().trim() == getString(R.string.choose_city)) {
             isValid = false
             toast(getString(R.string.choose_city))
         }

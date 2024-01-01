@@ -22,16 +22,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.pusher.pushnotifications.BeamsCallback
-import com.pusher.pushnotifications.PushNotifications
-import com.pusher.pushnotifications.PusherCallbackError
-import com.pusher.pushnotifications.auth.AuthData
-import com.pusher.pushnotifications.auth.AuthDataGetter
-import com.pusher.pushnotifications.auth.BeamsTokenProvider
 import com.visualinnovate.almursheed.BuildConfig
-import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
-import com.visualinnovate.almursheed.auth.AuthActivity
 import com.visualinnovate.almursheed.auth.viewmodel.AuthViewModel
 import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
@@ -177,7 +169,6 @@ class LoginFragment : BaseFragment() {
     }
 
 
-
     private fun validate(): Boolean {
         var isValid = true
         email = binding.edtEmailAddress.value
@@ -189,11 +180,12 @@ class LoginFragment : BaseFragment() {
         // email = "mohamed.nasar8710@gmail.com"
         // email = "driver400@gmail.com"
         // email = "mohamed.tourist1@gmail.com"
+        email = "hijuwu@closetab.email" // tourist
         // email = "mohamed200@gmail.com"
         // email = "guide100@gmail.com"
-       // email = "vazohu@tutuapp.bid" // guide
+        // email = "vazohu@tutuapp.bid" // guide
         // email = "nassar@gmail.com"
-       // password = "123456789"
+        password = "123456789"
 
         if (email.isEmptySting()) {
             binding.edtEmailAddress.error = getString(R.string.required)

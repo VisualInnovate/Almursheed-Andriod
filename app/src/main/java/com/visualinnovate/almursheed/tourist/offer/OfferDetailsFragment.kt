@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.invisible
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.databinding.FragmentOfferDetailsBinding
@@ -50,14 +51,11 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
         // get argument
         offerId = requireArguments().getInt(Constant.OFFER_ID)
 
-        // fun clicked
+        // call api to get offer details by offer id
+        vm.getOfferDetailsById(offerId ?: 0)
+
         setBtnListener()
         subscribeData()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        vm.getOfferDetailsById(offerId ?: 0)
     }
 
     @SuppressLint("SetTextI18n")
@@ -67,6 +65,7 @@ class OfferDetailsFragment : BottomSheetDialogFragment() {
         binding.realPrice.invisible()
         Glide.with(requireContext())
             .load(offer?.media?.get(0)?.originalUrl)
+            .error(R.drawable.ic_mursheed_logo)
             .into(binding.imgOffer)
 
         binding.OfferDescription.text = offer?.title ?: ""

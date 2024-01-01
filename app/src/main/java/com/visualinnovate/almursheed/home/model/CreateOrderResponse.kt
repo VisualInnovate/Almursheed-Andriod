@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class CreateOrderResponse(
 
     @field:SerializedName("cost")
-    val cost: Int? = null,
+    val cost: Double? = null,
 
     @field:SerializedName("sub_total")
     val subTotal: Double? = null,
@@ -20,7 +20,7 @@ data class CreateOrderResponse(
     val status: Int? = null,
 
     @field:SerializedName("order_id")
-    val order_id: Int? = null
+    val orderId: Int? = null
 )
 
 data class CountryPrice(

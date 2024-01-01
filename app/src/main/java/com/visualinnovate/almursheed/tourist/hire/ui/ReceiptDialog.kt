@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.res.Resources
 import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -81,7 +80,7 @@ class ReceiptDialog(private val onDismissCalBack: () -> Unit) : DialogFragment()
 
     private fun setBtnListener() {
         binding.btnHire.onDebouncedListener {
-            vm.submitOrder(vm.order?.order_id!!)
+            vm.submitOrder(vm.order?.orderId!!)
         }
         binding.btnClose.onDebouncedListener {
             dialog?.dismiss()
