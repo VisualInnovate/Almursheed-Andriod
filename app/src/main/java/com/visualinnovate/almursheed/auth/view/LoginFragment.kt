@@ -168,7 +168,6 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-
     private fun validate(): Boolean {
         var isValid = true
         email = binding.edtEmailAddress.value
@@ -178,9 +177,9 @@ class LoginFragment : BaseFragment() {
         // password = "123456789"
 
         // email = "mohamed.nasar8710@gmail.com"
-        // email = "driver400@gmail.com"
+        email = "vusabawi@closetab.email" // driver
         // email = "mohamed.tourist1@gmail.com"
-        email = "hijuwu@closetab.email" // tourist
+        // email = "cazirera@tutuapp.bid" // tourist
         // email = "mohamed200@gmail.com"
         // email = "guide100@gmail.com"
         // email = "vazohu@tutuapp.bid" // guide

@@ -22,6 +22,9 @@ data class MyOrdersItem(
     @field:SerializedName("cost")
     val cost: String? = null,
 
+    @field:SerializedName("sub_total")
+    val subTotal: String? = null,
+
     @field:SerializedName("created_at")
     val createdAt: String? = null,
 

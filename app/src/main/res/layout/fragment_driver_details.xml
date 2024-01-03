@@ -302,11 +302,38 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/imgCar"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="100dp"
                             android:scaleType="fitCenter"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/img_car" />
+                            app:srcCompat="@drawable/ic_mursheed_logo" />
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/rvCars"
+                            android:layout_width="@dimen/space_55x"
+                            android:layout_height="100dp"
+                            android:layout_marginHorizontal="@dimen/space_4x"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                            android:id="@+id/dotsIndicator"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_2x"
+                            app:dotsColor="@color/bg_dots_indicator"
+                            app:dotsCornerRadius="@dimen/space_2x"
+                            app:dotsSize="@dimen/space_2x"
+                            app:dotsSpacing="@dimen/space_1x"
+                            app:dotsWidthFactor="2.5"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/rvCars"
+                            app:progressMode="false"
+                            app:selectedDotColor="@color/primary" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -314,8 +341,10 @@
                             android:layout_margin="@dimen/space_3x"
                             android:gravity="center"
                             android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/imgCar">
+                            app:layout_constraintTop_toBottomOf="@id/dotsIndicator">
 
                             <TextView
                                 android:id="@+id/carName"
@@ -329,10 +358,6 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/space_10x_sp"
                                 app:drawableStartCompat="@drawable/ic_car_trunk"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@id/view"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/imgCar"
                                 tools:text="Accent 2022" />
 
                             <View

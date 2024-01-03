@@ -1,7 +1,7 @@
 package com.visualinnovate.almursheed.commonView.myOrders.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +67,7 @@ class OrderDetailsFragment : BaseFragment() {
         )
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initView() {
         if (days.isEmpty()) {
             getDaysList(vm.orderDetails)
@@ -99,7 +100,12 @@ class OrderDetailsFragment : BaseFragment() {
         binding.country.text = vm.orderDetails?.countryId.toString()
         binding.entryDate.text = vm.orderDetails?.startDate
         binding.exitDate.text = vm.orderDetails?.endDate
-        binding.price.text = vm.orderDetails?.cost +" $"
+
+        if (SharedPreference.getUserRole() == Constant.ROLE_GUIDE || SharedPreference.getUserRole() == Constant.ROLE_DRIVER || SharedPreference.getUserRole() == Constant.ROLE_GUIDES) {
+            binding.price.text = vm.orderDetails?.subTotal + " $"
+        } else {
+            binding.price.text = vm.orderDetails?.cost + " $"
+        }
     }
 
     private fun setBtnListener() {

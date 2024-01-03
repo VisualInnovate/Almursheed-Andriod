@@ -27,7 +27,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgRegisterAsTourist"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_4x"
         android:layout_marginTop="@dimen/space_5x"
@@ -53,7 +53,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgRegisterAsGuide"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_4x"
         android:layout_marginTop="@dimen/space_4x"
@@ -79,7 +79,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgRegisterAsDriver"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/space_4x"
         android:layout_marginTop="@dimen/space_4x"

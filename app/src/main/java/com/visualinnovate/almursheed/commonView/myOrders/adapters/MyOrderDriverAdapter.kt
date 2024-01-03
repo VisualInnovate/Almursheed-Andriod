@@ -47,8 +47,7 @@ class MyOrderDriverAdapter(
         holder.country.text = order?.countryId.toString()
         holder.dateOfEntry.text = order?.startDate
         holder.dateOfExit.text = order?.endDate
-        holder.price.text = order?.cost +" $"
-
+        holder.price.text = order?.subTotal +" $"
 
         when (order?.status) {
             "1" -> {

@@ -36,7 +36,6 @@ class OnBoardingFragment : BaseFragment() {
 
         // load icon next of get started
         loadGifImage(requireContext(), R.drawable.ic_next_animation, binding.icNextOnBoarding)
-        loadGifImage(requireContext(), R.drawable.ic_next_animation, binding.icNextLogin)
         setBtnListener()
     }
 

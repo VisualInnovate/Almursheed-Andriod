@@ -120,7 +120,7 @@ interface ApiService {
         @Query("city_id") cityId: Int,
     ): Response<DriversAndGuidesListResponse>
 
-    @GET("offers")
+    @GET("offers/mobile") // https://dev.back.mursheed.com/api/offers/mobile  -- offers/almtrshm/3bdl3zem
     suspend fun getAllOffers(): Response<OfferResponse>
 
     @GET("attracives") // https://mursheed.visualinnovate.net/api/attracives

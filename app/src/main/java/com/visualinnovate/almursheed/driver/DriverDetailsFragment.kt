@@ -14,10 +14,12 @@ import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.customNavigate
+import com.visualinnovate.almursheed.common.gone
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.toast
 import com.visualinnovate.almursheed.commonView.price.adapters.MyPricesAdapter
 import com.visualinnovate.almursheed.databinding.FragmentDriverDetailsBinding
+import com.visualinnovate.almursheed.driver.adapter.CarsImagesViewPagerAdapter
 import com.visualinnovate.almursheed.home.model.DriverAndGuideItem
 import com.visualinnovate.almursheed.home.viewmodel.HomeViewModel
 import com.visualinnovate.almursheed.utils.Constant
@@ -36,6 +38,8 @@ class DriverDetailsFragment : BaseFragment() {
     private var driverId: Int? = null
     private var driver: DriverAndGuideItem? = null
     private lateinit var pricesAdapter: MyPricesAdapter
+
+    private lateinit var carsImagesViewPagerAdapter: CarsImagesViewPagerAdapter
 
     private val btnBackCallBackFunc: () -> Unit = {
         findNavController().navigateUp()
@@ -60,9 +64,10 @@ class DriverDetailsFragment : BaseFragment() {
         vm.getDriverDetailsById(driverId)
 
         initToolbar()
-        subscribeData()
+        initBannerRecycler()
         initPricesRecyclerView()
         setBtnListeners()
+        subscribeData()
     }
 
     private fun setBtnListeners() {
@@ -117,6 +122,14 @@ class DriverDetailsFragment : BaseFragment() {
         }
     }
 
+    private fun initBannerRecycler() {
+        carsImagesViewPagerAdapter = CarsImagesViewPagerAdapter(requireContext())
+
+        binding.rvCars.offscreenPageLimit = 10
+        binding.rvCars.adapter = carsImagesViewPagerAdapter
+        binding.dotsIndicator.attachTo(binding.rvCars)
+    }
+
     @SuppressLint("SetTextI18n")
     private fun initViews(driver: DriverAndGuideItem?) {
         Glide.with(requireContext())
@@ -125,8 +138,15 @@ class DriverDetailsFragment : BaseFragment() {
             .into(binding.imgDriver)
 
         if (driver?.carPhoto?.isNotEmpty() == true) {
+            binding.imgCar.gone()
+            carsImagesViewPagerAdapter.submitData(driver.carPhoto)
+
+        } else {
+            binding.rvCars.gone()
+            binding.dotsIndicator.gone()
             Glide.with(requireContext())
-                .load(driver.carPhoto[0] ?: "")
+                .load(R.drawable.ic_mursheed_logo)
+                .error(R.drawable.ic_mursheed_logo)
                 .into(binding.imgCar)
         }
 
