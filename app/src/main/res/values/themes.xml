@@ -89,11 +89,6 @@
         <item name="cornerSize">@dimen/space_2x</item>
     </style>
 
-    <style name="TopRoundedImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/space_2x</item>
-    </style>
-
     <style name="CircleImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
