@@ -70,7 +70,7 @@ class PriceFragment : BaseFragment() {
     private fun initViews() {
         binding.city.text = cityName ?: getString(R.string.choose_city)
         // initCitiesSpinner()
-        citiesList = setupCitiesList(Utils.allCities)
+        citiesList = setupCitiesList(Utils.filteredCities)
         initMyPricesRecyclerView()
     }
 
