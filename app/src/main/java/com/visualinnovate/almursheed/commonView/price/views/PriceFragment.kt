@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.visualinnovate.almursheed.MainActivity
 import com.visualinnovate.almursheed.R
 import com.visualinnovate.almursheed.auth.model.CityItem
+import com.visualinnovate.almursheed.common.SharedPreference
 import com.visualinnovate.almursheed.common.base.BaseFragment
 import com.visualinnovate.almursheed.common.onDebouncedListener
 import com.visualinnovate.almursheed.common.showBottomSheet
@@ -70,6 +71,7 @@ class PriceFragment : BaseFragment() {
     private fun initViews() {
         binding.city.text = cityName ?: getString(R.string.choose_city)
         // initCitiesSpinner()
+        val country = SharedPreference.getCountryId()
         citiesList = setupCitiesList(Utils.filteredCities)
         initMyPricesRecyclerView()
     }

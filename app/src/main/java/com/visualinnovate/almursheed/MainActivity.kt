@@ -266,7 +266,11 @@ class MainActivity :
                     Utils.allCountries.add(item)
                     allNationalities.add(item.nationality)
                 }
+                if (SharedPreference.getCountryId()==null)
                 Utils.selectedCountryId = Utils.allCountries[0].country_id
+                else {
+                    Utils.selectedCountryId = SharedPreference.getCountryId().toString()
+                }
             }
         } catch (e: JSONException) {
             setupDataForCountryAndNationality()
